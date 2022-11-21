@@ -1,8 +1,35 @@
 import React from "react"
 import '../styles/Login.css';
+import { Button, Box, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-function SignUp () {
+interface State {
+  password: string;
 
+  showPassword: boolean;
+}
+
+function SignUp() {
+  const [values, setValues] = React.useState<State>({
+    password: '',
+    showPassword: false,
+  });
+
+  const handleChange =
+    (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      setValues({ ...values, [prop]: event.target.value });
+    };
+
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      showPassword: !values.showPassword,
+    });
+  };
+
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
 
   return (
     <div className="Login-form-container">
@@ -12,42 +39,85 @@ function SignUp () {
           <div className="text-center">
             Already registered? <a href="login">Sign In</a>
           </div>
-          <div className="form-group mt-3">
-            <label>First Name</label>
-            <input
+          <Box
+            component="form"
+            sx={{
+              '& .MuiTextField-root': { m: 0.5, width: '100%' },
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <TextField
+              required
               type="text"
               className="form-login-input"
-              placeholder="e.g Jane"
+              placeholder="Jane"
+              label="First Name"
             />
-          </div>
-          <div className="form-group mt-3">
-            <label>Surname</label>
-            <input
+
+            <TextField
+              required
               type="text"
               className="form-login-input"
-              placeholder="e.g Doe"
+              placeholder="Doe"
+              label="Surname"
             />
-          </div>
-          <div className="form-group mt-3">
-            <label>Email address</label>
-            <input
+
+            <TextField
+              required
               type="email"
               className="form-login-input"
-              placeholder="Email Address"
+              placeholder="Jane.doe@example.com"
+              label="Email Address"
             />
-          </div>
-          <div className="form-group mt-3">
-            <label>Password</label>
-            <input
-              type="password"
-              className="form-login-input"
-              placeholder="Password"
-            />
-          </div>
+
+            <FormControl sx={{ m: 0.5, width: '100%' }} variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-password">Password *</InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-password"
+                type={values.showPassword ? 'text' : 'password'}
+                value={values.password}
+                onChange={handleChange('password')}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                label="Password"
+              />
+            </FormControl>
+            <FormControl sx={{ m: 0.5, width: '100%' }} variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-password">Repeat Password *</InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-password"
+                type={values.showPassword ? 'text' : 'password'}
+                value={values.password}
+                onChange={handleChange('password')}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                label="Repeat Password"
+              />
+            </FormControl>
+          </Box>
           <div className="d-grid gap-2 mt-3">
-            <button type="submit" className="btn btn-primary">
-              Submit
-            </button>
+            <Button sx={{ m: 0.5, width: '100%' }} variant="contained">Sign Up</Button>
           </div>
         </form>
       </form>
