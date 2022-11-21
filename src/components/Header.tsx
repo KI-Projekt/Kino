@@ -1,4 +1,5 @@
 import * as React from 'react';
+<<<<<<< HEAD
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -171,6 +172,20 @@ function Header() {
       {renderMenu}
     </Box>
   );
+=======
+import '../styles/Header.css'
+
+function Header() {
+    return ( 
+        <div className="rmdb-header">
+            <div className="rmdb-header-content">
+                <text className="rmdb-logo">Cinetastisch</text>
+                <input/>
+                <button></button>
+            </div>
+        </div>
+     );
+>>>>>>> 571c1b7 (feat: established route and first styles)
 }
 
 export default Header;
