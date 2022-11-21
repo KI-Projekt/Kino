@@ -1,29 +1,27 @@
 import React, { useState } from "react"
+import '../styles/Login.css';
 
 function Login () {
-  const [authMode, setAuthMode] = useState("signin")
+  /*const [LoginMode, setLoginMode] = useState("signin")
 
-  const changeAuthMode = () => {
-    setAuthMode(authMode === "signin" ? "signup" : "signin")
+  const changeLoginMode = () => {
+    setLoginMode(LoginMode === "signin" ? "signup" : "signin")
   }
 
-  if (authMode === "signin") {
+  if (LoginMode === "signin") {*/
     return (
-      <div className="Auth-form-container">
-        <form className="Auth-form">
-          <div className="Auth-form-content">
-            <h3 className="Auth-form-title">Sign In</h3>
+      <div className="Login-form-container">
+        <form className="Login-form">
+          <div className="Login-form-content">
+            <h3 className="Login-form-title">Sign In</h3>
             <div className="text-center">
-              Not registered yet?{" "}
-              <span className="link-primary" onClick={changeAuthMode}>
-                Sign Up
-              </span>
+              Not registered yet? <a href="signUp">Sign Up</a>              
             </div>
-            <div className="form-group mt-3">
+            <div className="form-login-email-label">
               <label>Email address</label>
               <input
                 type="email"
-                className="form-control mt-1"
+                className="form-login-input"
                 placeholder="Enter email"
               />
             </div>
@@ -31,32 +29,32 @@ function Login () {
               <label>Password</label>
               <input
                 type="password"
-                className="form-control mt-1"
+                className="form-login-input"
                 placeholder="Enter password"
               />
             </div>
             <div className="d-grid gap-2 mt-3">
-              <button type="submit" className="btn btn-primary">
+              <button type="submit" className="btn-primary">
                 Submit
               </button>
             </div>
-            <p className="text-center mt-2">
+            {/* <p className="text-center mt-2">
               Forgot <a href="#">password?</a>
-            </p>
+            </p> */}
           </div>
         </form>
       </div>
     )
   }
-
+/*
   return (
-    <div className="Auth-form-container">
-      <form className="Auth-form">
-        <div className="Auth-form-content">
-          <h3 className="Auth-form-title">Sign In</h3>
+    <div className="Login-form-container">
+      <form className="Login-form">
+        <form className="Login-form-content">
+          <h3 className="Login-form-title">Sign Up</h3>
           <div className="text-center">
             Already registered?{" "}
-            <span className="link-primary" onClick={changeAuthMode}>
+            <span className="link-primary" onClick={changeLoginMode}>
               Sign In
             </span>
           </div>
@@ -64,7 +62,7 @@ function Login () {
             <label>Full Name</label>
             <input
               type="email"
-              className="form-control mt-1"
+              className="form-login-input"
               placeholder="e.g Jane Doe"
             />
           </div>
@@ -72,7 +70,7 @@ function Login () {
             <label>Email address</label>
             <input
               type="email"
-              className="form-control mt-1"
+              className="form-login-input"
               placeholder="Email Address"
             />
           </div>
@@ -80,7 +78,7 @@ function Login () {
             <label>Password</label>
             <input
               type="password"
-              className="form-control mt-1"
+              className="form-login-input"
               placeholder="Password"
             />
           </div>
@@ -92,10 +90,17 @@ function Login () {
           <p className="text-center mt-2">
             Forgot <a href="#">password?</a>
           </p>
-        </div>
+        </form>
       </form>
     </div>
   )
 }
+
+<! -- {" "}
+              <span className="link-primary" onClick={changeLoginMode}>
+                Sign Up
+              </span>
+              -- !> 
+              */
 
 export default Login;
