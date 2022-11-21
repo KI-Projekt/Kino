@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+<<<<<<< HEAD
 import Login from './components/Login';
 import OverviewView from './views/OverviewView';
 import SignUp from './components/SignUp';
@@ -16,6 +17,31 @@ function App() {
           </Routes>
         </div>
       </BrowserRouter>      
+=======
+import Header from './components/Header';
+import OverviewView from './views/OverviewView';
+
+function App() {
+  return (
+    <BrowserRouter>
+    <div> 
+      <nav>
+        <ul>
+          <li>
+            <Link to="/">OverviewView</Link>
+          </li>
+          <li>
+            <Link to="/header">Header</Link>
+          </li>
+        </ul>
+      </nav>
+      <Routes>     
+        <Route path="/" element={<OverviewView />} />     
+        <Route path="/header" element={<Header />} />
+      </Routes>
+    </div>
+  </BrowserRouter>      
+>>>>>>> 1557c76 (feat: established route and first styles)
   );
 }
 
