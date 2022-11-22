@@ -5,22 +5,31 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 interface State {
   password: string;
+  repeatedPassword: string;
 
   showPassword: boolean;
+  showRepeatedPassword: boolean;
 }
 
 function SignUp() {
   const [values, setValues] = React.useState<State>({
     password: '',
+    repeatedPassword: '',
     showPassword: false,
+    showRepeatedPassword: false
   });
 
-  const handleChange =
+  const handleChangePassword =
     (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
       setValues({ ...values, [prop]: event.target.value });
     };
 
-  const handleClickShowPassword = () => {
+  const handleClickShowPassword = (isRepeated: boolean) => {
+    isRepeated ? setValues({
+      ...values,
+      showRepeatedPassword: !values.showRepeatedPassword,
+    })
+     :
     setValues({
       ...values,
       showPassword: !values.showPassword,
@@ -77,12 +86,12 @@ function SignUp() {
                 id="outlined-adornment-password"
                 type={values.showPassword ? 'text' : 'password'}
                 value={values.password}
-                onChange={handleChange('password')}
+                onChange={handleChangePassword('password')}
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
                       aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
+                      onClick={()=> handleClickShowPassword(false)}
                       onMouseDown={handleMouseDownPassword}
                       edge="end"
                     >
@@ -97,18 +106,18 @@ function SignUp() {
               <InputLabel htmlFor="outlined-adornment-password">Repeat Password *</InputLabel>
               <OutlinedInput
                 id="outlined-adornment-password"
-                type={values.showPassword ? 'text' : 'password'}
-                value={values.password}
-                onChange={handleChange('password')}
+                type={values.showRepeatedPassword ? 'text' : 'password'}
+                value={values.repeatedPassword}
+                onChange={handleChangePassword('repeatedPassword')}
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
                       aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
+                      onClick={()=> handleClickShowPassword(true)}
                       onMouseDown={handleMouseDownPassword}
                       edge="end"
                     >
-                      {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                      {values.showRepeatedPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                   </InputAdornment>
                 }
