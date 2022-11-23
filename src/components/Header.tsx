@@ -18,7 +18,9 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import { Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import Login from './Login';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-
+import { Navigate } from 'react-router-dom';
+import useNavigate from 'react-router-dom';
+import { redTheme } from '../App';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -98,9 +100,15 @@ function Header() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
-
   const isProfileMenuOpen = Boolean(anchorElProfile);
   //const isMenuOpen = Boolean(anchorEl);
+
+  const menuData = [
+    { icon: <MovieIcon />, label: 'Movies' },
+    { icon: <SlideshowIcon />, label: 'Shows' },
+    { icon: <AccessTimeIcon />, label: 'Opening hours' },
+    { icon: <PaidIcon />, label: 'Ticket prices' },
+  ];
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElProfile(event.currentTarget);
@@ -116,6 +124,15 @@ function Header() {
 
   const handleProfileMenuClose = () => {
     setAnchorElProfile(null);
+  };
+
+  const handleListItemClick = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    label: string,
+  ) => {
+    // routing needs to be added here
+    console.log(label);
+    //setSelectedIndex(index);
   };
 
 
@@ -161,33 +178,24 @@ function Header() {
       anchor="left"
       open={open}
     >
-      <DrawerHeader>
-        <IconButton onClick={handleMenuClose}>
+      <DrawerHeader 
+      /* sx={{
+        color: redTheme.palette.primary.main,
+      }} */>
+      <Typography variant="h5" align='left'>Navigation</Typography>
+        <IconButton onClick={handleMenuClose} sx={{ color: redTheme.palette.primary.main }}>
           {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
         </IconButton>
       </DrawerHeader>
-      <Divider />
+      <Divider />      
       <List>
-        {['Movies', 'Shows'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <MovieIcon /> : <SlideshowIcon />}
+        {menuData.map((item) => (
+          <ListItem key={item.label} disablePadding>
+            <ListItemButton onClick={(event) => handleListItemClick(event, item.label)} /* sx={{ color: redTheme.palette.primary.main }} */>
+              <ListItemIcon sx={{ color: redTheme.palette.primary.main }}>
+                {item.icon}
               </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['Opening hours', 'Ticket prices'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <AccessTimeIcon /> : <PaidIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={item.label} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -197,52 +205,52 @@ function Header() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static" open={open}>
-          <Toolbar>
+      <AppBar position="static" open={open}>
+        <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="open menu"
+            aria-controls={menuId}
+            aria-haspopup="true"
+            onClick={handleMenuOpen}
+            sx={{ mr: 2, ...(open && { display: 'none' }) }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography
+            variant="h6" noWrap component="div"
+          >
+            Cinetastisch
+          </Typography>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </Search>
+          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton
               size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open menu"
-              aria-controls={menuId}
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={profileMenuId}
               aria-haspopup="true"
-              onClick={handleMenuOpen}
-              sx={{ mr: 2, ...(open && { display: 'none' }) }}
+              onClick={handleProfileMenuOpen}
+              color="inherit"
             >
-              <MenuIcon />
+              <AccountCircle />
             </IconButton>
-            <Typography
-              variant="h6" noWrap component="div"
-            >
-              Cinetastisch
-            </Typography>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }}
-              />
-            </Search>
-            <Box sx={{ flexGrow: 1 }} />
-            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-              <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={profileMenuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-            </Box>
-          </Toolbar>
-        </AppBar>
-        {renderProfile}
-        {renderMenu}
+          </Box>
+        </Toolbar>
+      </AppBar>
+      {renderProfile}
+      {renderMenu}
     </Box>
   );
 }
