@@ -1,11 +1,4 @@
 import * as React from 'react';
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a3a3d54 (feat: header first setup)
-=======
->>>>>>> 3486e82374d4acce2e4d6b0e8ec2cde2097b3942
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -13,38 +6,17 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 import Badge from '@mui/material/Badge';
->>>>>>> a3a3d54 (feat: header first setup)
-=======
->>>>>>> 5b2b057 (feat: header first steps login)
-=======
->>>>>>> 3486e82374d4acce2e4d6b0e8ec2cde2097b3942
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
->>>>>>> a3a3d54 (feat: header first setup)
-=======
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Modal, Popover, TextField } from '@mui/material';
 import Login from './Login';
->>>>>>> 5b2b057 (feat: header first steps login)
-=======
->>>>>>> ed17831 (feat: login first steps)
-=======
->>>>>>> 3486e82374d4acce2e4d6b0e8ec2cde2097b3942
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -85,10 +57,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 3486e82374d4acce2e4d6b0e8ec2cde2097b3942
 
 function Header() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -151,143 +119,6 @@ function Header() {
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
-
-  const mobileMenuId = 'primary-search-account-menu-mobile';
-
-  return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-          >
-
-            Cinetastisch
-
-          </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-<<<<<<< HEAD
-          </Box>       
-=======
-          </Box>
->>>>>>> ed17831 (feat: login first steps)
-        </Toolbar>
-      </AppBar>
-      {renderMenu}
-    </Box>
-  );
-<<<<<<< HEAD
-=======
-import '../styles/Header.css'
-
-function Header() {
-    return ( 
-        <div className="rmdb-header">
-            <div className="rmdb-header-content">
-                <text className="rmdb-logo">Cinetastisch</text>
-                <input/>
-                <button></button>
-            </div>
-        </div>
-     );
->>>>>>> 571c1b7 (feat: established route and first styles)
-=======
-
-function Header() {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
-  const isMenuOpen = Boolean(anchorEl);
-
-  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
-  
-  const menuId = 'primary-search-account-menu';
-  const renderMenu = ( 
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>LogIn</MenuItem>
-      
-    </Menu>
-  ); 
-
-
-  // if logged in
-  /* ( 
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  ); */
-
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
-
-
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -337,9 +168,6 @@ function Header() {
       {renderMenu}
     </Box>
   );
->>>>>>> a3a3d54 (feat: header first setup)
-=======
->>>>>>> 3486e82374d4acce2e4d6b0e8ec2cde2097b3942
 }
 
 export default Header;

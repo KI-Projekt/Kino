@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Box, Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from "@mui/material";
 import React from "react"
 import '../styles/Login.css';
@@ -93,16 +92,6 @@ function Login() {
       </div>
     </div>
   )
-=======
-import * as React from 'react';
-
-function Login() {
-    return ( 
-        <div>
-
-        </div>
-     );
->>>>>>> 3486e82374d4acce2e4d6b0e8ec2cde2097b3942
 }
 
 export default Login;
