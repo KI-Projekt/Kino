@@ -10,6 +10,19 @@ function App() {
     <BrowserRouter>
     <div> 
       <Header></Header>
+<<<<<<< HEAD
+=======
+      <nav>
+        <ul>
+          <li>
+            <Link to="/">OverviewView</Link>
+          </li>
+          <li>
+            <Link to="/header">Header</Link>
+          </li>
+        </ul>
+      </nav>
+>>>>>>> a3a3d54 (feat: header first setup)
       <Routes>     
         <Route path="/" element={<OverviewView />} />     
         <Route path="/header" element={<Header />} />
