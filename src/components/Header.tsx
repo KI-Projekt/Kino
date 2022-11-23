@@ -1,8 +1,11 @@
 import * as React from 'react';
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> a3a3d54 (feat: header first setup)
+=======
+>>>>>>> 3486e82374d4acce2e4d6b0e8ec2cde2097b3942
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -12,16 +15,20 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import Badge from '@mui/material/Badge';
 >>>>>>> a3a3d54 (feat: header first setup)
 =======
 >>>>>>> 5b2b057 (feat: header first steps login)
+=======
+>>>>>>> 3486e82374d4acce2e4d6b0e8ec2cde2097b3942
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -36,6 +43,8 @@ import Login from './Login';
 >>>>>>> 5b2b057 (feat: header first steps login)
 =======
 >>>>>>> ed17831 (feat: login first steps)
+=======
+>>>>>>> 3486e82374d4acce2e4d6b0e8ec2cde2097b3942
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -77,6 +86,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 3486e82374d4acce2e4d6b0e8ec2cde2097b3942
 
 function Header() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -197,6 +209,7 @@ function Header() {
       {renderMenu}
     </Box>
   );
+<<<<<<< HEAD
 =======
 import '../styles/Header.css'
 
@@ -325,6 +338,8 @@ function Header() {
     </Box>
   );
 >>>>>>> a3a3d54 (feat: header first setup)
+=======
+>>>>>>> 3486e82374d4acce2e4d6b0e8ec2cde2097b3942
 }
 
 export default Header;
