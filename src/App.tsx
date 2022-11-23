@@ -36,6 +36,7 @@ function App() {
     <BrowserRouter>
     <div> 
       <Header></Header>
+<<<<<<< HEAD
       <nav>
         <ul>
           <li>
@@ -47,6 +48,8 @@ function App() {
         </ul>
       </nav>
 >>>>>>> 571c1b7 (feat: established route and first styles)
+=======
+>>>>>>> 5b2b057 (feat: header first steps login)
       <Routes>     
         <Route path="/" element={<OverviewView />} />     
         <Route path="/header" element={<Header />} />
