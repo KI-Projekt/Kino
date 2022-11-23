@@ -6,21 +6,11 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-<<<<<<< HEAD
-=======
-import Badge from '@mui/material/Badge';
->>>>>>> a3a3d54 (feat: header first setup)
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-<<<<<<< HEAD
-=======
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import MoreIcon from '@mui/icons-material/MoreVert';
->>>>>>> a3a3d54 (feat: header first setup)
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -64,22 +54,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 function Header() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-<<<<<<< HEAD
 
   const isMenuOpen = Boolean(anchorEl);
-=======
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-    React.useState<null | HTMLElement>(null);
-
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
->>>>>>> a3a3d54 (feat: header first setup)
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-<<<<<<< HEAD
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
@@ -109,23 +90,6 @@ function Header() {
 
   // if logged in
   /* ( 
-=======
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
-
-  const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
-
-  const menuId = 'primary-search-account-menu';
-  const renderMenu = (
->>>>>>> a3a3d54 (feat: header first setup)
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
@@ -144,47 +108,13 @@ function Header() {
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
-<<<<<<< HEAD
   ); */
 
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
-=======
-  );
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >       
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
-  );
->>>>>>> a3a3d54 (feat: header first setup)
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -205,11 +135,9 @@ function Header() {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-<<<<<<< HEAD
+
             Cinetastisch
-=======
-            MUI
->>>>>>> a3a3d54 (feat: header first setup)
+
           </Typography>
           <Search>
             <SearchIconWrapper>
@@ -222,23 +150,6 @@ function Header() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-<<<<<<< HEAD
-=======
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
->>>>>>> a3a3d54 (feat: header first setup)
             <IconButton
               size="large"
               edge="end"
@@ -250,27 +161,9 @@ function Header() {
             >
               <AccountCircle />
             </IconButton>
-          </Box>
-<<<<<<< HEAD
+          </Box>       
         </Toolbar>
       </AppBar>
-=======
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
-      {renderMobileMenu}
->>>>>>> a3a3d54 (feat: header first setup)
       {renderMenu}
     </Box>
   );
