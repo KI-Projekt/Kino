@@ -26,16 +26,6 @@ function App() {
     <BrowserRouter>
     <div> 
       <Header></Header>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">OverviewView</Link>
-          </li>
-          <li>
-            <Link to="/header">Header</Link>
-          </li>
-        </ul>
-      </nav>
       <Routes>     
         <Route path="/" element={<OverviewView />} />     
         <Route path="/header" element={<Header />} />
