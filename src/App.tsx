@@ -8,17 +8,7 @@ import SignUp from './components/SignUp';
 function App() {
   return (
       <BrowserRouter>
-        <div> 
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">OverviewView</Link>
-              </li>
-              <li>
-                <Link to="/login">Login</Link>
-              </li>
-            </ul>
-          </nav>
+        <div>
           <Routes>     
             <Route path="/" element={<OverviewView />} />     
             <Route path="/login" element={<Login />} />
