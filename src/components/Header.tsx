@@ -161,7 +161,11 @@ function Header() {
             >
               <AccountCircle />
             </IconButton>
+<<<<<<< HEAD
           </Box>       
+=======
+          </Box>
+>>>>>>> ed17831 (feat: login first steps)
         </Toolbar>
       </AppBar>
       {renderMenu}
