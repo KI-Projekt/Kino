@@ -19,6 +19,7 @@ import { Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItem
 import Login from './Login';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 
+
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
@@ -92,7 +93,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 function Header() {
- // const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  // const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [anchorElProfile, setAnchorElProfile] = React.useState<null | HTMLElement>(null);
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -105,7 +106,7 @@ function Header() {
     setAnchorElProfile(event.currentTarget);
   };
 
-  const handleMenuOpen =() => {
+  const handleMenuOpen = () => {
     setOpen(true);
   };
 
@@ -146,102 +147,102 @@ function Header() {
     </Menu>
   );
 
- const renderMenu = (
-  <Drawer
-        sx={{
+  const renderMenu = (
+    <Drawer
+      sx={{
+        width: drawerWidth,
+        flexShrink: 0,
+        '& .MuiDrawer-paper': {
           width: drawerWidth,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: drawerWidth,
-            boxSizing: 'border-box',
-          },
-        }}
-        variant="persistent"
-        anchor="left"
-        open={open}
-      >
-        <DrawerHeader>
-          <IconButton onClick={handleMenuClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List>
-          {['Movies', 'Shows'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <MovieIcon /> : <SlideshowIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['Opening hours', 'Ticket prices'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <AccessTimeIcon /> : <PaidIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
- );
+          boxSizing: 'border-box',
+        },
+      }}
+      variant="persistent"
+      anchor="left"
+      open={open}
+    >
+      <DrawerHeader>
+        <IconButton onClick={handleMenuClose}>
+          {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+        </IconButton>
+      </DrawerHeader>
+      <Divider />
+      <List>
+        {['Movies', 'Shows'].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {index % 2 === 0 ? <MovieIcon /> : <SlideshowIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        {['Opening hours', 'Ticket prices'].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {index % 2 === 0 ? <AccessTimeIcon /> : <PaidIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Drawer>
+  );
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" open={open}>
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open menu"
-            aria-controls={menuId}
-            aria-haspopup="true"
-            onClick={handleMenuOpen}
-            sx={{ mr: 2, ...(open && { display: 'none' }) }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-             variant="h6" noWrap component="div"
-          >
-            Cinetastisch
-          </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+        <AppBar position="static" open={open}>
+          <Toolbar>
             <IconButton
               size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={profileMenuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
+              edge="start"
               color="inherit"
+              aria-label="open menu"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleMenuOpen}
+              sx={{ mr: 2, ...(open && { display: 'none' }) }}
             >
-              <AccountCircle />
+              <MenuIcon />
             </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>      
-      {renderProfile}
-      {renderMenu}
+            <Typography
+              variant="h6" noWrap component="div"
+            >
+              Cinetastisch
+            </Typography>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ 'aria-label': 'search' }}
+              />
+            </Search>
+            <Box sx={{ flexGrow: 1 }} />
+            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={profileMenuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+            </Box>
+          </Toolbar>
+        </AppBar>
+        {renderProfile}
+        {renderMenu}
     </Box>
   );
 }
