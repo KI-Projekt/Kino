@@ -39,7 +39,7 @@ function Login() {
 
   return (
     <div className="Login-form-container">
-      <form className="Login-form">
+      <div className="Login-form">
         <div className="Login-form-content">
           <h3 className="Login-form-title">Sign In</h3>
           <div className="text-center">
@@ -59,15 +59,6 @@ function Login() {
               placeholder="Jane.doe@example.com"
               label="Email Address"
             />
-
-            {/* <div className="form-group mt-3">
-                <TextField
-                  required
-                  type="password"
-                  className="form-login-input"
-                  label="Password"
-                />
-              </div> */}
             <FormControl sx={{ m: 0.5, width: '100%' }} variant="outlined">
               <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
               <OutlinedInput
@@ -98,7 +89,7 @@ function Login() {
             </Button>
           </Box>
         </div>
-      </form>
+      </div>
     </div>
   )
 }

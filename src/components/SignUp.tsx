@@ -42,8 +42,8 @@ function SignUp() {
 
   return (
     <div className="Login-form-container">
-      <form className="Login-form">
-        <form className="Login-form-content">
+      <div className="Login-form">
+        <div className="Login-form-content">
           <h3 className="Login-form-title">Sign Up</h3>
           <div className="text-center">
             Already registered? <a href="login">Sign In</a>
@@ -128,12 +128,10 @@ function SignUp() {
           <div className="d-grid gap-2 mt-3">
             <Button sx={{ m: 0.5, width: '100%' }} variant="contained">Sign Up</Button>
           </div>
-        </form>
-      </form>
+        </div>
+      </div>
     </div>
   )
 }
-
-
 
 export default SignUp;
