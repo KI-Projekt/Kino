@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from "@mui/material";
+import { Box, Button, FormControl, IconButton, InputAdornment, InputLabel, Link, OutlinedInput, TextField } from "@mui/material";
 import React from "react"
 import '../styles/Login.css';
 import Visibility from '@mui/icons-material/Visibility';
@@ -43,7 +43,7 @@ function Login() {
         <div className="Login-form-content">
           <h3 className="Login-form-title">Sign In</h3>
           <div className="text-center">
-            Not registered yet? <a href="signUp">Sign Up</a>
+            Not registered yet? <Link href={`/signUp`}>Sign Up</Link>
           </div>
           <Box
             component="form"

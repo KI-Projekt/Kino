@@ -3,14 +3,20 @@
     background-color: white;
   }
   
+  .Login-form-container-for-SignUp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 95vw;
+    height: 94vh; 
+  }
+  
   .Login-form-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* width: 100vw;
-    height: 100vh; */
   }
-  
+
   .Login-form {
     display: flex;
     width: 26.25rem;

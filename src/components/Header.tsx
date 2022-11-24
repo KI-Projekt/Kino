@@ -21,6 +21,10 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import { Navigate } from 'react-router-dom';
 import useNavigate from 'react-router-dom';
 import { redTheme } from '../App';
+import useEnhancedEffect from '@mui/material/utils/useEnhancedEffect';
+import Link from '@mui/material/Link';
+import CinetastischIcon from '../img/Cinetastisch_icon.png';
+import CinetastischText from '../img/Cinetastisch-text.png';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -103,11 +107,13 @@ function Header() {
   const isProfileMenuOpen = Boolean(anchorElProfile);
   //const isMenuOpen = Boolean(anchorEl);
 
+  //const navigate = useNavigate();
+
   const menuData = [
-    { icon: <MovieIcon />, label: 'Movies' },
-    { icon: <SlideshowIcon />, label: 'Shows' },
-    { icon: <AccessTimeIcon />, label: 'Opening hours' },
-    { icon: <PaidIcon />, label: 'Ticket prices' },
+    { icon: <MovieIcon />, label: 'Movies', link: '' },
+    { icon: <SlideshowIcon />, label: 'Shows', link: 'shows' },
+    { icon: <AccessTimeIcon />, label: 'Opening hours', link: 'openingHours' },
+    { icon: <PaidIcon />, label: 'Ticket prices', link: 'ticketPrices' },
   ];
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -131,8 +137,8 @@ function Header() {
     label: string,
   ) => {
     // routing needs to be added here
+    /* useNavigate(`/${label}`); */
     console.log(label);
-    //setSelectedIndex(index);
   };
 
 
@@ -172,32 +178,41 @@ function Header() {
         '& .MuiDrawer-paper': {
           width: drawerWidth,
           boxSizing: 'border-box',
+          bgcolor: redTheme.palette.primary.contrastText,
         },
       }}
       variant="persistent"
       anchor="left"
       open={open}
     >
-      <DrawerHeader 
-      /* sx={{
-        color: redTheme.palette.primary.main,
-      }} */>
-      <Typography variant="h5" align='left'>Navigation</Typography>
+      <DrawerHeader>
+        <Typography
+          variant="h5"
+          align='left'
+          sx={{
+            color: redTheme.palette.primary.main,
+          }}>
+          Navigation
+        </Typography>
         <IconButton onClick={handleMenuClose} sx={{ color: redTheme.palette.primary.main }}>
           {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
         </IconButton>
       </DrawerHeader>
-      <Divider />      
-      <List>
+      <Divider sx={{ bgcolor: redTheme.palette.primary.contrastText }} />
+      <List sx={{
+        bgcolor: redTheme.palette.primary.contrastText,
+      }}>
         {menuData.map((item) => (
-          <ListItem key={item.label} disablePadding>
-            <ListItemButton onClick={(event) => handleListItemClick(event, item.label)} /* sx={{ color: redTheme.palette.primary.main }} */>
-              <ListItemIcon sx={{ color: redTheme.palette.primary.main }}>
-                {item.icon}
-              </ListItemIcon>
-              <ListItemText primary={item.label} />
-            </ListItemButton>
-          </ListItem>
+          <Link href={`/${item.link}`} underline='none' sx={{ color: redTheme.palette.primary.main }}>
+            <ListItem key={item.label} disablePadding>
+              <ListItemButton onClick={(event) => handleListItemClick(event, item.label)} /* sx={{ color: redTheme.palette.primary.main }} */>
+                <ListItemIcon sx={{ color: redTheme.palette.primary.main }}>
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText sx={{ color: redTheme.palette.primary.main }} primary={item.label} />
+              </ListItemButton>
+            </ListItem>
+          </Link>
         ))}
       </List>
     </Drawer>
@@ -219,11 +234,25 @@ function Header() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6" noWrap component="div"
-          >
-            Cinetastisch
-          </Typography>
+          {/* <img src='../img/Cinetastisch.svg' alt="logo" className='classes.logo'></img> */}
+          <Link href={`/`} underline='none'>
+            <Box
+              component="img"
+              sx={{
+                height: '3rem',
+              }}
+              alt="logo"
+              src={CinetastischIcon}
+            />
+            <Box
+              component="img"
+              sx={{
+                height: '3rem',
+              }}
+              alt="logo"
+              src={CinetastischText}
+            />
+          </Link>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -251,7 +280,7 @@ function Header() {
       </AppBar>
       {renderProfile}
       {renderMenu}
-    </Box>
+    </Box >
   );
 }
 

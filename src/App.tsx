@@ -12,7 +12,11 @@ export const redTheme = createTheme({
     mode: 'light',
     primary: {
       main: '#ED254E',
+      contrastText: '#1D1E2A',
     },
+    secondary: {
+      main: '#1D1E2A',
+    }
   },
 });
 
@@ -23,13 +27,13 @@ function App() {
         <div>
           <Header></Header>
         </div>
-        <div>
+        
           <Routes>
             <Route path="/" element={<OverviewView />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/signIn" element={<Login />} />
             <Route path="/signUp" element={<SignUp />} />
           </Routes>
-        </div>
+        
       </BrowserRouter>
     </ThemeProvider>
   );
