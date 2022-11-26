@@ -18,13 +18,8 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import { Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import Login from './Login';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import { Navigate } from 'react-router-dom';
-import useNavigate from 'react-router-dom';
-import { redTheme } from '../App';
-import useEnhancedEffect from '@mui/material/utils/useEnhancedEffect';
 import Link from '@mui/material/Link';
-import CinetastischIcon from '../img/Cinetastisch_icon.png';
-import CinetastischText from '../img/Cinetastisch-text.png';
+import CinetastischHorizontal from '../img/Cinetastisch_horizontal.png';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -178,7 +173,7 @@ function Header() {
         '& .MuiDrawer-paper': {
           width: drawerWidth,
           boxSizing: 'border-box',
-          bgcolor: redTheme.palette.primary.contrastText,
+          bgcolor: theme.palette.primary.main,
         },
       }}
       variant="persistent"
@@ -189,27 +184,24 @@ function Header() {
         <Typography
           variant="h5"
           align='left'
-          sx={{
-            color: redTheme.palette.primary.main,
-          }}>
+          sx={{ color: theme.palette.primary.contrastText }}
+          >
           Navigation
         </Typography>
-        <IconButton onClick={handleMenuClose} sx={{ color: redTheme.palette.primary.main }}>
+        <IconButton onClick={handleMenuClose} sx={{ color: theme.palette.primary.contrastText }}>
           {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
         </IconButton>
       </DrawerHeader>
-      <Divider sx={{ bgcolor: redTheme.palette.primary.contrastText }} />
-      <List sx={{
-        bgcolor: redTheme.palette.primary.contrastText,
-      }}>
+      <Divider />
+      <List >
         {menuData.map((item) => (
-          <Link href={`/${item.link}`} underline='none' sx={{ color: redTheme.palette.primary.main }}>
+          <Link href={`/${item.link}`} underline='none' >
             <ListItem key={item.label} disablePadding>
-              <ListItemButton onClick={(event) => handleListItemClick(event, item.label)} /* sx={{ color: redTheme.palette.primary.main }} */>
-                <ListItemIcon sx={{ color: redTheme.palette.primary.main }}>
+              <ListItemButton onClick={(event) => handleListItemClick(event, item.label)} >
+                <ListItemIcon sx={{ color: theme.palette.primary.contrastText }}>
                   {item.icon}
                 </ListItemIcon>
-                <ListItemText sx={{ color: redTheme.palette.primary.main }} primary={item.label} />
+                <ListItemText sx={{ color: theme.palette.primary.contrastText }} primary={item.label} />
               </ListItemButton>
             </ListItem>
           </Link>
@@ -220,7 +212,7 @@ function Header() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" open={open}>
+      <AppBar position="fixed" open={open}>
         <Toolbar>
           <IconButton
             size="large"
@@ -234,23 +226,20 @@ function Header() {
           >
             <MenuIcon />
           </IconButton>
-          {/* <img src='../img/Cinetastisch.svg' alt="logo" className='classes.logo'></img> */}
           <Link href={`/`} underline='none'>
             <Box
               component="img"
               sx={{
                 height: '3rem',
+                position: 'absolute',
+                zIndex: 1,
+                top: '0.5rem',
+                left: 0,
+                right: 0,
+                margin: '0 auto',
               }}
               alt="logo"
-              src={CinetastischIcon}
-            />
-            <Box
-              component="img"
-              sx={{
-                height: '3rem',
-              }}
-              alt="logo"
-              src={CinetastischText}
+              src={CinetastischHorizontal}
             />
           </Link>
           <Search>
@@ -263,7 +252,7 @@ function Header() {
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ display: { /* xs: 'none', */ md: 'flex' } }}>
             <IconButton
               size="large"
               edge="end"
