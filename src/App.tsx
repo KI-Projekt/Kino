@@ -22,9 +22,10 @@ function App() {
           </nav>
           <Routes>     
             <Route path="/" element={<OverviewView />} />     
-            <Route path="/footerTest" element={<Footer />} />
+            <Route path="/footerTest" element={<Footer/>} />
           </Routes>
         </div>
+
       </BrowserRouter>      
   );
 }

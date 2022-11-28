@@ -1,55 +1,45 @@
 import * as React from 'react';
 import "../styles/Footer.css";
+import { Container, Grid, Box, Link, Typography }from '@mui/material/';
 
-function Footer() {
-    return ( 
-        <div className="main-footer">
-            <div className="container">
-                <div className="row">
-                    {/* Column1 */}
-                    <div className="col">
-                        <h4>THICC MEMES INC</h4>
-                        <ul className="list-unstyled">
-                            <li>3215-456-486</li>
-                            <li>Moscow, Russia</li>
-                            <li>123 street south north</li>
-                        </ul>
-
-                    </div>
-                    {/* Column2 */}
-                    <div className="col">
-                        <h4>ANOTHER COLUMN</h4>
-                        <ul className="list-unstyled">
-                            <li>3215-456-486</li>
-                            <li>Moscow, Russia</li>
-                            <li>123 street south north</li>
-                        </ul>
-
-                    </div>
-                    {/* Column3 */}
-                    <div className="col">
-                        <h4>STUFF</h4>
-                        <ul className="list-unstyled">
-                            <li>3215-456-486</li>
-                            <li>Moscow, Russia</li>
-                            <li>123 street south north</li>
-                        </ul>
-                    </div>
-                </div>
-                <hr />
-                <div className="row">
-                    <p className="col-sm">
-                        &copy;{new Date().getFullYear()} KINO XY | All rights reserved | Impressum | Contact Us | Privacy Policy
-                    </p>
-
-                </div>
-
-            </div>
-            <text>
-                Hallo :|
-            </text>
-        </div>
-     );
+export default function Footer(){
+    return <div>
+        <Box className="footerBox">
+            <Container className="footerContainer" sx={{width:'100%'}}>
+                <Grid container spacing={0} direction="row"  justifyContent="center"  alignItems="center">
+                    <Grid item xs={4} sm={4}>
+                    </Grid>
+                    <Grid  item xs={4} sm={4}>
+                        <Box>
+                            <Typography align='center'>
+                                <Link className="FooterLink" href="/" color="inherit" underline="none" variant="overline">
+                                    Info
+                                </Link>
+                                <Link className="FooterLink" href="/" color="inherit" underline="none" variant="overline">
+                                    Support
+                                </Link>
+                                <Link className="FooterLink" href="/" color="inherit" underline="none" variant="overline">
+                                    Marketing
+                                </Link>
+                            </Typography>
+                        </Box>
+                        <Box>
+                            <Typography align='center'>
+                            <Link href="/" color="inherit" underline="none" variant="overline" >
+                                Terms of Use
+                            </Link>
+                            </Typography>
+                        </Box>
+                        <Box>
+                            <Typography className='LowestFooterBox'variant='subtitle2' align='center'>
+                                &copy;{new Date().getFullYear()} Cinetastisch Entertainment
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={4} sm={4}>
+                    </Grid>
+                </Grid>
+            </Container>
+        </Box>
+    </div>
 }
-
-export default Footer;

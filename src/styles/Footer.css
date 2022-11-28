@@ -1,0 +1,22 @@
+.footerBox{
+    color: #F4FFFD;
+    background-color: #A5A5A5;
+    padding-top: 2em;
+    position: absolute;
+    bottom: 0;
+    width: 100vw;
+    padding-bottom: 1em;
+
+}
+
+.footer{
+    width: 100vw;
+}
+
+.FooterLink{
+    padding: 0.1cm;
+}
+
+.LowestFooterBox{
+    color: #7F7F7F;
+}
