@@ -19,4 +19,11 @@
 
 .LowestFooterBox{
     color: #7F7F7F;
+    padding-top: 1mm;
+}
+
+.FooterIcons{
+    padding-left: 2mm;
+    padding-right: 1mm;
+    padding-bottom: 4mm;
 }

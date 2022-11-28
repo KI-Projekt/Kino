@@ -1,6 +1,9 @@
 import * as React from 'react';
 import "../styles/Footer.css";
 import { Container, Grid, Box, Link, Typography }from '@mui/material/';
+import InfoIcon from '@mui/icons-material/Info';
+import AssistantDirectionIcon from '@mui/icons-material/AssistantDirection';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 export default function Footer(){
     return <div>
@@ -11,28 +14,33 @@ export default function Footer(){
                     </Grid>
                     <Grid  item xs={4} sm={4}>
                         <Box>
+                            <Typography align='center'> <InfoIcon className='FooterIcons' fontSize='large'></InfoIcon> <AssistantDirectionIcon className='FooterIcons' fontSize='large'></AssistantDirectionIcon><AccountCircleIcon className='FooterIcons' fontSize='large'></AccountCircleIcon></Typography>
                             <Typography align='center'>
-                                <Link className="FooterLink" href="/" color="inherit" underline="none" variant="overline">
-                                    Info
+                                <Link className="FooterLink" href="/" color="inherit" underline="none" variant="subtitle2">
+                                    Info ᛫
                                 </Link>
-                                <Link className="FooterLink" href="/" color="inherit" underline="none" variant="overline">
-                                    Support
+                                <Link className="FooterLink" href="/" color="inherit" underline="none" variant="subtitle2">
+                                    Support ᛫
                                 </Link>
-                                <Link className="FooterLink" href="/" color="inherit" underline="none" variant="overline">
+                                <Link className="FooterLink" href="/" color="inherit" underline="none" variant="subtitle2">
                                     Marketing
                                 </Link>
                             </Typography>
                         </Box>
+                        
                         <Box>
                             <Typography align='center'>
-                            <Link href="/" color="inherit" underline="none" variant="overline" >
-                                Terms of Use
+                            <Link className="FooterLink" href="/" color="inherit" underline="none" variant="subtitle2" >
+                                Terms of Use ᛫
+                            </Link>
+                            <Link className="FooterLink" href="/" color="inherit" underline="none" variant="subtitle2" >
+                                Privacy Policy
                             </Link>
                             </Typography>
                         </Box>
                         <Box>
                             <Typography className='LowestFooterBox'variant='subtitle2' align='center'>
-                                &copy;{new Date().getFullYear()} Cinetastisch Entertainment
+                                &copy; {new Date().getFullYear()} Cinetastisch Entertainment
                             </Typography>
                         </Box>
                     </Grid>
