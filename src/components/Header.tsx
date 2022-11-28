@@ -100,9 +100,6 @@ function Header() {
   const [open, setOpen] = React.useState(false);
 
   const isProfileMenuOpen = Boolean(anchorElProfile);
-  //const isMenuOpen = Boolean(anchorEl);
-
-  //const navigate = useNavigate();
 
   const menuData = [
     { icon: <MovieIcon />, label: 'Movies', link: '' },
@@ -130,11 +127,7 @@ function Header() {
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     label: string,
-  ) => {
-    // routing needs to be added here
-    /* useNavigate(`/${label}`); */
-    console.log(label);
-  };
+  ) => {};
 
 
   const menuId = 'primary-search-account-menu';
@@ -252,7 +245,7 @@ function Header() {
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { /* xs: 'none', */ md: 'flex' } }}>
+          <Box sx={{ display: { md: 'flex' } }}>
             <IconButton
               size="large"
               edge="end"

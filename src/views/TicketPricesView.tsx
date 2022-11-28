@@ -48,7 +48,6 @@ interface State {
 }
 
 class TicketPricesView extends React.Component<Props, State> {
-    //state = { :  }
     render() {
         return (
             <Container maxWidth='md' >

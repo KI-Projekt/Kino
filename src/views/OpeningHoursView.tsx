@@ -50,7 +50,6 @@ interface State {
 }
  
 class OpeningHoursView extends React.Component<Props, State> {
-    //state = { :  }
     render() { 
         return ( 
             <Container maxWidth='xs' >
