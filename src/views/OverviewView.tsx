@@ -14,7 +14,7 @@ class OverviewView extends React.Component<Props, State> {
     render() { 
         return ( 
             <div>
-                <h1>Hello World!</h1>
+                
             </div>
          );
     }
