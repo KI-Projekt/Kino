@@ -1,5 +1,6 @@
-import React from 'react';
+import React from "react";
 import './App.css';
+import Footer from "./components/Footer";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from './components/Login';
 import Header from './components/Header';
@@ -42,6 +43,7 @@ function App() {
           </Container>
         </BrowserRouter>
       </ThemeProvider >
+      <Footer />
     </div>
   );
 }
