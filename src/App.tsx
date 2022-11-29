@@ -4,8 +4,8 @@ import Login from './components/Login';
 import OverviewView from './views/OverviewView';
 import SignUp from './components/SignUp';
 import Footer from "./components/Footer";
+import ImpressumView from "./views/ImpressumView";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
 
 function App() {
   return (
@@ -13,6 +13,7 @@ function App() {
       <div>
         <Routes>
           <Route path="/" element={<OverviewView />} />
+          <Route path="/impressum" element={<ImpressumView />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signUp" element={<SignUp />} />
         </Routes>

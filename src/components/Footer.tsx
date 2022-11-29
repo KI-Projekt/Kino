@@ -60,7 +60,7 @@ export default function Footer() {
                 <Typography align="center">
                   <Link
                     className="Footer-Link"
-                    href="/"
+                    href="/impressum"
                     color="inherit"
                     underline="none"
                     variant="subtitle2"
