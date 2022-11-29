@@ -1,7 +1,8 @@
 import React from "react"
 import '../styles/Login.css';
-import { Button, Box, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from "@mui/material";
+import { Button, Box, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField, Link } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+
 
 interface State {
   password: string;
@@ -29,11 +30,11 @@ function SignUp() {
       ...values,
       showRepeatedPassword: !values.showRepeatedPassword,
     })
-     :
-    setValues({
-      ...values,
-      showPassword: !values.showPassword,
-    });
+      :
+      setValues({
+        ...values,
+        showPassword: !values.showPassword,
+      });
   };
 
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -41,13 +42,10 @@ function SignUp() {
   };
 
   return (
-    <div className="Login-form-container">
-      <div className="Login-form">
-        <div className="Login-form-content">
-          <h3 className="Login-form-title">Sign Up</h3>
-          <div className="text-center">
-            Already registered? <a href="login">Sign In</a>
-          </div>
+    <div className="Login-Form-Container-For-SignUp">
+      <div className="Login-Form">
+        <div className="Login-Form-Content">
+          <h3 className="Login-Form-Title">Sign Up</h3>
           <Box
             component="form"
             sx={{
@@ -56,10 +54,13 @@ function SignUp() {
             noValidate
             autoComplete="off"
           >
+            <div className="Text-Center">
+              Already registered?  <Link href={`/signIn`}>Sign In</Link>
+            </div>
             <TextField
               required
               type="text"
-              className="form-login-input"
+              className="Form-Login-Input"
               placeholder="Jane"
               label="First Name"
             />
@@ -67,7 +68,7 @@ function SignUp() {
             <TextField
               required
               type="text"
-              className="form-login-input"
+              className="Form-Login-Input"
               placeholder="Doe"
               label="Surname"
             />
@@ -75,7 +76,7 @@ function SignUp() {
             <TextField
               required
               type="email"
-              className="form-login-input"
+              className="Form-Login-Input"
               placeholder="Jane.doe@example.com"
               label="Email Address"
             />
@@ -91,7 +92,7 @@ function SignUp() {
                   <InputAdornment position="end">
                     <IconButton
                       aria-label="toggle password visibility"
-                      onClick={()=> handleClickShowPassword(false)}
+                      onClick={() => handleClickShowPassword(false)}
                       onMouseDown={handleMouseDownPassword}
                       edge="end"
                     >
@@ -113,7 +114,7 @@ function SignUp() {
                   <InputAdornment position="end">
                     <IconButton
                       aria-label="toggle password visibility"
-                      onClick={()=> handleClickShowPassword(true)}
+                      onClick={() => handleClickShowPassword(true)}
                       onMouseDown={handleMouseDownPassword}
                       edge="end"
                     >
