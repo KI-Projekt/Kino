@@ -1,6 +1,7 @@
 import React from "react";
 import './App.css';
 import Footer from "./components/Footer";
+import ImpressumView from "./views/ImpressumView";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from './components/Login';
 import Header from './components/Header';
@@ -34,6 +35,7 @@ function App() {
             <Box className='App-Box' sx={{ height: '95vh' }} >
               <Routes>
                 <Route path="/" element={<OverviewView />} />
+                <Route path="/impressum" element={<ImpressumView />} />
                 <Route path="/signIn" element={<Login />} />
                 <Route path="/signUp" element={<SignUp />} />
                 <Route path="/openingHours" element={<OpeningHoursView />} />
