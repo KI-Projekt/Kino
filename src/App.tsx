@@ -10,20 +10,10 @@ function App() {
   return (
       <BrowserRouter>
         <div> 
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">OverviewView</Link>
-              </li>
-              <li>
-                <Link to="/footerTest">Footer</Link>
-              </li>
-            </ul>
-          </nav>
           <Routes>     
             <Route path="/" element={<OverviewView />} />     
-            <Route path="/footerTest" element={<Footer/>} />
           </Routes>
+          <Footer />
         </div>
 
       </BrowserRouter>      

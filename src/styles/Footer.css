@@ -1,11 +1,11 @@
 .footerBox{
     color: #F4FFFD;
     background-color: #A5A5A5;
-    padding-top: 2em;
+    padding-top: 0.5rem;
     position: absolute;
     bottom: 0;
     width: 100vw;
-    padding-bottom: 1em;
+    padding-bottom: 0.5rem;
 
 }
 
@@ -14,7 +14,7 @@
 }
 
 .FooterLink{
-    padding: 0.1cm;
+    padding: 0.1rem;
 }
 
 .LowestFooterBox{
@@ -25,5 +25,5 @@
 .FooterIcons{
     padding-left: 2mm;
     padding-right: 1mm;
-    padding-bottom: 4mm;
+    padding-bottom: 0.1rem;
 }

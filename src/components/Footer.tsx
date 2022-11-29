@@ -14,7 +14,7 @@ export default function Footer(){
                     </Grid>
                     <Grid  item xs={4} sm={4}>
                         <Box>
-                            <Typography align='center'> <InfoIcon className='FooterIcons' fontSize='large'></InfoIcon> <AssistantDirectionIcon className='FooterIcons' fontSize='large'></AssistantDirectionIcon><AccountCircleIcon className='FooterIcons' fontSize='large'></AccountCircleIcon></Typography>
+                            <Typography align='center'> <InfoIcon className='FooterIcons' ></InfoIcon> <AssistantDirectionIcon className='FooterIcons'></AssistantDirectionIcon><AccountCircleIcon className='FooterIcons'></AccountCircleIcon></Typography>
                             <Typography align='center'>
                                 <Link className="FooterLink" href="/" color="inherit" underline="none" variant="subtitle2">
                                     Info ᛫
