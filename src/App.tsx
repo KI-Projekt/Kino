@@ -29,7 +29,7 @@ function App() {
     <div>
       <ThemeProvider theme={redTheme}>
         <BrowserRouter>
-          <Header></Header>
+          <Header />
           <Toolbar />
           <Container maxWidth="lg">
             <Box className='App-Box' sx={{ height: '95vh' }} >

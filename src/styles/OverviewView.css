@@ -1,0 +1,11 @@
+.Tile-Bar {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    display: flex;
+    flex-direction: row;
+}
+
+.Movie-Tile {
+    height: 15rem;
+}
+
