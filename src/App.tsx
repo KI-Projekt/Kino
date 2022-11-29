@@ -1,10 +1,11 @@
 import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
-import Login from "./components/Login";
+import './App.css';
+import Login from './components/Login';
+import OverviewView from './views/OverviewView';
+import SignUp from './components/SignUp';
 import Footer from "./components/Footer";
-import OverviewView from "./views/OverviewView";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 
 function App() {
   return (
@@ -12,6 +13,8 @@ function App() {
       <div>
         <Routes>
           <Route path="/" element={<OverviewView />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signUp" element={<SignUp />} />
         </Routes>
         <Footer />
       </div>

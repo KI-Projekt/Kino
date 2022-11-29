@@ -7,11 +7,11 @@
  ### Naming of the Branches
  
  All feature branches need to be named as follows:
- feat/[TICKET_ID]/[TICKET_NAME] -> the Pull Request follows a similiar naming convention <br>
+ feat/[TICKET_ID]/[TICKET_NAME] eg. feat/TGB-39/createLogin-> the Pull Request follows a similiar naming convention <br>
  e.g. feat: [TICKET_ID] - [TICKET_NAME]
  
  All bug branches need to be named as follows:
- fix/[TICKET_ID]/[TICKET_NAME] -> the Pull Request follows a similiar naming convention <br>
+ fix/[TICKET_ID]/[TICKET_NAME]  fix/TGB-64/fixBugXY-> the Pull Request follows a similiar naming convention <br>
  e.g. fix: [TICKET_ID] - [TICKET_NAME]
 
 ## Coding Guidelines
