@@ -1,4 +1,4 @@
-.footerBox{
+.Footer-Box{
     color: #F4FFFD;
     background-color: #A5A5A5;
     padding-top: 0.5rem;
@@ -9,21 +9,21 @@
 
 }
 
-.footer{
+.Footer{
     width: 100vw;
 }
 
-.FooterLink{
+.Footer-Link{
     padding: 0.1rem;
 }
 
-.LowestFooterBox{
+.Lowest-Footer-Box{
     color: #7F7F7F;
-    padding-top: 1mm;
+    padding-top: 0.2rem;
 }
 
-.FooterIcons{
-    padding-left: 2mm;
-    padding-right: 1mm;
+.Footer-Icons{
+    padding-left: 0.4rem;
+    padding-right: 0.2rem;
     padding-bottom: 0.1rem;
 }
