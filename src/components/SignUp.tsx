@@ -42,10 +42,10 @@ function SignUp() {
   };
 
   return (
-    <div className="Login-form-container-for-SignUp">
-      <div className="Login-form">
-        <div className="Login-form-content">
-          <h3 className="Login-form-title">Sign Up</h3>
+    <div className="Login-Form-Container-For-SignUp">
+      <div className="Login-Form">
+        <div className="Login-Form-Content">
+          <h3 className="Login-Form-Title">Sign Up</h3>
           <Box
             component="form"
             sx={{
@@ -54,13 +54,13 @@ function SignUp() {
             noValidate
             autoComplete="off"
           >
-            <div className="text-center">
+            <div className="Text-Center">
               Already registered?  <Link href={`/signIn`}>Sign In</Link>
             </div>
             <TextField
               required
               type="text"
-              className="form-login-input"
+              className="Form-Login-Input"
               placeholder="Jane"
               label="First Name"
             />
@@ -68,7 +68,7 @@ function SignUp() {
             <TextField
               required
               type="text"
-              className="form-login-input"
+              className="Form-Login-Input"
               placeholder="Doe"
               label="Surname"
             />
@@ -76,7 +76,7 @@ function SignUp() {
             <TextField
               required
               type="email"
-              className="form-login-input"
+              className="Form-Login-Input"
               placeholder="Jane.doe@example.com"
               label="Email Address"
             />

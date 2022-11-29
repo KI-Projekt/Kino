@@ -39,15 +39,7 @@ function createData(
        
 ];
 
-interface Props {
-
-}
-
-interface State {
-    
-}
-
-class TicketPricesView extends React.Component<Props, State> {
+class TicketPricesView extends React.Component {
     render() {
         return (
             <Container maxWidth='md' >

@@ -41,15 +41,7 @@ function createData(
        
 ];
 
-interface Props {
-    
-}
- 
-interface State {
-    
-}
- 
-class OpeningHoursView extends React.Component<Props, State> {
+class OpeningHoursView extends React.Component {
     render() { 
         return ( 
             <Container maxWidth='xs' >

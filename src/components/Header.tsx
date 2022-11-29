@@ -1,24 +1,17 @@
 import * as React from 'react';
 import { styled, alpha, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
+import { Divider, Link, Menu, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, IconButton, Box, Toolbar, Typography, InputBase } from '@mui/material';
 import PaidIcon from '@mui/icons-material/Paid';
 import SlideshowIcon from '@mui/icons-material/Slideshow';
 import MovieIcon from '@mui/icons-material/Movie';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import { Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import Login from './Login';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import Link from '@mui/material/Link';
 import CinetastischHorizontal from '../img/Cinetastisch_horizontal.png';
 
 interface AppBarProps extends MuiAppBarProps {
@@ -94,7 +87,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 function Header() {
-  // const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [anchorElProfile, setAnchorElProfile] = React.useState<null | HTMLElement>(null);
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -127,7 +119,7 @@ function Header() {
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     label: string,
-  ) => {};
+  ) => { };
 
 
   const menuId = 'primary-search-account-menu';
@@ -178,7 +170,7 @@ function Header() {
           variant="h5"
           align='left'
           sx={{ color: theme.palette.primary.contrastText }}
-          >
+        >
           Navigation
         </Typography>
         <IconButton onClick={handleMenuClose} sx={{ color: theme.palette.primary.contrastText }}>
