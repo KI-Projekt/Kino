@@ -2,9 +2,9 @@
     color: #F4FFFD;
     background-color: #A5A5A5;
     padding-top: 0.5rem;
-    position: absolute;
+    position: static;
     bottom: 0;
-    width: 100vw;
+    width: 90;
     padding-bottom: 0.5rem;
 
 }
