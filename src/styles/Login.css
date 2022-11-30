@@ -1,19 +1,11 @@
 .Login {
   background-color: white;
 }
-
-.Login-Form-Container-For-SignUp {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 94vh;
-}
-
 .Login-Form-Container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 94vh;
+  height: 50rem;
 }
 
 .Login-Form {

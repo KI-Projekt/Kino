@@ -3,7 +3,6 @@ import './App.css';
 import Footer from "./components/Footer";
 import ImpressumView from "./views/ImpressumView";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Login from './components/Login';
 import Header from './components/Header';
 import OverviewView from './views/OverviewView';
 import SignUp from './components/SignUp';
@@ -11,10 +10,15 @@ import { Box, Container, createTheme, ThemeProvider, Toolbar } from '@mui/materi
 import OpeningHoursView from './views/OpeningHoursView';
 import TicketPricesView from './views/TicketPricesView';
 import LoginView from "./views/LoginView";
+import PersonalData from "./components/PaymentDetailsView/PersonalData";
 
 export const redTheme = createTheme({
+  
   palette: {
     mode: 'light',
+    common: {
+    black: '#1D1E2A',
+    },
     primary: {
       main: '#ED254E',
       contrastText: '#1D1E2A',
@@ -22,7 +26,16 @@ export const redTheme = createTheme({
     secondary: {
       main: '#1D1E2A',
     },
+    text: {
+      primary: '#1D1E2A',
+    },
   },
+  typography: {
+    fontFamily: ["Monospace","Roboto", "Helvetica", "Arial", "sans-serif"].join(','),
+    h3: {
+      //fontWeight: 800
+    },
+  }
 });
 
 function App() {
@@ -41,12 +54,13 @@ function App() {
                 <Route path="/signUp" element={<SignUp />} />
                 <Route path="/openingHours" element={<OpeningHoursView />} />
                 <Route path="/ticketPrices" element={<TicketPricesView />} />
+                <Route path="/test/personalData" element={<PersonalData />} />
               </Routes>
             </Box>
           </Container>
+          <Footer />
         </BrowserRouter>
       </ThemeProvider >
-      <Footer />
     </div>
   );
 }
