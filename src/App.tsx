@@ -10,6 +10,7 @@ import SignUp from './components/SignUp';
 import { Box, Container, createTheme, ThemeProvider, Toolbar } from '@mui/material';
 import OpeningHoursView from './views/OpeningHoursView';
 import TicketPricesView from './views/TicketPricesView';
+import LoginView from "./views/LoginView";
 
 export const redTheme = createTheme({
   palette: {
@@ -36,7 +37,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<OverviewView />} />
                 <Route path="/impressum" element={<ImpressumView />} />
-                <Route path="/signIn" element={<Login />} />
+                <Route path="/signIn" element={<LoginView />} />
                 <Route path="/signUp" element={<SignUp />} />
                 <Route path="/openingHours" element={<OpeningHoursView />} />
                 <Route path="/ticketPrices" element={<TicketPricesView />} />

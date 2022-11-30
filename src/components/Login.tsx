@@ -4,19 +4,13 @@ import '../styles/Login.css';
 import {Visibility, VisibilityOff} from '@mui/icons-material';
 
 interface State {
-  amount: string;
   password: string;
-  weight: string;
-  weightRange: string;
   showPassword: boolean;
 }
 
 function Login() {
   const [values, setValues] = React.useState<State>({
-    amount: '',
     password: '',
-    weight: '',
-    weightRange: '',
     showPassword: false,
   });
 
@@ -37,8 +31,6 @@ function Login() {
   };
 
   return (
-    <div className="Login-Form-Container">
-      <div className="Login-Form">
         <div className="Login-Form-Content">
           <h3 className="Login-Form-Title">Sign In</h3>
           <div className="Text-Center">
@@ -88,8 +80,6 @@ function Login() {
             </Button>
           </Box>
         </div>
-      </div>
-    </div>
   )
 }
 
