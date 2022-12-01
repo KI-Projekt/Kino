@@ -3,7 +3,6 @@ import '../../styles/Login.css';
 import { Button, Box, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-
 interface State {
   password: string;
   repeatedPassword: string;

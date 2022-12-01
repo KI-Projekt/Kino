@@ -1,21 +1,14 @@
-import { VisibilityOff, Visibility } from "@mui/icons-material";
-import { Box, TextField, Button, Typography, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, Tab, Tabs, useTheme } from "@mui/material";
+import { Box, Typography, Tab, Tabs, useTheme } from "@mui/material";
 import React from "react"
 import Login from '../Login/LoginForm'
+import SignUpForm from "../Login/SignUpForm";
+import PersonalDataGuestUser from "./PersonalDataGuestUser";
 
 interface TabPanelProps {
     children?: React.ReactNode;
     dir?: string;
     index: number;
     value: number;
-}
-interface State {
-    password: string;
-    showPassword: boolean;
-    signUpPassword: string;
-    showSignUpPassword: boolean;
-    repeatedSignUpPassword: string;
-    showRepeatedSignUpPassword: boolean;
 }
 
 function TabPanel(props: TabPanelProps) {
@@ -53,55 +46,9 @@ function PersonalData() {
         setValue(newValue);
     };
 
-    const guestMode = "guest";
-    const signInMode = "signIn";
-    const signUpMode = "signUp";
-
-    //for Login
-    const [values, setValues] = React.useState<State>({
-        password: '',
-        showPassword: false,
-        signUpPassword: '',
-        showSignUpPassword: false,
-        repeatedSignUpPassword: '',
-        showRepeatedSignUpPassword: false,
-    });
-
-    const handleChange =
-        (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-            setValues({ ...values, [prop]: event.target.value });
-        };
-
-    const handleClickShowPassword = () => {
-        setValues({
-            ...values,
-            showPassword: !values.showPassword,
-        });
-    };
-
-    const handleClickShowSignUpPassword = (isRepeated: boolean) => {
-        isRepeated ? setValues({
-            ...values,
-            showRepeatedSignUpPassword: !values.showRepeatedSignUpPassword,
-        })
-            :
-            setValues({
-                ...values,
-                showSignUpPassword: !values.showSignUpPassword,
-            });
-    };
-
-    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-    };
-
-    const handleChangeSignUpPassword =
-        (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-            setValues({ ...values, [prop]: event.target.value });
-        };
-
     return (
         <Box sx={{ bgcolor: 'background.paper', width: '100%' }} alignItems='center'>
+            <Typography variant="h4" sx={{p: 3, paddingLeft:'5rem'}}>Personal Data</Typography>
             <Tabs
                 value={value}
                 onChange={handleChangeTabs}
@@ -116,124 +63,13 @@ function PersonalData() {
                 <Tab label="Sign Up" {...a11yProps(2)} />
             </Tabs>
             <TabPanel value={value} index={0} dir={theme.direction}>
-                <div className="Login-Form-Content">
-                    <Box
-                        component="form"
-                        sx={{
-                            '& .MuiTextField-root': { m: 0.5, width: '100%' },
-                        }}
-                        noValidate
-                        autoComplete="off"
-                    >
-                        <TextField
-                            required
-                            type="text"
-                            placeholder="Jane"
-                            label="First Name"
-                        />
-
-                        <TextField
-                            required
-                            type="text"
-                            placeholder="Doe"
-                            label="Surname"
-                        />
-
-                        <TextField
-                            required
-                            type="email"
-                            placeholder="Jane.doe@example.com"
-                            label="Email Address"
-                        />
-                    </Box>
-                </div>
+                <PersonalDataGuestUser />
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
-                <Login></Login>
+                <Login />
             </TabPanel>
             <TabPanel value={value} index={2} dir={theme.direction}>
-                <div className="Login-Form-Content">
-                    <Box
-                        component="form"
-                        sx={{
-                            '& .MuiTextField-root': { m: 0.5, width: '100%' },
-                        }}
-                        noValidate
-                        autoComplete="off"
-                    >
-                        <TextField
-                            required
-                            type="text"
-                            className="Form-Login-Input"
-                            placeholder="Jane"
-                            label="First Name"
-                        />
-
-                        <TextField
-                            required
-                            type="text"
-                            className="Form-Login-Input"
-                            placeholder="Doe"
-                            label="Surname"
-                        />
-
-                        <TextField
-                            required
-                            type="email"
-                            className="Form-Login-Input"
-                            placeholder="Jane.doe@example.com"
-                            label="Email Address"
-                        />
-
-                        <FormControl sx={{ m: 0.5, width: '100%' }} variant="outlined">
-                            <InputLabel htmlFor="outlined-adornment-password">Password *</InputLabel>
-                            <OutlinedInput
-                                id="outlined-adornment-password"
-                                type={values.showSignUpPassword ? 'text' : 'password'}
-                                value={values.signUpPassword}
-                                onChange={handleChangeSignUpPassword('signUpPassword')}
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={() => handleClickShowSignUpPassword(false)}
-                                            onMouseDown={handleMouseDownPassword}
-                                            edge="end"
-                                        >
-                                            {values.showSignUpPassword ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                }
-                                label="signUpPassword"
-                            />
-                        </FormControl>
-                        <FormControl sx={{ m: 0.5, width: '100%' }} variant="outlined">
-                            <InputLabel htmlFor="outlined-adornment-password">Repeat Password *</InputLabel>
-                            <OutlinedInput
-                                id="outlined-adornment-password"
-                                type={values.showRepeatedSignUpPassword ? 'text' : 'password'}
-                                value={values.repeatedSignUpPassword}
-                                onChange={handleChangeSignUpPassword('repeatedSignUpPassword')}
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={() => handleClickShowSignUpPassword(true)}
-                                            onMouseDown={handleMouseDownPassword}
-                                            edge="end"
-                                        >
-                                            {values.showRepeatedSignUpPassword ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                }
-                                label="Repeat signUpPassword"
-                            />
-                        </FormControl>
-                    </Box>
-                    <div className="d-grid gap-2 mt-3">
-                        <Button sx={{ m: 0.5, width: '100%' }} variant="contained">Sign Up</Button>
-                    </div>
-                </div>
+                <SignUpForm />
             </TabPanel>
         </Box>
     );

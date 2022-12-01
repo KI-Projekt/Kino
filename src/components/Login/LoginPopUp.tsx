@@ -9,7 +9,7 @@ function LoginPopUp() {
       <div className="Login-Form-Content">
         <h3 className="Login-Form-Title">Sign In</h3>
         <div className="Text-Center">
-          Not registered yet? <Link href={`/signUp`}>Sign Up</Link>
+          Not registered yet? <Link href={`/login`}>Sign Up</Link>
         </div>
       </div>
       <Login />
