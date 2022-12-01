@@ -1,7 +1,7 @@
 import { VisibilityOff, Visibility } from "@mui/icons-material";
-import { Box, TextField, Button, Typography, FormControl, IconButton, InputAdornment, InputLabel, Link, OutlinedInput, ButtonGroup, AppBar, Tab, Tabs, useTheme } from "@mui/material";
-import React, { useState } from "react"
-import Login from "../Login";
+import { Box, TextField, Button, Typography, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, Tab, Tabs, useTheme } from "@mui/material";
+import React from "react"
+import Login from '../Login/LoginForm'
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -45,9 +45,7 @@ function a11yProps(index: number) {
     };
 }
 
-
-
-export default function FullWidthTabs() {
+function PersonalData() {
     const theme = useTheme();
     const [value, setValue] = React.useState(0);
 
@@ -103,215 +101,142 @@ export default function FullWidthTabs() {
         };
 
     return (
-        <Box sx={{ bgcolor: 'background.paper', width: 500 }}>
-            <AppBar position="static">
-                <Tabs
-                    value={value}
-                    onChange={handleChangeTabs}
-                    indicatorColor="secondary"
-                    textColor="inherit"
-                    variant="fullWidth"
-                    aria-label="full width tabs example"
-                >
-                    <Tab label="Without Account" {...a11yProps(0)} />
-                    <Tab label="Sign In" {...a11yProps(1)} />
-                    <Tab label="Sign Up" {...a11yProps(2)} />
-                </Tabs>
-            </AppBar>
-            <TabPanel value={value} index={0} dir={theme.direction}>
-            <div className="Login-Form-Content">
-            <Box
-                component="form"
-                sx={{
-                    '& .MuiTextField-root': { m: 0.5, width: '100%' },
-                }}
-                noValidate
-                autoComplete="off"
+        <Box sx={{ bgcolor: 'background.paper', width: '100%' }} alignItems='center'>
+            <Tabs
+                value={value}
+                onChange={handleChangeTabs}
+                indicatorColor="secondary"
+                textColor="inherit"
+                variant="fullWidth"
+                aria-label="full width tabs example"
+                centered
             >
-                <TextField
-                    required
-                    type="text"
-                    placeholder="Jane"
-                    label="First Name"
-                />
+                <Tab label="Without Account" {...a11yProps(0)} />
+                <Tab label="Sign In" {...a11yProps(1)} />
+                <Tab label="Sign Up" {...a11yProps(2)} />
+            </Tabs>
+            <TabPanel value={value} index={0} dir={theme.direction}>
+                <div className="Login-Form-Content">
+                    <Box
+                        component="form"
+                        sx={{
+                            '& .MuiTextField-root': { m: 0.5, width: '100%' },
+                        }}
+                        noValidate
+                        autoComplete="off"
+                    >
+                        <TextField
+                            required
+                            type="text"
+                            placeholder="Jane"
+                            label="First Name"
+                        />
 
-                <TextField
-                    required
-                    type="text"
-                    placeholder="Doe"
-                    label="Surname"
-                />
+                        <TextField
+                            required
+                            type="text"
+                            placeholder="Doe"
+                            label="Surname"
+                        />
 
-                <TextField
-                    required
-                    type="email"
-                    placeholder="Jane.doe@example.com"
-                    label="Email Address"
-                />
-            </Box>
-        </div>
+                        <TextField
+                            required
+                            type="email"
+                            placeholder="Jane.doe@example.com"
+                            label="Email Address"
+                        />
+                    </Box>
+                </div>
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
-            <div className="Login-Form-Content">
-                <Box
-                    component="form"
-                    sx={{
-                        '& .MuiTextField-root': { m: 0.5, width: '100%' },
-                    }}
-                    noValidate
-                    autoComplete="off"
-                >
-
-                    <TextField
-                        type="email"
-                        className="Form-Login-Input"
-                        placeholder="Jane.doe@example.com"
-                        label="Email Address"
-                    />
-                    <FormControl sx={{ m: 0.5, width: '100%' }} variant="outlined">
-                        <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-                        <OutlinedInput
-                            id="outlined-adornment-password"
-                            type={values.showPassword ? 'text' : 'password'}
-                            value={values.password}
-                            onChange={handleChange('password')}
-                            endAdornment={
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
-                                        onMouseDown={handleMouseDownPassword}
-                                        edge="end"
-                                    >
-                                        {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                                    </IconButton>
-                                </InputAdornment>
-                            }
-                            label="Password"
-                        />
-                    </FormControl>
-                    <Button
-                        sx={{ m: 0.5, width: '100%' }}
-                        variant="contained"
-                    >
-                        Sign In
-                    </Button>
-                </Box>
-            </div>
+                <Login></Login>
             </TabPanel>
             <TabPanel value={value} index={2} dir={theme.direction}>
-            <div className="Login-Form-Content">
-                <Box
-                    component="form"
-                    sx={{
-                        '& .MuiTextField-root': { m: 0.5, width: '100%' },
-                    }}
-                    noValidate
-                    autoComplete="off"
-                >
-                    <TextField
-                        required
-                        type="text"
-                        className="Form-Login-Input"
-                        placeholder="Jane"
-                        label="First Name"
-                    />
-
-                    <TextField
-                        required
-                        type="text"
-                        className="Form-Login-Input"
-                        placeholder="Doe"
-                        label="Surname"
-                    />
-
-                    <TextField
-                        required
-                        type="email"
-                        className="Form-Login-Input"
-                        placeholder="Jane.doe@example.com"
-                        label="Email Address"
-                    />
-
-                    <FormControl sx={{ m: 0.5, width: '100%' }} variant="outlined">
-                        <InputLabel htmlFor="outlined-adornment-password">Password *</InputLabel>
-                        <OutlinedInput
-                            id="outlined-adornment-password"
-                            type={values.showSignUpPassword ? 'text' : 'password'}
-                            value={values.signUpPassword}
-                            onChange={handleChangeSignUpPassword('signUpPassword')}
-                            endAdornment={
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={() => handleClickShowSignUpPassword(false)}
-                                        onMouseDown={handleMouseDownPassword}
-                                        edge="end"
-                                    >
-                                        {values.showSignUpPassword ? <VisibilityOff /> : <Visibility />}
-                                    </IconButton>
-                                </InputAdornment>
-                            }
-                            label="signUpPassword"
+                <div className="Login-Form-Content">
+                    <Box
+                        component="form"
+                        sx={{
+                            '& .MuiTextField-root': { m: 0.5, width: '100%' },
+                        }}
+                        noValidate
+                        autoComplete="off"
+                    >
+                        <TextField
+                            required
+                            type="text"
+                            className="Form-Login-Input"
+                            placeholder="Jane"
+                            label="First Name"
                         />
-                    </FormControl>
-                    <FormControl sx={{ m: 0.5, width: '100%' }} variant="outlined">
-                        <InputLabel htmlFor="outlined-adornment-password">Repeat Password *</InputLabel>
-                        <OutlinedInput
-                            id="outlined-adornment-password"
-                            type={values.showRepeatedSignUpPassword ? 'text' : 'password'}
-                            value={values.repeatedSignUpPassword}
-                            onChange={handleChangeSignUpPassword('repeatedSignUpPassword')}
-                            endAdornment={
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={() => handleClickShowSignUpPassword(true)}
-                                        onMouseDown={handleMouseDownPassword}
-                                        edge="end"
-                                    >
-                                        {values.showRepeatedSignUpPassword ? <VisibilityOff /> : <Visibility />}
-                                    </IconButton>
-                                </InputAdornment>
-                            }
-                            label="Repeat signUpPassword"
+
+                        <TextField
+                            required
+                            type="text"
+                            className="Form-Login-Input"
+                            placeholder="Doe"
+                            label="Surname"
                         />
-                    </FormControl>
-                </Box>
-                <div className="d-grid gap-2 mt-3">
-                    <Button sx={{ m: 0.5, width: '100%' }} variant="contained">Sign Up</Button>
+
+                        <TextField
+                            required
+                            type="email"
+                            className="Form-Login-Input"
+                            placeholder="Jane.doe@example.com"
+                            label="Email Address"
+                        />
+
+                        <FormControl sx={{ m: 0.5, width: '100%' }} variant="outlined">
+                            <InputLabel htmlFor="outlined-adornment-password">Password *</InputLabel>
+                            <OutlinedInput
+                                id="outlined-adornment-password"
+                                type={values.showSignUpPassword ? 'text' : 'password'}
+                                value={values.signUpPassword}
+                                onChange={handleChangeSignUpPassword('signUpPassword')}
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={() => handleClickShowSignUpPassword(false)}
+                                            onMouseDown={handleMouseDownPassword}
+                                            edge="end"
+                                        >
+                                            {values.showSignUpPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                                label="signUpPassword"
+                            />
+                        </FormControl>
+                        <FormControl sx={{ m: 0.5, width: '100%' }} variant="outlined">
+                            <InputLabel htmlFor="outlined-adornment-password">Repeat Password *</InputLabel>
+                            <OutlinedInput
+                                id="outlined-adornment-password"
+                                type={values.showRepeatedSignUpPassword ? 'text' : 'password'}
+                                value={values.repeatedSignUpPassword}
+                                onChange={handleChangeSignUpPassword('repeatedSignUpPassword')}
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={() => handleClickShowSignUpPassword(true)}
+                                            onMouseDown={handleMouseDownPassword}
+                                            edge="end"
+                                        >
+                                            {values.showRepeatedSignUpPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                                label="Repeat signUpPassword"
+                            />
+                        </FormControl>
+                    </Box>
+                    <div className="d-grid gap-2 mt-3">
+                        <Button sx={{ m: 0.5, width: '100%' }} variant="contained">Sign Up</Button>
+                    </div>
                 </div>
-            </div>
             </TabPanel>
         </Box>
     );
 }
 
-
-/* 
-
-
-
-function PersonalData() {
-    
-
-
-    if (personalDataMode === signInMode) {
-        return (
-            
-        )
-    }
-
-    if (personalDataMode === signUpMode) {
-        return (
-           
-        )
-    }
-
-    return (
-        
-    )
-
-}
-
-export default PersonalData; */
+export default PersonalData; 

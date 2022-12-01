@@ -1,6 +1,6 @@
 import React from "react"
 import '../styles/Login.css';
-import Login from "../components/Login";
+import Login from "../components/Login/LoginPopUp";
 
 function LoginView() {
     return (

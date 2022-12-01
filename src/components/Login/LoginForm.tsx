@@ -1,6 +1,6 @@
-import { Box, Button, FormControl, IconButton, InputAdornment, InputLabel, Link, OutlinedInput, TextField } from "@mui/material";
+import { Box, Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from "@mui/material";
 import React from "react"
-import '../styles/Login.css';
+import '../../styles/Login.css';
 import {Visibility, VisibilityOff} from '@mui/icons-material';
 
 interface State {
@@ -32,10 +32,6 @@ function Login() {
 
   return (
         <div className="Login-Form-Content">
-          <h3 className="Login-Form-Title">Sign In</h3>
-          <div className="Text-Center">
-            Not registered yet? <Link href={`/signUp`}>Sign Up</Link>
-          </div>
           <Box
             component="form"
             sx={{

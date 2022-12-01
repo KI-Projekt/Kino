@@ -5,7 +5,7 @@ import ImpressumView from "./views/ImpressumView";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
 import OverviewView from './views/OverviewView';
-import SignUp from './components/SignUp';
+import SignUp from './components/Login/SignUp';
 import { Box, Container, createTheme, ThemeProvider, Toolbar } from '@mui/material';
 import OpeningHoursView from './views/OpeningHoursView';
 import TicketPricesView from './views/TicketPricesView';
