@@ -32,7 +32,7 @@ function App() {
           <Header></Header>
           <Toolbar />
           <Container maxWidth="lg">
-            <Box className='App-Box' sx={{ height: '95vh' }} >
+            <Box className='App-Box' >
               <Routes>
                 <Route path="/" element={<OverviewView />} />
                 <Route path="/impressum" element={<ImpressumView />} />
@@ -46,7 +46,7 @@ function App() {
         </BrowserRouter>
       </ThemeProvider >
       <Footer />
-    </div>
+    </div >
   );
 }
 
