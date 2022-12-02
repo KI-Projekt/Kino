@@ -5,7 +5,6 @@ import SignUpForm from "./SignUpForm";
 
 function SignUp() {
   return (
-    <div>
       <div className="Login-Form-Container">
         <div className="Login-Form">
           <div className="Login-Form-Content">
@@ -17,7 +16,6 @@ function SignUp() {
           </div>
         </div>
       </div>
-    </div>
   )
 }
 
