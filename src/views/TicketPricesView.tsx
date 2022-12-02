@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles';
-import { TableCell, tableCellClasses, TableRow, TableContainer, Paper, Table, TableHead, TableBody, Container, Typography, Button, ToggleButton, ToggleButtonGroup, TextField, FormControlLabel, Switch } from '@mui/material';
+import { TableCell, tableCellClasses, TableRow, TableContainer, Paper, Table, TableHead, TableBody, Container, Typography, TextField, FormControlLabel, Switch } from '@mui/material';
 import * as React from 'react';
 import { redTheme } from '../App';
 
@@ -48,21 +48,14 @@ function TicketPrices() {
     });
 
     const handleChangeAdminMode = (
-         event: React.ChangeEvent<HTMLInputElement>,
+        event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         setValues({
             ...values,
             isAdmin: event.target.checked,
         });
-        console.log(values)
+        console.log(values.isAdmin)
     };
-
-    function TableContent() {
-        if (values.isAdmin)
-            return (
-                <TextField variant="outlined"></TextField>
-            )
-    }
 
     return (
         <Container maxWidth='md' >
@@ -72,7 +65,13 @@ function TicketPrices() {
                     <TableHead >
                         <TableRow >
                             <StyledTableCell >Ticket Category</StyledTableCell>
-                            <StyledTableCell align="right">Price</StyledTableCell>
+                            {!values.isAdmin && (
+                                <StyledTableCell align="right" >Price</StyledTableCell>
+                            )}
+                            {values.isAdmin && (
+                                <StyledTableCell align="right" >Price in €</StyledTableCell>
+                            )}
+
                             <StyledTableCell align="right">Condition</StyledTableCell>
                         </TableRow>
                     </TableHead>
@@ -82,14 +81,30 @@ function TicketPrices() {
                                 <StyledTableCell component="th" scope="row">
                                     {row.name}
                                 </StyledTableCell>
-                                <StyledTableCell align="right">{row.price} €</StyledTableCell>
-                                <StyledTableCell align="right">{row.condition}</StyledTableCell>
+                                <StyledTableCell align="right">
+                                    {!values.isAdmin && (
+                                        <Typography>{row.price} €</Typography>
+                                    )}
+                                    {values.isAdmin && (
+                                        <div>
+                                            <TextField variant='outlined' defaultValue={row.price} label={`Price for ${row.name}`} />
+                                        </div>
+                                    )}
+                                </StyledTableCell>
+                                <StyledTableCell align="right">
+                                    {!values.isAdmin && (
+                                        <Typography>{row.condition}</Typography>
+                                    )}
+                                    {values.isAdmin && (
+                                        <TextField variant='outlined' defaultValue={row.condition} label={`Condition for ${row.name}`} />
+                                    )}
+                                </StyledTableCell>
                             </StyledTableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
-            <FormControlLabel control={<Switch checked={values.isAdmin} onChange={handleChangeAdminMode} />} label="Admin" />
+            <FormControlLabel control={<Switch onChange={handleChangeAdminMode} />} label="Admin" />
         </Container>
     );
 }
