@@ -1,9 +1,9 @@
-import { Link } from '@mui/material';
 import * as React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../../styles/OverviewView.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import LocalActivityIcon from '@mui/icons-material/LocalActivity';
+import { Button } from '@mui/material';
 
 interface MovieProps {
     picture: string,
@@ -12,19 +12,14 @@ interface MovieProps {
 
 function MovieTile(props: MovieProps) {
 
-    const onMovieTileClick = () => {
-
-    }
-
+    const navigate = useNavigate()
 
     return (
         <div className='image-container d-flex justify-content-start m-3'>
-                <Link href={`/movieDetails/${props.imdbID}`} underline='none'>
-                    <img src={props.picture} alt="movie" className='Movie-Tile'/>
-                </Link>
-                <Routes>
-                    <Route path={`/movieDetails/${props.imdbID}`} />
-                </Routes>
+            <img src={props.picture} alt="movie" className='Movie-Tile' />
+            <div className="overlay d-flex align-items-center justify-content-center" >
+                <Button startIcon={<LocalActivityIcon />} onClick={() => { navigate(`/movieDetails/${props.imdbID}`) }}>Tickets</Button>
+            </div>
         </div>
     );
 }

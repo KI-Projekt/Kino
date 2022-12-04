@@ -5,7 +5,11 @@ function OverviewView() {
 
 
     return (
-        <TileBar />
+        <div>
+            <TileBar title='Star Wars' query='Star Wars' />
+            <TileBar title='Marvel' query='Marvel' />
+            <TileBar title='Harry Potter' query='Harry Potter' />
+        </div>
     );
 }
 
