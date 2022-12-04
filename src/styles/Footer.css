@@ -1,0 +1,29 @@
+.Footer-Box{
+    color: #F4FFFD;
+    background-color: #A5A5A5;
+    padding-top: 0.5rem;
+    position: static;
+    bottom: 0;
+    width: 100%;
+    padding-bottom: 0.5rem;
+
+}
+
+.Footer{
+    width: 100vw;
+}
+
+.Footer-Link{
+    padding: 0.1rem;
+}
+
+.Lowest-Footer-Box{
+    color: #7F7F7F;
+    padding-top: 0.2rem;
+}
+
+.Footer-Icons{
+    padding-left: 0.4rem;
+    padding-right: 0.2rem;
+    padding-bottom: 0.1rem;
+}
