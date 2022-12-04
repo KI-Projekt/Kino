@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { fetchOMDbAPI } from '../../queries/fetchOMDbAPI';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MovieTile from '../../components/OverviewView/MovieTile';
@@ -22,7 +22,7 @@ function TileBar(props: TilebarProps) {
 
     useEffect(() => {
         fetchOMDbAPI(props.query).then((result) => { setMovies(result.Search) })
-    }, []);
+    });
 
     return (
         <>
