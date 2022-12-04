@@ -22,7 +22,7 @@ function MovieDetailsView() {
     if (selectedMovie) {
         return (
             <div className='row'>
-                <Card sx={{ maxWidth: 345, minWidth: 345, marginLeft: "1rem", marginRight: "2rem", marginBottom: "1rem" }}>
+                <Card sx={{ maxWidth: "21.5rem", minWidth: "21.5rem", marginLeft: "1rem", marginRight: "2rem", marginBottom: "1rem" }}>
                     <CardMedia
                         component="img"
                         alt="movie poster"
@@ -39,7 +39,7 @@ function MovieDetailsView() {
                         </Typography>
                     </CardContent>
                 </Card>
-                <Card sx={{ maxWidth: 345, minWidth: 345, maxHeight: 300, marginLeft: "1rem", marginRight: "2rem", overflowY: 'auto' }}>
+                <Card sx={{ maxWidth: "21.5rem", minWidth: "21.5rem", maxHeight: "18rem", marginLeft: "1rem", marginRight: "2rem", overflowY: 'auto' }}>
                     <Typography gutterBottom variant="h6" component="div">
                         Synopsis: <br />
                     </Typography>

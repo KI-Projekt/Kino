@@ -28,6 +28,7 @@ export const redTheme = createTheme({
     },
     text: {
       primary: '#1D1E2A',
+      secondary: '#7F7F7F'
     },
   },
   typography: {
