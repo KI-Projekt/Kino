@@ -1,23 +1,19 @@
-import * as React from 'react';
-import { Component } from 'react';
+import React, { Component } from 'react';
+import TileBar from '../components/OverviewView/Tilebar';
 
-interface Props {
-    
+function OverviewView() {
+
+
+    return (
+        <div>
+            <TileBar title='Star Wars' query='Star Wars' />
+            <TileBar title='Marvel' query='Marvel' />
+            <TileBar title='Harry Potter' query='Harry Potter' />
+        </div>
+    );
 }
- 
-interface State {
-    
-}
- 
-class OverviewView extends React.Component<Props, State> {
-    //state = { :  }
-    render() { 
-        return ( 
-            <div>
-                
-            </div>
-         );
-    }
-}
- 
+
+
 export default OverviewView;
+
+

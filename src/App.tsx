@@ -8,6 +8,7 @@ import OverviewView from './views/OverviewView';
 import { Box, Container, createTheme, ThemeProvider, Toolbar } from '@mui/material';
 import OpeningHoursView from './views/OpeningHoursView';
 import TicketPricesView from './views/TicketPricesView';
+import MovieDetailsView from './views/MovieDetailsView';
 import LoginView from "./views/LoginView";
 import PersonalData from "./components/PaymentDetailsView/PersonalData";
 
@@ -27,6 +28,7 @@ export const redTheme = createTheme({
     },
     text: {
       primary: '#1D1E2A',
+      secondary: '#7F7F7F'
     },
   },
   typography: {
@@ -39,16 +41,17 @@ function App() {
     <div>
       <ThemeProvider theme={redTheme}>
         <BrowserRouter>
-          <Header></Header>
+          <Header />
           <Toolbar />
           <Container maxWidth="lg">
-            <Box className='App-Box' sx={{ height: '95vh' }} >
+            <Box className='App-Box' sx={{ minHeight: '95vh' }} >
               <Routes>
                 <Route path="/" element={<OverviewView />} />
                 <Route path="/impressum" element={<ImpressumView />} />
                 <Route path="/login" element={<LoginView />} />
                 <Route path="/openingHours" element={<OpeningHoursView />} />
                 <Route path="/ticketPrices" element={<TicketPricesView />} />
+                <Route path="/movieDetails/:imdbID"  element={<MovieDetailsView />}/>
 
                 {/* //TestComponents */}
                 <Route path="/test/personalData" element={<PersonalData />} />
