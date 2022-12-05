@@ -7,7 +7,6 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 export default function Footer() {
   return (
-    <div>
       <Box className="Footer-Box">
         <Container className="footerContainer" sx={{ width: "100%" }}>
           <Grid
@@ -92,6 +91,5 @@ export default function Footer() {
           </Grid>
         </Container>
       </Box>
-    </div>
   );
 }
