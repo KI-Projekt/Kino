@@ -17,12 +17,11 @@ interface TilebarProps {
 }
 
 function TileBar(props: TilebarProps) {
-
     const [movies, setMovies] = useState([])
 
     useEffect(() => {
         fetchOMDbAPI(props.query).then((result) => { setMovies(result.Search) })
-    });
+    }, [props.query]);
 
     return (
         <>
