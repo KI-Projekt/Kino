@@ -104,7 +104,7 @@ function TicketPrices() {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <FormControlLabel control={<Switch onChange={handleChangeAdminMode} />} label="Admin" />
+            {/* <FormControlLabel control={<Switch onChange={handleChangeAdminMode} />} label="Admin" /> */}
         </Container>
     );
 }
