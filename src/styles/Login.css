@@ -1,49 +1,41 @@
-
 .Login {
-    background-color: white;
-  }
-  
-  .Login-Form-Container-For-SignUp {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 94vh; 
-  }
-  
-  .Login-Form-Container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  background-color: white;
+}
+.Login-Form-Container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50rem;
+}
 
-  .Login-Form {
-    display: flex;
-    width: 26.25rem;
-    box-shadow: rgb(0 0 0 / 16%) 0.063rem 0.063rem 0.625rem;
-    padding-top: 1.8rem;
-    padding-bottom: 1.25rem;
-    border-radius: 0.5rem;
-    background-color: white;
-  }
-  
-  .Login-Form-Content {
-    padding-left: 3rem;
-    padding-right: 3rem;
-  }
-  
-  .Login-Form-Title {
-    text-align: center;
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-    color: rgb(34, 34, 34);
-    font-weight: 800;
-  }
+.Login-Form {
+  display: flex;
+  width: 26.25rem;
+  box-shadow: rgb(0 0 0 / 16%) 0.063rem 0.063rem 0.625rem;
+  padding-top: 1.8rem;
+  padding-bottom: 1.25rem;
+  border-radius: 0.5rem;
+  background-color: white;
+}
 
-  .Form-Login-Input {
-    width: 100%;
-    margin-bottom: 1rem;
-  }
+.Login-Form-Content {
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
 
-  .Text-Center {
-    margin-bottom: 0.5rem;
-  }
+.Login-Form-Title {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: rgb(34, 34, 34);
+  font-weight: 800;
+}
+
+.Form-Login-Input {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.Text-Center {
+  margin-bottom: 0.5rem;
+}
