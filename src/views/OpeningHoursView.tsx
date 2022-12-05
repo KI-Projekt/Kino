@@ -88,13 +88,13 @@ function OpeningHours() {
                                         <Typography>{row.openingHoursStart} - {row.openingHoursEnd}</Typography>
                                     )}
                                     {values.isAdmin && (
-                                        <TextField variant='outlined' defaultValue={row.openingHoursStart} /* label={`Condition for ${row.name}`} */ />
+                                        <TextField variant='outlined' defaultValue={row.openingHoursStart} />
                                     )}
 
                                 </StyledTableCell>
                                 {values.isAdmin && (
                                     <StyledTableCell align="right">
-                                        <TextField variant='outlined' defaultValue={row.openingHoursEnd} /* label={`Condition for ${row.name}`} */ />
+                                        <TextField variant='outlined' defaultValue={row.openingHoursEnd} />
                                     </StyledTableCell>
                                 )}
 
