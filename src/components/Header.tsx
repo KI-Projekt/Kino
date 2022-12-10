@@ -15,7 +15,9 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import CinetastischHorizontal from '../img/Cinetastisch_horizontal.png';
 
 interface AppBarProps extends MuiAppBarProps {
-  open?: boolean;
+  open?: boolean,
+  handleMenuOpen: Function,
+  handleMenuClose: Function,
 }
 
 const Search = styled('div')(({ theme }) => ({
@@ -86,10 +88,9 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
-function Header() {
+function Header(props: AppBarProps) {
   const [anchorElProfile, setAnchorElProfile] = React.useState<null | HTMLElement>(null);
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
 
   const isProfileMenuOpen = Boolean(anchorElProfile);
 
@@ -102,14 +103,6 @@ function Header() {
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElProfile(event.currentTarget);
-  };
-
-  const handleMenuOpen = () => {
-    setOpen(true);
-  };
-
-  const handleMenuClose = () => {
-    setOpen(false);
   };
 
   const handleProfileMenuClose = () => {
@@ -163,7 +156,7 @@ function Header() {
       }}
       variant="persistent"
       anchor="left"
-      open={open}
+      open={props.open}
     >
       <DrawerHeader>
         <Typography
@@ -173,7 +166,7 @@ function Header() {
         >
           Navigation
         </Typography>
-        <IconButton onClick={handleMenuClose} sx={{ color: theme.palette.primary.contrastText }}>
+        <IconButton onClick={() => props.handleMenuClose()} sx={{ color: theme.palette.primary.contrastText }}>
           {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
         </IconButton>
       </DrawerHeader>
@@ -197,7 +190,7 @@ function Header() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={props.open} handleMenuClose={props.handleMenuClose} handleMenuOpen={props.handleMenuOpen}>
         <Toolbar>
           <IconButton
             size="large"
@@ -206,8 +199,8 @@ function Header() {
             aria-label="open menu"
             aria-controls={menuId}
             aria-haspopup="true"
-            onClick={handleMenuOpen}
-            sx={{ mr: 2, ...(open && { display: 'none' }) }}
+            onClick={() => props.handleMenuOpen()}
+            sx={{ mr: 2, ...(props.open && { display: 'none' }) }}
           >
             <MenuIcon />
           </IconButton>

@@ -5,7 +5,7 @@ import ImpressumView from "./views/ImpressumView";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
 import OverviewView from './views/OverviewView';
-import { Box, Container, createTheme, ThemeProvider, Toolbar } from '@mui/material';
+import { Box, Container, createTheme, styled, ThemeProvider, Toolbar } from '@mui/material';
 import OpeningHoursView from './views/OpeningHoursView';
 import TicketPricesView from './views/TicketPricesView';
 import MovieDetailsView from './views/MovieDetailsView';
@@ -36,15 +36,47 @@ export const redTheme = createTheme({
   }
 });
 
+const drawerWidth = 240;
+
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
+  open?: boolean;
+}>(({ theme, open }) => ({
+  flexGrow: 1,
+  padding: theme.spacing(3),
+  transition: theme.transitions.create('margin', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  marginLeft: `${drawerWidth}px`,
+  ...(open && {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 0,
+  }),
+}));
+
 function App() {
+  const [open, setOpen] = React.useState(false);
+
+  const handleMenuOpen = () => {
+    setOpen(true);
+  };
+
+  const handleMenuClose = () => {
+    setOpen(false);
+  };
+
   return (
     <div>
       <ThemeProvider theme={redTheme}>
         <BrowserRouter>
-          <Header />
+          <Header open={open} handleMenuOpen={handleMenuOpen} handleMenuClose={handleMenuClose} />
           <Toolbar />
+          <Main open={!open}>
           <Container maxWidth="lg">
-            <Box className='App-Box' sx={{ minHeight: '95vh' }} >
+            <Box className='App-Box' sx={{ minHeight: '90vh' }} >
               <Routes>
                 <Route path="/" element={<OverviewView />} />
                 <Route path="/impressum" element={<ImpressumView />} />
@@ -58,6 +90,7 @@ function App() {
               </Routes>
             </Box>
           </Container>
+          </Main>
           <Footer />
         </BrowserRouter>
       </ThemeProvider >
