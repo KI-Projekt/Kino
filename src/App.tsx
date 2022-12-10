@@ -13,11 +13,11 @@ import LoginView from "./views/LoginView";
 import PersonalData from "./components/PaymentDetailsView/PersonalData";
 
 export const redTheme = createTheme({
-  
+
   palette: {
     mode: 'light',
     common: {
-    black: '#1D1E2A',
+      black: '#1D1E2A',
     },
     primary: {
       main: '#ED254E',
@@ -32,8 +32,8 @@ export const redTheme = createTheme({
     },
   },
   typography: {
-    fontFamily: ["Monospace","Roboto", "Helvetica", "Arial", "sans-serif"].join(','),
-  }
+    fontFamily: ["Monospace", "Roboto", "Helvetica", "Arial", "sans-serif"].join(','),
+  },
 });
 
 const drawerWidth = 240;
@@ -42,18 +42,17 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
   open?: boolean;
 }>(({ theme, open }) => ({
   flexGrow: 1,
-  padding: theme.spacing(3),
   transition: theme.transitions.create('margin', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
   marginLeft: `${drawerWidth}px`,
-  ...(open && {
+  ...(!open && {
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    marginLeft: 0,
+    marginLeft: `calc(${theme.spacing(7)} + 1px)`,
   }),
 }));
 
@@ -74,22 +73,22 @@ function App() {
         <BrowserRouter>
           <Header open={open} handleMenuOpen={handleMenuOpen} handleMenuClose={handleMenuClose} />
           <Toolbar />
-          <Main open={!open}>
-          <Container maxWidth="lg">
-            <Box className='App-Box' sx={{ minHeight: '90vh' }} >
-              <Routes>
-                <Route path="/" element={<OverviewView />} />
-                <Route path="/impressum" element={<ImpressumView />} />
-                <Route path="/login" element={<LoginView />} />
-                <Route path="/openingHours" element={<OpeningHoursView />} />
-                <Route path="/ticketPrices" element={<TicketPricesView />} />
-                <Route path="/movieDetails/:imdbID"  element={<MovieDetailsView />}/>
+          <Main open={open}>
+            <Container maxWidth="xl">
+              <Box className='App-Box' sx={{ minHeight: '90vh' }} >
+                <Routes>
+                  <Route path="/" element={<OverviewView />} />
+                  <Route path="/impressum" element={<ImpressumView />} />
+                  <Route path="/login" element={<LoginView />} />
+                  <Route path="/openingHours" element={<OpeningHoursView />} />
+                  <Route path="/ticketPrices" element={<TicketPricesView />} />
+                  <Route path="/movieDetails/:imdbID" element={<MovieDetailsView />} />
 
-                {/* //TestComponents */}
-                <Route path="/test/personalData" element={<PersonalData />} />
-              </Routes>
-            </Box>
-          </Container>
+                  {/* //TestComponents */}
+                  <Route path="/test/personalData" element={<PersonalData />} />
+                </Routes>
+              </Box>
+            </Container>
           </Main>
           <Footer />
         </BrowserRouter>

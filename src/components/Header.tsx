@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { styled, alpha, useTheme } from '@mui/material/styles';
-import { Divider, Link, Menu, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, IconButton, Box, Toolbar, Typography, InputBase } from '@mui/material';
+import { styled, alpha, useTheme, Theme, CSSObject } from '@mui/material/styles';
+import { Divider, Link, Menu, List, ListItem, ListItemButton, ListItemIcon, ListItemText, IconButton, Box, Toolbar, Typography, InputBase } from '@mui/material';
+import MuiDrawer from '@mui/material/Drawer';
 import PaidIcon from '@mui/icons-material/Paid';
 import SlideshowIcon from '@mui/icons-material/Slideshow';
 import MovieIcon from '@mui/icons-material/Movie';
@@ -13,6 +14,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import Login from './Login/LoginPopUp';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import CinetastischHorizontal from '../img/Cinetastisch_horizontal.png';
+import { useNavigate } from 'react-router-dom';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean,
@@ -62,9 +64,33 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const drawerWidth = 240;
 
+const openedMixin = (theme: Theme): CSSObject => ({
+  width: drawerWidth,
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: 'hidden',
+  backgroundColor: theme.palette.primary.main,
+});
+
+const closedMixin = (theme: Theme): CSSObject => ({
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowX: 'hidden',
+  width: `calc(${theme.spacing(7)} + 1px)`,
+  [theme.breakpoints.up('sm')]: {
+    width: `calc(${theme.spacing(8)} + 1px)`,
+  },
+  backgroundColor: theme.palette.primary.main,
+});
+
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })<AppBarProps>(({ theme, open }) => ({
+  zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(['margin', 'width'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -79,6 +105,23 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
+const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+  ({ theme, open }) => ({
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+    boxSizing: 'border-box',
+    ...(open && {
+      ...openedMixin(theme),
+      '& .MuiDrawer-paper': openedMixin(theme),
+    }),
+    ...(!open && {
+      ...closedMixin(theme),
+      '& .MuiDrawer-paper': closedMixin(theme),
+    }),
+  }),
+);
+
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
@@ -90,15 +133,25 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 function Header(props: AppBarProps) {
   const [anchorElProfile, setAnchorElProfile] = React.useState<null | HTMLElement>(null);
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
   const theme = useTheme();
 
   const isProfileMenuOpen = Boolean(anchorElProfile);
 
+  function createMenuData(
+    index: number,
+    label: String,
+    link: String,
+    icon: JSX.Element,
+  ) {
+    return { index, label, link, icon }
+  }
+
   const menuData = [
-    { icon: <MovieIcon />, label: 'Movies', link: '' },
-    { icon: <SlideshowIcon />, label: 'Shows', link: 'shows' },
-    { icon: <AccessTimeIcon />, label: 'Opening hours', link: 'openingHours' },
-    { icon: <PaidIcon />, label: 'Ticket prices', link: 'ticketPrices' },
+    createMenuData(1, 'Movies', '', <MovieIcon />),
+    createMenuData(2, 'Shows', 'shows', <SlideshowIcon />),
+    createMenuData(3, 'Opening hours', 'openingHours', <AccessTimeIcon />),
+    createMenuData(4, 'Ticket prices', 'ticketPrices', <PaidIcon />),
   ];
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -109,11 +162,18 @@ function Header(props: AppBarProps) {
     setAnchorElProfile(null);
   };
 
+  const navigate = useNavigate();
+
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    label: string,
-  ) => { };
-
+    label: String,
+    link: String,
+    index: number,
+  ) => {
+    setSelectedIndex(index);
+    navigate(`/${link}`)
+    props.handleMenuClose();
+  };
 
   const menuId = 'primary-search-account-menu';
   const profileMenuId = 'primary-search-account-profile-menu';
@@ -145,16 +205,7 @@ function Header(props: AppBarProps) {
 
   const renderMenu = (
     <Drawer
-      sx={{
-        width: drawerWidth,
-        flexShrink: 0,
-        '& .MuiDrawer-paper': {
-          width: drawerWidth,
-          boxSizing: 'border-box',
-          bgcolor: theme.palette.primary.main,
-        },
-      }}
-      variant="persistent"
+      variant="permanent"
       anchor="left"
       open={props.open}
     >
@@ -173,16 +224,22 @@ function Header(props: AppBarProps) {
       <Divider />
       <List >
         {menuData.map((item) => (
-          <Link href={`/${item.link}`} underline='none' >
-            <ListItem key={item.label} disablePadding>
-              <ListItemButton onClick={(event) => handleListItemClick(event, item.label)} >
-                <ListItemIcon sx={{ color: theme.palette.primary.contrastText }}>
-                  {item.icon}
-                </ListItemIcon>
-                <ListItemText sx={{ color: theme.palette.primary.contrastText }} primary={item.label} />
-              </ListItemButton>
-            </ListItem>
-          </Link>
+          <ListItem key={item.index} disablePadding>
+            <ListItemButton
+              sx={{
+                "&.Mui-selected": {
+                  backgroundColor: "#f04265",
+                },
+              }}
+              selected={selectedIndex === item.index}
+              onClick={(event) => handleListItemClick(event, item.label, item.link, item.index)}
+            >
+              <ListItemIcon sx={{ color: theme.palette.primary.contrastText }}>
+                {item.icon}
+              </ListItemIcon>
+              <ListItemText sx={{ color: theme.palette.primary.contrastText }} primary={item.label} />
+            </ListItemButton>
+          </ListItem>
         ))}
       </List>
     </Drawer>
