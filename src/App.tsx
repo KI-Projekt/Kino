@@ -11,6 +11,7 @@ import TicketPricesView from './views/TicketPricesView';
 import MovieDetailsView from './views/MovieDetailsView';
 import LoginView from "./views/LoginView";
 import PersonalData from "./components/PaymentDetailsView/PersonalData";
+import FareSelection from "./components/TicketView/FareSelection";
 
 export const redTheme = createTheme({
 
@@ -82,11 +83,12 @@ function App() {
                   <Route path="/ticketPrices" element={<TicketPricesView />} />
                   <Route path="/movieDetails/:imdbID" element={<MovieDetailsView />} />
 
-                  {/* //TestComponents */}
-                  <Route path="/test/personalData" element={<PersonalData />} />
-                </Routes>
-              </Box>
-            </Container>
+                {/* //TestComponents */}
+                <Route path="/test/personalData" element={<PersonalData />} />
+                <Route path="/test/fareSelection" element={<FareSelection totalAmountOfTickets={2}/>} />
+              </Routes>
+            </Box>
+          </Container>
           </Main>
           <Footer />
         </BrowserRouter>
