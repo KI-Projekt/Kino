@@ -26,7 +26,7 @@ const AppBar = styled(MuiAppBar, {
   }),
   ...(open && {
     width: `calc(100% - ${drawerWidth})`,
-    marginLeft: `${drawerWidth}px`,
+    marginLeft: `${drawerWidth}`,
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
@@ -58,7 +58,7 @@ function Header(props: AppBarProps) {
           </Link>
           <SearchBar />
           <Box sx={{ flexGrow: 1 }} />
-          <ProfileMenuButton /* isProfileMenuOpen={isProfileMenuOpen} handleProfileMenuClose={handleProfileMenuClose} handleProfileMenuOpen={handleProfileMenuClose} */ />
+          <ProfileMenuButton />
         </Toolbar>
       </AppBar>
       <SideMenu open={props.open} handleMenuOpen={props.handleMenuOpen} handleMenuClose={props.handleMenuClose}/>

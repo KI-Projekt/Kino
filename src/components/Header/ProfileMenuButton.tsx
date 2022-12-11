@@ -39,7 +39,7 @@ function ProfileMenuButton() {
                     width: '20rem',
                     height: '20rem',
                 }}>
-                <Login></Login>
+                <Login />
             </Box>
         </Menu>
     );

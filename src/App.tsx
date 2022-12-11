@@ -3,7 +3,7 @@ import './App.css';
 import Footer from "./components/Footer";
 import ImpressumView from "./views/ImpressumView";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Header from './components/Header/Header';
+import Header, { drawerWidth } from './components/Header/Header';
 import OverviewView from './views/OverviewView';
 import { Box, Container, createTheme, styled, ThemeProvider, Toolbar } from '@mui/material';
 import OpeningHoursView from './views/OpeningHoursView';
@@ -36,8 +36,6 @@ export const redTheme = createTheme({
   },
 });
 
-const drawerWidth = 240;
-
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
   open?: boolean;
 }>(({ theme, open }) => ({
@@ -46,7 +44,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  marginLeft: `${drawerWidth}px`,
+  marginLeft: `${drawerWidth}`,
   ...(!open && {
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,

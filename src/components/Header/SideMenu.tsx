@@ -3,7 +3,6 @@ import { styled, Theme, CSSObject, useTheme } from "@mui/material/styles";
 import { Typography, IconButton, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import MuiDrawer from '@mui/material/Drawer';
 import { useNavigate } from "react-router-dom";
-
 import PaidIcon from '@mui/icons-material/Paid';
 import SlideshowIcon from '@mui/icons-material/Slideshow';
 import MovieIcon from '@mui/icons-material/Movie';
@@ -62,7 +61,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 function SideMenu(props: AppBarProps) {
-
     const [selectedIndex, setSelectedIndex] = React.useState(1);
     const theme = useTheme();
 
@@ -85,8 +83,6 @@ function SideMenu(props: AppBarProps) {
     const navigate = useNavigate();
 
     const handleListItemClick = (
-        event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-        label: String,
         link: String,
         index: number,
     ) => {
@@ -124,7 +120,7 @@ function SideMenu(props: AppBarProps) {
                                 },
                             }}
                             selected={selectedIndex === item.index}
-                            onClick={(event) => handleListItemClick(event, item.label, item.link, item.index)}
+                            onClick={() => handleListItemClick(item.link, item.index)}
                         >
                             <ListItemIcon sx={{ color: theme.palette.primary.contrastText }}>
                                 {item.icon}
