@@ -54,7 +54,6 @@ function TicketPrices() {
             ...values,
             isAdmin: event.target.checked,
         });
-        console.log(values.isAdmin)
     };
 
     return (
