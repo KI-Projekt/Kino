@@ -98,7 +98,6 @@ function Header() {
     { icon: <SlideshowIcon />, label: 'Shows', link: 'shows' },
     { icon: <AccessTimeIcon />, label: 'Opening hours', link: 'openingHours' },
     { icon: <PaidIcon />, label: 'Ticket prices', link: 'ticketPrices' },
-    { icon: <PaidIcon />, label: 'Fare Selection', link: 'test/fareSelection' },
   ];
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
