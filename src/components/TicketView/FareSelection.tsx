@@ -18,7 +18,7 @@ function FareSelection(props: fareSelectionProps) {
         return { id, name, price, condition, amountOfTickets };
     };
 
-    const [totalAmountOfTickets, setTotalAmountOfTickets] = useState(props.totalAmountOfTickets);
+    const totalAmountOfTickets = props.totalAmountOfTickets;
 
     const rows = [
         createData(0, 'Adults', 10.00, "", 0),
@@ -30,6 +30,13 @@ function FareSelection(props: fareSelectionProps) {
     const [fares, setFares] = useState(rows);
 
     useEffect(() => {
+        const calculateTotalAmountOfTickets = () => {
+            let totalAmountOfTickets = 0;
+            fares.forEach((row) => {
+                totalAmountOfTickets += row.amountOfTickets;
+            });
+            return totalAmountOfTickets;
+        };
         const currentTotalAmountOfTickets = calculateTotalAmountOfTickets();
         if (currentTotalAmountOfTickets !== totalAmountOfTickets) {
             const newFares = fares.map((row, id) => {
@@ -43,7 +50,7 @@ function FareSelection(props: fareSelectionProps) {
             })
             setFares(newFares);
         }
-    }, []);
+    }, [totalAmountOfTickets, fares, props.totalAmountOfTickets]);
 
     const handleRemoveTicket = (index: number) => {
         let isNumberChanged = false;
@@ -83,14 +90,6 @@ function FareSelection(props: fareSelectionProps) {
             });
             setFares(newFares);
         }
-    };
-
-    const calculateTotalAmountOfTickets = () => {
-        let totalAmountOfTickets = 0;
-        fares.forEach((row) => {
-            totalAmountOfTickets += row.amountOfTickets;
-        });
-        return totalAmountOfTickets;
     };
 
     return (
