@@ -30,6 +30,7 @@ function FareSelection(props: fareSelectionProps) {
     const [fares, setFares] = useState(rows);
 
     useEffect(() => {
+        //initial calculation of ticket amount and add everything to adult fare
         const calculateTotalAmountOfTickets = () => {
             let totalAmountOfTickets = 0;
             fares.forEach((row) => {
@@ -79,6 +80,7 @@ function FareSelection(props: fareSelectionProps) {
                 if (index === id) {
                     return { ...row, amountOfTickets: ++row.amountOfTickets, };
                 } else {
+                    //remove tickets of first fare
                     for (let i = 0; i < fares.length; i++) {
                         if ((id === i) && (row.amountOfTickets > 0) && (!isNumberChanged)) {
                             isNumberChanged = true;
