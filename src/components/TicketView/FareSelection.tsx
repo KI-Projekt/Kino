@@ -105,7 +105,7 @@ function FareSelection(props: fareSelectionProps) {
                                     <Typography>{fare.name}</Typography>
                                 </TableCell>
                                 <TableCell align='center'>
-                                    <IconButton onClick={() => handleRemoveTicket(index)}>
+                                    <IconButton onClick={() => handleRemoveTicket(index)} disabled={fare.amountOfTickets === 0}>
                                         <RemoveCircleOutlineIcon />
                                     </IconButton>
                                 </TableCell>
@@ -113,7 +113,7 @@ function FareSelection(props: fareSelectionProps) {
                                     <Typography>{fare.amountOfTickets}</Typography>
                                 </TableCell>
                                 <TableCell align='center'>
-                                    <IconButton onClick={() => handleAddTicket(index)}>
+                                    <IconButton onClick={() => handleAddTicket(index)} disabled={fare.amountOfTickets === totalAmountOfTickets}>
                                         <AddCircleOutlineIcon />
                                     </IconButton>
                                 </TableCell>
