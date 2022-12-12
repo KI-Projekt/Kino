@@ -55,7 +55,6 @@ function OpeningHours() {
             ...values,
             isAdmin: event.target.checked,
         });
-        console.log(values.isAdmin)
     };
 
     return (
