@@ -47,9 +47,9 @@ function Login() {
               label="Email Address"
             />
             <FormControl sx={{ m: 0.5, width: '100%' }} variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+              <InputLabel htmlFor="outlined-adornment-password-signIn">Password</InputLabel>
               <OutlinedInput
-                id="outlined-adornment-password"
+                id="outlined-adornment-password-signIn"
                 type={values.showPassword ? 'text' : 'password'}
                 value={values.password}
                 onChange={handleChange('password')}
