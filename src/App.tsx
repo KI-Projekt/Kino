@@ -27,9 +27,12 @@ export const redTheme = createTheme({
     secondary: {
       main: '#1D1E2A',
     },
+    info: {
+      main: '#5C95FF',
+    },
     text: {
       primary: '#1D1E2A',
-      secondary: '#7F7F7F'
+      secondary: '#7F7F7F',
     },
   },
   typography: {
