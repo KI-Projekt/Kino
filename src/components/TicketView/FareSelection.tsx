@@ -7,7 +7,7 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 interface fareSelectionProps {
     totalAmountOfTickets: number;
 }
-interface fareSelection {
+export interface fareSelection {
     id: number,
     name: string,
     price: number,

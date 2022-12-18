@@ -47,7 +47,7 @@ function PersonalData() {
     };
 
     return (
-        <Box sx={{ bgcolor: 'background.paper', width: '100%' }} alignItems='center'>
+        <Box sx={{ bgcolor: 'background.paper', maxWidth: '45rem' }} alignItems='center'>
             <Typography variant="h4" sx={{p: 3, paddingLeft:'5rem'}}>Personal Data</Typography>
             <Tabs
                 value={value}
