@@ -1,45 +1,85 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { fareSelection } from '../TicketView/FareSelection';
+import { Row } from '../../views/PaymentDetailsView';
+import { Box } from '@mui/material';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 interface OrderOverviewProps {
-  imdbID: string,
+  orderID: number,
+  movieID: number,
+  showID: number,
+  movie: string,
   picture: string,
-  movieTitle: string,
-  //fares: Array<>,
-  //seats:
+  showDate: Date,
+  room: string,
+  seats: Array<Row>,
+  fares: Array<fareSelection>,
   price: number,
 }
 
-function OrderOverview(props: OrderOverviewProps) {
-    
+function OrderOverview(prop: OrderOverviewProps) {
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: '45rem', display: 'flex' }}>
+      <Box sx={{ minWidth: '20rem', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+        <CardContent sx={{ flex: '1 0 auto' }}>
+          <Typography variant="h3" component="div" sx={{ paddingBottom: '1rem' }}>{prop.movie}</Typography>
+          <Box sx={{ paddingBottom: '1rem' }} >
+            <Typography variant='h6'>Date:</Typography>
+            <Typography variant="body1" color="text.secondary">
+              {prop.showDate.toDateString()}, {prop.showDate.getHours()}:{prop.showDate.getMinutes()}h
+            </Typography>
+          </Box>
+          <Box sx={{ paddingBottom: '1rem' }} >
+            <>
+              <Typography variant='h6'>Seats:</Typography>
+              <Typography variant="body1" color="text.secondary">{prop.room}</Typography>
+              {/* {prop.seats.map((seatRow) => {
+                return (
+                  <Typography variant="body1" color="text.secondary">Row: {seatRow.seatRow}</Typography>
+                )
+              })} */}
+              {prop.seats.map((seatRow, index) => {
+                return (
+                  <div key={index}>
+                    <Typography variant="body1" color="text.secondary">Row: {seatRow.seatRow}</Typography>
+                    <div className='row'>
+                      <Typography variant="body1" color="text.secondary" sx={{ width: '10rem' }}>Seat number:</Typography>
+                      {seatRow.seats.map((seatItem) => (
+                        <Typography variant="body1" color="text.secondary" sx={{ width: '1rem' }}>{seatItem.seatNumber}</Typography>
+                      ))}
+                    </div>
+                  </div>
+                )
+              })}
+            </>
+          </Box>
+          <Box sx={{ paddingBottom: '1rem' }} >
+            <Typography variant='h6'>Fares:</Typography>
+            {prop.fares.map((fareItem) => 
+            <>
+            {fareItem.amountOfTickets !== 0 &&
+              <Typography variant="body1" color="text.secondary">{fareItem.amountOfTickets} {fareItem.name}</Typography>
+            }
+            </>
+            )}
+          </Box>
+          <Box sx={{ paddingBottom: '1rem' }} >
+            <Typography variant='h6'>Price:</Typography>
+            <Typography variant="body1" color="text.secondary">{prop.price} €</Typography>
+          </Box>
+        </CardContent>
+      </Box >
       <CardMedia
         component="img"
-        alt="green iguana"
-        height="140"
-        image="/static/images/cards/contemplative-reptile.jpg"
+        alt="movie poster"
+        image={prop.picture}
       />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          Lizard
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
-      </CardActions>
-    </Card>
+    </Card >
   );
 }
 
