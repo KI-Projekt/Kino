@@ -12,6 +12,8 @@ import MovieDetailsView from './views/MovieDetailsView';
 import LoginView from "./views/LoginView";
 import PersonalData from "./components/PaymentDetailsView/PersonalData";
 import FareSelection from "./components/TicketView/FareSelection";
+import Overview from "./components/PaymentDetailsView/OrderOverview";
+import PaymentDetailsView from "./views/PaymentDetailsView";
 
 export const redTheme = createTheme({
 
@@ -82,6 +84,7 @@ function App() {
                   <Route path="/openingHours" element={<OpeningHoursView />} />
                   <Route path="/ticketPrices" element={<TicketPricesView />} />
                   <Route path="/movieDetails/:imdbID" element={<MovieDetailsView />} />
+                <Route path="/order" element={<PaymentDetailsView />} />
 
                 {/* //TestComponents */}
                 <Route path="/test/personalData" element={<PersonalData />} />
