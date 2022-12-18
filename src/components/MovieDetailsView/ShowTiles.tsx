@@ -1,5 +1,4 @@
-import { Box, ButtonBase, Divider, Paper, styled, Typography } from '@mui/material';
-import CinetastischIcon from '../../img/Cinetastisch_icon.png';
+import { Box, ButtonBase, Divider, styled, Typography } from '@mui/material';
 import * as React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -26,10 +25,8 @@ interface props {
 
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
     position: 'relative',
-    height: 200,
     [theme.breakpoints.down('sm')]: {
         width: '100% !important', // Overrides inline-style
-        height: 100,
     },
     '&:hover, &.Mui-focusVisible': {
         zIndex: 1,
@@ -58,8 +55,8 @@ const ImageBackdrop = styled('span')(({ theme }) => ({
 }));
 
 const ImageMarked = styled('span')(({ theme }) => ({
-    height: 3,
-    width: 18,
+    height: "0.2rem",
+    width: "1rem",
     backgroundColor: theme.palette.common.white,
     position: 'absolute',
     bottom: -2,
@@ -108,7 +105,7 @@ function ShowTiles(props: props) {
                                         position: 'relative',
                                         p: 4,
                                         pt: 2,
-                                        pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
+                                        pb: (theme) => `calc(${theme.spacing(1)} + 0.6rem)`,
                                     }}
                                 >
                                     {currentShow.dateTime.getHours()} : {currentShow.dateTime.getMinutes()}
