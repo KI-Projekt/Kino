@@ -27,10 +27,10 @@ function createData(
 };
 
 const data = [
-    createData(new Date(2023, 0, 1), [{ showID: "1", roomID: "1", dateTime: new Date(2023, 0, 1, 16, 30, 0), additionalInfo: { language: "english", isDbox: false, isThreeD: false } }, { showID: "1", roomID: "1", dateTime: new Date(2023, 0, 1, 21, 45, 0), additionalInfo: { language: "english", isDbox: false, isThreeD: false } }]),
-    createData(new Date(2023, 0, 2), [{ showID: "1", roomID: "1", dateTime: new Date(2023, 0, 2, 17, 30, 0), additionalInfo: { language: "english", isDbox: false, isThreeD: false } }]),
-    createData(new Date(2023, 0, 3), [{ showID: "1", roomID: "1", dateTime: new Date(2023, 0, 3, 18, 15, 0), additionalInfo: { language: "english", isDbox: false, isThreeD: false } }]),
-    createData(new Date(2023, 0, 4), [{ showID: "1", roomID: "1", dateTime: new Date(2023, 0, 4, 12, 30, 0), additionalInfo: { language: "english", isDbox: false, isThreeD: false } }, { showID: "1", roomID: "1", dateTime: new Date(2023, 0, 4, 16, 15, 0), additionalInfo: { language: "english", isDbox: false, isThreeD: false } }, { showID: "1", roomID: "1", dateTime: new Date(2023, 0, 4, 20, 30, 0), additionalInfo: { language: "english", isDbox: false, isThreeD: false } }]),
+    createData(new Date(2023, 0, 1), [{ movieID: "1",showID: "1", roomID: "1", dateTime: new Date(2023, 0, 1, 16, 30, 0), additionalInfo: { language: "english", isDbox: false, isThreeD: false } }, { movieID: "5",showID: "5", roomID: "5", dateTime: new Date(2023, 0, 1, 21, 45, 0), additionalInfo: { language: "english", isDbox: false, isThreeD: false } }]),
+    createData(new Date(2023, 0, 2), [{ movieID: "2",showID: "2", roomID: "2", dateTime: new Date(2023, 0, 2, 17, 30, 0), additionalInfo: { language: "english", isDbox: false, isThreeD: false } }]),
+    createData(new Date(2023, 0, 3), [{ movieID: "3",showID: "3", roomID: "3", dateTime: new Date(2023, 0, 3, 18, 15, 0), additionalInfo: { language: "english", isDbox: false, isThreeD: false } }]),
+    createData(new Date(2023, 0, 4), [{ movieID: "4",showID: "4", roomID: "4", dateTime: new Date(2023, 0, 4, 12, 30, 0), additionalInfo: { language: "english", isDbox: false, isThreeD: false } }, { movieID: "6",showID: "6", roomID: "6", dateTime: new Date(2023, 0, 4, 16, 15, 0), additionalInfo: { language: "english", isDbox: false, isThreeD: false } }, { movieID: "7",showID: "7", roomID: "7", dateTime: new Date(2023, 0, 4, 20, 30, 0), additionalInfo: { language: "english", isDbox: false, isThreeD: false } }]),
 ];
 
 function MovieDetailsView() {

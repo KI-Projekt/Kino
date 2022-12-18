@@ -4,6 +4,7 @@ import * as React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export interface Show {
+    movieID: string
     showID: string
     roomID: string
     dateTime: Date
