@@ -5,7 +5,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { fareSelection } from '../TicketView/FareSelection';
 import { Row } from '../../views/PaymentDetailsView';
-import { Box } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 interface OrderOverviewProps {
@@ -24,29 +24,26 @@ interface OrderOverviewProps {
 function OrderOverview(prop: OrderOverviewProps) {
 
   return (
-    <Card sx={{ maxWidth: '45rem', display: 'flex' }}>
+    <Card sx={{ maxWidth: '45rem', display: 'flex', m: '1rem' }}>
       <Box sx={{ minWidth: '20rem', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
         <CardContent sx={{ flex: '1 0 auto' }}>
           <Typography variant="h3" component="div" sx={{ paddingBottom: '1rem' }}>{prop.movie}</Typography>
+          <Divider />
           <Box sx={{ paddingBottom: '1rem' }} >
             <Typography variant='h6'>Date:</Typography>
             <Typography variant="body1" color="text.secondary">
               {prop.showDate.toDateString()}, {prop.showDate.getHours()}:{prop.showDate.getMinutes()}h
             </Typography>
           </Box>
+          <Divider />
           <Box sx={{ paddingBottom: '1rem' }} >
             <>
               <Typography variant='h6'>Seats:</Typography>
               <Typography variant="body1" color="text.secondary">{prop.room}</Typography>
-              {/* {prop.seats.map((seatRow) => {
-                return (
-                  <Typography variant="body1" color="text.secondary">Row: {seatRow.seatRow}</Typography>
-                )
-              })} */}
               {prop.seats.map((seatRow, index) => {
                 return (
                   <div key={index}>
-                    <Typography variant="body1" color="text.secondary">Row: {seatRow.seatRow}</Typography>
+                    <Typography variant="body1" color="text.secondary">Row: {seatRow.rowDescription}</Typography>
                     <div className='row'>
                       <Typography variant="body1" color="text.secondary" sx={{ width: '10rem' }}>Seat number:</Typography>
                       {seatRow.seats.map((seatItem) => (
@@ -58,16 +55,18 @@ function OrderOverview(prop: OrderOverviewProps) {
               })}
             </>
           </Box>
+          <Divider />
           <Box sx={{ paddingBottom: '1rem' }} >
             <Typography variant='h6'>Fares:</Typography>
-            {prop.fares.map((fareItem) => 
-            <>
-            {fareItem.amountOfTickets !== 0 &&
-              <Typography variant="body1" color="text.secondary">{fareItem.amountOfTickets} {fareItem.name}</Typography>
-            }
-            </>
+            {prop.fares.map((fareItem) =>
+              <>
+                {fareItem.amountOfTickets !== 0 &&
+                  <Typography variant="body1" color="text.secondary">{fareItem.amountOfTickets} {fareItem.name}</Typography>
+                }
+              </>
             )}
           </Box>
+          <Divider />
           <Box sx={{ paddingBottom: '1rem' }} >
             <Typography variant='h6'>Price:</Typography>
             <Typography variant="body1" color="text.secondary">{prop.price} €</Typography>

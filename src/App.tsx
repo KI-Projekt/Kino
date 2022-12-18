@@ -78,7 +78,7 @@ function App() {
           <Toolbar />
           <Main open={open}>
             <Container maxWidth="xl">
-              <Box className='App-Box' sx={{ minHeight: '90vh' }} >
+              <Box className='App-Box' sx={{ minHeight: '82vh' }} >
                 <Routes>
                   <Route path="/" element={<OverviewView />} />
                   <Route path="/impressum" element={<ImpressumView />} />
