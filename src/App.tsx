@@ -12,6 +12,7 @@ import MovieDetailsView from './views/MovieDetailsView';
 import LoginView from "./views/LoginView";
 import PersonalData from "./components/PaymentDetailsView/PersonalData";
 import FareSelection from "./components/TicketView/FareSelection";
+import PaymentDetailsView from "./views/PaymentDetailsView";
 
 export const redTheme = createTheme({
 
@@ -77,7 +78,7 @@ function App() {
           <Toolbar />
           <Main open={open}>
             <Container maxWidth="xl">
-              <Box className='App-Box' sx={{ minHeight: '90vh' }} >
+              <Box className='App-Box' sx={{ minHeight: '82vh' }} >
                 <Routes>
                   <Route path="/" element={<OverviewView />} />
                   <Route path="/impressum" element={<ImpressumView />} />
@@ -85,6 +86,7 @@ function App() {
                   <Route path="/openingHours" element={<OpeningHoursView />} />
                   <Route path="/ticketPrices" element={<TicketPricesView />} />
                   <Route path="/movieDetails/:imdbID" element={<MovieDetailsView />} />
+                <Route path="/order" element={<PaymentDetailsView />} />
 
                 {/* //TestComponents */}
                 <Route path="/test/personalData" element={<PersonalData />} />
