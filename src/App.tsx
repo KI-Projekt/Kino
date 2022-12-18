@@ -10,7 +10,6 @@ import OpeningHoursView from './views/OpeningHoursView';
 import TicketPricesView from './views/TicketPricesView';
 import MovieDetailsView from './views/MovieDetailsView';
 import LoginView from "./views/LoginView";
-import PersonalData from "./components/PaymentDetailsView/PersonalData";
 import FareSelection from "./components/TicketView/FareSelection";
 import PaymentDetailsView from "./views/PaymentDetailsView";
 
@@ -89,7 +88,6 @@ function App() {
                 <Route path="/order" element={<PaymentDetailsView />} />
 
                 {/* //TestComponents */}
-                <Route path="/test/personalData" element={<PersonalData />} />
                 <Route path="/test/fareSelection" element={<FareSelection totalAmountOfTickets={2}/>} />
               </Routes>
             </Box>
