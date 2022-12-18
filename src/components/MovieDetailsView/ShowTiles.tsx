@@ -49,7 +49,7 @@ const ImageBackdrop = styled('span')(({ theme }) => ({
     right: 0,
     top: 0,
     bottom: 0,
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: theme.palette.secondary.main,
     opacity: 0.4,
     transition: theme.transitions.create('opacity'),
 }));
@@ -114,7 +114,7 @@ function ShowTiles(props: props) {
                             </Image>
                         </ImageButton>
                     )}
-                    <Divider sx={{borderBottomWidth: 3}}/>
+                    <Divider sx={{borderBottomWidth: "0.2rem"}}/>
                 </Box>
             )}
         </Box>
