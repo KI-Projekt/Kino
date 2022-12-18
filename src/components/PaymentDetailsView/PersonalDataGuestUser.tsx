@@ -27,6 +27,40 @@ function PersonalDataGuestUser() {
                     label="Surname"
                 />
 
+                <Box sx={{ display: 'flex' }}>
+                    <TextField
+                        required
+                        type="text"
+                        className="Form-Login-Input"
+                        placeholder="Fifth Avenue"
+                        label="Street"
+                    />
+                    <TextField
+                        required
+                        type="text"
+                        className="Form-Login-Input"
+                        placeholder="69"
+                        label="House number"
+                    />
+                </Box>
+
+                <Box sx={{ display: 'flex' }}>
+                    <TextField
+                        required
+                        type="text"
+                        className="Form-Login-Input"
+                        placeholder="68165"
+                        label="Postcode"
+                    />
+                    <TextField
+                        required
+                        type="text"
+                        className="Form-Login-Input"
+                        placeholder="Mannheim"
+                        label="City"
+                    />
+                </Box>
+
                 <TextField
                     required
                     type="email"
