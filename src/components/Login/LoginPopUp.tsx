@@ -8,12 +8,12 @@ function LoginPopUp() {
     <div>
       <div className="Login-Form-Content">
         <Typography variant="h4" align="center" padding='1rem' >Sign In</Typography>
-        <div className="Text-Center">
+        <Typography sx={{ mb: '0.5rem'}}>
           Not registered yet? <Link href={`/login`}>Sign Up</Link>
-        </div>
+        </Typography>
       </div>
       <Login />
-    </div>
+    </div >
   )
 }
 
