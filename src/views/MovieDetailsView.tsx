@@ -1,12 +1,41 @@
 import * as React from 'react';
-import { Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { fetchMovie } from '../queries/fetchOMDbAPI';
+import Youtube from 'react-youtube'
+import { fetchMovie, fetchTrailerFromTMDb } from '../queries/fetchOMDbAPI';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ShowTiles, { Show } from '../components/MovieDetailsView/ShowTiles';
+
+interface TrailerType {
+    id: string
+    iso_639_1: string
+    iso_3166_1: string
+    key: string
+    name: string
+    official: boolean
+    published_at: string
+    site: string
+    size: number
+    type: string
+}
+
+function createData(
+    date: Date,
+    shows: Array<Show>
+) {
+    return { date, shows };
+};
+
+const data = [
+    createData(new Date(2023, 0, 1), [{showID: "1", roomID:"1", dateTime: new Date(2023, 0, 1, 16, 30 ,0), additionalInfo: {language: "english", isDbox: false, isThreeD: false}}, {showID: "1", roomID:"1", dateTime: new Date(2023, 0, 1, 21, 45 ,0), additionalInfo: {language: "english", isDbox: false, isThreeD: false}}] ),
+    createData(new Date(2023, 0, 2), [{showID: "1", roomID:"1", dateTime: new Date(2023, 0, 2, 17, 30 ,0), additionalInfo: {language: "english", isDbox: false, isThreeD: false}}] ),
+    createData(new Date(2023, 0, 3), [{showID: "1", roomID:"1", dateTime: new Date(2023, 0, 3, 18, 15 ,0), additionalInfo: {language: "english", isDbox: false, isThreeD: false}}] ),
+    createData(new Date(2023, 0, 4), [{showID: "1", roomID:"1", dateTime: new Date(2023, 0, 4, 12, 30 ,0), additionalInfo: {language: "english", isDbox: false, isThreeD: false}}, {showID: "1", roomID:"1", dateTime: new Date(2023, 0, 4, 16, 15 ,0), additionalInfo: {language: "english", isDbox: false, isThreeD: false}}, {showID: "1", roomID:"1", dateTime: new Date(2023, 0, 4, 20, 30 ,0), additionalInfo: {language: "english", isDbox: false, isThreeD: false}}] ),
+];
 
 function MovieDetailsView() {
 
-    const [selectedMovie, setSelectedMovie] = useState(Object || undefined);
+    const [selectedMovie, setSelectedMovie] = useState(undefined || Object);
 
     const getIDFromURL = () => {
         let url = window.location.href;
@@ -15,14 +44,32 @@ function MovieDetailsView() {
         return aUrlParts[4]
     }
 
+
+
     useEffect(() => {
-        fetchMovie(getIDFromURL()).then((result) => { setSelectedMovie(result) })
+        let fetchedMovie: Object | undefined;
+
+        function appendTrailer(trailers: Array<TrailerType>) {
+            trailers.map((item: TrailerType) => {
+                if (item.type === "Trailer") {
+                    setSelectedMovie({ ...fetchedMovie, trailer: item });
+                    return true;
+                } else {
+                    return false;
+                }
+            })
+        }
+        fetchMovie(getIDFromURL()).then((result) => {
+            fetchedMovie = result;
+            fetchTrailerFromTMDb(getIDFromURL()).then((trailers) => appendTrailer(trailers.results));
+        })
+
     }, []);
 
-    if (selectedMovie) {
+    if (selectedMovie.trailer) {
         return (
             <div className='row'>
-                <Card sx={{ maxWidth: "21.5rem", minWidth: "21.5rem", marginLeft: "1rem", marginRight: "2rem", marginBottom: "1rem" }}>
+                <Card sx={{ maxWidth: "25rem", minWidth: "18rem", marginLeft: "1rem", marginRight: "1rem", marginBottom: "2rem", marginTop: "1rem" }}>
                     <CardMedia
                         component="img"
                         alt="movie poster"
@@ -36,25 +83,30 @@ function MovieDetailsView() {
                             Runtime: {selectedMovie.Runtime} <br />
                             Writer: {selectedMovie.Writer} <br />
                             Cast: {selectedMovie.Actors} <br />
+                            Genres: {selectedMovie.Genre} <br />
+                            Age Rating: {selectedMovie.Rated} <br />
                         </Typography>
                     </CardContent>
                 </Card>
-                <Card sx={{ maxWidth: "21.5rem", minWidth: "21.5rem", maxHeight: "18rem", marginLeft: "1rem", marginRight: "2rem", overflowY: 'auto' }}>
-                    <Typography gutterBottom variant="h6" component="div">
-                        Synopsis: <br />
-                    </Typography>
-                    <Typography>
-                        {selectedMovie.Plot}
-                    </Typography>
-                </Card>
+                <Box sx={{ maxWidth: "25rem", minWidth: "16rem", marginTop: "1rem" }}>
+                    <Card sx={{ maxWidth: "25rem", minWidth: "18rem", maxHeight: "26rem", marginLeft: "1rem", marginRight: "1rem", overflowY: 'auto' }}>
+                        <Typography variant='h6' sx={{ padding: "1rem" }}>
+                            Plot:
+                        </Typography>
+                        <Typography sx={{ padding: "1rem" }}>
+                            {selectedMovie.Plot}
+                        </Typography>
+                    </Card>
+                    <Card sx={{ maxWidth: "25rem", minWidth: "18rem", maxHeight: "23rem", marginLeft: "1rem", marginRight: "1rem", overflowY: 'auto', marginTop: "1rem" }}>
+                        <Youtube videoId={selectedMovie.trailer.key} opts={{ width: "100%" }} />
+                    </Card>
+                </Box>
+                <ShowTiles shows={data}/>
             </div>
         );
     }
     else {
-        return (<div>
-
-        </div>
-        );
+        return (<></>);
     }
 }
 
