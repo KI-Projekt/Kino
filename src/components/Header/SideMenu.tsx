@@ -93,7 +93,7 @@ function SideMenu(props: AppBarProps) {
 
     return (
         <Drawer
-            variant="permanent"
+            variant= "permanent"
             anchor="left"
             open={props.open}
             ModalProps={{

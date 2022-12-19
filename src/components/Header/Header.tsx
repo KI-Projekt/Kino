@@ -24,6 +24,9 @@ const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
+  [theme.breakpoints.down('sm')]: {
+    zIndex: theme.zIndex.drawer - 1,
+},
   ...(open && {
     width: `calc(100% - ${drawerWidth})`,
     marginLeft: `${drawerWidth}`,
@@ -31,6 +34,11 @@ const AppBar = styled(MuiAppBar, {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+      marginLeft: 0,
+      zIndex: theme.zIndex.drawer - 1,
+  },
   }),
 }));
 
