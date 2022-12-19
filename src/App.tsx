@@ -49,12 +49,18 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
     duration: theme.transitions.duration.leavingScreen,
   }),
   marginLeft: `${drawerWidth}`,
+  [theme.breakpoints.down('sm')]: {
+    marginLeft: 0,
+  },
   ...(!open && {
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
     marginLeft: `calc(${theme.spacing(7)} + 1px)`,
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: 0,
+    },
   }),
 }));
 
@@ -85,13 +91,13 @@ function App() {
                   <Route path="/openingHours" element={<OpeningHoursView />} />
                   <Route path="/ticketPrices" element={<TicketPricesView />} />
                   <Route path="/movieDetails/:imdbID" element={<MovieDetailsView />} />
-                <Route path="/order" element={<PaymentDetailsView />} />
+                  <Route path="/order" element={<PaymentDetailsView />} />
 
-                {/* //TestComponents */}
-                <Route path="/test/fareSelection" element={<FareSelection totalAmountOfTickets={2}/>} />
-              </Routes>
-            </Box>
-          </Container>
+                  {/* //TestComponents */}
+                  <Route path="/test/fareSelection" element={<FareSelection totalAmountOfTickets={2} />} />
+                </Routes>
+              </Box>
+            </Container>
           </Main>
           <Footer />
         </BrowserRouter>

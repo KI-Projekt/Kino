@@ -27,10 +27,10 @@ const closedMixin = (theme: Theme): CSSObject => ({
         duration: theme.transitions.duration.leavingScreen,
     }),
     overflowX: 'hidden',
-    width: `calc(${theme.spacing(7)} + 1px)`,
-    [theme.breakpoints.down('sm')]: {
+    width: 0,
+    /* [theme.breakpoints.up('sm')]: {
         width: 0,
-    },
+    }, */
     backgroundColor: theme.palette.primary.main,
 });
 
@@ -60,7 +60,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     justifyContent: 'flex-end',
 }));
 
-function SideMenu(props: AppBarProps) {
+function MobileSideMenu(props: AppBarProps) {
     const [selectedIndex, setSelectedIndex] = React.useState(1);
     const theme = useTheme();
 
@@ -87,7 +87,7 @@ function SideMenu(props: AppBarProps) {
         index: number,
     ) => {
         setSelectedIndex(index);
-        navigate(`/${link}`);
+        navigate(`/${link}`)
         props.handleMenuClose();
     };
 
@@ -134,4 +134,4 @@ function SideMenu(props: AppBarProps) {
     );
 }
 
-export default SideMenu;
+export default MobileSideMenu;

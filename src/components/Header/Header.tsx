@@ -7,6 +7,7 @@ import SearchBar from './SearchBar';
 import SideMenu from './SideMenu';
 import SideMenuButton from './SideMenuButton';
 import ProfileMenuButton from './ProfileMenuButton';
+import MobileSideMenu from './MobileSideMenu';
 
 export interface AppBarProps extends MuiAppBarProps {
   open?: boolean,
@@ -62,6 +63,7 @@ function Header(props: AppBarProps) {
         </Toolbar>
       </AppBar>
       <SideMenu open={props.open} handleMenuOpen={props.handleMenuOpen} handleMenuClose={props.handleMenuClose}/>
+      {/* <MobileSideMenu open={props.open} handleMenuOpen={props.handleMenuOpen} handleMenuClose={props.handleMenuClose}/> */}
     </Box >
   );
 }
