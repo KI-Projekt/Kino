@@ -83,7 +83,7 @@ export default function Footer() {
                 </Link>
                 <Link
                   className="Footer-Link"
-                  href="/"
+                  href="/contact"
                   color="inherit"
                   underline="none"
                   variant="subtitle2"
