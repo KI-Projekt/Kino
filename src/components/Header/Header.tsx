@@ -7,7 +7,6 @@ import SearchBar from './SearchBar';
 import SideMenu from './SideMenu';
 import SideMenuButton from './SideMenuButton';
 import ProfileMenuButton from './ProfileMenuButton';
-import MobileSideMenu from './MobileSideMenu';
 
 export interface AppBarProps extends MuiAppBarProps {
   open?: boolean,
@@ -38,9 +37,14 @@ const AppBar = styled(MuiAppBar, {
 function Header(props: AppBarProps) {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed" open={props.open} handleMenuClose={props.handleMenuClose} handleMenuOpen={props.handleMenuOpen}>
+      <AppBar
+        position="fixed"
+        open={props.open}
+        handleMenuClose={props.handleMenuClose}
+        handleMenuOpen={props.handleMenuOpen}
+      >
         <Toolbar>
-          <SideMenuButton open={props.open} handleMenuOpen={props.handleMenuOpen} handleMenuClose={props.handleMenuClose}/>
+          <SideMenuButton open={props.open} handleMenuOpen={props.handleMenuOpen} handleMenuClose={props.handleMenuClose} />
           <Link href={`/`} underline='none'>
             <Box
               component="img"
@@ -62,8 +66,7 @@ function Header(props: AppBarProps) {
           <ProfileMenuButton />
         </Toolbar>
       </AppBar>
-      <SideMenu open={props.open} handleMenuOpen={props.handleMenuOpen} handleMenuClose={props.handleMenuClose}/>
-      {/* <MobileSideMenu open={props.open} handleMenuOpen={props.handleMenuOpen} handleMenuClose={props.handleMenuClose}/> */}
+      <SideMenu open={props.open} handleMenuOpen={props.handleMenuOpen} handleMenuClose={props.handleMenuClose} />
     </Box >
   );
 }

@@ -96,6 +96,9 @@ function SideMenu(props: AppBarProps) {
             variant="permanent"
             anchor="left"
             open={props.open}
+            ModalProps={{
+                keepMounted: true, // Better open performance on mobile.
+              }}
         >
             <DrawerHeader>
                 <Typography
