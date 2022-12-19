@@ -22,9 +22,6 @@ interface OrderOverviewProps {
 }
 
 function OrderOverview(prop: OrderOverviewProps) {
-
-  const theme = useTheme();
-
   return (
     <Card variant='elevation' elevation={0} sx={{ display: 'flex', m: '1rem' }}>
       <Box sx={{ minWidth: '20rem', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
