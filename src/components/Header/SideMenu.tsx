@@ -19,6 +19,9 @@ const openedMixin = (theme: Theme): CSSObject => ({
     }),
     overflowX: 'hidden',
     backgroundColor: theme.palette.primary.main,
+    [theme.breakpoints.down('sm')]: {
+        width: '100%',
+    },
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
