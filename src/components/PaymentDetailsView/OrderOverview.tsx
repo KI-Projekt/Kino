@@ -5,7 +5,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { fareSelection } from '../TicketView/FareSelection';
 import { Row } from '../../views/PaymentDetailsView';
-import { Box, Divider } from '@mui/material';
+import { Box, Divider, useTheme } from '@mui/material';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 interface OrderOverviewProps {
@@ -23,8 +23,10 @@ interface OrderOverviewProps {
 
 function OrderOverview(prop: OrderOverviewProps) {
 
+  const theme = useTheme();
+
   return (
-    <Card sx={{ maxWidth: '45rem', display: 'flex', m: '1rem' }}>
+    <Card variant='elevation' elevation={0} sx={{ display: 'flex', m: '1rem' }}>
       <Box sx={{ minWidth: '20rem', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
         <CardContent sx={{ flex: '1 0 auto' }}>
           <Typography variant="h3" component="div" sx={{ paddingBottom: '1rem' }}>{prop.movie}</Typography>
@@ -45,9 +47,9 @@ function OrderOverview(prop: OrderOverviewProps) {
                   <div key={index}>
                     <Typography variant="body1" color="text.secondary">Row: {seatRow.rowDescription}</Typography>
                     <div className='row'>
-                      <Typography variant="body1" color="text.secondary" sx={{ width: '10rem' }}>Seat number:</Typography>
+                      <Typography variant="body1" color="text.secondary" sx={{ width: '9rem', paddingRight: '0rem' }}>Seat number:</Typography>
                       {seatRow.seats.map((seatItem) => (
-                        <Typography variant="body1" color="text.secondary" sx={{ width: '1rem' }}>{seatItem.seatNumber}</Typography>
+                        <Typography variant="body1" color="text.secondary" sx={{ width: '0rem', m: 0, paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>{seatItem.seatNumber}</Typography>
                       ))}
                     </div>
                   </div>
@@ -77,6 +79,7 @@ function OrderOverview(prop: OrderOverviewProps) {
         component="img"
         alt="movie poster"
         image={prop.picture}
+        sx={{ width: 'auto' }}
       />
     </Card >
   );

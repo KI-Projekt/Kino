@@ -1,7 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import StoreIcon from '@mui/icons-material/Store';
-import { Box, CardContent, Divider, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
+import { Box, CardContent, Divider, ToggleButton, ToggleButtonGroup, Typography, useTheme } from '@mui/material';
 import React from 'react';
+import { padding } from '@mui/system';
 
 function PaymentOptions() {
     const [paymentMethod, setPaymentMethod] = React.useState<string | null>('cash')
@@ -12,6 +13,9 @@ function PaymentOptions() {
     ) => {
         setPaymentMethod(newPaymentMethod);
     };
+
+    const theme = useTheme();
+
     return (
         <Box
             sx={{
@@ -29,8 +33,8 @@ function PaymentOptions() {
                 alignItems='center'
                 justifyItems='center'
             >
-                <Typography variant="h4" sx={{ p: 3, paddingLeft: '5rem', maxWidth: '30rem' }}>Payment method</Typography>
-                <CardContent sx={{ flex: '1 0 auto' }}>
+                <Typography variant="h4" sx={{ p: 3, paddingLeft: theme.spacing, }}>Payment method</Typography>
+                <CardContent sx={{ flex: 'auto' }}>
                     <ToggleButtonGroup
                         value={paymentMethod}
                         exclusive
