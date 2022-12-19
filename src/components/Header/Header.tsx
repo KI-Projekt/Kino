@@ -3,10 +3,12 @@ import { styled } from '@mui/material/styles';
 import { Link, Box, Toolbar } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import CinetastischHorizontal from '../../img/Cinetastisch_horizontal.png';
+import CinetastischIcon from '../../img/Cinetastisch_icon.png';
 import SearchBar from './SearchBar';
 import SideMenu from './SideMenu';
 import SideMenuButton from './SideMenuButton';
 import ProfileMenuButton from './ProfileMenuButton';
+import { isMobile } from 'react-device-detect'
 
 export interface AppBarProps extends MuiAppBarProps {
   open?: boolean,
@@ -26,7 +28,7 @@ const AppBar = styled(MuiAppBar, {
   }),
   [theme.breakpoints.down('sm')]: {
     zIndex: theme.zIndex.drawer - 1,
-},
+  },
   ...(open && {
     width: `calc(100% - ${drawerWidth})`,
     marginLeft: `${drawerWidth}`,
@@ -38,7 +40,7 @@ const AppBar = styled(MuiAppBar, {
       width: '100%',
       marginLeft: 0,
       zIndex: theme.zIndex.drawer - 1,
-  },
+    },
   }),
 }));
 
@@ -54,20 +56,36 @@ function Header(props: AppBarProps) {
         <Toolbar>
           <SideMenuButton open={props.open} handleMenuOpen={props.handleMenuOpen} handleMenuClose={props.handleMenuClose} />
           <Link href={`/`} underline='none'>
-            <Box
-              component="img"
-              sx={{
-                height: '3rem',
-                position: 'absolute',
-                zIndex: 1,
-                top: '0.5rem',
-                left: 0,
-                right: 0,
-                margin: '0 auto',
-              }}
-              alt="logo"
-              src={CinetastischHorizontal}
-            />
+            {!isMobile &&
+              <Box
+                component="img"
+                sx={{
+                  height: '3rem',
+                  position: 'absolute',
+                  zIndex: 1,
+                  top: '0.5rem',
+                  left: 0,
+                  right: 0,
+                  margin: '0 auto',
+                }}
+                alt="logo"
+                src={CinetastischHorizontal}
+              />}
+            {isMobile &&
+              <Box
+                component="img"
+                sx={{
+                  height: '3rem',
+                  position: 'absolute',
+                  zIndex: 1,
+                  top: '0.5rem',
+                  left: 0,
+                  right: 0,
+                  margin: '0 auto',
+                }}
+                alt="logo"
+                src={CinetastischIcon}
+              />}
           </Link>
           <SearchBar />
           <Box sx={{ flexGrow: 1 }} />
