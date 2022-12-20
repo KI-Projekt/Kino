@@ -1,8 +1,9 @@
-import { Box, IconButton, Paper, Popover, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material";
+import { Box, IconButton, Paper, Popover, Table, TableBody, TableCell, TableContainer, TableRow, Tooltip, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react"
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import { isMobile } from 'react-device-detect';
 
 interface fareSelectionProps {
     totalAmountOfTickets: number;
@@ -144,10 +145,15 @@ function FareSelection(props: fareSelectionProps) {
                                 <TableCell align='center' sx={{ alignContent: 'center' }}>
                                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                         <Typography>{fare.name}</Typography>
-                                        {fare.condition !== "" &&
-                                                <IconButton aria-describedby={fare.condition} id={fare.condition} onClick={handleClickOnInfo}>
-                                                    <HelpOutlineIcon color={"info"}/>
-                                                </IconButton>
+                                        {fare.condition !== "" && isMobile &&
+                                            <IconButton aria-describedby={fare.condition} id={fare.condition} onClick={handleClickOnInfo}>
+                                                <HelpOutlineIcon color={"info"} />
+                                            </IconButton>
+                                        }
+                                        {fare.condition !== "" && !isMobile &&
+                                            <Tooltip title={fare.condition}>
+                                                    <HelpOutlineIcon  sx= {{ ml: '1rem'}} color={"info"} />
+                                            </Tooltip>
                                         }
                                     </Box>
                                 </TableCell>
