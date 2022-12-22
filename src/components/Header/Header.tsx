@@ -4,11 +4,9 @@ import { Link, Box, Toolbar } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import CinetastischHorizontal from '../../img/Cinetastisch_horizontal.png';
 import CinetastischIcon from '../../img/Cinetastisch_icon.png';
-import SearchBar from './SearchBar';
 import SideMenu from './SideMenu';
 import SideMenuButton from './SideMenuButton';
 import ProfileMenuButton from './ProfileMenuButton';
-import { isMobile } from 'react-device-detect'
 
 export interface AppBarProps extends MuiAppBarProps {
   open?: boolean,
@@ -45,6 +43,7 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 function Header(props: AppBarProps) {
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -56,10 +55,13 @@ function Header(props: AppBarProps) {
         <Toolbar>
           <SideMenuButton open={props.open} handleMenuOpen={props.handleMenuOpen} handleMenuClose={props.handleMenuClose} />
           <Link href={`/`} underline='none'>
-            {!isMobile &&
               <Box
                 component="img"
                 sx={{
+                  content: {
+                    xs: `url(${CinetastischIcon})`, //img src from xs up to sm
+                    sm: `url(${CinetastischHorizontal})`,  //img src from sm and up
+                  },
                   height: '3rem',
                   position: 'absolute',
                   zIndex: 1,
@@ -68,26 +70,9 @@ function Header(props: AppBarProps) {
                   right: 0,
                   margin: '0 auto',
                 }}
-                alt="logo"
-                src={CinetastischHorizontal}
-              />}
-            {isMobile &&
-              <Box
-                component="img"
-                sx={{
-                  height: '3rem',
-                  position: 'absolute',
-                  zIndex: 1,
-                  top: '0.5rem',
-                  left: 0,
-                  right: 0,
-                  margin: '0 auto',
-                }}
-                alt="logo"
-                src={CinetastischIcon}
-              />}
+                alt="Logo"
+              />
           </Link>
-          <SearchBar />
           <Box sx={{ flexGrow: 1 }} />
           <ProfileMenuButton />
         </Toolbar>
