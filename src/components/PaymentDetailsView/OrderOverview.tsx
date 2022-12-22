@@ -22,10 +22,11 @@ interface OrderOverviewProps {
 }
 
 function OrderOverview(prop: OrderOverviewProps) {
+
   return (
-    <Card variant='elevation' elevation={0} sx={{ display: 'flex', m: '1rem' }}>
-      <Box sx={{ minWidth: '20rem', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-        <CardContent sx={{ flex: '1 0 auto' }}>
+    <Card variant='elevation' elevation={0} sx={{ display: 'flex', m: '1rem', flexDirection: 'row', flexGrow: 1 }}>
+      <CardContent sx={{ flex: ' 0 1 auto' }}>
+        <Box sx={{ minWidth: '20rem', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
           <Typography variant="h3" component="div" sx={{ paddingBottom: '1rem' }}>{prop.movie}</Typography>
           <Divider />
           <Box sx={{ paddingBottom: '1rem' }} >
@@ -70,14 +71,15 @@ function OrderOverview(prop: OrderOverviewProps) {
             <Typography variant='h6'>Price:</Typography>
             <Typography variant="body1" color="text.secondary">{prop.price} €</Typography>
           </Box>
-        </CardContent>
-      </Box >
-      <CardMedia
-        component="img"
-        alt="movie poster"
-        image={prop.picture}
-        sx={{ width: 'auto' }}
-      />
+        </Box >
+      </CardContent>
+      <Box sx={{ alignSelf: 'center', justifySelf: 'center', }}>
+        <CardMedia
+          component="img"
+          alt="movie poster"
+          image={prop.picture}
+        />
+      </Box>
     </Card >
   );
 }

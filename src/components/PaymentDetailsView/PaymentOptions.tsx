@@ -24,7 +24,7 @@ function PaymentOptions() {
         >
             <Divider />
             <Box >
-                <Grid container spacing={2}>
+                <Grid container >
                     <Grid xs={12} sm={12} md={4} xl={4}>
                         <Typography variant="h4" sx={{ p: 3, paddingLeft: theme.spacing, }}>Payment method</Typography>
                     </Grid>
