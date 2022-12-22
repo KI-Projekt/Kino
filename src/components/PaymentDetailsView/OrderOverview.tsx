@@ -5,7 +5,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { fareSelection } from '../TicketView/FareSelection';
 import { Row } from '../../views/PaymentDetailsView';
-import { Box, Divider, useTheme } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 interface OrderOverviewProps {
