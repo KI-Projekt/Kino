@@ -1,12 +1,22 @@
 import * as React from 'react';
-import { Alert, Box, Card, CardContent, CardMedia, Divider, Grid, TextField, Typography, useTheme } from '@mui/material';
+import { Alert, Box, Button, Card, CardContent, CardMedia, Divider, Grid, TextField, Typography, useTheme } from '@mui/material';
 import Youtube from 'react-youtube'
 import ShowTiles from '../components/MovieDetailsView/ShowTiles';
 import { data, MovieDetailsViewProp } from './MovieDetailsView';
+import AddIcon from '@mui/icons-material/Add';
+import { useNavigate } from 'react-router-dom';
 
 function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
 
     const theme = useTheme();
+
+    const navigate = useNavigate();
+
+    const handleButtonCklick = (
+        link: String,
+    ) => {
+        navigate(`/${link}`);
+    };
 
     return (
         <>
@@ -111,15 +121,33 @@ function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
                         <Grid item xs={12} sm={12} md={12} xl={4} >
                             <Divider orientation='vertical' flexItem sx={{ borderBottomWidth: "0.2rem" }} />
                             <Box sx={{ marginTop: theme.spacing(1) }}>
-                                <Typography
-                                    variant="h4"
-                                    sx={{
-                                        p: 3,
-                                        paddingLeft: theme.spacing
-                                    }}
-                                >
-                                    Shows
-                                </Typography>
+                                <Grid container>
+                                    <Grid item xs={12} sm={12} md={6} xl={6}>
+                                        <Typography
+                                            variant="h4"
+                                            sx={{
+                                                p: theme.spacing(3),
+                                                paddingLeft: theme.spacing(2)
+                                            }}
+                                        >
+                                            Shows
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={12} sm={12} md={6} xl={6}>
+                                        <Box>
+                                            <Button
+                                                variant='contained'
+                                                onClick={() => handleButtonCklick("addNewShow")}
+                                                startIcon={<AddIcon />}
+                                                sx={{
+                                                    m: theme.spacing(3),
+                                                }}
+                                            >
+                                                Add new Show
+                                            </Button>
+                                        </Box>
+                                    </Grid>
+                                </Grid>
                                 <ShowTiles shows={data} />
                             </Box>
                         </Grid>
