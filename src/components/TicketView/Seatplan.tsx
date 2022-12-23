@@ -14,11 +14,11 @@ function Seatplan(props: SeatPlanprops) {
     <Box
       sx={{
         border: "0.1rem dashed grey",
-        maxWidth: "22rem",
         marginLeft: "1rem",
         marginTop: "1rem",
       }}
       alignItems="center"
+      justifyItems="center"
     >
       <>
         {props.data.map((row) => (
