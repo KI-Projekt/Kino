@@ -18,11 +18,8 @@ function OverviewView(adminProp: AdminProps) {
 
     return (
         <div>
-            <TileBar title='Star Wars' query='Star Wars' />
-            <TileBar title='Marvel' query='Marvel' />
-            <TileBar title='Harry Potter' query='Harry Potter' />
             {adminProp.isAdmin &&
-                <Box textAlign = 'center' sx={{ p: theme.spacing(3) }}>
+                <Box textAlign='center' sx={{ pt: theme.spacing(3) }}>
                     <Button
                         variant='contained'
                         onClick={() => handleButtonCklick("addNewMovie")}
@@ -32,6 +29,10 @@ function OverviewView(adminProp: AdminProps) {
                     </Button>
                 </Box>
             }
+            <TileBar title='Star Wars' query='Star Wars' />
+            <TileBar title='Marvel' query='Marvel' />
+            <TileBar title='Harry Potter' query='Harry Potter' />
+
         </div>
     );
 }

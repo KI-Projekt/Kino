@@ -1,13 +1,18 @@
 import * as React from 'react';
-import { Alert, Box, Card, CardContent, CardHeader, CardMedia, Divider, Grid, Typography, useTheme } from '@mui/material';
+import { Alert } from '@mui/material';
 import { useEffect, useState } from 'react';
-import Youtube from 'react-youtube'
 import { fetchMovie, fetchTrailerFromTMDb } from '../queries/fetchOMDbAPI';
-import ShowTiles, { Show } from '../components/MovieDetailsView/ShowTiles';
+import { Show } from '../components/MovieDetailsView/ShowTiles';
 import { AdminProps } from '../App';
-import AdminMovieDetailsView from './AdminMovieDetailsView';
+import AdminMovieDetailsView from './MovieDetailsViewAdmin';
+import UserMovieDetailsView from './MovieDetailsViewUser';
 
-export interface TrailerType {
+export interface MovieDetailsViewProp {
+    selectedMovie: Movie,
+    setSelectedMovie: Function,
+}
+
+interface TrailerType {
     id: string
     iso_639_1: string
     iso_3166_1: string
@@ -18,6 +23,18 @@ export interface TrailerType {
     site: string
     size: number
     type: string
+}
+
+interface Movie {
+    Title: String,
+    Poster: string,
+    Runtime: String,
+    Writer: String,
+    Actors: String,
+    Genre: String,
+    Rated: String,
+    Plot: String,
+    trailer: TrailerType,
 }
 
 function createData(
@@ -65,96 +82,11 @@ function MovieDetailsView(prop: AdminProps) {
         })
     }, []);
 
-    const theme = useTheme();
-
     return (
         <>
-            {!prop.isAdmin && selectedMovie &&
-                <Box sx={{ flexGrow: 1 }}>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12} sm={12} md={6} xl={4} >
-                            <Card
-                                sx={{
-                                    marginLeft: theme.spacing(1),
-                                    marginRight: theme.spacing(1),
-                                }}
-                                elevation={0}
-                            >
-                                <CardHeader
-                                    title={selectedMovie.Title}
-                                    titleTypographyProps={{ p: theme.spacing(3), pt: theme.spacing(2), paddingLeft: 0, fontSize: theme.typography.h4.fontSize }}
-                                />
+            {!prop.isAdmin && selectedMovie && <UserMovieDetailsView selectedMovie={selectedMovie} setSelectedMovie={setSelectedMovie} />}
 
-                                <CardMedia
-                                    component="img"
-                                    alt="movie poster"
-                                    image={selectedMovie.Poster} />
-
-                                <CardContent>
-                                    <Typography variant="body2" color="text.secondary">
-                                        Runtime: {selectedMovie.Runtime} <br />
-                                        Writer: {selectedMovie.Writer} <br />
-                                        Cast: {selectedMovie.Actors} <br />
-                                        Genres: {selectedMovie.Genre} <br />
-                                        Age Rating: {selectedMovie.Rated} <br />
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                        <Grid item xs={12} sm={12} md={6} xl={4} >
-                            <Divider orientation="vertical" flexItem sx={{ borderBottomWidth: "0.2rem" }} />
-                            <Box sx={{ marginTop: theme.spacing(1) }}>
-                                <Card sx={{ marginLeft: theme.spacing(1), marginRight: theme.spacing(1), overflowY: 'auto' }} elevation={0}>
-                                    <Typography
-                                        variant="h4"
-                                        sx={{
-                                            p: theme.spacing(3),
-                                            pt: {
-                                                xs: theme.spacing(1),
-                                                sm: theme.spacing(3)
-                                            },
-                                            paddingLeft: theme.spacing
-                                        }}
-                                    >
-                                        Plot
-                                    </Typography>
-                                    <Typography sx={{ padding: theme.spacing(1) }}>
-                                        {selectedMovie.Plot}
-                                    </Typography>
-                                </Card>
-                                {selectedMovie.trailer &&
-                                    <Card
-                                        sx={{
-                                            marginLeft: theme.spacing(1),
-                                            marginRight: theme.spacing(1),
-                                            marginTop: theme.spacing(1),
-                                        }}
-                                        elevation={0}
-                                    >
-                                        <Youtube videoId={selectedMovie.trailer.key} opts={{ width: "100%", outerHeight: '56.25%' }} />
-                                    </Card>}
-                            </Box>
-                        </Grid>
-                        <Grid item xs={12} sm={12} md={12} xl={4} >
-                            <Divider orientation='vertical' flexItem sx={{ borderBottomWidth: "0.2rem" }} />
-                            <Box sx={{ marginTop: theme.spacing(1) }}>
-                                <Typography
-                                    variant="h4"
-                                    sx={{
-                                        p: 3,
-                                        paddingLeft: theme.spacing
-                                    }}
-                                >
-                                    Shows
-                                </Typography>
-                                <ShowTiles shows={data} />
-                            </Box>
-                        </Grid>
-                    </Grid>
-                </Box>
-            }
-
-            {prop.isAdmin && selectedMovie && <AdminMovieDetailsView selectedMovie={selectedMovie} setSelectedMovie={setSelectedMovie} /> }
+            {prop.isAdmin && selectedMovie && <AdminMovieDetailsView selectedMovie={selectedMovie} setSelectedMovie={setSelectedMovie} />}
 
             {!selectedMovie && <Alert sx={{ marginTop: "1rem", width: "90rem", marginLeft: "2rem" }} severity="error">Currently there is no data available</Alert>}
         </>

@@ -2,26 +2,9 @@ import * as React from 'react';
 import { Alert, Box, Card, CardContent, CardMedia, Divider, Grid, TextField, Typography, useTheme } from '@mui/material';
 import Youtube from 'react-youtube'
 import ShowTiles from '../components/MovieDetailsView/ShowTiles';
-import { data, TrailerType } from './MovieDetailsView';
+import { data, MovieDetailsViewProp } from './MovieDetailsView';
 
-interface AdminMovieDetailsViewProp {
-    selectedMovie: Movie,
-    setSelectedMovie: Function,
-}
-
-interface Movie {
-    Title: String,
-    Poster: string,
-    Runtime: String,
-    Writer: String,
-    Actors: String,
-    Genre: String,
-    Rated: String,
-    Plot: String,
-    trailer: TrailerType,
-}
-
-function AdminMovieDetailsView(prop: AdminMovieDetailsViewProp) {
+function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
 
     const theme = useTheme();
 
