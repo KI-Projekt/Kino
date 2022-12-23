@@ -50,12 +50,18 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
     duration: theme.transitions.duration.leavingScreen,
   }),
   marginLeft: `${drawerWidth}`,
+  [theme.breakpoints.down('sm')]: {
+    marginLeft: 0,
+  },
   ...(!open && {
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
     marginLeft: `calc(${theme.spacing(7)} + 1px)`,
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: 0,
+    },
   }),
 }));
 

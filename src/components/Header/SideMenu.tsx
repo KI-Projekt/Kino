@@ -10,6 +10,8 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { AppBarProps, drawerWidth } from "./Header";
+import SearchBar from "./SearchBar";
+import SearchIcon from '@mui/icons-material/Search';
 
 const openedMixin = (theme: Theme): CSSObject => ({
     width: drawerWidth,
@@ -19,6 +21,9 @@ const openedMixin = (theme: Theme): CSSObject => ({
     }),
     overflowX: 'hidden',
     backgroundColor: theme.palette.primary.main,
+    [theme.breakpoints.down('sm')]: {
+        width: '100%',
+    },
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
@@ -28,8 +33,8 @@ const closedMixin = (theme: Theme): CSSObject => ({
     }),
     overflowX: 'hidden',
     width: `calc(${theme.spacing(7)} + 1px)`,
-    [theme.breakpoints.up('sm')]: {
-        width: `calc(${theme.spacing(8)} + 1px)`,
+    [theme.breakpoints.down('sm')]: {
+        width: 0,
     },
     backgroundColor: theme.palette.primary.main,
 });
@@ -87,15 +92,20 @@ function SideMenu(props: AppBarProps) {
         index: number,
     ) => {
         setSelectedIndex(index);
-        navigate(`/${link}`)
+        navigate(`/${link}`);
         props.handleMenuClose();
     };
+
+    const [searchOpen, setSearchOpen] = React.useState<boolean>(false);
 
     return (
         <Drawer
             variant="permanent"
             anchor="left"
             open={props.open}
+            ModalProps={{
+                keepMounted: true, // Better open performance on mobile.
+            }}
         >
             <DrawerHeader>
                 <Typography
@@ -105,11 +115,58 @@ function SideMenu(props: AppBarProps) {
                 >
                     Navigation
                 </Typography>
-                <IconButton onClick={() => props.handleMenuClose()} sx={{ color: theme.palette.primary.contrastText }}>
+                <IconButton
+                    onClick={() => props.handleMenuClose()}
+                    sx={{ color: theme.palette.primary.contrastText }}
+                >
                     {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                 </IconButton>
             </DrawerHeader>
             <Divider />
+            {!props.open &&
+                <ListItem
+                    disablePadding >
+                    <ListItemButton
+                        sx={{
+                            "&.Mui-selected": {
+                                backgroundColor: "#f04265",
+                            }
+                        }}
+                        onClick={() => props.handleMenuOpen()}
+                    >
+                        <ListItemIcon sx={{ color: theme.palette.primary.contrastText }}>
+                            <SearchIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                            sx={{ color: theme.palette.primary.contrastText }}
+                            primary={
+                                <SearchBar searchOpen={searchOpen} setSearchOpen={setSearchOpen} />
+                            }
+                        />
+                    </ListItemButton>
+                </ListItem>
+            }
+            {props.open &&
+                <ListItem
+                    disablePadding 
+                        sx={{
+                            ml:'1rem',
+                            "&.Mui-selected": {
+                                backgroundColor: "#f04265",
+                            }
+                        }}
+                    >
+                        <ListItemIcon sx={{ color: theme.palette.primary.contrastText }}>
+                            <SearchIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                            sx={{ color: theme.palette.primary.contrastText }}
+                            primary={
+                                <SearchBar searchOpen={searchOpen} setSearchOpen={setSearchOpen} />
+                            }
+                        />
+                </ListItem>
+            }
             <List >
                 {menuData.map((item) => (
                     <ListItem key={item.index} disablePadding>
@@ -130,7 +187,7 @@ function SideMenu(props: AppBarProps) {
                     </ListItem>
                 ))}
             </List>
-        </Drawer>
+        </Drawer >
     );
 }
 

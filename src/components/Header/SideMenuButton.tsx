@@ -16,7 +16,7 @@ function SideMenuButton(props: AppBarProps) {
                 aria-controls={menuId}
                 aria-haspopup="true"
                 onClick={() => props.handleMenuOpen()}
-                sx={{ mr: 2, ...(props.open && { display: 'none' }) }}
+                sx={{ ...(props.open && { display: 'none' }) }}
             >
                 <MenuIcon />
             </IconButton>
