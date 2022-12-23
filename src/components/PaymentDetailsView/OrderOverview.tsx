@@ -24,9 +24,9 @@ interface OrderOverviewProps {
 function OrderOverview(prop: OrderOverviewProps) {
 
   return (
-    <Card sx={{ maxWidth: '45rem', display: 'flex', m: '1rem' }}>
-      <Box sx={{ minWidth: '20rem', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-        <CardContent sx={{ flex: '1 0 auto' }}>
+    <Card variant='elevation' elevation={0} sx={{ display: 'flex', m: '1rem', flexDirection: 'row', flexGrow: 1 }}>
+      <CardContent sx={{ flex: ' 0 1 auto' }}>
+        <Box sx={{ minWidth: '20rem', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
           <Typography variant="h3" component="div" sx={{ paddingBottom: '1rem' }}>{prop.movie}</Typography>
           <Divider />
           <Box sx={{ paddingBottom: '1rem' }} >
@@ -45,9 +45,9 @@ function OrderOverview(prop: OrderOverviewProps) {
                   <div key={index}>
                     <Typography variant="body1" color="text.secondary">Row: {seatRow.rowDescription}</Typography>
                     <div className='row'>
-                      <Typography variant="body1" color="text.secondary" sx={{ width: '10rem' }}>Seat number:</Typography>
+                      <Typography variant="body1" color="text.secondary" sx={{ width: '9rem', paddingRight: '0rem' }}>Seat number:</Typography>
                       {seatRow.seats.map((seatItem) => (
-                        <Typography variant="body1" color="text.secondary" sx={{ width: '1rem' }}>{seatItem.seatNumber}</Typography>
+                        <Typography variant="body1" color="text.secondary" sx={{ width: '0rem', m: 0, paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>{seatItem.seatNumber}</Typography>
                       ))}
                     </div>
                   </div>
@@ -71,13 +71,15 @@ function OrderOverview(prop: OrderOverviewProps) {
             <Typography variant='h6'>Price:</Typography>
             <Typography variant="body1" color="text.secondary">{prop.price} €</Typography>
           </Box>
-        </CardContent>
-      </Box >
-      <CardMedia
-        component="img"
-        alt="movie poster"
-        image={prop.picture}
-      />
+        </Box >
+      </CardContent>
+      <Box sx={{ alignSelf: 'center', justifySelf: 'center', }}>
+        <CardMedia
+          component="img"
+          alt="movie poster"
+          image={prop.picture}
+        />
+      </Box>
     </Card >
   );
 }

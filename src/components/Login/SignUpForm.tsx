@@ -1,6 +1,6 @@
 import React from "react"
 import '../../styles/Login.css';
-import { Button, Box, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from "@mui/material";
+import { Button, Box, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField, useTheme } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 interface State {
@@ -40,11 +40,14 @@ function SignUpForm() {
     event.preventDefault();
   };
 
+  const theme = useTheme();
+
   return (
-    <div className="Login-Form-Content">
+    <>
       <Box
         component="form"
         sx={{
+          paddingX: theme.spacing,
           '& .MuiTextField-root': { m: 0.5, width: '100%' },
         }}
         noValidate
@@ -156,7 +159,7 @@ function SignUpForm() {
       <div className="d-grid gap-2 mt-3">
         <Button sx={{ m: 0.5, width: '100%' }} variant="contained">Sign Up</Button>
       </div>
-    </div >
+    </>
   )
 }
 

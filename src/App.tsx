@@ -85,15 +85,15 @@ function App() {
                   <Route path="/openingHours" element={<OpeningHoursView />} />
                   <Route path="/ticketPrices" element={<TicketPricesView />} />
                   <Route path="/movieDetails/:imdbID" element={<MovieDetailsView />} />
-                <Route path="/order" element={<PaymentDetailsView />} />
+                  <Route path="/order" element={<PaymentDetailsView />} />
 
-                {/* //TestComponents */}
-                <Route path="/test/fareSelection" element={<FareSelection totalAmountOfTickets={2}/>} />
-              </Routes>
-            </Box>
-          </Container>
+                  {/* //TestComponents */}
+                  <Route path="/test/fareSelection" element={<FareSelection totalAmountOfTickets={2} />} />
+                </Routes>
+              </Box>
+            </Container>
+            <Footer />
           </Main>
-          <Footer />
         </BrowserRouter>
       </ThemeProvider >
     </div>

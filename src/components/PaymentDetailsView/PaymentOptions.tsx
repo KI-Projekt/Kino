@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import StoreIcon from '@mui/icons-material/Store';
-import { Box, CardContent, Divider, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
+import { Box, Divider, Grid, ToggleButton, ToggleButtonGroup, Typography, useTheme } from '@mui/material';
 import React from 'react';
 
 function PaymentOptions() {
@@ -12,38 +12,37 @@ function PaymentOptions() {
     ) => {
         setPaymentMethod(newPaymentMethod);
     };
+
+    const theme = useTheme();
+
     return (
         <Box
             sx={{
                 bgcolor: 'background.paper',
-                maxWidth: '45rem',
             }}
             alignItems='center'
-            justifyItems='center'
         >
             <Divider />
-            <Box sx={{
-                display: 'flex',
-                flexDirection: 'row'
-            }}
-                alignItems='center'
-                justifyItems='center'
-            >
-                <Typography variant="h4" sx={{ p: 3, paddingLeft: '5rem', maxWidth: '30rem' }}>Payment method</Typography>
-                <CardContent sx={{ flex: '1 0 auto' }}>
+            <Box >
+                <Grid container >
+                    <Grid xs={12} sm={12} md={4} xl={4}>
+                        <Typography variant="h4" sx={{ p: 3, paddingLeft: theme.spacing, }}>Payment method</Typography>
+                    </Grid>
+                    <Grid xs={12} sm={12} md={2} xl={2}>
+                    </Grid>
                     <ToggleButtonGroup
                         value={paymentMethod}
                         exclusive
                         onChange={handlePaymentMethod}
                         aria-label="payment method"
-                        sx={{ maxWidth: '10rem' }}
+                        sx={{ p: 3, paddingLeft: theme.spacing, }}
                     >
                         <ToggleButton value="cash" aria-label='pay with cash'>
                             <StoreIcon />
                             <Typography>Pay local</Typography>
                         </ToggleButton>
                     </ToggleButtonGroup>
-                </CardContent>
+                </Grid>
             </Box>
         </Box>
     );

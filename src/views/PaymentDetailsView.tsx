@@ -3,8 +3,9 @@ import OrderOverview from "../components/PaymentDetailsView/OrderOverview";
 import { fareSelection } from "../components/TicketView/FareSelection";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PersonalData from "../components/PaymentDetailsView/PersonalData";
-import { Button, Card, Checkbox, FormControlLabel, Link, Typography } from "@mui/material";
+import { Box, Button, Checkbox, FormControlLabel, Grid, Link, Typography, useTheme } from "@mui/material";
 import PaymentOptions from "../components/PaymentDetailsView/PaymentOptions";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export interface Seat {
     seatID: number,
@@ -55,35 +56,45 @@ function PaymentDetailsView() {
         )
         ;
 
+        const theme = useTheme();
+
     return (
         <div className="row">
-            <OrderOverview
-                orderID={orderData.orderID}
-                movieID={orderData.movieID}
-                showID={orderData.orderID}
-                movie={orderData.movie}
-                picture={orderData.picture}
-                showDate={orderData.showDate}
-                room={orderData.room}
-                seats={orderData.seats}
-                fares={orderData.fares}
-                price={orderData.price}
-            />
-            <Card sx={{ maxWidth: '45rem', m: '1rem' }}>
-                <PersonalData />
-                <PaymentOptions />
-                <FormControlLabel
-                    control={<Checkbox />}
-                    sx={{ paddingLeft: '3rem' }}
-                    label={
-                        <Typography >
-                            I accept the <Link href={`/`}>Terms of Use</Link> & <Link href={`/`}>Privacy Policy</Link>
-                        </Typography>
-                    }
-                />
-                <br />
-                <Button variant="contained" sx={{m:'1rem', minWidth: '40rem'}}>Buy with payment</Button>
-            </Card>
+            <Box sx={{ flexGrow: 1 }}>
+                <Grid container spacing={3}>
+                    <Grid item xs={12} sm={12} md={6} xl={6}  >
+                        <OrderOverview
+                            orderID={orderData.orderID}
+                            movieID={orderData.movieID}
+                            showID={orderData.orderID}
+                            movie={orderData.movie}
+                            picture={orderData.picture}
+                            showDate={orderData.showDate}
+                            room={orderData.room}
+                            seats={orderData.seats}
+                            fares={orderData.fares}
+                            price={orderData.price}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6} xl={6} >
+                        <PersonalData />
+                        <PaymentOptions />
+                        <FormControlLabel
+                            control={<Checkbox />}
+                            sx={{ paddingLeft: '3rem' }}
+                            label={
+                                <Typography >
+                                    I accept the <Link href={`/`}>Terms of Use</Link> & <Link href={`/`}>Privacy Policy</Link>
+                                </Typography>
+                            }
+                        />
+                        <br />
+                        <Box sx={{ m: 3, paddingLeft: theme.spacing, paddingRight: theme.spacing }}>
+                            <Button variant="contained" sx={{ paddingX: theme.spacing, width: '100%' }}>Buy with payment</Button>
+                        </Box>
+                    </Grid>
+                </Grid>
+            </Box>
         </div>
     );
 };
