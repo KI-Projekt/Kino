@@ -43,7 +43,13 @@ function OpeningHoursView(prop: AdminProps) {
 
     return (
         <Container maxWidth='xs' >
-            <Typography variant='h4' align='left' sx={{ paddingBottom: '3rem', paddingTop: '3rem', color: redTheme.palette.primary.contrastText }}>Opening hours</Typography>
+            <Typography
+                variant='h4'
+                align='left'
+                sx={{ paddingBottom: '3rem', paddingTop: '3rem', color: redTheme.palette.primary.contrastText }}
+            >
+                Opening hours
+            </Typography>
             <TableContainer component={Paper} >
                 <Table aria-label="customized table">
                     <TableHead >

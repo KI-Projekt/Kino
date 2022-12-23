@@ -15,6 +15,10 @@ import PaymentDetailsView from "./views/PaymentDetailsView";
 
 export interface AdminProps {
   isAdmin: boolean,
+}
+
+export interface AdminPropsChange {
+  isAdmin: boolean,
   handleChangeAdminMode: Function,
 }
 
@@ -100,12 +104,12 @@ function App() {
             <Container maxWidth="xl">
               <Box className='App-Box' sx={{ minHeight: '82vh' }} >
                 <Routes>
-                  <Route path="/" element={<OverviewView />} />
+                  <Route path="/" element={<OverviewView isAdmin={admin} />} />
                   <Route path="/impressum" element={<ImpressumView />} />
                   <Route path="/login" element={<LoginView />} />
-                  <Route path="/openingHours" element={<OpeningHoursView isAdmin={admin} handleChangeAdminMode={handleChangeAdminMode} />} />
-                  <Route path="/ticketPrices" element={<TicketPricesView isAdmin={admin} handleChangeAdminMode={handleChangeAdminMode} />} />
-                  <Route path="/movieDetails/:imdbID" element={<MovieDetailsView />} />
+                  <Route path="/openingHours" element={<OpeningHoursView isAdmin={admin} />} />
+                  <Route path="/ticketPrices" element={<TicketPricesView isAdmin={admin} />} />
+                  <Route path="/movieDetails/:imdbID" element={<MovieDetailsView isAdmin={admin} />} />
                   <Route path="/order" element={<PaymentDetailsView />} />
 
                   {/* //TestComponents */}

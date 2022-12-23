@@ -4,8 +4,10 @@ import { useEffect, useState } from 'react';
 import Youtube from 'react-youtube'
 import { fetchMovie, fetchTrailerFromTMDb } from '../queries/fetchOMDbAPI';
 import ShowTiles, { Show } from '../components/MovieDetailsView/ShowTiles';
+import { AdminProps } from '../App';
+import AdminMovieDetailsView from './AdminMovieDetailsView';
 
-interface TrailerType {
+export interface TrailerType {
     id: string
     iso_639_1: string
     iso_3166_1: string
@@ -25,14 +27,14 @@ function createData(
     return { date, shows };
 };
 
-const data = [
+export const data = [
     createData(new Date(2023, 0, 1), [{ movieID: "1", showID: "1", roomID: "1", dateTime: new Date(2023, 0, 1, 16, 30, 0), additionalInfo: { language: "english", isDbox: false, isThreeD: false } }, { movieID: "5", showID: "5", roomID: "5", dateTime: new Date(2023, 0, 1, 21, 45, 0), additionalInfo: { language: "english", isDbox: false, isThreeD: false } }]),
     createData(new Date(2023, 0, 2), [{ movieID: "2", showID: "2", roomID: "2", dateTime: new Date(2023, 0, 2, 17, 30, 0), additionalInfo: { language: "english", isDbox: false, isThreeD: false } }]),
     createData(new Date(2023, 0, 3), [{ movieID: "3", showID: "3", roomID: "3", dateTime: new Date(2023, 0, 3, 18, 15, 0), additionalInfo: { language: "english", isDbox: false, isThreeD: false } }]),
     createData(new Date(2023, 0, 4), [{ movieID: "4", showID: "4", roomID: "4", dateTime: new Date(2023, 0, 4, 12, 30, 0), additionalInfo: { language: "english", isDbox: false, isThreeD: false } }, { movieID: "6", showID: "6", roomID: "6", dateTime: new Date(2023, 0, 4, 16, 15, 0), additionalInfo: { language: "english", isDbox: false, isThreeD: false } }, { movieID: "7", showID: "7", roomID: "7", dateTime: new Date(2023, 0, 4, 20, 30, 0), additionalInfo: { language: "english", isDbox: false, isThreeD: false } }]),
 ];
 
-function MovieDetailsView() {
+function MovieDetailsView(prop: AdminProps) {
 
     const [selectedMovie, setSelectedMovie] = useState(undefined || Object);
 
@@ -67,7 +69,7 @@ function MovieDetailsView() {
 
     return (
         <>
-            {selectedMovie &&
+            {!prop.isAdmin && selectedMovie &&
                 <Box sx={{ flexGrow: 1 }}>
                     <Grid container spacing={3}>
                         <Grid item xs={12} sm={12} md={6} xl={4} >
@@ -151,6 +153,8 @@ function MovieDetailsView() {
                     </Grid>
                 </Box>
             }
+
+            {prop.isAdmin && selectedMovie && <AdminMovieDetailsView selectedMovie={selectedMovie} setSelectedMovie={setSelectedMovie} /> }
 
             {!selectedMovie && <Alert sx={{ marginTop: "1rem", width: "90rem", marginLeft: "2rem" }} severity="error">Currently there is no data available</Alert>}
         </>
