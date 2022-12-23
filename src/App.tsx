@@ -98,8 +98,8 @@ function App() {
                 </Routes>
               </Box>
             </Container>
+            <Footer />
           </Main>
-          <Footer />
         </BrowserRouter>
       </ThemeProvider >
     </div>
