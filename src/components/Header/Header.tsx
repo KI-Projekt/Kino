@@ -65,7 +65,10 @@ function Header(props: AppBarProps) {
                   height: '3rem',
                   position: 'absolute',
                   zIndex: 1,
-                  top: '0.5rem',
+                  top: {
+                    xs: '0.2rem',
+                    sm: '0.5rem',
+                  } ,
                   left: 0,
                   right: 0,
                   margin: '0 auto',
