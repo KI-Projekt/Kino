@@ -135,7 +135,7 @@ function FareSelection(props: fareSelectionProps) {
     };
 
     return (
-        <Box sx={{ bgcolor: 'background.paper', width: '100%' }} alignItems='center'>
+        <Box sx={{ bgcolor: 'background.paper', maxWidth: '23rem'}} alignItems='center'>
             <Typography variant="h4" sx={{ p: 3, paddingLeft: '5rem' }}>{totalAmountOfTickets} Tickets</Typography>
             <TableContainer component={Paper} sx={{ maxWidth: '23rem' }}>
                 <Table>

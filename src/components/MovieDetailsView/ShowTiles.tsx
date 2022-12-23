@@ -1,6 +1,8 @@
 import { Box, ButtonBase, Divider, styled, Typography } from '@mui/material';
 import * as React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from 'react-router-dom';
+import { getIMDbIDFromURL } from '../../views/MovieDetailsView';
 
 export interface Show {
     movieID: string
@@ -22,6 +24,8 @@ export interface ShowDate {
 interface props {
     shows: Array<ShowDate>
 }
+
+
 
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
     position: 'relative',
@@ -78,17 +82,21 @@ const Image = styled('span')(({ theme }) => ({
 
 
 function ShowTiles(props: props) {
+
+    const navigate = useNavigate()
+
     return (
-        <Box sx={{ maxWidth: "40rem", marginTop: "1rem" }}>
+        <Box sx={{ maxWidth: "35rem", marginTop: "1rem" }}>
             {props.shows.map((currentShowDate) =>
                 <Box sx={{ maxWidth: "40rem" }}>
                     <Typography sx={{ paddingLeft: "1rem" }} variant='h5'>{currentShowDate.date.toDateString()}</Typography>
                     {currentShowDate.shows.map((currentShow) =>
                         <ImageButton
+                            onClick={() => navigate(`/movieDetails/${getIMDbIDFromURL()}/${currentShow.showID}` )}
                             focusRipple
                             style={{
-                                width: "11rem",
-                                height: "8rem",
+                                width: "10rem",
+                                height: "7rem",
                                 marginLeft: "1rem",
                                 marginTop: "1rem",
                                 marginBottom: "1rem"

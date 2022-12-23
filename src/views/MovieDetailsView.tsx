@@ -33,16 +33,17 @@ const data = [
     createData(new Date(2023, 0, 4), [{ movieID: "4",showID: "4", roomID: "4", dateTime: new Date(2023, 0, 4, 12, 30, 0), additionalInfo: { language: "english", isDbox: false, isThreeD: false } }, { movieID: "6",showID: "6", roomID: "6", dateTime: new Date(2023, 0, 4, 16, 15, 0), additionalInfo: { language: "english", isDbox: false, isThreeD: false } }, { movieID: "7",showID: "7", roomID: "7", dateTime: new Date(2023, 0, 4, 20, 30, 0), additionalInfo: { language: "english", isDbox: false, isThreeD: false } }]),
 ];
 
+export const getIMDbIDFromURL = () => {
+    let url = window.location.href;
+
+    let aUrlParts = url.split("/")
+    return aUrlParts[4]
+}
+
 function MovieDetailsView() {
 
     const [selectedMovie, setSelectedMovie] = useState(undefined || Object);
 
-    const getIDFromURL = () => {
-        let url = window.location.href;
-
-        let aUrlParts = url.split("/")
-        return aUrlParts[4]
-    }
 
 
 
@@ -60,9 +61,9 @@ function MovieDetailsView() {
                 }
             })
         }
-        fetchMovie(getIDFromURL()).then((result) => {
+        fetchMovie(getIMDbIDFromURL()).then((result) => {
             fetchedMovie = result;
-            fetchTrailerFromTMDb(getIDFromURL()).then((trailers) => appendTrailer(trailers.results));
+            fetchTrailerFromTMDb(getIMDbIDFromURL()).then((trailers) => appendTrailer(trailers.results));
         })
 
     }, []);

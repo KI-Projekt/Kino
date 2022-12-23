@@ -8,8 +8,9 @@ import PaymentOptions from "../components/PaymentDetailsView/PaymentOptions";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export interface Seat {
-    seatID: number,
-    seatNumber: number,
+    seatID: string | null,
+    seatNumber: number| null,
+    booked: boolean | null
 }
 
 export interface Row {
@@ -46,8 +47,8 @@ function PaymentDetailsView() {
             "https://m.media-amazon.com/images/M/MV5BMTE0YWFmOTMtYTU2ZS00ZTIxLWE3OTEtYTNiYzBkZjViZThiXkEyXkFqcGdeQXVyODMzMzQ4OTI@._V1_SX300.jpg",
             new Date(2023, 4, 4, 20, 30),
             "Saal A",
-            [{ seatRowID: 0, rowDescription: "D", seats: [{ seatID: 1, seatNumber: 2 }, { seatID: 2, seatNumber: 3 }] },
-            { seatRowID: 1, rowDescription: "A", seats: [{ seatID: 6, seatNumber: 6 }, { seatID: 8, seatNumber: 8 }, { seatID: 7, seatNumber: 7 }, { seatID: 9, seatNumber: 9 }] }],
+            [{ seatRowID: 0, rowDescription: "D", seats: [{ seatID: "1", seatNumber: 2 , booked: true}, { seatID: "2", seatNumber: 3, booked: true }] },
+            { seatRowID: 1, rowDescription: "A", seats: [{ seatID: "6", seatNumber: 6, booked: true }, { seatID: "8", seatNumber: 8, booked: true }, { seatID: "7", seatNumber: 7,booked: true }, { seatID: "9", seatNumber: 9, booked: true }] }],
             [{ id: 12435, name: "Adult", price: 10.00, condition: "People older than 16 and younger than 65 years old", amountOfTickets: 2, },
             { id: 1, name: 'Kid', price: 7.00, condition: "Kids under 16 years old", amountOfTickets: 1 },
             { id: 2, name: 'Student', price: 8.00, condition: "Students with a student ID", amountOfTickets: 1 },

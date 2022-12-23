@@ -12,6 +12,7 @@ import MovieDetailsView from './views/MovieDetailsView';
 import LoginView from "./views/LoginView";
 import FareSelection from "./components/TicketView/FareSelection";
 import PaymentDetailsView from "./views/PaymentDetailsView";
+import TicketView from "./views/TicketView";
 
 export const redTheme = createTheme({
 
@@ -85,6 +86,7 @@ function App() {
                   <Route path="/openingHours" element={<OpeningHoursView />} />
                   <Route path="/ticketPrices" element={<TicketPricesView />} />
                   <Route path="/movieDetails/:imdbID" element={<MovieDetailsView />} />
+                  <Route path="/movieDetails/:imdbID/:showID" element={<TicketView />} />
                   <Route path="/order" element={<PaymentDetailsView />} />
 
                   {/* //TestComponents */}
