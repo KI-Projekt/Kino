@@ -1,10 +1,6 @@
-import { TableCell, tableCellClasses, TableRow, Container, Typography, TableContainer, Paper, Table, TableHead, TableBody, styled, FormControlLabel, Switch, TextField } from '@mui/material';
+import { TableCell, tableCellClasses, TableRow, Container, Typography, TableContainer, Paper, Table, TableHead, TableBody, styled, TextField } from '@mui/material';
 import * as React from 'react';
-import { redTheme } from '../App';
-
-interface State {
-    isAdmin: boolean;
-}
+import { AdminProps, redTheme } from '../App';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -43,19 +39,7 @@ const rows = [
     createData('Sunday', '17:00', '24:00'),
 ];
 
-function OpeningHours() {
-    const [values, setValues] = React.useState<State>({
-        isAdmin: false,
-    });
-
-    const handleChangeAdminMode = (
-        event: React.ChangeEvent<HTMLInputElement>,
-    ) => {
-        setValues({
-            ...values,
-            isAdmin: event.target.checked,
-        });
-    };
+function OpeningHoursView(prop: AdminProps) {
 
     return (
         <Container maxWidth='xs' >
@@ -65,14 +49,14 @@ function OpeningHours() {
                     <TableHead >
                         <TableRow >
                             <StyledTableCell >Weekday</StyledTableCell>
-                            {!values.isAdmin && (
+                            {!prop.isAdmin && (
                                 <StyledTableCell align="right">Opening hours</StyledTableCell>
                             )}
-                            {values.isAdmin && (
-                                    <StyledTableCell align="left">Start</StyledTableCell>
+                            {prop.isAdmin && (
+                                <StyledTableCell align="left">Start</StyledTableCell>
                             )}
-                            {values.isAdmin && (
-                                    <StyledTableCell align="left">End</StyledTableCell>
+                            {prop.isAdmin && (
+                                <StyledTableCell align="left">End</StyledTableCell>
                             )}
                         </TableRow>
                     </TableHead>
@@ -83,15 +67,15 @@ function OpeningHours() {
                                     {row.weekday}
                                 </StyledTableCell>
                                 <StyledTableCell align="right">
-                                    {!values.isAdmin && (
+                                    {!prop.isAdmin && (
                                         <Typography>{row.openingHoursStart} - {row.openingHoursEnd}</Typography>
                                     )}
-                                    {values.isAdmin && (
+                                    {prop.isAdmin && (
                                         <TextField variant='outlined' defaultValue={row.openingHoursStart} /* label={`Condition for ${row.name}`} */ />
                                     )}
 
                                 </StyledTableCell>
-                                {values.isAdmin && (
+                                {prop.isAdmin && (
                                     <StyledTableCell align="right">
                                         <TextField variant='outlined' defaultValue={row.openingHoursEnd} /* label={`Condition for ${row.name}`} */ />
                                     </StyledTableCell>
@@ -102,17 +86,8 @@ function OpeningHours() {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <FormControlLabel control={<Switch onChange={handleChangeAdminMode} />} label="Admin" />
         </Container>
     )
-}
-
-class OpeningHoursView extends React.Component {
-    render() {
-        return (
-            <OpeningHours />
-        );
-    }
 }
 
 export default OpeningHoursView;

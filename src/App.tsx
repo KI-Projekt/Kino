@@ -5,13 +5,18 @@ import ImpressumView from "./views/ImpressumView";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Header, { drawerWidth } from './components/Header/Header';
 import OverviewView from './views/OverviewView';
-import { Box, Container, createTheme, styled, ThemeProvider, Toolbar } from '@mui/material';
+import { Box, Container, createTheme, FormControlLabel, styled, Switch, ThemeProvider, Toolbar } from '@mui/material';
 import OpeningHoursView from './views/OpeningHoursView';
 import TicketPricesView from './views/TicketPricesView';
 import MovieDetailsView from './views/MovieDetailsView';
 import LoginView from "./views/LoginView";
 import FareSelection from "./components/TicketView/FareSelection";
 import PaymentDetailsView from "./views/PaymentDetailsView";
+
+export interface AdminProps {
+  isAdmin: boolean,
+  handleChangeAdminMode: Function,
+}
 
 export const redTheme = createTheme({
 
@@ -75,6 +80,16 @@ function App() {
     setOpen(false);
   };
 
+  const [admin, setAdmin] = React.useState<boolean>(false);
+
+  const handleChangeAdminMode = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setAdmin(
+      event.target.checked,
+    );
+  };
+
   return (
     <div>
       <ThemeProvider theme={redTheme}>
@@ -88,8 +103,8 @@ function App() {
                   <Route path="/" element={<OverviewView />} />
                   <Route path="/impressum" element={<ImpressumView />} />
                   <Route path="/login" element={<LoginView />} />
-                  <Route path="/openingHours" element={<OpeningHoursView />} />
-                  <Route path="/ticketPrices" element={<TicketPricesView />} />
+                  <Route path="/openingHours" element={<OpeningHoursView isAdmin={admin} handleChangeAdminMode={handleChangeAdminMode} />} />
+                  <Route path="/ticketPrices" element={<TicketPricesView isAdmin={admin} handleChangeAdminMode={handleChangeAdminMode} />} />
                   <Route path="/movieDetails/:imdbID" element={<MovieDetailsView />} />
                   <Route path="/order" element={<PaymentDetailsView />} />
 
@@ -99,6 +114,7 @@ function App() {
               </Box>
             </Container>
             <Footer />
+            <FormControlLabel control={<Switch onChange={handleChangeAdminMode} />} label="Admin" />
           </Main>
         </BrowserRouter>
       </ThemeProvider >
