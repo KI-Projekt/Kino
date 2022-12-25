@@ -1,6 +1,7 @@
 import { Box, ButtonBase, Divider, styled, Typography, useTheme } from '@mui/material';
 import * as React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from 'react-router-dom';
 
 export interface Show {
     movieID: string
@@ -78,6 +79,13 @@ function ShowTiles(props: props) {
 
     const theme = useTheme();
 
+    const navigate = useNavigate();
+
+    const handleOnClick = (showID: string) => {
+        navigate(`/showDetails/${showID}`);
+        console.log("Klickkkkk")
+    };
+
     return (
         <Box sx={{ marginTop: "1rem" }}>
             {props.shows.map((currentShowDate) =>
@@ -90,13 +98,14 @@ function ShowTiles(props: props) {
                                 width: {
                                     xs: '90%',
                                     sm: theme.spacing(23),
-                                } ,
+                                },
                                 height: "8rem",
                                 marginLeft: "1rem",
                                 marginRight: "1rem",
                                 marginTop: "1rem",
                                 marginBottom: "1rem",
                             }}
+                            onClick={() => handleOnClick(currentShow.showID)}
                         >
                             <ImageBackdrop className="MuiImageBackdrop-root" />
                             <Image>
@@ -117,7 +126,7 @@ function ShowTiles(props: props) {
                             </Image>
                         </ImageButton>
                     )}
-                    <Divider sx={{borderBottomWidth: "0.2rem"}}/>
+                    <Divider sx={{ borderBottomWidth: "0.2rem" }} />
                 </Box>
             )}
         </Box>

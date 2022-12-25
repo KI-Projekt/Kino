@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { fetchMovie, fetchTrailerFromTMDb } from '../queries/fetchOMDbAPI';
 import { Show } from '../components/MovieDetailsView/ShowTiles';
 import { AdminProps } from '../App';
-import AdminMovieDetailsView from './MovieDetailsViewAdmin';
+import AdminMovieDetailsView from './Admin/MovieDetailsViewAdmin';
 import UserMovieDetailsView from './MovieDetailsViewUser';
 
 export interface MovieDetailsViewProp {

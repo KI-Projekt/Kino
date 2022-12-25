@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Alert, Box, Button, Card, CardContent, CardMedia, Divider, Grid, TextField, Typography, useTheme } from '@mui/material';
 import Youtube from 'react-youtube'
-import ShowTiles from '../components/MovieDetailsView/ShowTiles';
-import { data, MovieDetailsViewProp } from './MovieDetailsView';
+import ShowTiles from '../../components/MovieDetailsView/ShowTiles';
+import { data, MovieDetailsViewProp } from '../MovieDetailsView';
 import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from 'react-router-dom';
 
