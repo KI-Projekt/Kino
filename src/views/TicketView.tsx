@@ -260,13 +260,18 @@ const data = [
 ];
 
 function TicketView() {
-  const [currentTicketAmmount, setCurrentTicketAmount] = useState();
+  const [currentTicketAmmount, setCurrentTicketAmount] = useState(0);
 
   function onSeatClick(e: React.ChangeEvent<HTMLButtonElement>) {
     data.forEach((row) => {
       row.seats.forEach((seat) => {
-        if (seat.seatID === e.target.id) {
-          console.log(seat);
+        if (seat.seatID === e.currentTarget.id) {
+          if (seat.selected === false) {
+            setCurrentTicketAmount(currentTicketAmmount+1)
+          } else {
+            setCurrentTicketAmount(currentTicketAmmount-1)
+          }
+          seat.selected = !seat.selected;
         }
       });
     });
@@ -274,11 +279,11 @@ function TicketView() {
 
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12} sm={12} md={3} xl={3}>
+      <Grid item xs={12} sm={8} md={4} xl={3}>
         <Seatplan data={data} onSeatClick={onSeatClick} />
       </Grid>
       <Grid item xs={12} sm={12} md={4} xl={4}>
-        <FareSelection totalAmountOfTickets={2} />
+        <FareSelection totalAmountOfTickets={currentTicketAmmount} />
       </Grid>
     </Grid>
   );

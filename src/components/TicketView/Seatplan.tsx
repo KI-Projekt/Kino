@@ -16,6 +16,7 @@ function Seatplan(props: SeatPlanprops) {
         border: "0.1rem dashed grey",
         marginLeft: "1rem",
         marginTop: "1rem",
+        width: "22rem"
       }}
       alignItems="center"
       justifyItems="center"
@@ -25,8 +26,8 @@ function Seatplan(props: SeatPlanprops) {
           <>
             {row.seats.map((seat) => (
               <>
-                {seat.seatID && (
-                  <IconButton id={seat.seatID} onClick={(e) => props.onSeatClick(e)}>
+                {seat.seatID && seat.booked !== null && (
+                  <IconButton id={seat.seatID} onClick={(e) => props.onSeatClick(e)} color={seat.selected ? "primary" : "secondary"} disabled={seat.booked}>
                     <EventSeatIcon id={seat.seatID}/>
                   </IconButton>
                 )}

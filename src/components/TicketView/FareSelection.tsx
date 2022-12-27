@@ -86,8 +86,12 @@ function FareSelection(props: fareSelectionProps) {
                         ...row,
                         amountOfTickets: props.totalAmountOfTickets,
                     }
+                } else {
+                    return {
+                        ...row,
+                        amountOfTickets: 0
+                    }
                 }
-                return row;
             })
             setFares(newFares);
         }
