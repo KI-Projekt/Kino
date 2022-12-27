@@ -2,11 +2,11 @@ import * as React from 'react';
 import { Alert, Box, Button, Card, CardContent, CardMedia, Divider, Grid, TextField, Typography, useTheme } from '@mui/material';
 import Youtube from 'react-youtube'
 import ShowTiles from './ShowTiles';
-import { data, MovieDetailsViewProp } from '../../views/MovieDetailsView';
+import { MovieDetailsViewUserAdminProps } from '../../views/MovieDetailsView';
 import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from 'react-router-dom';
 
-function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
+function AdminMovieDetailsView(props: MovieDetailsViewUserAdminProps) {
 
     const theme = useTheme();
 
@@ -19,12 +19,12 @@ function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
     };
 
     const handleTextChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        prop.setSelectedMovie({...prop.selectedMovie, [e.target.id]: e.target.value});
+        props.setSelectedMovie({...props.selectedMovie, [e.target.id]: e.target.value});
     }
 
     return (
         <>
-            {prop.selectedMovie &&
+            {props.selectedMovie &&
                 <Box sx={{ flexGrow: 1 }}>
                     <Grid container spacing={3}>
                         <Grid item xs={12} sm={12} md={6} xl={4} >
@@ -38,7 +38,7 @@ function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
                                 <TextField
                                     id="Title"
                                     label="Title"
-                                    value={prop.selectedMovie.Title}
+                                    value={props.selectedMovie.Title}
                                     sx={{ my: theme.spacing(2) }}
                                     fullWidth
                                     InputLabelProps={{ shrink: true }}
@@ -48,13 +48,13 @@ function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
                                 <CardMedia
                                     component="img"
                                     alt="movie poster"
-                                    image={prop.selectedMovie.Poster} />
+                                    image={props.selectedMovie.Poster} />
 
                                 <CardContent>
                                     <TextField
                                         id="Runtime"
                                         label="Runtime"
-                                        value={prop.selectedMovie.Runtime}
+                                        value={props.selectedMovie.Runtime}
                                         sx={{ my: theme.spacing(1) }}
                                         fullWidth
                                         InputLabelProps={{ shrink: true }}
@@ -63,7 +63,7 @@ function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
                                     <TextField
                                         id="Writer"
                                         label="Writer"
-                                        value={prop.selectedMovie.Writer}
+                                        value={props.selectedMovie.Writer}
                                         sx={{ my: theme.spacing(1) }}
                                         fullWidth
                                         InputLabelProps={{ shrink: true }}
@@ -72,7 +72,7 @@ function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
                                     <TextField
                                         id="Actors"
                                         label="Actors"
-                                        value={prop.selectedMovie.Actors}
+                                        value={props.selectedMovie.Actors}
                                         sx={{ my: theme.spacing(1) }}
                                         fullWidth
                                         InputLabelProps={{ shrink: true }}
@@ -81,7 +81,7 @@ function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
                                     <TextField
                                         id="Genre"
                                         label="Genre"
-                                        value={prop.selectedMovie.Genre}
+                                        value={props.selectedMovie.Genre}
                                         sx={{ my: theme.spacing(1) }}
                                         fullWidth
                                         InputLabelProps={{ shrink: true }}
@@ -90,7 +90,7 @@ function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
                                     <TextField
                                         id="Rated"
                                         label="Age Rating"
-                                        value={prop.selectedMovie.Rated}
+                                        value={props.selectedMovie.Rated}
                                         sx={{ my: theme.spacing(1) }}
                                         fullWidth
                                         InputLabelProps={{ shrink: true }}
@@ -107,7 +107,7 @@ function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
                                     <TextField
                                         id="Plot"
                                         label="Plot"
-                                        value={prop.selectedMovie.Plot}
+                                        value={props.selectedMovie.Plot}
                                         sx={{ my: theme.spacing(2) }}
                                         fullWidth
                                         multiline
@@ -116,7 +116,7 @@ function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
                                     />
 
                                 </Card>
-                                {prop.selectedMovie.trailer &&
+                                {props.selectedMovie.trailer &&
                                     <Card
                                         sx={{
                                             marginLeft: theme.spacing(1),
@@ -125,7 +125,7 @@ function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
                                         }}
                                         elevation={0}
                                     >
-                                        <Youtube videoId={prop.selectedMovie.trailer.key} opts={{ width: "100%", outerHeight: '56.25%' }} />
+                                        <Youtube videoId={props.selectedMovie.trailer.key} opts={{ width: "100%", outerHeight: '56.25%' }} />
                                     </Card>}
                             </Box>
                         </Grid>
@@ -159,14 +159,14 @@ function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
                                         </Box>
                                     </Grid>
                                 </Grid>
-                                <ShowTiles shows={data} />
+                                <ShowTiles shows={props.showData} />
                             </Box>
                         </Grid>
                     </Grid>
                 </Box>
             }
 
-            {!prop.selectedMovie && <Alert sx={{ marginTop: "1rem", width: "90rem", marginLeft: "2rem" }} severity="error">Currently there is no data available</Alert>}
+            {!props.selectedMovie && <Alert sx={{ marginTop: "1rem", width: "90rem", marginLeft: "2rem" }} severity="error">Currently there is no data available</Alert>}
         </>
     );
 }

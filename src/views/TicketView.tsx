@@ -245,7 +245,7 @@ const data = [
     {
       seatNumber: 24,
       seatID: "24",
-      booked: false,
+      booked: true,
       selected: false,
       seatRowID: 4,
     },
@@ -261,9 +261,10 @@ const data = [
 
 function TicketView() {
   const [currentTicketAmmount, setCurrentTicketAmount] = useState(0);
+  const [seats, setSeats] = useState(data);
 
   function onSeatClick(e: React.ChangeEvent<HTMLButtonElement>) {
-    data.forEach((row) => {
+    seats.forEach((row) => {
       row.seats.forEach((seat) => {
         if (seat.seatID === e.currentTarget.id) {
           if (seat.selected === false) {
@@ -274,13 +275,14 @@ function TicketView() {
           seat.selected = !seat.selected;
         }
       });
+      setSeats(seats);
     });
   }
 
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} sm={8} md={4} xl={3.5}>
-        <Seatplan data={data} onSeatClick={onSeatClick} />
+        <Seatplan data={seats} onSeatClick={onSeatClick} />
       </Grid>
       <Grid item xs={12} sm={12} md={4} xl={4}>
         <FareSelection totalAmountOfTickets={currentTicketAmmount} />
