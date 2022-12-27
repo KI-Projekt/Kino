@@ -1,8 +1,8 @@
 import { Grid, Card, CardHeader, CardMedia, CardContent, Typography, Divider, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
 import Youtube from 'react-youtube'
-import ShowTiles from "../components/MovieDetailsView/ShowTiles";
-import { data, MovieDetailsViewProp } from "./MovieDetailsView";
+import ShowTiles from "./ShowTiles";
+import { data, MovieDetailsViewProp } from "../../views/MovieDetailsView";
 
 function UserMovieDetailsView(prop: MovieDetailsViewProp) {
 

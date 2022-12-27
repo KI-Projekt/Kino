@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react';
 import { fetchMovie, fetchTrailerFromTMDb } from '../queries/fetchOMDbAPI';
 import { Show } from '../components/MovieDetailsView/ShowTiles';
 import { AdminProps } from '../App';
-import AdminMovieDetailsView from './MovieDetailsViewAdmin';
-import UserMovieDetailsView from './MovieDetailsViewUser';
+import AdminMovieDetailsView from '../components/MovieDetailsView/MovieDetailsViewAdmin';
+import UserMovieDetailsView from '../components/MovieDetailsView/MovieDetailsViewUser';
 
 export interface MovieDetailsViewProp {
     selectedMovie: Movie,
-    setSelectedMovie: Function,
+    setSelectedMovie: React.Dispatch<Movie>,
 }
 
 interface TrailerType {
@@ -26,15 +26,15 @@ interface TrailerType {
 }
 
 interface Movie {
-    Title: String,
-    Poster: string,
-    Runtime: String,
-    Writer: String,
-    Actors: String,
-    Genre: String,
-    Rated: String,
-    Plot: String,
-    trailer: TrailerType,
+    Title?: String | undefined,
+    Poster?: string | undefined,
+    Runtime?: String | undefined,
+    Writer?: String | undefined,
+    Actors?: String | undefined,
+    Genre?: String | undefined,
+    Rated?: String | undefined,
+    Plot?: String | undefined,
+    trailer: TrailerType | undefined,
 }
 
 function createData(
@@ -53,7 +53,7 @@ export const data = [
 
 function MovieDetailsView(prop: AdminProps) {
 
-    const [selectedMovie, setSelectedMovie] = useState(undefined || Object);
+    const [selectedMovie, setSelectedMovie] = useState<Movie | undefined>(undefined);
 
     const getIDFromURL = () => {
         let url = window.location.href;
@@ -63,7 +63,7 @@ function MovieDetailsView(prop: AdminProps) {
     }
 
     useEffect(() => {
-        let fetchedMovie: Object | undefined;
+        let fetchedMovie: Movie | undefined;
 
         function appendTrailer(trailers: Array<TrailerType>) {
             trailers.map((item: TrailerType) => {
@@ -71,7 +71,7 @@ function MovieDetailsView(prop: AdminProps) {
                     setSelectedMovie({ ...fetchedMovie, trailer: item });
                     return true;
                 } else {
-                    setSelectedMovie(fetchedMovie);
+                    setSelectedMovie({ ...fetchedMovie, trailer: undefined });
                     return false;
                 }
             })

@@ -4,7 +4,7 @@ import { AdminProps } from '../App';
 import TileBar from '../components/OverviewView/Tilebar';
 import AddIcon from '@mui/icons-material/Add';
 
-function OverviewView(adminProp: AdminProps) {
+function OverviewView(adminProps: AdminProps) {
 
     const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ function OverviewView(adminProp: AdminProps) {
 
     return (
         <div>
-            {adminProp.isAdmin &&
+            {adminProps.isAdmin &&
                 <Box textAlign='center' sx={{ pt: theme.spacing(3) }}>
                     <Button
                         variant='contained'
@@ -29,9 +29,9 @@ function OverviewView(adminProp: AdminProps) {
                     </Button>
                 </Box>
             }
-            <TileBar title='Star Wars' query='Star Wars' />
-            <TileBar title='Marvel' query='Marvel' />
-            <TileBar title='Harry Potter' query='Harry Potter' />
+            <TileBar title='Star Wars' query='Star Wars' adminProps={adminProps} />
+            <TileBar title='Marvel' query='Marvel' adminProps={adminProps} />
+            <TileBar title='Harry Potter' query='Harry Potter' adminProps={adminProps} />
 
         </div>
     );

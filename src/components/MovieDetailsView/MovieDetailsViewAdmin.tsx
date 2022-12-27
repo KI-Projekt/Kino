@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Alert, Box, Button, Card, CardContent, CardMedia, Divider, Grid, TextField, Typography, useTheme } from '@mui/material';
 import Youtube from 'react-youtube'
-import ShowTiles from '../components/MovieDetailsView/ShowTiles';
-import { data, MovieDetailsViewProp } from './MovieDetailsView';
+import ShowTiles from './ShowTiles';
+import { data, MovieDetailsViewProp } from '../../views/MovieDetailsView';
 import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from 'react-router-dom';
 
@@ -18,6 +18,10 @@ function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
         navigate(`/${link}`);
     };
 
+    const handleTextChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        prop.setSelectedMovie({...prop.selectedMovie, [e.target.id]: e.target.value});
+    }
+
     return (
         <>
             {prop.selectedMovie &&
@@ -32,12 +36,13 @@ function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
                                 elevation={0}
                             >
                                 <TextField
-                                    id="movie-title"
+                                    id="Title"
                                     label="Title"
                                     value={prop.selectedMovie.Title}
                                     sx={{ my: theme.spacing(2) }}
                                     fullWidth
                                     InputLabelProps={{ shrink: true }}
+                                    onChange={handleTextChange}
                                 />
 
                                 <CardMedia
@@ -47,44 +52,49 @@ function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
 
                                 <CardContent>
                                     <TextField
-                                        id="movie-runtime"
+                                        id="Runtime"
                                         label="Runtime"
                                         value={prop.selectedMovie.Runtime}
                                         sx={{ my: theme.spacing(1) }}
                                         fullWidth
                                         InputLabelProps={{ shrink: true }}
+                                        onChange={handleTextChange}
                                     />
                                     <TextField
-                                        id="movie-writer"
+                                        id="Writer"
                                         label="Writer"
                                         value={prop.selectedMovie.Writer}
                                         sx={{ my: theme.spacing(1) }}
                                         fullWidth
                                         InputLabelProps={{ shrink: true }}
+                                        onChange={handleTextChange}
                                     />
                                     <TextField
-                                        id="movie-actors"
+                                        id="Actors"
                                         label="Actors"
                                         value={prop.selectedMovie.Actors}
                                         sx={{ my: theme.spacing(1) }}
                                         fullWidth
                                         InputLabelProps={{ shrink: true }}
+                                        onChange={handleTextChange}
                                     />
                                     <TextField
-                                        id="movie-genre"
+                                        id="Genre"
                                         label="Genre"
                                         value={prop.selectedMovie.Genre}
                                         sx={{ my: theme.spacing(1) }}
                                         fullWidth
                                         InputLabelProps={{ shrink: true }}
+                                        onChange={handleTextChange}
                                     />
                                     <TextField
-                                        id="movie-Rated"
+                                        id="Rated"
                                         label="Age Rating"
                                         value={prop.selectedMovie.Rated}
                                         sx={{ my: theme.spacing(1) }}
                                         fullWidth
                                         InputLabelProps={{ shrink: true }}
+                                        onChange={handleTextChange}
                                     />
                                 </CardContent>
                             </Card>
@@ -95,13 +105,14 @@ function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
                                 <Card sx={{ marginLeft: theme.spacing(1), marginRight: theme.spacing(1), marginTop: theme.spacing(10), overflowY: 'auto' }} elevation={0}>
 
                                     <TextField
-                                        id="movie-plot"
+                                        id="Plot"
                                         label="Plot"
                                         value={prop.selectedMovie.Plot}
                                         sx={{ my: theme.spacing(2) }}
                                         fullWidth
                                         multiline
                                         InputLabelProps={{ shrink: true }}
+                                        onChange={handleTextChange}
                                     />
 
                                 </Card>
