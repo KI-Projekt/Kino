@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Alert } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { fetchMovie, fetchTrailerFromTMDb } from '../queries/fetchOMDbAPI';
 import { Show } from '../components/MovieDetailsView/ShowTiles';
 import { AdminProps } from '../App';
@@ -14,6 +14,8 @@ export interface MovieDetailsViewUserAdminProps {
 }
 
 interface MovieDetailsViewProps {
+    selectedMovie: Movie | undefined,
+    setSelectedMovie: React.Dispatch<Movie>,
     showData: Array<ShowCollection>,
     adminProps: AdminProps
 }
@@ -31,7 +33,7 @@ interface TrailerType {
     type: string
 }
 
-interface Movie {
+export interface Movie {
     Title?: String | undefined,
     Poster?: string | undefined,
     Runtime?: String | undefined,
@@ -57,8 +59,8 @@ export const getIMDbIDFromURL = () => {
 
 function MovieDetailsView(props: MovieDetailsViewProps) {
 
-    const [selectedMovie, setSelectedMovie] = useState<Movie | undefined>(undefined);
 
+    const setSelectedMovie = props.setSelectedMovie;
 
     useEffect(() => {
         let fetchedMovie: Movie | undefined;
@@ -78,15 +80,15 @@ function MovieDetailsView(props: MovieDetailsViewProps) {
             fetchedMovie = result;
             fetchTrailerFromTMDb(getIMDbIDFromURL()).then((trailers) => appendTrailer(trailers.results));
         })
-    }, []);
+    }, [setSelectedMovie]);
 
     return (
         <>
-            {!props.adminProps.isAdmin && selectedMovie && <UserMovieDetailsView selectedMovie={selectedMovie} setSelectedMovie={setSelectedMovie} showData={props.showData}/>}
+            {!props.adminProps.isAdmin && props.selectedMovie && <UserMovieDetailsView selectedMovie={props.selectedMovie} setSelectedMovie={props.setSelectedMovie} showData={props.showData}/>}
 
-            {props.adminProps.isAdmin && selectedMovie && <AdminMovieDetailsView selectedMovie={selectedMovie} setSelectedMovie={setSelectedMovie} showData={props.showData}/>}
+            {props.adminProps.isAdmin && props.selectedMovie && <AdminMovieDetailsView selectedMovie={props.selectedMovie} setSelectedMovie={props.setSelectedMovie} showData={props.showData}/>}
 
-            {!selectedMovie && <Alert sx={{ marginTop: "1rem", width: "90rem", marginLeft: "2rem" }} severity="error">Currently there is no data available</Alert>}
+            {!props.selectedMovie && <Alert sx={{ marginTop: "1rem", width: "90rem", marginLeft: "2rem" }} severity="error">Currently there is no data available</Alert>}
         </>
     );
 }

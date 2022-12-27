@@ -8,6 +8,7 @@ export interface Show {
     movieID: string
     showID: string
     roomID: string
+    room: string
     dateTime: Date
     additionalInfo: {
         language: string

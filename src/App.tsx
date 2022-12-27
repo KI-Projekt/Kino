@@ -17,9 +17,8 @@ import {
 } from "@mui/material";
 import OpeningHoursView from "./views/OpeningHoursView";
 import TicketPricesView from "./views/TicketPricesView";
-import MovieDetailsView from "./views/MovieDetailsView";
+import MovieDetailsView, { Movie } from "./views/MovieDetailsView";
 import LoginView from "./views/LoginView";
-import FareSelection from "./components/TicketView/FareSelection";
 import PaymentDetailsView from "./views/PaymentDetailsView";
 import TicketView from "./views/TicketView";
 import { Show } from "./components/MovieDetailsView/ShowTiles";
@@ -34,13 +33,15 @@ export const data = [
       movieID: "1",
       showID: "1",
       roomID: "1",
+      room: "Saal 1",
       dateTime: new Date(2023, 0, 1, 16, 30, 0),
       additionalInfo: { language: "english", isDbox: false, isThreeD: false },
     },
     {
       movieID: "5",
       showID: "5",
-      roomID: "5",
+      roomID: "2",
+      room: "Saal 2",
       dateTime: new Date(2023, 0, 1, 21, 45, 0),
       additionalInfo: { language: "english", isDbox: false, isThreeD: false },
     },
@@ -50,6 +51,7 @@ export const data = [
       movieID: "2",
       showID: "2",
       roomID: "2",
+      room: "Saal 2",
       dateTime: new Date(2023, 0, 2, 17, 30, 0),
       additionalInfo: { language: "english", isDbox: false, isThreeD: false },
     },
@@ -59,6 +61,7 @@ export const data = [
       movieID: "3",
       showID: "3",
       roomID: "3",
+      room: "Saal 3",
       dateTime: new Date(2023, 0, 3, 18, 15, 0),
       additionalInfo: { language: "english", isDbox: false, isThreeD: false },
     },
@@ -67,21 +70,24 @@ export const data = [
     {
       movieID: "4",
       showID: "4",
-      roomID: "4",
+      roomID: "1",
+      room: "Saal 1",
       dateTime: new Date(2023, 0, 4, 12, 30, 0),
       additionalInfo: { language: "english", isDbox: false, isThreeD: false },
     },
     {
       movieID: "6",
       showID: "6",
-      roomID: "6",
+      roomID: "2",
+      room: "Saal 2",
       dateTime: new Date(2023, 0, 4, 16, 15, 0),
       additionalInfo: { language: "english", isDbox: false, isThreeD: false },
     },
     {
       movieID: "7",
       showID: "7",
-      roomID: "7",
+      roomID: "1",
+      room: "Saal 1",
       dateTime: new Date(2023, 0, 4, 20, 30, 0),
       additionalInfo: { language: "english", isDbox: false, isThreeD: false },
     },
@@ -164,6 +170,8 @@ function App() {
     setOpen(false);
   };
 
+  const [selectedMovie, setSelectedMovie] = React.useState<Movie | undefined>(undefined);
+
   const [adminProps, setAdminProps] = React.useState<AdminProps>({
     isAdmin: false,
   });
@@ -206,7 +214,7 @@ function App() {
                   />
                   <Route
                     path="/movieDetails/:imdbID"
-                    element={<MovieDetailsView adminProps={adminProps} showData={data} />}
+                    element={<MovieDetailsView setSelectedMovie={setSelectedMovie} selectedMovie={selectedMovie} adminProps={adminProps} showData={data} />}
                   />
                   <Route path="/order" element={<PaymentDetailsView />} />
                   <Route
@@ -216,8 +224,8 @@ function App() {
 
                   {/* //TestComponents */}
                   <Route
-                    path="/test/fareSelection"
-                    element={<FareSelection totalAmountOfTickets={2} />}
+                    path="/test/paymendDetails"
+                    element={<PaymentDetailsView />}
                   />
                 </Routes>
               </Box>
