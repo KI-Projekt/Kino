@@ -12,6 +12,7 @@ import MovieDetailsView from './views/MovieDetailsView';
 import LoginView from "./views/LoginView";
 import FareSelection from "./components/TicketView/FareSelection";
 import PaymentDetailsView from "./views/PaymentDetailsView";
+import AddNewMoviesView from "./views/AddNewMoviesView";
 
 export interface AdminProps {
   isAdmin: boolean,
@@ -111,6 +112,7 @@ function App() {
                   <Route path="/ticketPrices" element={<TicketPricesView isAdmin={admin} />} />
                   <Route path="/movieDetails/:imdbID" element={<MovieDetailsView isAdmin={admin} />} />
                   <Route path="/order" element={<PaymentDetailsView />} />
+                  <Route path="/addNewMovie" element={<AddNewMoviesView />} />
 
                   {/* //TestComponents */}
                   <Route path="/test/fareSelection" element={<FareSelection totalAmountOfTickets={2} />} />
