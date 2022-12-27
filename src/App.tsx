@@ -5,7 +5,7 @@ import ImpressumView from "./views/ImpressumView";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Header, { drawerWidth } from './components/Header/Header';
 import OverviewView from './views/OverviewView';
-import { Box, Container, createTheme, styled, ThemeProvider, Toolbar } from '@mui/material';
+import { Box, Container, createTheme, FormControlLabel, styled, Switch, ThemeProvider, Toolbar } from '@mui/material';
 import OpeningHoursView from './views/OpeningHoursView';
 import TicketPricesView from './views/TicketPricesView';
 import MovieDetailsView from './views/MovieDetailsView';
@@ -13,6 +13,15 @@ import LoginView from "./views/LoginView";
 import FareSelection from "./components/TicketView/FareSelection";
 import PaymentDetailsView from "./views/PaymentDetailsView";
 import TicketView from "./views/TicketView";
+
+export interface AdminProps {
+  isAdmin: boolean,
+}
+
+export interface AdminPropsChange {
+  isAdmin: boolean,
+  handleChangeAdminMode: Function,
+}
 
 export const redTheme = createTheme({
 
@@ -76,6 +85,16 @@ function App() {
     setOpen(false);
   };
 
+  const [admin, setAdmin] = React.useState<boolean>(false);
+
+  const handleChangeAdminMode = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setAdmin(
+      event.target.checked,
+    );
+  };
+
   return (
     <div>
       <ThemeProvider theme={redTheme}>
@@ -86,14 +105,14 @@ function App() {
             <Container maxWidth="xl">
               <Box className='App-Box' sx={{ minHeight: '82vh' }} >
                 <Routes>
-                  <Route path="/" element={<OverviewView />} />
+                  <Route path="/" element={<OverviewView isAdmin={admin} />} />
                   <Route path="/impressum" element={<ImpressumView />} />
                   <Route path="/login" element={<LoginView />} />
-                  <Route path="/openingHours" element={<OpeningHoursView />} />
-                  <Route path="/ticketPrices" element={<TicketPricesView />} />
-                  <Route path="/movieDetails/:imdbID" element={<MovieDetailsView />} />
-                  <Route path="/movieDetails/:imdbID/:showID" element={<TicketView />} />
+                  <Route path="/openingHours" element={<OpeningHoursView isAdmin={admin} />} />
+                  <Route path="/ticketPrices" element={<TicketPricesView isAdmin={admin} />} />
+                  <Route path="/movieDetails/:imdbID" element={<MovieDetailsView isAdmin={admin} />} />
                   <Route path="/order" element={<PaymentDetailsView />} />
+                  <Route path="/movieDetails/:imdbID/:showID" element={<TicketView />} />
 
                   {/* //TestComponents */}
                   <Route path="/test/fareSelection" element={<FareSelection totalAmountOfTickets={2} />} />
@@ -101,6 +120,7 @@ function App() {
               </Box>
             </Container>
             <Footer />
+            <FormControlLabel control={<Switch onChange={handleChangeAdminMode} />} label="Admin" />
           </Main>
         </BrowserRouter>
       </ThemeProvider >

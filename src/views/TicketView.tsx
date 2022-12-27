@@ -279,7 +279,7 @@ function TicketView() {
 
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12} sm={8} md={4} xl={3}>
+      <Grid item xs={12} sm={8} md={4} xl={3.5}>
         <Seatplan data={data} onSeatClick={onSeatClick} />
       </Grid>
       <Grid item xs={12} sm={12} md={4} xl={4}>

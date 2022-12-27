@@ -14,9 +14,9 @@ function Seatplan(props: SeatPlanprops) {
     <Box
       sx={{
         border: "0.1rem dashed grey",
-        marginLeft: "1rem",
+        marginX: "1rem",
         marginTop: "1rem",
-        width: "22rem"
+        width: "22rem",
       }}
       alignItems="center"
       justifyItems="center"
