@@ -59,7 +59,6 @@ function PaymentDetailsView() {
         const theme = useTheme();
 
     return (
-        <div className="row">
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={12} md={6} xl={6}  >
@@ -95,7 +94,6 @@ function PaymentDetailsView() {
                     </Grid>
                 </Grid>
             </Box>
-        </div>
     );
 };
 
