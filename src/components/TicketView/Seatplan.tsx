@@ -27,12 +27,12 @@ function Seatplan(props: SeatPlanprops) {
             {row.seats.map((seat) => (
               <>
                 {seat.seatID && seat.booked !== null && (
-                  <IconButton id={seat.seatID} onClick={(e) => props.onSeatClick(e)} color={seat.selected ? "primary" : "secondary"} disabled={seat.booked}>
-                    <EventSeatIcon id={seat.seatID}/>
+                  <IconButton sx={{width: {xs: "1.6rem", sm: "2.5rem", md: "2rem", xl: "3rem"}}} id={seat.seatID} onClick={(e) => props.onSeatClick(e)} color={seat.selected ? "primary" : "secondary"} disabled={seat.booked}>
+                    <EventSeatIcon  id={seat.seatID}/>
                   </IconButton>
                 )}
                 {seat.seatID === null && (
-                  <IconButton disabled>
+                  <IconButton disabled sx={{width: {xs: "1.5rem", sm: "1.5rem", md: "2rem", xl: "3rem"}}}>
                     <StairsOutlinedIcon />
                   </IconButton>
                 )}

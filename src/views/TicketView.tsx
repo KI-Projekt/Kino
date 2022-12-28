@@ -82,22 +82,6 @@ const data = [
       seatRowID: 1,
     },
     {
-      seatNumber: null,
-      seatID: null,
-      booked: null,
-      selected: null,
-      seatRowID: 1,
-    },
-  ]),
-  createData(2, "B", [
-    {
-      seatNumber: null,
-      seatID: null,
-      booked: null,
-      selected: null,
-      seatRowID: 2,
-    },
-    {
       seatNumber: 7,
       seatID: "7",
       booked: false,
@@ -126,6 +110,22 @@ const data = [
       seatRowID: 2,
     },
     {
+      seatNumber: null,
+      seatID: null,
+      booked: null,
+      selected: null,
+      seatRowID: 1,
+    },
+  ]),
+  createData(2, "B", [
+    {
+      seatNumber: null,
+      seatID: null,
+      booked: null,
+      selected: null,
+      seatRowID: 2,
+    },
+    {
       seatNumber: 11,
       seatID: "11",
       booked: false,
@@ -138,22 +138,6 @@ const data = [
       booked: false,
       selected: false,
       seatRowID: 2,
-    },
-    {
-      seatNumber: null,
-      seatID: null,
-      booked: null,
-      selected: null,
-      seatRowID: 2,
-    },
-  ]),
-  createData(3, "C", [
-    {
-      seatNumber: null,
-      seatID: null,
-      booked: null,
-      selected: null,
-      seatRowID: 3,
     },
     {
       seatNumber: 13,
@@ -198,22 +182,6 @@ const data = [
       seatRowID: 3,
     },
     {
-      seatNumber: null,
-      seatID: null,
-      booked: null,
-      selected: false,
-      seatRowID: 3,
-    },
-  ]),
-  createData(4, "D", [
-    {
-      seatNumber: null,
-      seatID: null,
-      booked: null,
-      selected: false,
-      seatRowID: 4,
-    },
-    {
       seatNumber: 19,
       seatID: "19",
       booked: false,
@@ -226,6 +194,22 @@ const data = [
       booked: false,
       selected: false,
       seatRowID: 4,
+    },
+    {
+      seatNumber: null,
+      seatID: null,
+      booked: null,
+      selected: null,
+      seatRowID: 2,
+    },
+  ]),
+  createData(3, "C", [
+    {
+      seatNumber: null,
+      seatID: null,
+      booked: null,
+      selected: null,
+      seatRowID: 3,
     },
     {
       seatNumber: 21,
@@ -256,11 +240,53 @@ const data = [
       seatRowID: 4,
     },
     {
+      seatNumber: 25,
+      seatID: "25",
+      booked: false,
+      selected: false,
+      seatRowID: 4,
+    },
+    {
+      seatNumber: 26,
+      seatID: "26",
+      booked: false,
+      selected: false,
+      seatRowID: 4,
+    },
+    {
+      seatNumber: 27,
+      seatID: "27",
+      booked: false,
+      selected: false,
+      seatRowID: 4,
+    },
+    {
+      seatNumber: 28,
+      seatID: "28",
+      booked: true,
+      selected: false,
+      seatRowID: 4,
+    },
+    {
+      seatNumber: 29,
+      seatID: "29",
+      booked: false,
+      selected: false,
+      seatRowID: 4,
+    },
+    {
+      seatNumber: 30,
+      seatID: "30",
+      booked: false,
+      selected: false,
+      seatRowID: 4,
+    }, 
+    {
       seatNumber: null,
       seatID: null,
       booked: null,
       selected: false,
-      seatRowID: 4,
+      seatRowID: 3,
     },
   ]),
 ];
@@ -388,7 +414,7 @@ function TicketView(props: TicketViewProps) {
 
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12} sm={8} md={6} xl={6}>
+      <Grid item xs={12} sm={12} md={6.5} xl={6}>
         <Box>
           <Typography
             align="center"
@@ -422,7 +448,7 @@ function TicketView(props: TicketViewProps) {
         </Box>
         {seats && <Seatplan data={seats} onSeatClick={onSeatClick} />}
       </Grid>
-      <Grid item xs={12} sm={12} md={6} xl={6}>
+      <Grid item xs={12} sm={12} md={5.5} xl={6}>
         <FareSelection
           totalAmountOfTickets={currentTicketAmmount}
           fares={fares}
