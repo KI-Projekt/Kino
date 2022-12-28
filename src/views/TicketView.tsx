@@ -344,7 +344,7 @@ function TicketView(props: TicketViewProps) {
     };
     props.setOrder(newOrder);
     if (props.selectedShow){
-      navigate(`/movieDetails/${getIMDbIDFromURL()}/${props.selectedShow.showID}/${newOrder.orderID}`);
+      navigate(`/orderDetails/${getIMDbIDFromURL()}/${props.selectedShow.showID}/${newOrder.orderID}`);
     }
     };
 

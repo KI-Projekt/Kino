@@ -68,7 +68,7 @@ function MovieDetailsView(props: MovieDetailsViewProps) {
     const navigate = useNavigate();
 
     const onShowTileClick = (currentShow : Show) => {
-        navigate(`/movieDetails/${getIMDbIDFromURL()}/${currentShow.showID}`);
+        navigate(`/showDetails/${getIMDbIDFromURL()}/${currentShow.showID}`);
         props.setSelectedShow(currentShow);
     }
 

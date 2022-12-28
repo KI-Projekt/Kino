@@ -220,11 +220,11 @@ function App() {
                     element={<MovieDetailsView setSelectedMovie={setSelectedMovie} setSelectedShow={setSelectedShow} selectedMovie={selectedMovie} adminProps={adminProps} showData={data} />}
                   />
                   <Route
-                    path="/movieDetails/:imdbID/:showID"
+                    path="/showDetails/:imdbID/:showID"
                     element={<TicketView selectedMovie={selectedMovie} selectedShow={selectedShow} setOrder={setOrder}/>}
                   />
                   <Route
-                    path="/movieDetails/:imdbID/:showID/:orderID"
+                    path="/orderDetails/:imdbID/:showID/:orderID"
                     element={<PaymentDetailsView order={order} />}
                   />
                 </Routes>
