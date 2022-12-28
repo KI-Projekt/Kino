@@ -29,7 +29,7 @@ function AdminMovieDetailsView(props: MovieDetailsViewAdminProp) {
         props.setSelectedMovie({ ...props.selectedMovie, [e.target.id]: e.target.value });
     }
 
-    function handleAddNewMovie () {
+    function handleAddNewMovie() {
         //POST an Movie API schicken und dann
         props.setIsNew(false);
     }
@@ -138,13 +138,16 @@ function AdminMovieDetailsView(props: MovieDetailsViewAdminProp) {
                                         <Youtube videoId={props.selectedMovie.trailer.key} opts={{ width: "100%", outerHeight: '56.25%' }} />
                                     </Card>
                                 }
-                                <Button
-                                    variant='contained'
-                                    fullWidth
-                                    onClick={() => handleAddNewMovie()}
-                                >
-                                    Add new Movie
-                                </Button>
+                                {props.isNew &&
+                                    <Button
+                                        variant='contained'
+                                        fullWidth
+                                        onClick={() => handleAddNewMovie()}
+                                        sx={{ marginBottom: theme.spacing(2) }}
+                                    >
+                                        Add new Movie
+                                    </Button>
+                                }
                             </Box>
                         </Grid>
                         {!props.isNew &&
