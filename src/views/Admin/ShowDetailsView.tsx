@@ -1,6 +1,7 @@
-import { Alert, Box, FormControl, InputLabel, MenuItem, Select, TextField, Typography, useTheme } from "@mui/material";
-import { useEffect, useState } from "react";
-import { AdminProps } from "../../App";
+import { Alert, Box, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography, useTheme } from "@mui/material";
+import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import dayjs, { Dayjs } from 'dayjs';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 ////just for information - can be deleted
 export interface Show {
@@ -15,18 +16,22 @@ export interface Show {
     }
 }
 
-function ShowDetailsView(adminProp: AdminProps) {
+interface ShowDetailsProps {
+    isAdmin: boolean,
+    selectedShow?: Show,
+    setSelectedShow: Function,
+}
+
+function ShowDetailsView(props: ShowDetailsProps) {
 
     const theme = useTheme();
 
-    const [selectedShow, setSelectedShow] = useState<Show>(undefined || Object);
-
-    const getIDFromURL = () => {
+    /* const getIDFromURL = () => {
         let url = window.location.href;
 
         let aUrlParts = url.split("/")
         return aUrlParts[4]
-    }
+    } */
 
     /*  useEffect(() => {
          let fetchShow: Object | undefined;
@@ -50,9 +55,26 @@ function ShowDetailsView(adminProp: AdminProps) {
         createRoomData(4, 'Raum 6'),
     ];
 
+    const handleChangeDateTime = (newValue: Dayjs | null) => {
+        const newShow = {
+            ...props.selectedShow,
+            dateTime: newValue,
+        }
+        props.setSelectedShow(newShow);
+    };
+
+    const handleChangeRoom = (e: SelectChangeEvent) => {
+        console.log(e);
+        /* const newShow = {
+            ...props.selectedShow,
+            roomID: 1 //change room id
+        }
+        props.setSelectedShow(newShow); */
+    };
+
     return (
-        <>
-            {adminProp.isAdmin &&
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+            {props.isAdmin && props.selectedShow &&
                 <Box sx={{ p: 5 }}>
                     <Typography
                         variant="h4"
@@ -63,15 +85,16 @@ function ShowDetailsView(adminProp: AdminProps) {
                     >
                         Shows
                     </Typography>
-                    {/* <Typography>{selectedShow.showID}</Typography>
-                    <Typography>{selectedShow.movieID}</Typography> */}
+                    <Typography sx={{ ml: 1, mb: 1 }}>ShowID: {props.selectedShow.showID}</Typography>
+                    <Typography sx={{ ml: 1, mb: 1 }}>MovieID: {props.selectedShow.movieID}</Typography>
                     <FormControl sx={{ m: 1, minWidth: 80 }}>
                         <InputLabel id="show-room">Room</InputLabel>
                         <Select
                             id="show-room"
                             label="Room"
-                            // value={selectedShow.roomID}
+                            value={props.selectedShow.roomID}
                             autoWidth
+                            onChange={handleChangeRoom}
                         >
                             {roomData.map((room) => (
                                 <MenuItem>{room.name}</MenuItem>
@@ -80,25 +103,25 @@ function ShowDetailsView(adminProp: AdminProps) {
 
                         </Select>
                     </FormControl>
-                    {/* <Select
-                        id="show-room"
-                        label="Room"
-                        value={selectedShow.roomID}
-                        sx={{ my: theme.spacing(2) }}
-                    > 
-                        {roomData.map((room) => (
-                            <MenuItem>{selectedShow.additionalInfo.language}</MenuItem>
-                        )
-                        )}
-
-                    </Select> */}
+                    <DateTimePicker
+                        label="Show starts at"
+                        value={props.selectedShow.dateTime}
+                        onChange={handleChangeDateTime}
+                        renderInput={(params) => <TextField {...params} />}
+                    />
                 </Box>
 
             }
-            {!adminProp.isAdmin &&
+            {props.isAdmin && !props.selectedShow &&
+                <Alert sx={{ marginTop: "1rem", width: "90rem", marginLeft: "2rem" }} severity="error">No show is selected</Alert>
+            }
+            {!props.isAdmin && props.selectedShow &&
                 <Alert sx={{ marginTop: "1rem", width: "90rem", marginLeft: "2rem" }} severity="error">You don't have access to this site</Alert>
             }
-        </>
+            {!props.isAdmin && !props.selectedShow &&
+                <Alert sx={{ marginTop: "1rem", width: "90rem", marginLeft: "2rem" }} severity="error">You don't have access to this site and no show is selected</Alert>
+            }
+        </LocalizationProvider>
     );
 };
 

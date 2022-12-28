@@ -15,6 +15,7 @@ import {
   ThemeProvider,
   Toolbar,
 } from "@mui/material";
+import type { } from '@mui/x-date-pickers/themeAugmentation';
 import OpeningHoursView from "./views/OpeningHoursView";
 import TicketPricesView from "./views/TicketPricesView";
 import MovieDetailsView, { Movie } from "./views/MovieDetailsView";
@@ -136,6 +137,15 @@ export const redTheme = createTheme({
       "sans-serif",
     ].join(","),
   },
+  components: {
+    MuiDatePicker: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#ED254E',
+        },
+      },
+    },
+  },
 });
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
@@ -204,28 +214,28 @@ function App() {
           <Main open={open}>
             <Container maxWidth="xl">
               <Box className="App-Box" sx={{ minHeight: "82vh" }}>
-                <Routes>
-                  <Route
-                    path="/movieDetails/:imdbID"
-                    element={<MovieDetailsView setSelectedMovie={setSelectedMovie} setSelectedShow={setSelectedShow} selectedMovie={selectedMovie} isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} showData={data} />}
-                  />
-                  <Route
-                    path="/showDetails/:imdbID/:showID"
-                    element={<TicketView selectedMovie={selectedMovie} selectedShow={selectedShow} setOrder={setOrder} />}
-                  />
-                  <Route
-                    path="/orderDetails/:imdbID/:showID/:orderID"
-                    element={<PaymentDetailsView order={order} />}
-                  />
-                  <Route path="/" element={<OverviewView isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} />} />
-                  <Route path="/impressum" element={<ImpressumView />} />
-                  <Route path="/login" element={<LoginView />} />
-                  <Route path="/openingHours" element={<OpeningHoursView isAdmin={adminProps.isAdmin} />} />
-                  <Route path="/ticketPrices" element={<TicketPricesView isAdmin={adminProps.isAdmin} />} />
-                  <Route path="/movieDetails/:imdbID/new" element={<MovieDetailsView setSelectedMovie={setSelectedMovie} setSelectedShow={setSelectedShow} selectedMovie={selectedMovie} isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} showData={data} />} />
-                  <Route path="/addNewMovie" element={<AddNewMoviesView isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} />} />
-                  <Route path="/showDetails/:showID" element={<ShowDetailsView isAdmin={adminProps.isAdmin} />} />
-                </Routes>
+                  <Routes>
+                    <Route
+                      path="/movieDetails/:imdbID"
+                      element={<MovieDetailsView setSelectedMovie={setSelectedMovie} setSelectedShow={setSelectedShow} selectedMovie={selectedMovie} isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} showData={data} />}
+                    />
+                    <Route
+                      path="/showDetails/:imdbID/:showID"
+                      element={<TicketView selectedMovie={selectedMovie} selectedShow={selectedShow} setOrder={setOrder} />}
+                    />
+                    <Route
+                      path="/orderDetails/:imdbID/:showID/:orderID"
+                      element={<PaymentDetailsView order={order} />}
+                    />
+                    <Route path="/" element={<OverviewView isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} />} />
+                    <Route path="/impressum" element={<ImpressumView />} />
+                    <Route path="/login" element={<LoginView />} />
+                    <Route path="/openingHours" element={<OpeningHoursView isAdmin={adminProps.isAdmin} />} />
+                    <Route path="/ticketPrices" element={<TicketPricesView isAdmin={adminProps.isAdmin} />} />
+                    <Route path="/movieDetails/:imdbID/new" element={<MovieDetailsView setSelectedMovie={setSelectedMovie} setSelectedShow={setSelectedShow} selectedMovie={selectedMovie} isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} showData={data} />} />
+                    <Route path="/addNewMovie" element={<AddNewMoviesView isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} />} />
+                    <Route path="/showDetails/:imdbID/:showID/edit" element={<ShowDetailsView isAdmin={adminProps.isAdmin} selectedShow={selectedShow} setSelectedShow={setSelectedShow} />} />
+                  </Routes>
               </Box>
             </Container>
             <Footer />
