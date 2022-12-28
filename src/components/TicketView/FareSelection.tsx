@@ -1,12 +1,14 @@
 import { Box, IconButton, Paper, Popover, Table, TableBody, TableCell, TableContainer, TableRow, Tooltip, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { isMobile } from 'react-device-detect';
 
 interface fareSelectionProps {
-    totalAmountOfTickets: number;
+    totalAmountOfTickets: number,
+    fares: fareSelection[],
+    setFares:React.Dispatch<React.SetStateAction<fareSelection[]>>
 }
 export interface fareSelection {
     id: number,
@@ -17,26 +19,8 @@ export interface fareSelection {
 }
 
 function FareSelection(props: fareSelectionProps) {
-    function createData(
-        id: number,
-        name: string,
-        price: number,
-        condition: string,
-        amountOfTickets: number,
-    ) {
-        return { id, name, price, condition, amountOfTickets };
-    };
 
     const totalAmountOfTickets = props.totalAmountOfTickets;
-
-    const rows = [
-        createData(0, 'Adults', 10.00, "People older than 16 and younger than 65 years old", 0),
-        createData(1, 'Kids', 7.00, "Kids under 16 years old", 0),
-        createData(2, 'Students', 8.00, "Students with a student ID", 0),
-        createData(3, 'Pensioner', 9.00, "People older than 65", 0),
-    ];
-
-    const [fares, setFares] = useState<Array<fareSelection>>(rows);
 
     const [anchorElConditionInfo, setAnchorElConditionInfo] = React.useState<HTMLButtonElement | null>(null);
 
@@ -69,6 +53,9 @@ function FareSelection(props: fareSelectionProps) {
         </Popover>
     )
 
+    const fares = props.fares;
+    const setFares = props.setFares;
+    
     useEffect(() => {
         //initial calculation of ticket amount and add everything to adult fare
         const calculateTotalAmountOfTickets = () => {
@@ -86,8 +73,12 @@ function FareSelection(props: fareSelectionProps) {
                         ...row,
                         amountOfTickets: props.totalAmountOfTickets,
                     }
+                } else {
+                    return {
+                        ...row,
+                        amountOfTickets: 0
+                    }
                 }
-                return row;
             })
             setFares(newFares);
         }
@@ -135,7 +126,7 @@ function FareSelection(props: fareSelectionProps) {
     };
 
     return (
-        <Box sx={{ bgcolor: 'background.paper', width: '100%' }} alignItems='center'>
+        <Box sx={{ bgcolor: 'background.paper', maxWidth: '23rem'}} alignItems='center'>
             <Typography variant="h4" sx={{ p: 3, paddingLeft: '5rem' }}>{totalAmountOfTickets} Tickets</Typography>
             <TableContainer component={Paper} sx={{ maxWidth: '23rem' }}>
                 <Table>

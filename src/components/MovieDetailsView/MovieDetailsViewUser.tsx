@@ -1,10 +1,17 @@
 import { Grid, Card, CardHeader, CardMedia, CardContent, Typography, Divider, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
 import Youtube from 'react-youtube'
-import ShowTiles from "../components/MovieDetailsView/ShowTiles";
-import { data, MovieDetailsViewProp } from "./MovieDetailsView";
+import ShowTiles, { Show } from "./ShowTiles";
+import { Movie, ShowCollection } from "../../views/MovieDetailsView";
 
-function UserMovieDetailsView(prop: MovieDetailsViewProp) {
+interface MovieDetailsViewUserProp {
+    selectedMovie: Movie,
+    setSelectedMovie: React.Dispatch<Movie>,
+    onShowTileClick: (currentShow: Show) => void,
+    showData: Array<ShowCollection>,
+}
+
+function UserMovieDetailsView(props: MovieDetailsViewUserProp) {
 
     const theme = useTheme();
 
@@ -20,22 +27,22 @@ function UserMovieDetailsView(prop: MovieDetailsViewProp) {
                         elevation={0}
                     >
                         <CardHeader
-                            title={prop.selectedMovie.Title}
+                            title={props.selectedMovie.Title}
                             titleTypographyProps={{ p: theme.spacing(3), pt: theme.spacing(2), paddingLeft: 0, fontSize: theme.typography.h4.fontSize }}
                         />
 
                         <CardMedia
                             component="img"
                             alt="movie poster"
-                            image={prop.selectedMovie.Poster} />
+                            image={props.selectedMovie.Poster} />
 
                         <CardContent>
                             <Typography variant="body2" color="text.secondary">
-                                Runtime: {prop.selectedMovie.Runtime} <br />
-                                Writer: {prop.selectedMovie.Writer} <br />
-                                Cast: {prop.selectedMovie.Actors} <br />
-                                Genres: {prop.selectedMovie.Genre} <br />
-                                Age Rating: {prop.selectedMovie.Rated} <br />
+                                Runtime: {props.selectedMovie.Runtime} <br />
+                                Writer: {props.selectedMovie.Writer} <br />
+                                Cast: {props.selectedMovie.Actors} <br />
+                                Genres: {props.selectedMovie.Genre} <br />
+                                Age Rating: {props.selectedMovie.Rated} <br />
                             </Typography>
                         </CardContent>
                     </Card>
@@ -58,10 +65,10 @@ function UserMovieDetailsView(prop: MovieDetailsViewProp) {
                                 Plot
                             </Typography>
                             <Typography sx={{ padding: theme.spacing(1) }}>
-                                {prop.selectedMovie.Plot}
+                                {props.selectedMovie.Plot}
                             </Typography>
                         </Card>
-                        {prop.selectedMovie.trailer &&
+                        {props.selectedMovie.trailer &&
                             <Card
                                 sx={{
                                     marginLeft: theme.spacing(1),
@@ -70,7 +77,7 @@ function UserMovieDetailsView(prop: MovieDetailsViewProp) {
                                 }}
                                 elevation={0}
                             >
-                                <Youtube videoId={prop.selectedMovie.trailer.key} opts={{ width: "100%", outerHeight: '56.25%' }} />
+                                <Youtube videoId={props.selectedMovie.trailer.key} opts={{ width: "100%", outerHeight: '56.25%' }} />
                             </Card>}
                     </Box>
                 </Grid>
@@ -86,7 +93,7 @@ function UserMovieDetailsView(prop: MovieDetailsViewProp) {
                         >
                             Shows
                         </Typography>
-                        <ShowTiles shows={data} />
+                        <ShowTiles shows={props.showData} onShowTileClick={props.onShowTileClick} />
                     </Box>
                 </Grid>
             </Grid>

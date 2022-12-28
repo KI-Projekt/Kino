@@ -1,10 +1,16 @@
 import { Box, Button, useTheme } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { AdminProps } from '../App';
 import TileBar from '../components/OverviewView/Tilebar';
 import AddIcon from '@mui/icons-material/Add';
+import { useEffect } from 'react';
 
-function OverviewView(adminProp: AdminProps) {
+interface OverviewViewProps {
+    isAdmin: boolean,
+    isNew: boolean,
+    setIsNew: Function,
+}
+
+function OverviewView(props: OverviewViewProps) {
 
     const navigate = useNavigate();
 
@@ -16,9 +22,13 @@ function OverviewView(adminProp: AdminProps) {
 
     const theme = useTheme();
 
+    useEffect(() => {
+        props.setIsNew(false);
+    });
+
     return (
         <div>
-            {adminProp.isAdmin &&
+            {props.isAdmin &&
                 <Box textAlign='center' sx={{ pt: theme.spacing(3) }}>
                     <Button
                         variant='contained'
@@ -29,9 +39,9 @@ function OverviewView(adminProp: AdminProps) {
                     </Button>
                 </Box>
             }
-            <TileBar title='Star Wars' query='Star Wars' />
-            <TileBar title='Marvel' query='Marvel' />
-            <TileBar title='Harry Potter' query='Harry Potter' />
+            <TileBar title='Star Wars' query='Star Wars' isAdmin={props.isAdmin} isNew={props.isNew} />
+            <TileBar title='Marvel' query='Marvel' isAdmin={props.isAdmin} isNew={props.isNew} />
+            <TileBar title='Harry Potter' query='Harry Potter' isAdmin={props.isAdmin} isNew={props.isNew} />
 
         </div>
     );
