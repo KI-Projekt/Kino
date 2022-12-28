@@ -6,16 +6,19 @@ import { Show } from '../components/MovieDetailsView/ShowTiles';
 import { AdminProps } from '../App';
 import AdminMovieDetailsView from '../components/MovieDetailsView/MovieDetailsViewAdmin';
 import UserMovieDetailsView from '../components/MovieDetailsView/MovieDetailsViewUser';
+import { useNavigate } from 'react-router-dom';
 
 export interface MovieDetailsViewUserAdminProps {
     selectedMovie: Movie,
     setSelectedMovie: React.Dispatch<Movie>,
+    onShowTileClick: (currentShow: Show) => void,
     showData: Array<ShowCollection>,
 }
 
 interface MovieDetailsViewProps {
     selectedMovie: Movie | undefined,
     setSelectedMovie: React.Dispatch<Movie>,
+    setSelectedShow: React.Dispatch<React.SetStateAction<Show | undefined>>,
     showData: Array<ShowCollection>,
     adminProps: AdminProps
 }
@@ -62,6 +65,13 @@ function MovieDetailsView(props: MovieDetailsViewProps) {
 
     const setSelectedMovie = props.setSelectedMovie;
 
+    const navigate = useNavigate();
+
+    const onShowTileClick = (currentShow : Show) => {
+        navigate(`/movieDetails/${getIMDbIDFromURL()}/${currentShow.showID}`);
+        props.setSelectedShow(currentShow);
+    }
+
     useEffect(() => {
         let fetchedMovie: Movie | undefined;
 
@@ -84,9 +94,9 @@ function MovieDetailsView(props: MovieDetailsViewProps) {
 
     return (
         <>
-            {!props.adminProps.isAdmin && props.selectedMovie && <UserMovieDetailsView selectedMovie={props.selectedMovie} setSelectedMovie={props.setSelectedMovie} showData={props.showData}/>}
+            {!props.adminProps.isAdmin && props.selectedMovie && <UserMovieDetailsView selectedMovie={props.selectedMovie} setSelectedMovie={props.setSelectedMovie} onShowTileClick={onShowTileClick} showData={props.showData}/>}
 
-            {props.adminProps.isAdmin && props.selectedMovie && <AdminMovieDetailsView selectedMovie={props.selectedMovie} setSelectedMovie={props.setSelectedMovie} showData={props.showData}/>}
+            {props.adminProps.isAdmin && props.selectedMovie && <AdminMovieDetailsView selectedMovie={props.selectedMovie} setSelectedMovie={props.setSelectedMovie} onShowTileClick={onShowTileClick} showData={props.showData}/>}
 
             {!props.selectedMovie && <Alert sx={{ marginTop: "1rem", width: "90rem", marginLeft: "2rem" }} severity="error">Currently there is no data available</Alert>}
         </>

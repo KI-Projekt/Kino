@@ -86,7 +86,7 @@ function UserMovieDetailsView(props: MovieDetailsViewUserAdminProps) {
                         >
                             Shows
                         </Typography>
-                        <ShowTiles shows={props.showData} />
+                        <ShowTiles shows={props.showData} onShowTileClick={props.onShowTileClick} />
                     </Box>
                 </Grid>
             </Grid>

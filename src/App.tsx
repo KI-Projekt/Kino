@@ -22,6 +22,7 @@ import LoginView from "./views/LoginView";
 import PaymentDetailsView from "./views/PaymentDetailsView";
 import TicketView from "./views/TicketView";
 import { Show } from "./components/MovieDetailsView/ShowTiles";
+import { Order } from "./views/PaymentDetailsView";
 
 function createData(date: Date, shows: Array<Show>) {
   return { date, shows };
@@ -171,10 +172,12 @@ function App() {
   };
 
   const [selectedMovie, setSelectedMovie] = React.useState<Movie | undefined>(undefined);
-
+  const [selectedShow, setSelectedShow] = React.useState<Show | undefined> (undefined);
   const [adminProps, setAdminProps] = React.useState<AdminProps>({
     isAdmin: false,
   });
+
+  const [order, setOrder] = React.useState<Order | undefined>(undefined);
 
   const handleChangeAdminMode = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -214,18 +217,15 @@ function App() {
                   />
                   <Route
                     path="/movieDetails/:imdbID"
-                    element={<MovieDetailsView setSelectedMovie={setSelectedMovie} selectedMovie={selectedMovie} adminProps={adminProps} showData={data} />}
+                    element={<MovieDetailsView setSelectedMovie={setSelectedMovie} setSelectedShow={setSelectedShow} selectedMovie={selectedMovie} adminProps={adminProps} showData={data} />}
                   />
-                  <Route path="/order" element={<PaymentDetailsView />} />
                   <Route
                     path="/movieDetails/:imdbID/:showID"
-                    element={<TicketView />}
+                    element={<TicketView selectedMovie={selectedMovie} selectedShow={selectedShow} setOrder={setOrder}/>}
                   />
-
-                  {/* //TestComponents */}
                   <Route
-                    path="/test/paymendDetails"
-                    element={<PaymentDetailsView />}
+                    path="/movieDetails/:imdbID/:showID/:orderID"
+                    element={<PaymentDetailsView order={order} />}
                   />
                 </Routes>
               </Box>
