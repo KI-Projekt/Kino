@@ -1,10 +1,17 @@
 import { Grid, Card, CardHeader, CardMedia, CardContent, Typography, Divider, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
 import Youtube from 'react-youtube'
-import ShowTiles from "./ShowTiles";
-import { MovieDetailsViewUserAdminProps } from "../../views/MovieDetailsView";
+import ShowTiles, { Show } from "./ShowTiles";
+import { Movie, ShowCollection } from "../../views/MovieDetailsView";
 
-function UserMovieDetailsView(props: MovieDetailsViewUserAdminProps) {
+interface MovieDetailsViewUserProp {
+    selectedMovie: Movie,
+    setSelectedMovie: React.Dispatch<Movie>,
+    onShowTileClick: (currentShow: Show) => void,
+    showData: Array<ShowCollection>,
+}
+
+function UserMovieDetailsView(props: MovieDetailsViewUserProp) {
 
     const theme = useTheme();
 

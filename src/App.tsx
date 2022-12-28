@@ -23,6 +23,7 @@ import PaymentDetailsView from "./views/PaymentDetailsView";
 import TicketView from "./views/TicketView";
 import { Show } from "./components/MovieDetailsView/ShowTiles";
 import { Order } from "./views/PaymentDetailsView";
+import AddNewMoviesView from "./views/AddNewMoviesView";
 
 function createData(date: Date, shows: Array<Show>) {
   return { date, shows };
@@ -187,6 +188,8 @@ function App() {
     });
   };
 
+  const [isNew, setIsNew] = React.useState<boolean>(false);
+
   return (
     <div>
       <ThemeProvider theme={redTheme}>
@@ -202,22 +205,8 @@ function App() {
               <Box className="App-Box" sx={{ minHeight: "82vh" }}>
                 <Routes>
                   <Route
-                    path="/"
-                    element={<OverviewView isAdmin={adminProps.isAdmin} />}
-                  />
-                  <Route path="/impressum" element={<ImpressumView />} />
-                  <Route path="/login" element={<LoginView />} />
-                  <Route
-                    path="/openingHours"
-                    element={<OpeningHoursView isAdmin={adminProps.isAdmin} />}
-                  />
-                  <Route
-                    path="/ticketPrices"
-                    element={<TicketPricesView isAdmin={adminProps.isAdmin} />}
-                  />
-                  <Route
                     path="/movieDetails/:imdbID"
-                    element={<MovieDetailsView setSelectedMovie={setSelectedMovie} setSelectedShow={setSelectedShow} selectedMovie={selectedMovie} adminProps={adminProps} showData={data} />}
+                    element={<MovieDetailsView setSelectedMovie={setSelectedMovie} setSelectedShow={setSelectedShow} selectedMovie={selectedMovie} isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} showData={data} />}
                   />
                   <Route
                     path="/showDetails/:imdbID/:showID"
@@ -227,7 +216,14 @@ function App() {
                     path="/orderDetails/:imdbID/:showID/:orderID"
                     element={<PaymentDetailsView order={order} />}
                   />
-                </Routes>
+                  <Route path="/" element={<OverviewView isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} />} />
+                  <Route path="/impressum" element={<ImpressumView />} />
+                  <Route path="/login" element={<LoginView />} />
+                  <Route path="/openingHours" element={<OpeningHoursView isAdmin={adminProps.isAdmin} />} />
+                  <Route path="/ticketPrices" element={<TicketPricesView isAdmin={adminProps.isAdmin} />} />
+                  <Route path="/movieDetails/:imdbID/new" element={<MovieDetailsView setSelectedMovie={setSelectedMovie} setSelectedShow={setSelectedShow} selectedMovie={selectedMovie} isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew}  showData={data}/>} />
+                  <Route path="/addNewMovie" element={<AddNewMoviesView isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} />} />
+                  </Routes>
               </Box>
             </Container>
             <Footer />
