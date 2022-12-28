@@ -26,8 +26,6 @@ interface props {
     onShowTileClick: (currentShow: Show) => void
 }
 
-
-
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
     position: 'relative',
     '&:hover, &.Mui-focusVisible': {
@@ -43,7 +41,6 @@ const ImageButton = styled(ButtonBase)(({ theme }) => ({
         },
     },
 }));
-
 
 const ImageBackdrop = styled('span')(({ theme }) => ({
     position: 'absolute',
@@ -78,7 +75,6 @@ const Image = styled('span')(({ theme }) => ({
     color: theme.palette.common.white,
 }));
 
-
 function ShowTiles(props: props) {
 
     const theme = useTheme();
@@ -110,7 +106,6 @@ function ShowTiles(props: props) {
                                 marginTop: "1rem",
                                 marginBottom: "1rem",
                             }}
-                            onClick={() => handleOnClick(currentShow.showID)}
                         >
                             <ImageBackdrop className="MuiImageBackdrop-root" />
                             <Image>

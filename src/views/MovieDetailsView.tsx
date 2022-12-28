@@ -61,9 +61,13 @@ function MovieDetailsView(props: MovieDetailsViewProps) {
 
     const navigate = useNavigate();
 
-    const onShowTileClick = (currentShow : Show) => {
-        navigate(`/showDetails/${getIMDbIDFromURL()}/${currentShow.showID}`);
-        props.setSelectedShow(currentShow);
+    const onShowTileClick = (currentShow: Show) => {
+        if (!props.isAdmin) {
+            navigate(`/showDetails/${getIMDbIDFromURL()}/${currentShow.showID}`);
+            props.setSelectedShow(currentShow);
+        } else if (props.isAdmin) {
+            navigate(`/showDetails/${currentShow.showID}`);
+        }
     }
 
     useEffect(() => {
@@ -88,9 +92,9 @@ function MovieDetailsView(props: MovieDetailsViewProps) {
 
     return (
         <>
-            {!props.isAdmin && props.selectedMovie && <UserMovieDetailsView selectedMovie={props.selectedMovie} setSelectedMovie={props.setSelectedMovie} onShowTileClick={onShowTileClick} showData={props.showData}/>}
+            {!props.isAdmin && props.selectedMovie && <UserMovieDetailsView selectedMovie={props.selectedMovie} setSelectedMovie={props.setSelectedMovie} onShowTileClick={onShowTileClick} showData={props.showData} />}
 
-            {props.isAdmin && props.selectedMovie && <AdminMovieDetailsView selectedMovie={props.selectedMovie} setSelectedMovie={props.setSelectedMovie} onShowTileClick={onShowTileClick} showData={props.showData} isNew={props.isNew} setIsNew={props.setIsNew}/>}
+            {props.isAdmin && props.selectedMovie && <AdminMovieDetailsView selectedMovie={props.selectedMovie} setSelectedMovie={props.setSelectedMovie} onShowTileClick={onShowTileClick} showData={props.showData} isNew={props.isNew} setIsNew={props.setIsNew} />}
 
             {!props.selectedMovie && <Alert sx={{ marginTop: "1rem", width: "90rem", marginLeft: "2rem" }} severity="error">Currently there is no data available</Alert>}
         </>
