@@ -3,13 +3,13 @@ import { Alert } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { fetchMovie, fetchTrailerFromTMDb } from '../queries/fetchOMDbAPI';
 import { Show } from '../components/MovieDetailsView/ShowTiles';
-import { AdminProps } from '../App';
 import AdminMovieDetailsView from '../components/MovieDetailsView/MovieDetailsViewAdmin';
 import UserMovieDetailsView from '../components/MovieDetailsView/MovieDetailsViewUser';
 
-export interface MovieDetailsViewProp {
-    selectedMovie: Movie,
-    setSelectedMovie: React.Dispatch<Movie>,
+interface MovieDetailsViewProps {
+    isAdmin: boolean,
+    isNew: boolean,
+    setIsNew: Function,
 }
 
 interface TrailerType {
@@ -25,7 +25,7 @@ interface TrailerType {
     type: string
 }
 
-interface Movie {
+export interface Movie {
     Title?: String | undefined,
     Poster?: string | undefined,
     Runtime?: String | undefined,
@@ -51,7 +51,7 @@ export const data = [
     createData(new Date(2023, 0, 4), [{ movieID: "4", showID: "4", roomID: "4", dateTime: new Date(2023, 0, 4, 12, 30, 0), additionalInfo: { language: "english", isDbox: false, isThreeD: false } }, { movieID: "6", showID: "6", roomID: "6", dateTime: new Date(2023, 0, 4, 16, 15, 0), additionalInfo: { language: "english", isDbox: false, isThreeD: false } }, { movieID: "7", showID: "7", roomID: "7", dateTime: new Date(2023, 0, 4, 20, 30, 0), additionalInfo: { language: "english", isDbox: false, isThreeD: false } }]),
 ];
 
-function MovieDetailsView(prop: AdminProps) {
+function MovieDetailsView(props: MovieDetailsViewProps) {
 
     const [selectedMovie, setSelectedMovie] = useState<Movie | undefined>(undefined);
 
@@ -84,9 +84,9 @@ function MovieDetailsView(prop: AdminProps) {
 
     return (
         <>
-            {!prop.isAdmin && selectedMovie && <UserMovieDetailsView selectedMovie={selectedMovie} setSelectedMovie={setSelectedMovie} />}
+            {!props.isAdmin && selectedMovie && <UserMovieDetailsView selectedMovie={selectedMovie} setSelectedMovie={setSelectedMovie} />}
 
-            {prop.isAdmin && selectedMovie && <AdminMovieDetailsView selectedMovie={selectedMovie} setSelectedMovie={setSelectedMovie} />}
+            {props.isAdmin && selectedMovie && <AdminMovieDetailsView selectedMovie={selectedMovie} setSelectedMovie={setSelectedMovie} isNew={props.isNew} setIsNew={props.setIsNew} />}
 
             {!selectedMovie && <Alert sx={{ marginTop: "1rem", width: "90rem", marginLeft: "2rem" }} severity="error">Currently there is no data available</Alert>}
         </>

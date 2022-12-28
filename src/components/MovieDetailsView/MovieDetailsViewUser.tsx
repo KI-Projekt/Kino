@@ -2,9 +2,14 @@ import { Grid, Card, CardHeader, CardMedia, CardContent, Typography, Divider, us
 import { Box } from "@mui/system";
 import Youtube from 'react-youtube'
 import ShowTiles from "./ShowTiles";
-import { data, MovieDetailsViewProp } from "../../views/MovieDetailsView";
+import { data, Movie } from "../../views/MovieDetailsView";
 
-function UserMovieDetailsView(prop: MovieDetailsViewProp) {
+interface MovieDetailsViewUserProp {
+    selectedMovie: Movie,
+    setSelectedMovie: React.Dispatch<Movie>,
+}
+
+function UserMovieDetailsView(prop: MovieDetailsViewUserProp) {
 
     const theme = useTheme();
 

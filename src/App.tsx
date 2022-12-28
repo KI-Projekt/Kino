@@ -95,6 +95,8 @@ function App() {
     );
   };
 
+  const [isNew, setIsNew] = React.useState<boolean>(false);
+
   return (
     <div>
       <ThemeProvider theme={redTheme}>
@@ -105,14 +107,15 @@ function App() {
             <Container maxWidth="xl">
               <Box className='App-Box' sx={{ minHeight: '82vh' }} >
                 <Routes>
-                  <Route path="/" element={<OverviewView isAdmin={admin} />} />
+                  <Route path="/" element={<OverviewView isAdmin={admin} isNew={isNew} setIsNew={setIsNew} />} />
                   <Route path="/impressum" element={<ImpressumView />} />
                   <Route path="/login" element={<LoginView />} />
                   <Route path="/openingHours" element={<OpeningHoursView isAdmin={admin} />} />
                   <Route path="/ticketPrices" element={<TicketPricesView isAdmin={admin} />} />
-                  <Route path="/movieDetails/:imdbID" element={<MovieDetailsView isAdmin={admin} />} />
+                  <Route path="/movieDetails/:imdbID" element={<MovieDetailsView isAdmin={admin} isNew={isNew} setIsNew={setIsNew} />} />
+                  <Route path="/movieDetails/:imdbID/new" element={<MovieDetailsView isAdmin={admin} isNew={isNew} setIsNew={setIsNew} />} />
                   <Route path="/order" element={<PaymentDetailsView />} />
-                  <Route path="/addNewMovie" element={<AddNewMoviesView />} />
+                  <Route path="/addNewMovie" element={<AddNewMoviesView isAdmin={admin} isNew={isNew} setIsNew={setIsNew} />} />
 
                   {/* //TestComponents */}
                   <Route path="/test/fareSelection" element={<FareSelection totalAmountOfTickets={2} />} />

@@ -2,11 +2,18 @@ import * as React from 'react';
 import { Alert, Box, Button, Card, CardContent, CardMedia, Divider, Grid, TextField, Typography, useTheme } from '@mui/material';
 import Youtube from 'react-youtube'
 import ShowTiles from './ShowTiles';
-import { data, MovieDetailsViewProp } from '../../views/MovieDetailsView';
+import { data, Movie } from '../../views/MovieDetailsView';
 import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from 'react-router-dom';
 
-function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
+interface MovieDetailsViewAdminProp {
+    selectedMovie: Movie,
+    setSelectedMovie: React.Dispatch<Movie>,
+    isNew: boolean,
+    setIsNew: Function,
+}
+
+function AdminMovieDetailsView(props: MovieDetailsViewAdminProp) {
 
     const theme = useTheme();
 
@@ -19,15 +26,20 @@ function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
     };
 
     const handleTextChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        prop.setSelectedMovie({...prop.selectedMovie, [e.target.id]: e.target.value});
+        props.setSelectedMovie({ ...props.selectedMovie, [e.target.id]: e.target.value });
+    }
+
+    function handleAddNewMovie () {
+        //POST an Movie API schicken und dann
+        props.setIsNew(false);
     }
 
     return (
         <>
-            {prop.selectedMovie &&
+            {props.selectedMovie &&
                 <Box sx={{ flexGrow: 1 }}>
                     <Grid container spacing={3}>
-                        <Grid item xs={12} sm={12} md={6} xl={4} >
+                        <Grid item xs={12} sm={12} md={6} xl={props.isNew ? 6 : 4} >
                             <Card
                                 sx={{
                                     marginLeft: theme.spacing(1),
@@ -38,7 +50,7 @@ function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
                                 <TextField
                                     id="Title"
                                     label="Title"
-                                    value={prop.selectedMovie.Title}
+                                    value={props.selectedMovie.Title}
                                     sx={{ my: theme.spacing(2) }}
                                     fullWidth
                                     InputLabelProps={{ shrink: true }}
@@ -48,13 +60,13 @@ function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
                                 <CardMedia
                                     component="img"
                                     alt="movie poster"
-                                    image={prop.selectedMovie.Poster} />
+                                    image={props.selectedMovie.Poster} />
 
                                 <CardContent>
                                     <TextField
                                         id="Runtime"
                                         label="Runtime"
-                                        value={prop.selectedMovie.Runtime}
+                                        value={props.selectedMovie.Runtime}
                                         sx={{ my: theme.spacing(1) }}
                                         fullWidth
                                         InputLabelProps={{ shrink: true }}
@@ -63,7 +75,7 @@ function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
                                     <TextField
                                         id="Writer"
                                         label="Writer"
-                                        value={prop.selectedMovie.Writer}
+                                        value={props.selectedMovie.Writer}
                                         sx={{ my: theme.spacing(1) }}
                                         fullWidth
                                         InputLabelProps={{ shrink: true }}
@@ -72,7 +84,7 @@ function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
                                     <TextField
                                         id="Actors"
                                         label="Actors"
-                                        value={prop.selectedMovie.Actors}
+                                        value={props.selectedMovie.Actors}
                                         sx={{ my: theme.spacing(1) }}
                                         fullWidth
                                         InputLabelProps={{ shrink: true }}
@@ -81,7 +93,7 @@ function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
                                     <TextField
                                         id="Genre"
                                         label="Genre"
-                                        value={prop.selectedMovie.Genre}
+                                        value={props.selectedMovie.Genre}
                                         sx={{ my: theme.spacing(1) }}
                                         fullWidth
                                         InputLabelProps={{ shrink: true }}
@@ -90,7 +102,7 @@ function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
                                     <TextField
                                         id="Rated"
                                         label="Age Rating"
-                                        value={prop.selectedMovie.Rated}
+                                        value={props.selectedMovie.Rated}
                                         sx={{ my: theme.spacing(1) }}
                                         fullWidth
                                         InputLabelProps={{ shrink: true }}
@@ -99,15 +111,15 @@ function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
                                 </CardContent>
                             </Card>
                         </Grid>
-                        <Grid item xs={12} sm={12} md={6} xl={4} >
+                        <Grid item xs={12} sm={12} md={6} xl={props.isNew ? 6 : 4} >
                             <Divider orientation="vertical" flexItem sx={{ borderBottomWidth: "0.2rem" }} />
-                            <Box sx={{ marginTop: theme.spacing(1) }}>
+                            <Box sx={{ marginTop: theme.spacing(1), marginLeft: theme.spacing(1), marginRight: theme.spacing(1), }}>
                                 <Card sx={{ marginLeft: theme.spacing(1), marginRight: theme.spacing(1), marginTop: theme.spacing(10), overflowY: 'auto' }} elevation={0}>
 
                                     <TextField
                                         id="Plot"
                                         label="Plot"
-                                        value={prop.selectedMovie.Plot}
+                                        value={props.selectedMovie.Plot}
                                         sx={{ my: theme.spacing(2) }}
                                         fullWidth
                                         multiline
@@ -116,57 +128,65 @@ function AdminMovieDetailsView(prop: MovieDetailsViewProp) {
                                     />
 
                                 </Card>
-                                {prop.selectedMovie.trailer &&
+                                {props.selectedMovie.trailer &&
                                     <Card
                                         sx={{
-                                            marginLeft: theme.spacing(1),
-                                            marginRight: theme.spacing(1),
                                             marginTop: theme.spacing(1),
                                         }}
                                         elevation={0}
                                     >
-                                        <Youtube videoId={prop.selectedMovie.trailer.key} opts={{ width: "100%", outerHeight: '56.25%' }} />
-                                    </Card>}
+                                        <Youtube videoId={props.selectedMovie.trailer.key} opts={{ width: "100%", outerHeight: '56.25%' }} />
+                                    </Card>
+                                }
+                                <Button
+                                    variant='contained'
+                                    fullWidth
+                                    onClick={() => handleAddNewMovie()}
+                                >
+                                    Add new Movie
+                                </Button>
                             </Box>
                         </Grid>
-                        <Grid item xs={12} sm={12} md={12} xl={4} >
-                            <Divider orientation='vertical' flexItem sx={{ borderBottomWidth: "0.2rem" }} />
-                            <Box sx={{ marginTop: theme.spacing(1) }}>
-                                <Grid container>
-                                    <Grid item xs={12} sm={12} md={6} xl={6}>
-                                        <Typography
-                                            variant="h4"
-                                            sx={{
-                                                p: theme.spacing(3),
-                                                paddingLeft: theme.spacing(2)
-                                            }}
-                                        >
-                                            Shows
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item xs={12} sm={12} md={6} xl={6}>
-                                        <Box>
-                                            <Button
-                                                variant='contained'
-                                                onClick={() => handleButtonCklick("addNewShow")}
-                                                startIcon={<AddIcon />}
+                        {!props.isNew &&
+                            <Grid item xs={12} sm={12} md={12} xl={4} >
+                                <Divider orientation='vertical' flexItem sx={{ borderBottomWidth: "0.2rem" }} />
+                                <Box sx={{ marginTop: theme.spacing(1) }}>
+                                    <Grid container>
+                                        <Grid item xs={12} sm={12} md={6} xl={6}>
+                                            <Typography
+                                                variant="h4"
                                                 sx={{
-                                                    m: theme.spacing(3),
+                                                    p: theme.spacing(3),
+                                                    paddingLeft: theme.spacing(2)
                                                 }}
                                             >
-                                                Add new Show
-                                            </Button>
-                                        </Box>
+                                                Shows
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={12} sm={12} md={6} xl={6}>
+                                            <Box>
+                                                <Button
+                                                    variant='contained'
+                                                    onClick={() => handleButtonCklick("addNewShow")}
+                                                    startIcon={<AddIcon />}
+                                                    sx={{
+                                                        m: theme.spacing(3),
+                                                    }}
+                                                >
+                                                    Add new Show
+                                                </Button>
+                                            </Box>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
-                                <ShowTiles shows={data} />
-                            </Box>
-                        </Grid>
+                                    <ShowTiles shows={data} />
+                                </Box>
+                            </Grid>
+                        }
                     </Grid>
                 </Box>
             }
 
-            {!prop.selectedMovie && <Alert sx={{ marginTop: "1rem", width: "90rem", marginLeft: "2rem" }} severity="error">Currently there is no data available</Alert>}
+            {!props.selectedMovie && <Alert sx={{ marginTop: "1rem", width: "90rem", marginLeft: "2rem" }} severity="error">Currently there is no data available</Alert>}
         </>
     );
 }
