@@ -10,20 +10,20 @@ interface SeatPlanprops{
 }
 
 function Seatplan(props: SeatPlanprops) {
+
   return (
     <Box
       sx={{
         border: "0.1rem dashed grey",
         marginX: "1rem",
         marginTop: "1rem",
-        width: "22rem",
       }}
       alignItems="center"
-      justifyItems="center"
+      justifyContent="center"
     >
       <>
         {props.data.map((row) => (
-          <>
+          <div style={{width: "fit-content", margin: "auto"}}>
             {row.seats.map((seat) => (
               <>
                 {seat.seatID && seat.booked !== null && (
@@ -39,7 +39,7 @@ function Seatplan(props: SeatPlanprops) {
               </>
             ))}
             <Divider />
-          </>
+          </div>
         ))}
         <Divider sx={{ marginBottom: "2rem", marginTop: "1rem" }}>Screen</Divider>
       </>
