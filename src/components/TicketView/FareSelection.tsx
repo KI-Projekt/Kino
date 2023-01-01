@@ -128,7 +128,7 @@ function FareSelection(props: fareSelectionProps) {
     return (
         <Box sx={{ bgcolor: 'background.paper'}} alignItems='center'>
             <Typography align="center" variant="h4" sx={{ p: 3 }}>{totalAmountOfTickets} Tickets</Typography>
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} elevation={0}>
                 <Table>
                     <TableBody>
                         {fares.map((fare, index) => (
