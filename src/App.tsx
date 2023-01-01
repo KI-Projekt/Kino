@@ -174,7 +174,7 @@ function App() {
 
   const [selectedMovie, setSelectedMovie] = React.useState<Movie | undefined>(undefined);
   const [selectedShow, setSelectedShow] = React.useState<Show | undefined>(undefined);
-  const [adminProps, setAdminProps] = React.useState<AdminProps>({
+  const [adminProps, /* setAdminProps */] = React.useState<AdminProps>({
     isAdmin: false,
   });
 
