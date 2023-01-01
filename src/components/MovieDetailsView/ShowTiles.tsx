@@ -6,6 +6,7 @@ export interface Show {
     movieID: string
     showID: string
     roomID: string
+    room: string
     dateTime: Date
     additionalInfo: {
         language: string
@@ -20,8 +21,11 @@ export interface ShowDate {
 }
 
 interface props {
-    shows: Array<ShowDate>
+    shows: Array<ShowDate>,
+    onShowTileClick: (currentShow: Show) => void
 }
+
+
 
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
     position: 'relative',
@@ -85,6 +89,7 @@ function ShowTiles(props: props) {
                     <Typography sx={{ paddingLeft: "1rem", paddingRight: "1rem" }} variant='h5'>{currentShowDate.date.toDateString()}</Typography>
                     {currentShowDate.shows.map((currentShow) =>
                         <ImageButton
+                            onClick={() => props.onShowTileClick(currentShow)}
                             focusRipple
                             sx={{
                                 width: {
