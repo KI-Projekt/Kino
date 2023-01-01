@@ -1,7 +1,6 @@
 import { Box, ButtonBase, Divider, styled, Typography, useTheme } from '@mui/material';
 import * as React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate } from 'react-router-dom';
 
 export interface Show {
     movieID: string
@@ -78,13 +77,6 @@ const Image = styled('span')(({ theme }) => ({
 function ShowTiles(props: props) {
 
     const theme = useTheme();
-
-    const navigate = useNavigate();
-
-    const handleOnClick = (showID: string) => {
-        navigate(`/showDetails/${showID}`);
-        console.log("Klickkkkk")
-    };
 
     return (
         <Box sx={{ marginTop: "1rem" }}>

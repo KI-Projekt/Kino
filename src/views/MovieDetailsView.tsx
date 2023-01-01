@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Alert } from '@mui/material';
 import { useEffect } from 'react';
 import { fetchMovie, fetchTrailerFromTMDb } from '../queries/fetchOMDbAPI';
-import { Show } from '../components/MovieDetailsView/ShowTiles';
+import { Show, ShowDate } from '../components/MovieDetailsView/ShowTiles';
 import AdminMovieDetailsView from '../components/MovieDetailsView/MovieDetailsViewAdmin';
 import UserMovieDetailsView from '../components/MovieDetailsView/MovieDetailsViewUser';
 import { useNavigate } from 'react-router-dom';
@@ -11,10 +11,11 @@ interface MovieDetailsViewProps {
     selectedMovie: Movie | undefined,
     setSelectedMovie: React.Dispatch<Movie>,
     setSelectedShow: React.Dispatch<React.SetStateAction<Show | undefined>>,
-    showData: Array<ShowCollection>,
+    showData: Array<ShowDate>,
     isAdmin: boolean,
     isNew: boolean,
     setIsNew: Function,
+    setShowData: Function;
 }
 
 interface TrailerType {
@@ -40,11 +41,6 @@ export interface Movie {
     Rated?: String | undefined,
     Plot?: String | undefined,
     trailer: TrailerType | undefined,
-}
-
-export interface ShowCollection {
-    date: Date,
-    shows: Array<Show>
 }
 
 export const getIMDbIDFromURL = () => {
@@ -95,7 +91,17 @@ function MovieDetailsView(props: MovieDetailsViewProps) {
         <>
             {!props.isAdmin && props.selectedMovie && <UserMovieDetailsView selectedMovie={props.selectedMovie} setSelectedMovie={props.setSelectedMovie} onShowTileClick={onShowTileClick} showData={props.showData} />}
 
-            {props.isAdmin && props.selectedMovie && <AdminMovieDetailsView selectedMovie={props.selectedMovie} setSelectedMovie={props.setSelectedMovie} onShowTileClick={onShowTileClick} showData={props.showData} isNew={props.isNew} setIsNew={props.setIsNew} />}
+            {props.isAdmin && props.selectedMovie &&
+                <AdminMovieDetailsView
+                    selectedMovie={props.selectedMovie}
+                    setSelectedMovie={props.setSelectedMovie}
+                    onShowTileClick={onShowTileClick}
+                    showData={props.showData}
+                    isNew={props.isNew}
+                    setIsNew={props.setIsNew}
+                    setShowData={props.setShowData}
+                />
+            }
 
             {!props.selectedMovie && <Alert sx={{ marginTop: "1rem", width: "90rem", marginLeft: "2rem" }} severity="error">Currently there is no data available</Alert>}
         </>
