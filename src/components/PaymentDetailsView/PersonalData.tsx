@@ -47,8 +47,8 @@ function PersonalData() {
     };
 
     return (
-        <Box sx={{ bgcolor: 'background.paper', width: '100%' }} alignItems='center'>
-            <Typography variant="h4" sx={{p: 3, paddingLeft:'5rem'}}>Personal Data</Typography>
+        <Box sx={{ bgcolor: 'background.paper' }} alignItems='center'>
+            <Typography variant="h4" sx={{ p: 3, paddingLeft: theme.spacing }}>Personal Data</Typography>
             <Tabs
                 value={value}
                 onChange={handleChangeTabs}

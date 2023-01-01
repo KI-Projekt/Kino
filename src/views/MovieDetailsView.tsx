@@ -1,61 +1,100 @@
 import * as React from 'react';
-import { Card, CardContent, CardMedia, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { fetchMovie } from '../queries/fetchOMDbAPI';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { Alert } from '@mui/material';
+import { useEffect } from 'react';
+import { fetchMovie, fetchTrailerFromTMDb } from '../queries/fetchOMDbAPI';
+import { Show } from '../components/MovieDetailsView/ShowTiles';
+import AdminMovieDetailsView from '../components/MovieDetailsView/MovieDetailsViewAdmin';
+import UserMovieDetailsView from '../components/MovieDetailsView/MovieDetailsViewUser';
+import { useNavigate } from 'react-router-dom';
 
-function MovieDetailsView() {
+interface MovieDetailsViewProps {
+    selectedMovie: Movie | undefined,
+    setSelectedMovie: React.Dispatch<Movie>,
+    setSelectedShow: React.Dispatch<React.SetStateAction<Show | undefined>>,
+    showData: Array<ShowCollection>,
+    isAdmin: boolean,
+    isNew: boolean,
+    setIsNew: Function,
+}
 
-    const [selectedMovie, setSelectedMovie] = useState(Object || undefined);
+interface TrailerType {
+    id: string
+    iso_639_1: string
+    iso_3166_1: string
+    key: string
+    name: string
+    official: boolean
+    published_at: string
+    site: string
+    size: number
+    type: string
+}
 
-    const getIDFromURL = () => {
-        let url = window.location.href;
+export interface Movie {
+    Title?: String | undefined,
+    Poster?: string | undefined,
+    Runtime?: String | undefined,
+    Writer?: String | undefined,
+    Actors?: String | undefined,
+    Genre?: String | undefined,
+    Rated?: String | undefined,
+    Plot?: String | undefined,
+    trailer: TrailerType | undefined,
+}
 
-        let aUrlParts = url.split("/")
-        return aUrlParts[4]
+export interface ShowCollection {
+    date: Date,
+    shows: Array<Show>
+}
+
+export const getIMDbIDFromURL = () => {
+    let url = window.location.href;
+
+    let aUrlParts = url.split("/")
+    return aUrlParts[4]
+}
+
+function MovieDetailsView(props: MovieDetailsViewProps) {
+
+
+    const setSelectedMovie = props.setSelectedMovie;
+
+    const navigate = useNavigate();
+
+    const onShowTileClick = (currentShow : Show) => {
+        navigate(`/showDetails/${getIMDbIDFromURL()}/${currentShow.showID}`);
+        props.setSelectedShow(currentShow);
     }
 
     useEffect(() => {
-        fetchMovie(getIDFromURL()).then((result) => { setSelectedMovie(result) })
-    }, []);
+        let fetchedMovie: Movie | undefined;
 
-    if (selectedMovie) {
-        return (
-            <div className='row'>
-                <Card sx={{ maxWidth: "21.5rem", minWidth: "21.5rem", marginLeft: "1rem", marginRight: "2rem", marginBottom: "1rem" }}>
-                    <CardMedia
-                        component="img"
-                        alt="movie poster"
-                        image={selectedMovie.Poster}
-                    />
-                    <CardContent>
-                        <Typography gutterBottom variant="h6" component="div">
-                            {selectedMovie.Title}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            Runtime: {selectedMovie.Runtime} <br />
-                            Writer: {selectedMovie.Writer} <br />
-                            Cast: {selectedMovie.Actors} <br />
-                        </Typography>
-                    </CardContent>
-                </Card>
-                <Card sx={{ maxWidth: "21.5rem", minWidth: "21.5rem", maxHeight: "18rem", marginLeft: "1rem", marginRight: "2rem", overflowY: 'auto' }}>
-                    <Typography gutterBottom variant="h6" component="div">
-                        Synopsis: <br />
-                    </Typography>
-                    <Typography>
-                        {selectedMovie.Plot}
-                    </Typography>
-                </Card>
-            </div>
-        );
-    }
-    else {
-        return (<div>
+        function appendTrailer(trailers: Array<TrailerType>) {
+            trailers.map((item: TrailerType) => {
+                if (item.type === "Trailer") {
+                    setSelectedMovie({ ...fetchedMovie, trailer: item });
+                    return true;
+                } else {
+                    setSelectedMovie({ ...fetchedMovie, trailer: undefined });
+                    return false;
+                }
+            })
+        }
+        fetchMovie(getIMDbIDFromURL()).then((result) => {
+            fetchedMovie = result;
+            fetchTrailerFromTMDb(getIMDbIDFromURL()).then((trailers) => appendTrailer(trailers.results));
+        })
+    }, [setSelectedMovie]);
 
-        </div>
-        );
-    }
+    return (
+        <>
+            {!props.isAdmin && props.selectedMovie && <UserMovieDetailsView selectedMovie={props.selectedMovie} setSelectedMovie={props.setSelectedMovie} onShowTileClick={onShowTileClick} showData={props.showData}/>}
+
+            {props.isAdmin && props.selectedMovie && <AdminMovieDetailsView selectedMovie={props.selectedMovie} setSelectedMovie={props.setSelectedMovie} onShowTileClick={onShowTileClick} showData={props.showData} isNew={props.isNew} setIsNew={props.setIsNew}/>}
+
+            {!props.selectedMovie && <Alert sx={{ marginTop: "1rem", width: "90rem", marginLeft: "2rem" }} severity="error">Currently there is no data available</Alert>}
+        </>
+    );
 }
 
 export default MovieDetailsView;

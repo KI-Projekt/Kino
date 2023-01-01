@@ -1,11 +1,7 @@
 import { styled } from '@mui/material/styles';
-import { TableCell, tableCellClasses, TableRow, TableContainer, Paper, Table, TableHead, TableBody, Container, Typography, TextField, FormControlLabel, Switch } from '@mui/material';
+import { TableCell, tableCellClasses, TableRow, TableContainer, Paper, Table, TableHead, TableBody, Container, Typography, TextField } from '@mui/material';
 import * as React from 'react';
-import { redTheme } from '../App';
-
-interface State {
-    isAdmin: boolean;
-}
+import { AdminProps, redTheme } from '../App';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -36,25 +32,13 @@ function createData(
 };
 
 const rows = [
-    createData('Adults', 10.00, ""),
+    createData('Adults', 10.00, "People older than 16 and younger than 65 years old"),
     createData('Kids', 7.00, "Kids under 16 years old"),
     createData('Students', 8.00, "Students with a student ID"),
     createData('Pensioner', 9.00, "People older than 65"),
 ];
 
-function TicketPrices() {
-    const [values, setValues] = React.useState<State>({
-        isAdmin: false,
-    });
-
-    const handleChangeAdminMode = (
-        event: React.ChangeEvent<HTMLInputElement>,
-    ) => {
-        setValues({
-            ...values,
-            isAdmin: event.target.checked,
-        });
-    };
+function TicketPricesView(adminProp: AdminProps) {
 
     return (
         <Container maxWidth='md' >
@@ -64,10 +48,10 @@ function TicketPrices() {
                     <TableHead >
                         <TableRow >
                             <StyledTableCell >Ticket Category</StyledTableCell>
-                            {!values.isAdmin && (
+                            {!adminProp.isAdmin && (
                                 <StyledTableCell align="right" >Price</StyledTableCell>
                             )}
-                            {values.isAdmin && (
+                            {adminProp.isAdmin && (
                                 <StyledTableCell align="right" >Price in €</StyledTableCell>
                             )}
 
@@ -81,20 +65,20 @@ function TicketPrices() {
                                     {row.name}
                                 </StyledTableCell>
                                 <StyledTableCell align="right">
-                                    {!values.isAdmin && (
+                                    {!adminProp.isAdmin && (
                                         <Typography>{row.price} €</Typography>
                                     )}
-                                    {values.isAdmin && (
+                                    {adminProp.isAdmin && (
                                         <div>
                                             <TextField variant='outlined' defaultValue={row.price} label={`Price for ${row.name}`} />
                                         </div>
                                     )}
                                 </StyledTableCell>
                                 <StyledTableCell align="right">
-                                    {!values.isAdmin && (
+                                    {!adminProp.isAdmin && (
                                         <Typography>{row.condition}</Typography>
                                     )}
-                                    {values.isAdmin && (
+                                    {adminProp.isAdmin && (
                                         <TextField variant='outlined' defaultValue={row.condition} label={`Condition for ${row.name}`} />
                                     )}
                                 </StyledTableCell>
@@ -103,19 +87,8 @@ function TicketPrices() {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <FormControlLabel control={<Switch onChange={handleChangeAdminMode} />} label="Admin" />
         </Container>
     );
-}
-
-
-class TicketPricesView extends React.Component {
-
-    render() {
-        return (
-            <TicketPrices />
-        );
-    }
 }
 
 export default TicketPricesView;
