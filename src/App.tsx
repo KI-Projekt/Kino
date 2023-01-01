@@ -9,9 +9,9 @@ import {
   Box,
   Container,
   createTheme,
-  FormControlLabel,
+  /*   FormControlLabel, */
   styled,
-  Switch,
+  /*   Switch, */
   ThemeProvider,
   Toolbar,
 } from "@mui/material";
@@ -180,13 +180,13 @@ function App() {
 
   const [order, setOrder] = React.useState<Order | undefined>(undefined);
 
-  const handleChangeAdminMode = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setAdminProps({
-      isAdmin: event.target.checked,
-    });
-  };
+  /*  const handleChangeAdminMode = (
+     event: React.ChangeEvent<HTMLInputElement>
+   ) => {
+     setAdminProps({
+       isAdmin: event.target.checked,
+     });
+   }; */
 
   const [isNew, setIsNew] = React.useState<boolean>(false);
 
