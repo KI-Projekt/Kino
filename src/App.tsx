@@ -173,7 +173,7 @@ function App() {
   };
 
   const [selectedMovie, setSelectedMovie] = React.useState<Movie | undefined>(undefined);
-  const [selectedShow, setSelectedShow] = React.useState<Show | undefined> (undefined);
+  const [selectedShow, setSelectedShow] = React.useState<Show | undefined>(undefined);
   const [adminProps, setAdminProps] = React.useState<AdminProps>({
     isAdmin: false,
   });
@@ -210,7 +210,7 @@ function App() {
                   />
                   <Route
                     path="/showDetails/:imdbID/:showID"
-                    element={<TicketView selectedMovie={selectedMovie} selectedShow={selectedShow} setOrder={setOrder}/>}
+                    element={<TicketView selectedMovie={selectedMovie} selectedShow={selectedShow} setOrder={setOrder} />}
                   />
                   <Route
                     path="/orderDetails/:imdbID/:showID/:orderID"
@@ -221,16 +221,16 @@ function App() {
                   <Route path="/login" element={<LoginView />} />
                   <Route path="/openingHours" element={<OpeningHoursView isAdmin={adminProps.isAdmin} />} />
                   <Route path="/ticketPrices" element={<TicketPricesView isAdmin={adminProps.isAdmin} />} />
-                  <Route path="/movieDetails/:imdbID/new" element={<MovieDetailsView setSelectedMovie={setSelectedMovie} setSelectedShow={setSelectedShow} selectedMovie={selectedMovie} isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew}  showData={data}/>} />
+                  <Route path="/movieDetails/:imdbID/new" element={<MovieDetailsView setSelectedMovie={setSelectedMovie} setSelectedShow={setSelectedShow} selectedMovie={selectedMovie} isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} showData={data} />} />
                   <Route path="/addNewMovie" element={<AddNewMoviesView isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} />} />
-                  </Routes>
+                </Routes>
               </Box>
             </Container>
             <Footer />
-            <FormControlLabel
-              control={<Switch onChange={handleChangeAdminMode} />}
+            {/* <FormControlLabel
+              control={<Switch onChange={handleChangeAdminMode} visible />}
               label="Admin"
-            />
+            /> */}
           </Main>
         </BrowserRouter>
       </ThemeProvider>
