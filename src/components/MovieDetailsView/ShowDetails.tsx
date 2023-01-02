@@ -1,43 +1,18 @@
-import { Alert, Box, Divider, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
-import { LocalizationProvider } from "@mui/x-date-pickers";
+import { Alert, Box, Button, Divider, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography, useTheme } from "@mui/material";
+import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { ShowDate } from "./ShowTiles";
-
-////just for information - can be deleted
-export interface Show {
-    movieID: string
-    showID: string
-    roomID: string
-    room: string
-    dateTime: Date
-    additionalInfo: {
-        language: string
-        isThreeD: boolean
-        isDbox: boolean
-    }
-}
+import { Show, ShowDate } from "./ShowTiles";
+import React from "react";
+import { Movie } from "../../views/MovieDetailsView";
+import AddIcon from '@mui/icons-material/Add';
 
 interface ShowDetailsProps {
     showData: Array<ShowDate>,
     setShowData: Function,
+    selectedMovie: Movie,
 }
 
 function ShowDetails(props: ShowDetailsProps) {
-
-    /* const getIDFromURL = () => {
-        let url = window.location.href;
-
-        let aUrlParts = url.split("/")
-        return aUrlParts[4]
-    } */
-
-    /*  useEffect(() => {
-         let fetchShow: Object | undefined;
- 
-         fetchShow(getIDFromURL()).then((result) => {
-             fetchedShow = result;
-         })
-     }, []); */
 
     function createRoomData(
         roomID: string,
@@ -53,16 +28,29 @@ function ShowDetails(props: ShowDetailsProps) {
         createRoomData("4", 'Raum 6'),
     ];
 
-    /* const handleChangeDateTime = (newValue: Dayjs | null) => {
-        const newShow = props.showData.map{
-            ...props.showData,
-            dateTime: newValue,
-        }
-        props.set(newShow);
-    }; */
+    const handleChangeDateTime = (newValue: Date | null, changedShow: Show) => {
+        const newShowData = props.showData.map((currentShowDate) => {
+            const newShows = currentShowDate.shows.map((currentShow) => {
+                if (currentShow.showID === changedShow.showID) {
+                    return {
+                        ...currentShow,
+                        dateTime: newValue,
+                    };
+                } else {
+                    return {
+                        ...currentShow,
+                    }
+                }
+            });
+            return {
+                ...currentShowDate,
+                shows: newShows,
+            }
+        });
+        props.setShowData(newShowData);
+    };
 
     const handleChangeRoom = (e: SelectChangeEvent, changedShow: Show) => {
-        console.log(e);
         const newShowData = props.showData.map((currentShowDate) => {
             const newShows = currentShowDate.shows.map((currentShow) => {
                 if (currentShow.showID === changedShow.showID) {
@@ -82,21 +70,64 @@ function ShowDetails(props: ShowDetailsProps) {
             }
         });
         props.setShowData(newShowData);
-        console.log(newShowData);
     };
+
+    const handleAddRoom = (e: SelectChangeEvent) => {
+        setAddNewShow(prev => ({
+            ...prev,
+            roomID: e.target.value,
+        }));
+    }
+
+    const handleAddDateTime = (newValue: Date | null | undefined) => {
+        if (newValue != null) {
+            setAddNewShow(prev => ({
+                ...prev,
+                dateTime: newValue,
+            }))
+        }
+    }
+
+    const theme = useTheme();
+
+    const [addNewShow, setAddNewShow] = React.useState<Show>(
+        {
+            movieID: props.selectedMovie.imdbID,
+            showID: undefined,
+            roomID: undefined,
+            room: undefined,
+            dateTime: null,
+            additionalInfo: { language: "english", isDbox: false, isThreeD: false },
+        }
+    );
+    function handleAddNewShow() {
+        //POST an Show API schicken und dann
+    }
 
     return (
         <>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 {props.showData &&
-                    <Box sx={{ p: 5 }}>
+                    <Box sx={{ p: theme.spacing(1) }}>
                         <>
                             {props.showData.map((currentShowDate: ShowDate) => (
                                 currentShowDate.shows.map((currentShow: Show) => (
                                     <>
-                                        <Divider />
-                                        <Typography sx={{ ml: 1, mb: 1 }}>ShowID: {currentShow.showID}</Typography>
-                                        <FormControl sx={{ m: 1, minWidth: 80 }}>
+                                        <Divider sx={{ borderBottomWidth: "0.2rem" }} />
+                                        <Typography
+                                            sx={{
+                                                ml: theme.spacing(1),
+                                                my: theme.spacing(1),
+                                            }}
+                                        >
+                                            ShowID: {currentShow.showID}
+                                        </Typography>
+                                        <FormControl
+                                            sx={{
+                                                m: theme.spacing(1),
+                                                width: theme.spacing(15)
+                                            }}
+                                        >
                                             <InputLabel id="show-room">Room</InputLabel>
                                             <Select
                                                 id="roomID"
@@ -115,21 +146,86 @@ function ShowDetails(props: ShowDetailsProps) {
 
                                             </Select>
                                         </FormControl>
-                                        {/* <DateTimePicker
-                                        id="dateTime"
-                                            label="Show starts at"
-                                            value={currentShow.dateTime}
-                                            onChange={handleChangeDateTime}
-                                            renderInput={(params) => <TextField {...params} />}
-                                        /> */}
+                                        <FormControl sx={{ m: theme.spacing(1) }}>
+                                            <DateTimePicker
+                                                label="Show starts at"
+                                                value={currentShow.dateTime}
+                                                onChange={(newValue) => handleChangeDateTime(newValue, currentShow)}
+                                                renderInput={(params) => <TextField {...params} />}
+
+                                            />
+                                        </FormControl>
                                     </>
                                 ))
                             ))}
+                            <>
+                                <Divider sx={{ borderBottomWidth: "0.2rem" }} />
+                                <Typography
+                                    sx={{
+                                        ml: theme.spacing(1),
+                                        my: theme.spacing(1),
+                                    }}
+                                    variant="h6"
+                                >
+                                    Add new show
+                                </Typography>
+                                <FormControl
+                                    sx={{
+                                        m: theme.spacing(1),
+                                        width: theme.spacing(15)
+                                    }}
+                                >
+                                    <InputLabel id="show-room">Room</InputLabel>
+                                    <Select
+                                        id="roomID"
+                                        label="Room"
+                                        value={addNewShow.roomID}
+                                        onChange={(e) => handleAddRoom(e)}
+                                    >
+                                        {roomData.map((room) => (
+                                            <MenuItem
+                                                value={room.roomID}
+                                            >
+                                                {room.name}
+                                            </MenuItem>
+                                        )
+                                        )}
+
+                                    </Select>
+                                </FormControl>
+                                <FormControl sx={{ m: theme.spacing(1) }}>
+                                    <DateTimePicker
+                                        label="Show starts at"
+                                        value={addNewShow.dateTime}
+                                        onChange={(newValue) => handleAddDateTime(newValue)}
+                                        renderInput={(params) => <TextField {...params} />}
+                                    />
+                                </FormControl>
+                                <Button
+                                    variant="contained"
+                                    fullWidth
+                                    onClick={() => handleAddNewShow()}
+                                    sx={{ my: theme.spacing(2) }}
+                                    startIcon={<AddIcon />}
+                                    disabled={(addNewShow.dateTime && addNewShow.roomID) ? false : true}
+                                >
+                                    Add Show
+                                </Button>
+                            </>
                         </>
                     </Box>
                 }
                 {!props.showData &&
-                    <Alert sx={{ marginTop: "1rem", width: "90rem", marginLeft: "2rem" }} severity="error">No show is selected</Alert>
+                    <Alert
+                        sx={{
+                            marginTop: "1rem",
+                            width: "90rem",
+                            marginLeft: "2rem"
+                        }}
+                        severity="error"
+                    >
+                        No show is selected
+                    </Alert>
                 }
             </LocalizationProvider>
         </>

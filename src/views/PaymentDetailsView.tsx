@@ -36,7 +36,7 @@ export interface Order {
   showID: string | undefined;
   movie: String | undefined;
   picture: string | undefined;
-  showDate: Date | undefined;
+  showDate: Date | null | undefined;
   room: string | undefined;
   seats: Array<Row>;
   fares: Array<fareSelection>;

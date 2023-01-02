@@ -32,6 +32,7 @@ interface TrailerType {
 }
 
 export interface Movie {
+    imdbID?: string | undefined,
     Title?: String | undefined,
     Poster?: string | undefined,
     Runtime?: String | undefined,
