@@ -46,13 +46,7 @@ export const redTheme = createTheme({
     },
   },
   typography: {
-    fontFamily: [
-      "Monospace",
-      "Roboto",
-      "Helvetica",
-      "Arial",
-      "sans-serif",
-    ].join(","),
+    fontFamily: ["Roboto", "Helvetica", "Arial", "sans-serif"].join(","),
   },
 });
 

@@ -7,7 +7,7 @@ import {
   Container,
 } from "@mui/material";
 import * as React from "react";
-import "../styles/Impressum.css";
+import "../styles/PrivacyPolicyView.css";
 import CinetastischHorizontal from "../img/Cinetastisch_horizontal.png";
 
 interface Props {}
@@ -18,7 +18,7 @@ class PrivacyPolicyView extends React.Component<Props, State> {
   render() {
     return (
       <Container>
-        <Card className="Impressum-Card" sx={{ maxWidth: 1000 }}>
+        <Card className="PrivacyPolicy-Card" sx={{ maxWidth: 1000 }}>
           <CardActionArea>
             <CardMedia
               component="img"
@@ -27,7 +27,7 @@ class PrivacyPolicyView extends React.Component<Props, State> {
               alt="logo_horizontal"
             ></CardMedia>
             <CardContent>
-              <Typography variant="h5">Privacy Policy</Typography>
+              <Typography variant="h4">Privacy Policy</Typography>
               <Typography fontWeight="Bold">
                 <br />
                 Digital Web and Mobile Privacy Statement
@@ -83,6 +83,7 @@ class PrivacyPolicyView extends React.Component<Props, State> {
                 diagnose technical issues and suggest digital solutions for
                 improving Cinetastisch Entertainment websites and other digital
                 channels.
+                <br />
               </Typography>
             </CardContent>
           </CardActionArea>
