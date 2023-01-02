@@ -1,6 +1,5 @@
-import { Alert, Box, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography, useTheme } from "@mui/material";
-import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { Dayjs } from 'dayjs';
+import { Alert, Box, Divider, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
+import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { ShowDate } from "./ShowTiles";
 
@@ -25,8 +24,6 @@ interface ShowDetailsProps {
 
 function ShowDetails(props: ShowDetailsProps) {
 
-    const theme = useTheme();
-
     /* const getIDFromURL = () => {
         let url = window.location.href;
 
@@ -43,17 +40,17 @@ function ShowDetails(props: ShowDetailsProps) {
      }, []); */
 
     function createRoomData(
-        roomID: number,
-        name: String,
+        roomID: string,
+        name: string,
     ) {
         return { roomID, name }
     }
 
     const roomData = [
-        createRoomData(1, 'Raum 1'),
-        createRoomData(2, 'Audimaxx'),
-        createRoomData(3, 'Lidl Saal'),
-        createRoomData(4, 'Raum 6'),
+        createRoomData("1", 'Raum 1'),
+        createRoomData("2", 'Audimaxx'),
+        createRoomData("3", 'Lidl Saal'),
+        createRoomData("4", 'Raum 6'),
     ];
 
     /* const handleChangeDateTime = (newValue: Dayjs | null) => {
@@ -64,13 +61,28 @@ function ShowDetails(props: ShowDetailsProps) {
         props.set(newShow);
     }; */
 
-    const handleChangeRoom = (e: SelectChangeEvent) => {
+    const handleChangeRoom = (e: SelectChangeEvent, changedShow: Show) => {
         console.log(e);
-        /* const newShow = {
-            ...props.selectedShow,
-            roomID: 1 //change room id
-        }
-        props.setSelectedShow(newShow); */
+        const newShowData = props.showData.map((currentShowDate) => {
+            const newShows = currentShowDate.shows.map((currentShow) => {
+                if (currentShow.showID === changedShow.showID) {
+                    return {
+                        ...currentShow,
+                        roomID: e.target.value,
+                    };
+                } else {
+                    return {
+                        ...currentShow,
+                    }
+                }
+            });
+            return {
+                ...currentShowDate,
+                shows: newShows,
+            }
+        });
+        props.setShowData(newShowData);
+        console.log(newShowData);
     };
 
     return (
@@ -79,36 +91,40 @@ function ShowDetails(props: ShowDetailsProps) {
                 {props.showData &&
                     <Box sx={{ p: 5 }}>
                         <>
-                            {props.showData.map((currentShowDate: ShowDate) => {
-                                currentShowDate.shows.map((currentShow: Show) => {
+                            {props.showData.map((currentShowDate: ShowDate) => (
+                                currentShowDate.shows.map((currentShow: Show) => (
                                     <>
-                                        <Typography sx={{ ml: 1, mb: 1 }}>Movie Title: {currentShow.movieID}</Typography>
+                                        <Divider />
                                         <Typography sx={{ ml: 1, mb: 1 }}>ShowID: {currentShow.showID}</Typography>
                                         <FormControl sx={{ m: 1, minWidth: 80 }}>
                                             <InputLabel id="show-room">Room</InputLabel>
                                             <Select
-                                                id="show-room"
+                                                id="roomID"
                                                 label="Room"
                                                 value={currentShow.roomID}
-                                                autoWidth
-                                                onChange={handleChangeRoom}
+                                                onChange={(e) => handleChangeRoom(e, currentShow)}
                                             >
                                                 {roomData.map((room) => (
-                                                    <MenuItem>{room.name}</MenuItem>
+                                                    <MenuItem
+                                                        value={room.roomID}
+                                                    >
+                                                        {room.name}
+                                                    </MenuItem>
                                                 )
                                                 )}
 
                                             </Select>
                                         </FormControl>
                                         {/* <DateTimePicker
+                                        id="dateTime"
                                             label="Show starts at"
                                             value={currentShow.dateTime}
                                             onChange={handleChangeDateTime}
                                             renderInput={(params) => <TextField {...params} />}
                                         /> */}
                                     </>
-                                })
-                            })}
+                                ))
+                            ))}
                         </>
                     </Box>
                 }
