@@ -19,6 +19,7 @@ import {
 import OpeningHoursView from "./views/OpeningHoursView";
 import TicketPricesView from "./views/TicketPricesView";
 import MovieDetailsView from "./views/MovieDetailsView";
+import PrivacyPolicyView from "./views/PrivacyPolicyView";
 import LoginView from "./views/LoginView";
 import FareSelection from "./components/TicketView/FareSelection";
 import PaymentDetailsView from "./views/PaymentDetailsView";
@@ -106,6 +107,10 @@ function App() {
                   <Route path="/login" element={<LoginView />} />
                   <Route path="/openingHours" element={<OpeningHoursView />} />
                   <Route path="/ticketPrices" element={<TicketPricesView />} />
+                  <Route
+                    path="/privacyPolicy"
+                    element={<PrivacyPolicyView />}
+                  />
                   <Route
                     path="/movieDetails/:imdbID"
                     element={<MovieDetailsView />}

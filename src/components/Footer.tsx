@@ -106,7 +106,7 @@ export default function Footer() {
                 </Link>
                 <Link
                   className="Footer-Link"
-                  href="/"
+                  href="/privacyPolicy"
                   color="inherit"
                   underline="none"
                   variant="subtitle2"
