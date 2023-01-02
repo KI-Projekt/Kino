@@ -38,7 +38,7 @@ export default function Footer() {
             <Box>
               <Typography align="center">
                 <Tooltip title="About Us">
-                  <IconButton onClick={() => handleClick("")}>
+                  <IconButton onClick={() => handleClick("about")}>
                     <InfoIcon
                       sx={{ color: theme.palette.common.white }}
                       className="Footer-Icons"
@@ -46,7 +46,7 @@ export default function Footer() {
                   </IconButton>
                 </Tooltip>
                 <Tooltip title="Getting Here">
-                  <IconButton onClick={() => handleClick("")}>
+                  <IconButton onClick={() => handleClick("gettingHere")}>
                     <AssistantDirectionIcon
                       sx={{ color: theme.palette.common.white }}
                       className="Footer-Icons"

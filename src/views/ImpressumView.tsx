@@ -33,14 +33,14 @@ class ImpressumView extends React.Component<Props, State> {
                 Cinetastisch GmbH <br />
                 Cinema Street 11 <br />
                 68161 Mannheim <br /> <br />
-                Tel: +49 621 15 04 577 <br />
-                Tax: +49 621 2 83 03 <br /> <br />
+                Tel: +49 123 45 67 890 <br />
+                Tax: +49 098 7 65 43 <br /> <br />
                 Email: office@cinetastisch.de <br />
                 Homepage: www.cinetastisch.de <br /> <br />
                 Managing director authorised to represent the company: Richarda
                 Rich <br />
                 Register court: Local Court Mannheim - Dept. B <br />
-                Registration number: 5377 <br />
+                Registration number: 1234 <br />
                 Sales tax identification number according to § 27a
                 Umsatzsteuergesetz: 38180/33800 <br />
                 Responsible for content according to §6 MDStV: Richarda Rich{" "}

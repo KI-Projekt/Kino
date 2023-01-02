@@ -3,6 +3,8 @@ import './App.css';
 import Footer from "./components/Footer";
 import ImpressumView from "./views/ImpressumView";
 import ContactUsView from "./views/ContactUsView";
+import AboutUsView from "./views/AboutUsView";
+import GettingHereView from "./views/GettingHereView";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header, { drawerWidth } from "./components/Header/Header";
 import OverviewView from "./views/OverviewView";
@@ -99,6 +101,8 @@ function App() {
                   <Route path="/" element={<OverviewView />} />
                   <Route path="/impressum" element={<ImpressumView />} />
                   <Route path="/contact" element={<ContactUsView />} />
+                  <Route path="/about" element={<AboutUsView />} />
+                  <Route path="/gettingHere" element={<GettingHereView />} />
                   <Route path="/login" element={<LoginView />} />
                   <Route path="/openingHours" element={<OpeningHoursView />} />
                   <Route path="/ticketPrices" element={<TicketPricesView />} />

@@ -1,0 +1,24 @@
+.Container-Left{
+    padding-top:6rem;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    text-align: center;
+    display: flex;
+}
+
+.Text-Left{
+    padding-top:1.5rem;
+}
+
+.Headline{
+    padding-top:5%;
+    left:50%;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    display: relative;
+}
+.Image-Right{
+    width: 100%;
+    
+}
