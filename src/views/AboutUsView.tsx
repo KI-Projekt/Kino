@@ -1,12 +1,7 @@
 import {
   Box,
-  Card,
-  CardActionArea,
-  CardContent,
-  CardMedia,
   Container,
   Grid,
-  IconButton,
   Typography,
 } from "@mui/material";
 import "../styles/AboutUsView.css";
