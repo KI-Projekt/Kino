@@ -1,4 +1,4 @@
-import { Box, ButtonBase, Divider, styled, Typography } from '@mui/material';
+import { Box, ButtonBase, Divider, styled, Typography, useTheme } from '@mui/material';
 import * as React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -6,6 +6,7 @@ export interface Show {
     movieID: string
     showID: string
     roomID: string
+    room: string
     dateTime: Date
     additionalInfo: {
         language: string
@@ -20,14 +21,14 @@ export interface ShowDate {
 }
 
 interface props {
-    shows: Array<ShowDate>
+    shows: Array<ShowDate>,
+    onShowTileClick: (currentShow: Show) => void
 }
+
+
 
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
     position: 'relative',
-    [theme.breakpoints.down('sm')]: {
-        width: '100% !important', // Overrides inline-style
-    },
     '&:hover, &.Mui-focusVisible': {
         zIndex: 1,
         '& .MuiImageBackdrop-root': {
@@ -78,23 +79,30 @@ const Image = styled('span')(({ theme }) => ({
 
 
 function ShowTiles(props: props) {
+
+    const theme = useTheme();
+
     return (
-        <Box sx={{ maxWidth: "40rem", marginTop: "1rem" }}>
+        <Box sx={{ marginTop: "1rem" }}>
             {props.shows.map((currentShowDate) =>
-                <Box sx={{ maxWidth: "40rem" }}>
-                    <Typography sx={{ paddingLeft: "1rem" }} variant='h5'>{currentShowDate.date.toDateString()}</Typography>
+                <Box>
+                    <Typography sx={{ paddingLeft: "1rem", paddingRight: "1rem" }} variant='h5'>{currentShowDate.date.toDateString()}</Typography>
                     {currentShowDate.shows.map((currentShow) =>
                         <ImageButton
+                            onClick={() => props.onShowTileClick(currentShow)}
                             focusRipple
-                            style={{
-                                width: "11rem",
+                            sx={{
+                                width: {
+                                    xs: '90%',
+                                    sm: theme.spacing(23),
+                                } ,
                                 height: "8rem",
                                 marginLeft: "1rem",
+                                marginRight: "1rem",
                                 marginTop: "1rem",
-                                marginBottom: "1rem"
+                                marginBottom: "1rem",
                             }}
                         >
-
                             <ImageBackdrop className="MuiImageBackdrop-root" />
                             <Image>
                                 <Typography
@@ -103,8 +111,8 @@ function ShowTiles(props: props) {
                                     color="inherit"
                                     sx={{
                                         position: 'relative',
-                                        p: 4,
-                                        pt: 2,
+                                        p: theme.spacing(4),
+                                        pt: theme.spacing(2),
                                         pb: (theme) => `calc(${theme.spacing(1)} + 0.6rem)`,
                                     }}
                                 >

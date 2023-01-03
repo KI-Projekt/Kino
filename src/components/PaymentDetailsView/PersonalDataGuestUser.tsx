@@ -1,13 +1,14 @@
-import { Box, TextField } from "@mui/material";
+import { Box, TextField, useTheme } from "@mui/material";
 import React from "react"
 import '../../styles/Login.css';
 
 function PersonalDataGuestUser() {
+    const theme = useTheme();
     return (
-        <div className="Login-Form-Content">
             <Box
                 component="form"
                 sx={{
+                    paddingX: theme.spacing,
                     '& .MuiTextField-root': { m: 0.5, width: '100%' },
                 }}
                 noValidate
@@ -68,7 +69,6 @@ function PersonalDataGuestUser() {
                     label="Email Address"
                 />
             </Box>
-        </div>
     )
 }
 
