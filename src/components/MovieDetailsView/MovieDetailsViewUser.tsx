@@ -59,7 +59,7 @@ function UserMovieDetailsView(props: MovieDetailsViewUserProp) {
                                         xs: theme.spacing(1),
                                         sm: theme.spacing(3)
                                     },
-                                    paddingLeft: theme.spacing
+                                    paddingLeft: theme.spacing(1)
                                 }}
                             >
                                 Plot

@@ -72,6 +72,7 @@ function ShowDetailsEditTiles(props: ShowDetailsEditTileProps) {
                                         ml: theme.spacing(1),
                                         my: theme.spacing(1),
                                     }}
+                                    variant="h6"
                                 >
                                     {currentShow.dateTime.toDateString()} at {currentShow.dateTime.toLocaleTimeString()}
                                 </Typography>
