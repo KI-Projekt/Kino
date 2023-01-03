@@ -58,6 +58,14 @@ function ShowDetailsAddTile(props: ShowDetailsAddTileProps) {
             >
                 Add new show
             </Typography>
+            <FormControl sx={{ m: theme.spacing(1) }}>
+                <DateTimePicker
+                    label="Show starts at"
+                    value={addNewShow.dateTime}
+                    onChange={(newValue: Dayjs | null) => handleAddDateTime(newValue)}
+                    renderInput={(params) => <TextField {...params} />}
+                />
+            </FormControl>
             <FormControl
                 sx={{
                     m: theme.spacing(1),
@@ -81,14 +89,6 @@ function ShowDetailsAddTile(props: ShowDetailsAddTileProps) {
                     )}
 
                 </Select>
-            </FormControl>
-            <FormControl sx={{ m: theme.spacing(1) }}>
-                <DateTimePicker
-                    label="Show starts at"
-                    value={addNewShow.dateTime}
-                    onChange={(newValue: Dayjs | null) => handleAddDateTime(newValue)}
-                    renderInput={(params) => <TextField {...params} />}
-                />
             </FormControl>
             <Button
                 variant="contained"

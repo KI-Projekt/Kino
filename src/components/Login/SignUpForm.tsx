@@ -6,7 +6,6 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 interface State {
   password: string;
   repeatedPassword: string;
-
   showPassword: boolean;
   showRepeatedPassword: boolean;
 }

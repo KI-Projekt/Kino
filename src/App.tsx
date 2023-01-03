@@ -20,6 +20,7 @@ import TicketView from "./views/TicketView";
 import { Show, ShowDate } from "./components/MovieDetailsView/ShowTiles";
 import { Order } from "./views/PaymentDetailsView";
 import AddNewMoviesView from "./views/Admin/AddNewMoviesView";
+import { User } from "./components/PaymentDetailsView/PersonalDataGuestUser";
 
 function createData(date: Date, shows: Array<Show>) {
   return { date, shows };
@@ -181,6 +182,21 @@ function App() {
 
   const [shows, setShows] = React.useState<Array<ShowDate>>(data);
 
+  function createUserData(
+    firstName: string | undefined,
+    surname: string | undefined,
+    street: string | undefined,
+    houseNumber: string | undefined,
+    postcode: string | undefined,
+    city: string | undefined,
+    emailAdress: string | undefined,) {
+    return { firstName, surname, street, houseNumber, postcode, city, emailAdress };
+  }
+
+  const [user, setUser] = React.useState<User>(
+    createUserData(undefined, undefined, undefined, undefined, undefined, undefined, undefined)
+  )
+
   const handleChangeAdminMode = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -219,7 +235,14 @@ function App() {
                     path="/showDetails/:imdbID/:showID"
                     element={<TicketView selectedMovie={selectedMovie} selectedShow={selectedShow} setOrder={setOrder} />}
                   />
-                  <Route path="/orderDetails/:imdbID/:showID/:orderID" element={<PaymentDetailsView order={order} />}
+                  <Route
+                    path="/orderDetails/:imdbID/:showID/:orderID"
+                    element={
+                      <PaymentDetailsView
+                        order={order}
+                        user={user}
+                        setUser={setUser}
+                      />}
                   />
                   <Route path="/" element={<OverviewView isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} />} />
                   <Route path="/impressum" element={<ImpressumView />} />
@@ -235,7 +258,6 @@ function App() {
                     path="/movieDetails/:imdbID"
                     element={<MovieDetailsView setSelectedMovie={setSelectedMovie} setSelectedShow={setSelectedShow} selectedMovie={selectedMovie} isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} showData={shows} setShowData={setShows} />}
                   />
-                  <Route path="/order" element={<PaymentDetailsView order={order} />} />
                   <Route path="/openingHours" element={<OpeningHoursView isAdmin={adminProps.isAdmin} />} />
                   <Route path="/ticketPrices" element={<TicketPricesView isAdmin={adminProps.isAdmin} />} />
                   <Route path="/movieDetails/:imdbID/new"
