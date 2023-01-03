@@ -49,7 +49,15 @@ function LoginView() {
     return (
         <div className="Login-Form-Container">
             <div className="Login-Form">
-                <Box sx={{ bgcolor: 'background.paper'}}>
+                <Box sx={{ bgcolor: 'background.paper' }}>
+                    <Typography
+                        variant="h4"
+                        sx={{
+                            textAlign:"center"
+                        }}
+                    >
+                        Login
+                    </Typography>
                     <Tabs
                         value={value}
                         onChange={handleChange}

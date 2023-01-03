@@ -13,10 +13,9 @@ import {
   useTheme,
 } from "@mui/material";
 import Youtube from "react-youtube";
-import ShowTiles, { Show } from "./ShowTiles";
-import { Movie, ShowCollection } from "../../views/MovieDetailsView";
-import AddIcon from "@mui/icons-material/Add";
-import { useNavigate } from "react-router-dom";
+import { Show, ShowDate } from "./ShowTiles";
+import { Movie } from "../../views/MovieDetailsView";
+import ShowDetails from "./ShowDetails";
 
 interface MovieDetailsViewAdminProp {
   selectedMovie: Movie;
@@ -24,17 +23,12 @@ interface MovieDetailsViewAdminProp {
   isNew: boolean;
   setIsNew: Function;
   onShowTileClick: (currentShow: Show) => void;
-  showData: Array<ShowCollection>;
+  showData: Array<ShowDate>;
+  setShowData: Function;
 }
 
 function AdminMovieDetailsView(props: MovieDetailsViewAdminProp) {
   const theme = useTheme();
-
-  const navigate = useNavigate();
-
-  const handleButtonCklick = (link: String) => {
-    navigate(`/${link}`);
-  };
 
   const handleTextChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -206,24 +200,11 @@ function AdminMovieDetailsView(props: MovieDetailsViewAdminProp) {
                         Shows
                       </Typography>
                     </Grid>
-                    <Grid item xs={12} sm={12} md={6} xl={6}>
-                      <Box>
-                        <Button
-                          variant="contained"
-                          onClick={() => handleButtonCklick("addNewShow")}
-                          startIcon={<AddIcon />}
-                          sx={{
-                            m: theme.spacing(3),
-                          }}
-                        >
-                          Add new Show
-                        </Button>
-                      </Box>
-                    </Grid>
                   </Grid>
-                  <ShowTiles
-                    shows={props.showData}
-                    onShowTileClick={props.onShowTileClick}
+                  <ShowDetails
+                    showData={props.showData}
+                    setShowData={props.setShowData}
+                    selectedMovie={props.selectedMovie}
                   />
                 </Box>
               </Grid>

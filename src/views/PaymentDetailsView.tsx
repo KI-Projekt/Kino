@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import PaymentOptions from "../components/PaymentDetailsView/PaymentOptions";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { User } from "../components/PaymentDetailsView/PersonalDataGuestUser";
 
 export interface Seat {
   seatID: string | null;
@@ -36,7 +37,7 @@ export interface Order {
   showID: string | undefined;
   movie: String | undefined;
   picture: string | undefined;
-  showDate: Date | undefined;
+  showDate: Date | null | undefined;
   room: string | undefined;
   seats: Array<Row>;
   fares: Array<fareSelection>;
@@ -45,10 +46,24 @@ export interface Order {
 
 interface PaymentDetailsViewProps {
   order: Order | undefined;
+  user: User;
+  setUser: Function;
 }
 
+
 function PaymentDetailsView(props: PaymentDetailsViewProps) {
+
   const theme = useTheme();
+
+  const [paymentMethod, setPaymentMethod] = React.useState<string | null>('cash');
+
+  const [privacyPolicyChecked, setPrivacyPolicyChecked] = React.useState(false);
+
+  const [personalDataFilled, setPersonalDataFilled] = React.useState(false);
+
+  const handleChangePrivacyPolicyCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPrivacyPolicyChecked(event.target.checked);
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -70,15 +85,26 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
           )}
         </Grid>
         <Grid item xs={12} sm={12} md={6} xl={6}>
-          <PersonalData />
-          <PaymentOptions />
+          <PersonalData 
+          personalDataFilled={personalDataFilled} 
+          setPersonalDataFilled={setPersonalDataFilled}  
+          user={props.user}
+          setUser={props.setUser}
+            />
+          <PaymentOptions paymentMethod={paymentMethod} setPaymentMethod={setPaymentMethod} />
           <FormControlLabel
-            control={<Checkbox />}
+            control={<Checkbox value={privacyPolicyChecked} onChange={handleChangePrivacyPolicyCheck} />}
             sx={{ paddingLeft: "3rem" }}
             label={
               <Typography>
-                I accept the <Link href={`/`}>Terms of Use</Link> &{" "}
-                <Link href={`/`}>Privacy Policy</Link>
+                I accept the
+                {" "}
+                <Link
+                  href={`/privacyPolicy`}
+                  target="_blank"
+                >
+                  Privacy Policy
+                </Link>
               </Typography>
             }
           />
@@ -93,6 +119,7 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
             <Button
               variant="contained"
               sx={{ paddingX: theme.spacing, width: "100%" }}
+              disabled={(paymentMethod && privacyPolicyChecked && personalDataFilled) ? false : true}
             >
               Buy with payment
             </Button>

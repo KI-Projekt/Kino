@@ -14,7 +14,7 @@ interface OrderOverviewProps {
   showID: string;
   movie: String | undefined;
   picture: string | undefined;
-  showDate: Date | undefined;
+  showDate: Date | null | undefined;
   room: string | undefined;
   seats: Array<Row>;
   fares: Array<fareSelection>;
@@ -117,7 +117,7 @@ function OrderOverview(prop: OrderOverviewProps) {
         </Box>
       </CardContent>
       <Box sx={{ alignSelf: "center", justifySelf: "center" }}>
-        {prop.picture && <CardMedia component="img" alt="movie poster" image={prop.picture} /> }
+        {prop.picture && <CardMedia component="img" alt="movie poster" image={prop.picture} />}
       </Box>
     </Card>
   );

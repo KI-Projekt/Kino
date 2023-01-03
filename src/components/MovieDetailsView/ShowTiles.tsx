@@ -3,15 +3,15 @@ import * as React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export interface Show {
-    movieID: string
-    showID: string
-    roomID: string
-    room: string
-    dateTime: Date
+    movieID: string | undefined;
+    showID: string | undefined;
+    roomID: string | undefined;
+    room: string | undefined;
+    dateTime: Date | null;
     additionalInfo: {
-        language: string
-        isThreeD: boolean
-        isDbox: boolean
+        language: string;
+        isThreeD: boolean;
+        isDbox: boolean;
     }
 }
 
@@ -24,8 +24,6 @@ interface props {
     shows: Array<ShowDate>,
     onShowTileClick: (currentShow: Show) => void
 }
-
-
 
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
     position: 'relative',
@@ -42,7 +40,6 @@ const ImageButton = styled(ButtonBase)(({ theme }) => ({
         },
     },
 }));
-
 
 const ImageBackdrop = styled('span')(({ theme }) => ({
     position: 'absolute',
@@ -77,7 +74,6 @@ const Image = styled('span')(({ theme }) => ({
     color: theme.palette.common.white,
 }));
 
-
 function ShowTiles(props: props) {
 
     const theme = useTheme();
@@ -86,43 +82,47 @@ function ShowTiles(props: props) {
         <Box sx={{ marginTop: "1rem" }}>
             {props.shows.map((currentShowDate) =>
                 <Box>
-                    <Typography sx={{ paddingLeft: "1rem", paddingRight: "1rem" }} variant='h5'>{currentShowDate.date.toDateString()}</Typography>
-                    {currentShowDate.shows.map((currentShow) =>
-                        <ImageButton
-                            onClick={() => props.onShowTileClick(currentShow)}
-                            focusRipple
-                            sx={{
-                                width: {
-                                    xs: '90%',
-                                    sm: theme.spacing(23),
-                                } ,
-                                height: "8rem",
-                                marginLeft: "1rem",
-                                marginRight: "1rem",
-                                marginTop: "1rem",
-                                marginBottom: "1rem",
-                            }}
-                        >
-                            <ImageBackdrop className="MuiImageBackdrop-root" />
-                            <Image>
-                                <Typography
-                                    component="span"
-                                    variant="h6"
-                                    color="inherit"
+                    <>
+                        <Typography sx={{ paddingLeft: "1rem", paddingRight: "1rem" }} variant='h5'>{currentShowDate.date.toDateString()}</Typography>
+                        {currentShowDate.shows.map((currentShow) => (
+                            currentShow.dateTime !== null && (
+                                <ImageButton
+                                    onClick={() => props.onShowTileClick(currentShow)}
+                                    focusRipple
                                     sx={{
-                                        position: 'relative',
-                                        p: theme.spacing(4),
-                                        pt: theme.spacing(2),
-                                        pb: (theme) => `calc(${theme.spacing(1)} + 0.6rem)`,
+                                        width: {
+                                            xs: '90%',
+                                            sm: theme.spacing(23),
+                                        },
+                                        height: "8rem",
+                                        marginLeft: "1rem",
+                                        marginRight: "1rem",
+                                        marginTop: "1rem",
+                                        marginBottom: "1rem",
                                     }}
                                 >
-                                    {currentShow.dateTime.getHours()} : {currentShow.dateTime.getMinutes()}
-                                    <ImageMarked className="MuiImageMarked-root" />
-                                </Typography>
-                            </Image>
-                        </ImageButton>
-                    )}
-                    <Divider sx={{borderBottomWidth: "0.2rem"}}/>
+                                    <ImageBackdrop className="MuiImageBackdrop-root" />
+                                    <Image>
+                                        <Typography
+                                            component="span"
+                                            variant="h6"
+                                            color="inherit"
+                                            sx={{
+                                                position: 'relative',
+                                                p: theme.spacing(4),
+                                                pt: theme.spacing(2),
+                                                pb: (theme) => `calc(${theme.spacing(1)} + 0.6rem)`,
+                                            }}
+                                        >
+                                            {currentShow.dateTime.getHours()} : {currentShow.dateTime.getMinutes()}
+                                            <ImageMarked className="MuiImageMarked-root" />
+                                        </Typography>
+                                    </Image>
+                                </ImageButton>
+                            )
+                        ))}
+                        <Divider sx={{ borderBottomWidth: "0.2rem" }} />
+                    </>
                 </Box>
             )}
         </Box>
