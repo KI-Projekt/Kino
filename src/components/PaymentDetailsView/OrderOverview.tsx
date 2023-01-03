@@ -38,7 +38,7 @@ function OrderOverview(prop: OrderOverviewProps) {
           }}
         >
           <Typography
-            variant="h3"
+            variant="h4"
             component="div"
             sx={{ paddingBottom: "1rem" }}
           >

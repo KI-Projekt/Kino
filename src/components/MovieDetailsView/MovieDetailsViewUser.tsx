@@ -88,7 +88,7 @@ function UserMovieDetailsView(props: MovieDetailsViewUserProp) {
                             variant="h4"
                             sx={{
                                 p: 3,
-                                paddingLeft: theme.spacing
+                                paddingLeft: theme.spacing(1)
                             }}
                         >
                             Shows

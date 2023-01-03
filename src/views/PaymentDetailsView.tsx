@@ -16,6 +16,7 @@ import {
 import PaymentOptions from "../components/PaymentDetailsView/PaymentOptions";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { User } from "../components/PaymentDetailsView/PersonalDataGuestUser";
+import { useNavigate } from "react-router-dom";
 
 export interface Seat {
   seatID: string | null;
@@ -64,6 +65,12 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
   const handleChangePrivacyPolicyCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPrivacyPolicyChecked(event.target.checked);
   };
+
+  const navigate = useNavigate();
+
+    function handleOnClick() {
+        navigate(`/order/${props.order?.movieID}/${props.order?.showID}/${props.order?.orderID}`);
+    }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -120,6 +127,7 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
               variant="contained"
               sx={{ paddingX: theme.spacing, width: "100%" }}
               disabled={(paymentMethod && privacyPolicyChecked && personalDataFilled) ? false : true}
+              onClick={handleOnClick}
             >
               Buy with payment
             </Button>
