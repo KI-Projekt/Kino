@@ -18,7 +18,7 @@ function ShowDetailsAddTile(props: ShowDetailsAddTileProps) {
 
     const [addNewShow, setAddNewShow] = React.useState<Show>(
         {
-            movieID: props.selectedMovie.imdbID,
+            movieID: props.selectedMovie.imdbId,
             showID: undefined,
             roomID: undefined,
             room: undefined,

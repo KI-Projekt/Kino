@@ -89,7 +89,7 @@ function MovieDetailsView(props: MovieDetailsViewProps) {
         let fetchedMovie: any;
 
         function appendTrailer(trailers: Array<TrailerType>) {
-            trailers.map((item: TrailerType) => {
+            trailers.forEach((item: TrailerType) => {
                 let selectedMovie: Movie = {
                     trailer: item.type === "Trailer" ? item : undefined,
                     actors: fetchedMovie.Actors,
