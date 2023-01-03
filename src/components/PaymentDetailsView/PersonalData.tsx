@@ -53,7 +53,6 @@ function PersonalData(props: PersonalDataProps) {
 
     const handleChangeTabs = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
-        props.setPersonalDataFilled(false);
     };
 
     return (
