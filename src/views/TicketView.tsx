@@ -429,21 +429,23 @@ function TicketView(props: TicketViewProps) {
           >
             {props.selectedMovie?.title}
           </Typography>
-          <Typography
-            align="center"
-            variant="body1"
-            sx={{
-              p: theme.spacing(1),
-              pt: {
-                xs: theme.spacing(1),
-                sm: theme.spacing(3),
-              },
-              paddingLeft: theme.spacing,
-            }}
-          >
-            Show on {props.selectedShow?.dateTime.toDateString()} <br />
-            {props.selectedShow?.dateTime.getHours()}:{props.selectedShow?.dateTime.getMinutes()}h in {props.selectedShow?.room}
-          </Typography>
+          {props.selectedShow?.dateTime &&
+            <Typography
+              align="center"
+              variant="body1"
+              sx={{
+                p: theme.spacing(1),
+                pt: {
+                  xs: theme.spacing(1),
+                  sm: theme.spacing(3),
+                },
+                paddingLeft: theme.spacing,
+              }}
+            >
+              Show on {props.selectedShow?.dateTime.toDateString()} <br />
+              {props.selectedShow?.dateTime.getHours()}:{props.selectedShow?.dateTime.getMinutes()}h in {props.selectedShow?.room}
+            </Typography>
+          }
         </Box>
         {seats && <Seatplan data={seats} onSeatClick={onSeatClick} />}
       </Grid>

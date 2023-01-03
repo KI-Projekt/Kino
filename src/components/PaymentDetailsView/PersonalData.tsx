@@ -2,7 +2,14 @@ import { Box, Typography, Tab, Tabs, useTheme } from "@mui/material";
 import React from "react"
 import Login from '../Login/LoginForm'
 import SignUpForm from "../Login/SignUpForm";
-import PersonalDataGuestUser from "./PersonalDataGuestUser";
+import PersonalDataGuestUser, { User } from "./PersonalDataGuestUser";
+
+export interface PersonalDataProps {
+    personalDataFilled: boolean;
+    setPersonalDataFilled: Function;
+    user: User;
+    setUser: Function;
+}
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -38,8 +45,10 @@ function a11yProps(index: number) {
     };
 }
 
-function PersonalData() {
+function PersonalData(props: PersonalDataProps) {
+
     const theme = useTheme();
+
     const [value, setValue] = React.useState(0);
 
     const handleChangeTabs = (event: React.SyntheticEvent, newValue: number) => {
@@ -63,7 +72,12 @@ function PersonalData() {
                 <Tab label="Sign Up" {...a11yProps(2)} />
             </Tabs>
             <TabPanel value={value} index={0} dir={theme.direction}>
-                <PersonalDataGuestUser />
+                <PersonalDataGuestUser
+                    personalDataFilled={props.personalDataFilled}
+                    setPersonalDataFilled={props.setPersonalDataFilled}
+                    user={props.user}
+                    setUser={props.setUser}
+                />
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
                 <Login />

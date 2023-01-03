@@ -20,13 +20,14 @@ import {
   useTheme,
 } from "@mui/material";
 import Youtube from "react-youtube";
-import ShowTiles, { Show } from "./ShowTiles";
-import { Movie, ShowCollection } from "../../views/MovieDetailsView";
+import { Show, ShowDate } from "./ShowTiles";
+import { Movie } from "../../views/MovieDetailsView";
 import AddIcon from "@mui/icons-material/Add";
 import UpdateIcon from '@mui/icons-material/Update';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from "react-router-dom";
 import { deleteMovie, postNewMovie, updateMovie } from "../../queries/changeMovies";
+import ShowDetails from "./ShowDetails";
 
 interface MovieDetailsViewAdminProp {
   selectedMovie: Movie;
@@ -34,7 +35,8 @@ interface MovieDetailsViewAdminProp {
   isNew: boolean;
   setIsNew: Function;
   onShowTileClick: (currentShow: Show) => void;
-  showData: Array<ShowCollection>;
+  showData: Array<ShowDate>;
+  setShowData: Function;
 }
 
 function AdminMovieDetailsView(props: MovieDetailsViewAdminProp) {
@@ -358,9 +360,10 @@ function AdminMovieDetailsView(props: MovieDetailsViewAdminProp) {
                       </Box>
                     </Grid>
                   </Grid>
-                  <ShowTiles
-                    shows={props.showData}
-                    onShowTileClick={props.onShowTileClick}
+                  <ShowDetails
+                    showData={props.showData}
+                    setShowData={props.setShowData}
+                    selectedMovie={props.selectedMovie}
                   />
                 </Box>
               </Grid>

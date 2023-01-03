@@ -1,8 +1,9 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { Alert, Box, Button, InputAdornment, TextField, useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import MovieTile from '../components/OverviewView/MovieTile';
-import { fetchOMDbAPI } from '../queries/fetchOMDbAPI';
+import MovieTile from '../../components/OverviewView/MovieTile';
+import { MovieProps } from '../../components/OverviewView/Tilebar';
+import { fetchOMDbAPI } from '../../queries/fetchOMDbAPI';
 
 interface AddNewMoviesViewProps {
     isAdmin: boolean,

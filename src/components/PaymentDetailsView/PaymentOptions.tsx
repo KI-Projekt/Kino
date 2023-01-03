@@ -3,17 +3,21 @@ import StoreIcon from '@mui/icons-material/Store';
 import { Box, Divider, Grid, ToggleButton, ToggleButtonGroup, Typography, useTheme } from '@mui/material';
 import React from 'react';
 
-function PaymentOptions() {
-    const [paymentMethod, setPaymentMethod] = React.useState<string | null>('cash')
+interface PaymentOptionsProps {
+    paymentMethod: string | null;
+    setPaymentMethod: Function;
+}
+
+function PaymentOptions(props: PaymentOptionsProps) {
+    
+    const theme = useTheme();
 
     const handlePaymentMethod = (
         event: React.MouseEvent<HTMLElement>,
         newPaymentMethod: string | null,
     ) => {
-        setPaymentMethod(newPaymentMethod);
+        props.setPaymentMethod(newPaymentMethod);
     };
-
-    const theme = useTheme();
 
     return (
         <Box
@@ -31,7 +35,7 @@ function PaymentOptions() {
                     <Grid xs={12} sm={12} md={2} xl={2}>
                     </Grid>
                     <ToggleButtonGroup
-                        value={paymentMethod}
+                        value={props.paymentMethod}
                         exclusive
                         onChange={handlePaymentMethod}
                         aria-label="payment method"
