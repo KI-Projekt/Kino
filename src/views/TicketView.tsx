@@ -280,7 +280,7 @@ const data = [
       booked: false,
       selected: false,
       seatRowID: 4,
-    }, 
+    },
     {
       seatNumber: null,
       seatID: null,
@@ -376,9 +376,9 @@ function TicketView(props: TicketViewProps) {
     let newOrder = {
       fares: fares,
       movieID: getIMDbIDFromURL(),
-      movie: props.selectedMovie?.Title,
+      movie: props.selectedMovie?.title,
       orderID: "1",
-      picture: props.selectedMovie?.Poster,
+      picture: props.selectedMovie?.posterImage,
       price: calculatePrice(),
       room: props.selectedShow?.room,
       seats: selectedSeats,
@@ -388,8 +388,7 @@ function TicketView(props: TicketViewProps) {
     props.setOrder(newOrder);
     if (props.selectedShow) {
       navigate(
-        `/orderDetails/${getIMDbIDFromURL()}/${props.selectedShow.showID}/${
-          newOrder.orderID
+        `/orderDetails/${getIMDbIDFromURL()}/${props.selectedShow.showID}/${newOrder.orderID
         }`
       );
     }
@@ -428,7 +427,7 @@ function TicketView(props: TicketViewProps) {
               paddingLeft: theme.spacing,
             }}
           >
-            {props.selectedMovie?.Title}
+            {props.selectedMovie?.title}
           </Typography>
           <Typography
             align="center"
@@ -454,7 +453,7 @@ function TicketView(props: TicketViewProps) {
           fares={fares}
           setFares={setFares}
         />
-                <Box>
+        <Box>
           <Typography
             align="center"
             variant="h5"

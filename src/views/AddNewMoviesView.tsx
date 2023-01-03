@@ -2,16 +2,20 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Alert, Box, Button, InputAdornment, TextField, useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import MovieTile from '../components/OverviewView/MovieTile';
-import { MovieProps } from '../components/OverviewView/Tilebar';
 import { fetchOMDbAPI } from '../queries/fetchOMDbAPI';
 
-interface AddNewMovieProps {
+interface AddNewMoviesViewProps {
     isAdmin: boolean,
     isNew: boolean,
     setIsNew: Function,
 }
 
-function AddNewMoviesView(props: AddNewMovieProps) {
+export interface OMDbMovieProps {
+    Poster: string,
+    imdbID: string,
+}
+
+function AddNewMoviesView(props: AddNewMoviesViewProps) {
 
     const theme = useTheme();
 
@@ -33,7 +37,6 @@ function AddNewMoviesView(props: AddNewMovieProps) {
                 setIsError(true);
                 setMovies([]);
             }
-            console.log(result.Search);
         });
     }
 
@@ -80,8 +83,8 @@ function AddNewMoviesView(props: AddNewMovieProps) {
                             marginBottom: theme.spacing(1),
                         }}
                     >
-                        {movies.map((item: MovieProps) => (
-                            <MovieTile picture={item.Poster} imdbID={item.imdbID} isAdmin={props.isAdmin} isNew={props.isNew} />
+                        {movies.map((item: OMDbMovieProps) => (
+                            <MovieTile picture={item.Poster} id={item.imdbID} isAdmin={props.isAdmin} isNew={props.isNew} />
                         ))}
                         {isError &&
                             <Alert

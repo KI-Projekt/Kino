@@ -27,22 +27,22 @@ function UserMovieDetailsView(props: MovieDetailsViewUserProp) {
                         elevation={0}
                     >
                         <CardHeader
-                            title={props.selectedMovie.Title}
+                            title={props.selectedMovie.title}
                             titleTypographyProps={{ p: theme.spacing(3), pt: theme.spacing(2), paddingLeft: 0, fontSize: theme.typography.h4.fontSize }}
                         />
 
                         <CardMedia
                             component="img"
                             alt="movie poster"
-                            image={props.selectedMovie.Poster} />
+                            image={props.selectedMovie.posterImage} />
 
                         <CardContent>
                             <Typography variant="body2" color="text.secondary">
-                                Runtime: {props.selectedMovie.Runtime} <br />
-                                Writer: {props.selectedMovie.Writer} <br />
-                                Cast: {props.selectedMovie.Actors} <br />
-                                Genres: {props.selectedMovie.Genre} <br />
-                                Age Rating: {props.selectedMovie.Rated} <br />
+                                Runtime: {props.selectedMovie.runtime} <br />
+                                Writer: {props.selectedMovie.writer} <br />
+                                Cast: {props.selectedMovie.actors} <br />
+                                Genres: {props.selectedMovie.genre} <br />
+                                Age Rating: {props.selectedMovie.rated} <br />
                             </Typography>
                         </CardContent>
                     </Card>
@@ -65,7 +65,7 @@ function UserMovieDetailsView(props: MovieDetailsViewUserProp) {
                                 Plot
                             </Typography>
                             <Typography sx={{ padding: theme.spacing(1) }}>
-                                {props.selectedMovie.Plot}
+                                {props.selectedMovie.plot}
                             </Typography>
                         </Card>
                         {props.selectedMovie.trailer &&

@@ -9,9 +9,9 @@ import {
   Box,
   Container,
   createTheme,
-  /*   FormControlLabel, */
+  FormControlLabel,
   styled,
-  /*   Switch, */
+  Switch,
   ThemeProvider,
   Toolbar,
 } from "@mui/material";
@@ -174,19 +174,19 @@ function App() {
 
   const [selectedMovie, setSelectedMovie] = React.useState<Movie | undefined>(undefined);
   const [selectedShow, setSelectedShow] = React.useState<Show | undefined>(undefined);
-  const [adminProps, /* setAdminProps */] = React.useState<AdminProps>({
+  const [adminProps, setAdminProps] = React.useState<AdminProps>({
     isAdmin: false,
   });
 
   const [order, setOrder] = React.useState<Order | undefined>(undefined);
 
-  /*  const handleChangeAdminMode = (
-     event: React.ChangeEvent<HTMLInputElement>
-   ) => {
-     setAdminProps({
-       isAdmin: event.target.checked,
-     });
-   }; */
+  const handleChangeAdminMode = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setAdminProps({
+      isAdmin: event.target.checked,
+    });
+  };
 
   const [isNew, setIsNew] = React.useState<boolean>(false);
 
@@ -227,10 +227,10 @@ function App() {
               </Box>
             </Container>
             <Footer />
-            {/* <FormControlLabel
-              control={<Switch onChange={handleChangeAdminMode} visible />}
+            {<FormControlLabel
+              control={<Switch onChange={handleChangeAdminMode} />}
               label="Admin"
-            /> */}
+            />}
           </Main>
         </BrowserRouter>
       </ThemeProvider>
