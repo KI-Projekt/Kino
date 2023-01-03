@@ -29,6 +29,7 @@ function ShowDetails(props: ShowDetailsProps) {
     ];
 
     const handleChangeDateTime = (newValue: Date | null, changedShow: Show) => {
+        console.log(newValue);
         const newShowData = props.showData.map((currentShowDate) => {
             const newShows = currentShowDate.shows.map((currentShow) => {
                 if (currentShow.showID === changedShow.showID) {
@@ -48,6 +49,7 @@ function ShowDetails(props: ShowDetailsProps) {
             }
         });
         props.setShowData(newShowData);
+        console.log(props.showData);
     };
 
     const handleChangeRoom = (e: SelectChangeEvent, changedShow: Show) => {
@@ -112,16 +114,27 @@ function ShowDetails(props: ShowDetailsProps) {
                         <>
                             {props.showData.map((currentShowDate: ShowDate) => (
                                 currentShowDate.shows.map((currentShow: Show) => (
+                                    currentShow.dateTime &&
                                     <>
                                         <Divider sx={{ borderBottomWidth: "0.2rem" }} />
-                                        <Typography
-                                            sx={{
-                                                ml: theme.spacing(1),
-                                                my: theme.spacing(1),
-                                            }}
-                                        >
-                                            ShowID: {currentShow.showID}
-                                        </Typography>
+                                        {typeof currentShow.dateTime === 'object' && currentShow.dateTime !== null && 'toDateString' in currentShow.dateTime &&
+                                            <Typography
+                                                sx={{
+                                                    ml: theme.spacing(1),
+                                                    my: theme.spacing(1),
+                                                }}
+                                            >
+                                                {currentShow.dateTime.toDateString()} at {currentShow.dateTime.toLocaleTimeString()}
+                                            </Typography>
+                                        }
+                                        <FormControl sx={{ m: theme.spacing(1) }}>
+                                            <DateTimePicker
+                                                label="Show starts at"
+                                                value={currentShow.dateTime}
+                                                onChange={(newValue) => handleChangeDateTime(newValue, currentShow)}
+                                                renderInput={(params) => <TextField {...params} />}
+                                            />
+                                        </FormControl>
                                         <FormControl
                                             sx={{
                                                 m: theme.spacing(1),
@@ -145,15 +158,6 @@ function ShowDetails(props: ShowDetailsProps) {
                                                 )}
 
                                             </Select>
-                                        </FormControl>
-                                        <FormControl sx={{ m: theme.spacing(1) }}>
-                                            <DateTimePicker
-                                                label="Show starts at"
-                                                value={currentShow.dateTime}
-                                                onChange={(newValue) => handleChangeDateTime(newValue, currentShow)}
-                                                renderInput={(params) => <TextField {...params} />}
-
-                                            />
                                         </FormControl>
                                     </>
                                 ))
