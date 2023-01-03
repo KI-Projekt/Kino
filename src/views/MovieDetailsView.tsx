@@ -62,9 +62,6 @@ function MovieDetailsView(props: MovieDetailsViewProps) {
         if (!props.isAdmin) {
             navigate(`/showDetails/${getIMDbIDFromURL()}/${currentShow.showID}`);
             props.setSelectedShow(currentShow);
-        } else if (props.isAdmin) {
-            navigate(`/showDetails/$${getIMDbIDFromURL()}/${currentShow.showID}/edit`);
-            props.setSelectedShow(currentShow);
         }
     }
 
