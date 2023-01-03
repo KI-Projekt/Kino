@@ -2,6 +2,9 @@ import React from "react";
 import "./App.css";
 import Footer from "./components/Footer";
 import ImpressumView from "./views/ImpressumView";
+import ContactUsView from "./views/ContactUsView";
+import AboutUsView from "./views/AboutUsView";
+import GettingHereView from "./views/GettingHereView";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header, { drawerWidth } from "./components/Header/Header";
 import OverviewView from "./views/OverviewView";
@@ -18,6 +21,7 @@ import {
 import OpeningHoursView from "./views/OpeningHoursView";
 import TicketPricesView from "./views/TicketPricesView";
 import MovieDetailsView, { Movie } from "./views/MovieDetailsView";
+import PrivacyPolicyView from "./views/PrivacyPolicyView";
 import LoginView from "./views/LoginView";
 import PaymentDetailsView from "./views/PaymentDetailsView";
 import TicketView from "./views/TicketView";
@@ -127,13 +131,7 @@ export const redTheme = createTheme({
     },
   },
   typography: {
-    fontFamily: [
-      "Monospace",
-      "Roboto",
-      "Helvetica",
-      "Arial",
-      "sans-serif",
-    ].join(","),
+    fontFamily: ["Roboto", "Helvetica", "Arial", "sans-serif"].join(","),
   },
 });
 
@@ -218,7 +216,19 @@ function App() {
                   />
                   <Route path="/" element={<OverviewView isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} />} />
                   <Route path="/impressum" element={<ImpressumView />} />
+                  <Route path="/contact" element={<ContactUsView />} />
+                  <Route path="/about" element={<AboutUsView />} />
+                  <Route path="/gettingHere" element={<GettingHereView />} />
                   <Route path="/login" element={<LoginView />} />
+                  <Route
+                    path="/privacyPolicy"
+                    element={<PrivacyPolicyView />}
+                  />
+                  <Route
+                    path="/movieDetails/:imdbID"
+                    element={<MovieDetailsView setSelectedMovie={setSelectedMovie} setSelectedShow={setSelectedShow} selectedMovie={selectedMovie} isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} showData={data} />}
+                  />
+                  <Route path="/order" element={<PaymentDetailsView order={order}/>} />
                   <Route path="/openingHours" element={<OpeningHoursView isAdmin={adminProps.isAdmin} />} />
                   <Route path="/ticketPrices" element={<TicketPricesView isAdmin={adminProps.isAdmin} />} />
                   <Route path="/movieDetails/:imdbID/new" element={<MovieDetailsView setSelectedMovie={setSelectedMovie} setSelectedShow={setSelectedShow} selectedMovie={selectedMovie} isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} showData={data} />} />
