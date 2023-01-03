@@ -280,7 +280,7 @@ const data = [
       booked: false,
       selected: false,
       seatRowID: 4,
-    }, 
+    },
     {
       seatNumber: null,
       seatID: null,
@@ -388,8 +388,7 @@ function TicketView(props: TicketViewProps) {
     props.setOrder(newOrder);
     if (props.selectedShow) {
       navigate(
-        `/orderDetails/${getIMDbIDFromURL()}/${props.selectedShow.showID}/${
-          newOrder.orderID
+        `/orderDetails/${getIMDbIDFromURL()}/${props.selectedShow.showID}/${newOrder.orderID
         }`
       );
     }
@@ -430,21 +429,23 @@ function TicketView(props: TicketViewProps) {
           >
             {props.selectedMovie?.Title}
           </Typography>
-          <Typography
-            align="center"
-            variant="body1"
-            sx={{
-              p: theme.spacing(1),
-              pt: {
-                xs: theme.spacing(1),
-                sm: theme.spacing(3),
-              },
-              paddingLeft: theme.spacing,
-            }}
-          >
-            Show on {props.selectedShow?.dateTime.toDateString()} <br />
-            {props.selectedShow?.dateTime.getHours()}:{props.selectedShow?.dateTime.getMinutes()}h in {props.selectedShow?.room}
-          </Typography>
+          {props.selectedShow?.dateTime &&
+            <Typography
+              align="center"
+              variant="body1"
+              sx={{
+                p: theme.spacing(1),
+                pt: {
+                  xs: theme.spacing(1),
+                  sm: theme.spacing(3),
+                },
+                paddingLeft: theme.spacing,
+              }}
+            >
+              Show on {props.selectedShow?.dateTime.toDateString()} <br />
+              {props.selectedShow?.dateTime.getHours()}:{props.selectedShow?.dateTime.getMinutes()}h in {props.selectedShow?.room}
+            </Typography>
+          }
         </Box>
         {seats && <Seatplan data={seats} onSeatClick={onSeatClick} />}
       </Grid>
@@ -454,7 +455,7 @@ function TicketView(props: TicketViewProps) {
           fares={fares}
           setFares={setFares}
         />
-                <Box>
+        <Box>
           <Typography
             align="center"
             variant="h5"
