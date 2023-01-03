@@ -2,6 +2,7 @@ import { Divider, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, 
 import { Show, ShowDate } from "./ShowTiles";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import { Room } from "../../views/TicketView";
+import { Dayjs } from "dayjs";
 
 interface ShowDetailsEditTileProps {
     showData: Array<ShowDate>;
@@ -13,14 +14,13 @@ function ShowDetailsEditTiles(props: ShowDetailsEditTileProps) {
 
     const theme = useTheme();
 
-    const handleChangeDateTime = (newValue: Date | null, changedShow: Show) => {
-        console.log(newValue);
+    const handleChangeDateTime = (newValue: Dayjs | null, changedShow: Show) => {
         const newShowData = props.showData.map((currentShowDate) => {
             const newShows = currentShowDate.shows.map((currentShow) => {
                 if (currentShow.showID === changedShow.showID) {
                     return {
                         ...currentShow,
-                        dateTime: newValue,
+                        dateTime: newValue?.toDate(),
                     };
                 } else {
                     return {
@@ -34,7 +34,6 @@ function ShowDetailsEditTiles(props: ShowDetailsEditTileProps) {
             }
         });
         props.setShowData(newShowData);
-        console.log(props.showData);
     };
 
     const handleChangeRoom = (e: SelectChangeEvent, changedShow: Show) => {
@@ -81,7 +80,7 @@ function ShowDetailsEditTiles(props: ShowDetailsEditTileProps) {
                                 <DateTimePicker
                                     label="Show starts at"
                                     value={currentShow.dateTime}
-                                    onChange={(newValue) => handleChangeDateTime(newValue, currentShow)}
+                                    onChange={(newValue: Dayjs | null) => handleChangeDateTime(newValue, currentShow)}
                                     renderInput={(params) => <TextField {...params} />}
                                 />
                             </FormControl>

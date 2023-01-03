@@ -5,6 +5,7 @@ import { Room } from "../../views/TicketView";
 import React from "react";
 import { Movie } from "../../views/MovieDetailsView";
 import AddIcon from '@mui/icons-material/Add';
+import { Dayjs } from "dayjs";
 
 interface ShowDetailsAddTileProps {
     selectedMovie: Movie;
@@ -36,11 +37,11 @@ function ShowDetailsAddTile(props: ShowDetailsAddTileProps) {
         }));
     }
 
-    const handleAddDateTime = (newValue: Date | null | undefined) => {
+    const handleAddDateTime = (newValue: Dayjs | null | undefined) => {
         if (newValue != null) {
             setAddNewShow(prev => ({
                 ...prev,
-                dateTime: newValue,
+                dateTime: newValue?.toDate(),
             }))
         }
     }
@@ -85,7 +86,7 @@ function ShowDetailsAddTile(props: ShowDetailsAddTileProps) {
                 <DateTimePicker
                     label="Show starts at"
                     value={addNewShow.dateTime}
-                    onChange={(newValue) => handleAddDateTime(newValue)}
+                    onChange={(newValue: Dayjs | null) => handleAddDateTime(newValue)}
                     renderInput={(params) => <TextField {...params} />}
                 />
             </FormControl>
