@@ -74,7 +74,7 @@ function ShowDetailsEditTiles(props: ShowDetailsEditTileProps) {
                                     }}
                                     variant="h6"
                                 >
-                                    {currentShow.dateTime.toDateString()} at {currentShow.dateTime.toLocaleTimeString()}
+                                    {currentShow.dateTime.toLocaleDateString()} at {currentShow.dateTime.getHours()}:{currentShow.dateTime.getMinutes()}h
                                 </Typography>
                             }
                             <FormControl sx={{ m: theme.spacing(1) }}>
