@@ -35,26 +35,14 @@ function ShowDetails(props: ShowDetailsProps) {
     return (
         <>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                {props.showData &&
-                    <Box sx={{ p: theme.spacing(1) }}>
-                        <>
+                <Box sx={{ p: theme.spacing(1) }}>
+                    <>
+                        {props.showData &&
                             <ShowDetailsEditTiles roomData={roomData} showData={props.showData} setShowData={props.setShowData} />
-                            <ShowDetailsAddTile roomData={roomData} selectedMovie={props.selectedMovie} />
-                        </>
-                    </Box>
-                }
-                {!props.showData &&
-                    <Alert
-                        sx={{
-                            marginTop: "1rem",
-                            width: "90rem",
-                            marginLeft: "2rem"
-                        }}
-                        severity="error"
-                    >
-                        No show is selected
-                    </Alert>
-                }
+                        }
+                        <ShowDetailsAddTile roomData={roomData} selectedMovie={props.selectedMovie} />
+                    </>
+                </Box>
             </LocalizationProvider>
         </>
     );
