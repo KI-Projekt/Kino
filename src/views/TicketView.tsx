@@ -6,10 +6,11 @@ import FareSelection, {
 import Seatplan from "../components/TicketView/Seatplan";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Order, Row, Seat } from "../views/PaymentDetailsView";
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, Typography, useTheme } from "@mui/material";
 import { getIMDbIDFromURL, Movie } from "./MovieDetailsView";
 import { Show } from "../components/MovieDetailsView/ShowTiles";
 import { useNavigate } from "react-router-dom";
+import { Box } from "@mui/system";
 
 export interface Room {
   roomName: string;
@@ -81,22 +82,6 @@ const data = [
       seatRowID: 1,
     },
     {
-      seatNumber: null,
-      seatID: null,
-      booked: null,
-      selected: null,
-      seatRowID: 1,
-    },
-  ]),
-  createData(2, "B", [
-    {
-      seatNumber: null,
-      seatID: null,
-      booked: null,
-      selected: null,
-      seatRowID: 2,
-    },
-    {
       seatNumber: 7,
       seatID: "7",
       booked: false,
@@ -125,6 +110,22 @@ const data = [
       seatRowID: 2,
     },
     {
+      seatNumber: null,
+      seatID: null,
+      booked: null,
+      selected: null,
+      seatRowID: 1,
+    },
+  ]),
+  createData(2, "B", [
+    {
+      seatNumber: null,
+      seatID: null,
+      booked: null,
+      selected: null,
+      seatRowID: 2,
+    },
+    {
       seatNumber: 11,
       seatID: "11",
       booked: false,
@@ -137,22 +138,6 @@ const data = [
       booked: false,
       selected: false,
       seatRowID: 2,
-    },
-    {
-      seatNumber: null,
-      seatID: null,
-      booked: null,
-      selected: null,
-      seatRowID: 2,
-    },
-  ]),
-  createData(3, "C", [
-    {
-      seatNumber: null,
-      seatID: null,
-      booked: null,
-      selected: null,
-      seatRowID: 3,
     },
     {
       seatNumber: 13,
@@ -197,22 +182,6 @@ const data = [
       seatRowID: 3,
     },
     {
-      seatNumber: null,
-      seatID: null,
-      booked: null,
-      selected: false,
-      seatRowID: 3,
-    },
-  ]),
-  createData(4, "D", [
-    {
-      seatNumber: null,
-      seatID: null,
-      booked: null,
-      selected: false,
-      seatRowID: 4,
-    },
-    {
       seatNumber: 19,
       seatID: "19",
       booked: false,
@@ -225,6 +194,22 @@ const data = [
       booked: false,
       selected: false,
       seatRowID: 4,
+    },
+    {
+      seatNumber: null,
+      seatID: null,
+      booked: null,
+      selected: null,
+      seatRowID: 2,
+    },
+  ]),
+  createData(3, "C", [
+    {
+      seatNumber: null,
+      seatID: null,
+      booked: null,
+      selected: null,
+      seatRowID: 3,
     },
     {
       seatNumber: 21,
@@ -255,11 +240,53 @@ const data = [
       seatRowID: 4,
     },
     {
+      seatNumber: 25,
+      seatID: "25",
+      booked: false,
+      selected: false,
+      seatRowID: 4,
+    },
+    {
+      seatNumber: 26,
+      seatID: "26",
+      booked: false,
+      selected: false,
+      seatRowID: 4,
+    },
+    {
+      seatNumber: 27,
+      seatID: "27",
+      booked: false,
+      selected: false,
+      seatRowID: 4,
+    },
+    {
+      seatNumber: 28,
+      seatID: "28",
+      booked: true,
+      selected: false,
+      seatRowID: 4,
+    },
+    {
+      seatNumber: 29,
+      seatID: "29",
+      booked: false,
+      selected: false,
+      seatRowID: 4,
+    },
+    {
+      seatNumber: 30,
+      seatID: "30",
+      booked: false,
+      selected: false,
+      seatRowID: 4,
+    }, 
+    {
       seatNumber: null,
       seatID: null,
       booked: null,
       selected: false,
-      seatRowID: 4,
+      seatRowID: 3,
     },
   ]),
 ];
@@ -271,13 +298,28 @@ interface TicketViewProps {
 }
 
 function TicketView(props: TicketViewProps) {
+  const theme = useTheme();
+
   const [currentTicketAmmount, setCurrentTicketAmount] = useState(0);
 
-  const [seats, setSeats] = useState(data);
+  const [seats, setSeats] = useState<Array<Row>>(data);
+
+  const newData = seats;
+
+  React.useEffect(() => {
+    newData.forEach((row) => {
+      row.seats.forEach((seat) => {
+        if (seat.selected) {
+          seat.selected = false;
+        }
+      });
+    });
+    setSeats(newData);
+  }, [newData]);
 
   const navigate = useNavigate();
 
-  function createData(
+  function createFareData(
     id: number,
     name: string,
     price: number,
@@ -288,45 +330,46 @@ function TicketView(props: TicketViewProps) {
   }
 
   const rows = [
-    createData(
+    createFareData(
       0,
       "Adults",
       10.0,
       "People older than 16 and younger than 65 years old",
       0
     ),
-    createData(1, "Kids", 7.0, "Kids under 16 years old", 0),
-    createData(2, "Students", 8.0, "Students with a student ID", 0),
-    createData(3, "Pensioner", 9.0, "People older than 65", 0),
+    createFareData(1, "Kids", 7.0, "Kids under 16 years old", 0),
+    createFareData(2, "Students", 8.0, "Students with a student ID", 0),
+    createFareData(3, "Pensioner", 9.0, "People older than 65", 0),
   ];
 
   const [fares, setFares] = useState<Array<fareSelection>>(rows);
 
   function calculateSelectedSeats() {
     let array: Array<Row> = [];
-    seats.forEach((row: Row) => {
-      let newRow: Row = { seatRowID: -1, rowDescription: "-1", seats: [] };
-      row.seats.forEach((seat) => {
-        if (seat.selected) {
-          newRow.seats.push(seat);
+    seats &&
+      seats.forEach((row: Row) => {
+        let newRow: Row = { seatRowID: -1, rowDescription: "-1", seats: [] };
+        row.seats.forEach((seat) => {
+          if (seat.selected) {
+            newRow.seats.push(seat);
+          }
+        });
+        if (newRow.seats.length > 0) {
+          newRow.seatRowID = row.seatRowID;
+          newRow.rowDescription = row.rowDescription;
+          array.push(newRow);
         }
       });
-      if (newRow.seats.length > 0) {
-        newRow.seatRowID = row.seatRowID;
-        newRow.rowDescription = row.rowDescription;
-        array.push(newRow);
-      }
-    });
     return array;
   }
 
   const calculatePrice = () => {
     let price = 0;
-    fares.forEach(fare => {
-      price += fare.amountOfTickets * fare.price 
-    })
+    fares.forEach((fare) => {
+      price += fare.amountOfTickets * fare.price;
+    });
     return price;
-  }
+  };
 
   const onButtonClick = () => {
     let selectedSeats = calculateSelectedSeats();
@@ -343,39 +386,95 @@ function TicketView(props: TicketViewProps) {
       showID: props.selectedShow?.showID,
     };
     props.setOrder(newOrder);
-    if (props.selectedShow){
-      navigate(`/orderDetails/${getIMDbIDFromURL()}/${props.selectedShow.showID}/${newOrder.orderID}`);
+    if (props.selectedShow) {
+      navigate(
+        `/orderDetails/${getIMDbIDFromURL()}/${props.selectedShow.showID}/${
+          newOrder.orderID
+        }`
+      );
     }
-    };
+  };
 
   function onSeatClick(e: React.ChangeEvent<HTMLButtonElement>) {
-    seats.forEach((row) => {
-      row.seats.forEach((seat) => {
-        if (seat.seatID === e.currentTarget.id) {
-          if (seat.selected === false) {
-            setCurrentTicketAmount(currentTicketAmmount + 1);
-          } else {
-            setCurrentTicketAmount(currentTicketAmmount - 1);
+    seats &&
+      seats.forEach((row) => {
+        row.seats.forEach((seat) => {
+          if (seat.seatID === e.currentTarget.id) {
+            if (seat.selected === false) {
+              setCurrentTicketAmount(currentTicketAmmount + 1);
+            } else {
+              setCurrentTicketAmount(currentTicketAmmount - 1);
+            }
+            seat.selected = !seat.selected;
           }
-          seat.selected = !seat.selected;
-        }
+        });
+        setSeats(seats);
       });
-      setSeats(seats);
-    });
   }
 
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12} sm={8} md={4} xl={3.5}>
-        <Seatplan data={seats} onSeatClick={onSeatClick} />
+      <Grid item xs={12} sm={12} md={6.5} xl={6}>
+        <Box>
+          <Typography
+            align="center"
+            variant="h4"
+            sx={{
+              p: theme.spacing(3),
+              pt: {
+                xs: theme.spacing(1),
+                sm: theme.spacing(3),
+              },
+              paddingLeft: theme.spacing,
+            }}
+          >
+            {props.selectedMovie?.Title}
+          </Typography>
+          <Typography
+            align="center"
+            variant="body1"
+            sx={{
+              p: theme.spacing(1),
+              pt: {
+                xs: theme.spacing(1),
+                sm: theme.spacing(3),
+              },
+              paddingLeft: theme.spacing,
+            }}
+          >
+            Show on {props.selectedShow?.dateTime.toDateString()} <br />
+            {props.selectedShow?.dateTime.getHours()}:{props.selectedShow?.dateTime.getMinutes()}h in {props.selectedShow?.room}
+          </Typography>
+        </Box>
+        {seats && <Seatplan data={seats} onSeatClick={onSeatClick} />}
       </Grid>
-      <Grid item xs={12} sm={12} md={4} xl={4}>
+      <Grid item xs={12} sm={12} md={5.5} xl={6}>
         <FareSelection
           totalAmountOfTickets={currentTicketAmmount}
           fares={fares}
           setFares={setFares}
         />
-        <Button variant="contained" onClick={onButtonClick}>
+                <Box>
+          <Typography
+            align="center"
+            variant="h5"
+            sx={{
+              p: theme.spacing(1),
+              pt: {
+                xs: theme.spacing(1),
+                sm: theme.spacing(3),
+              },
+              paddingLeft: theme.spacing,
+            }}
+          >
+            Total Price: {calculatePrice()} Euro
+          </Typography>
+        </Box>
+        <Button
+          sx={{ width: "100%", marginY: "1rem" }}
+          variant="contained"
+          onClick={onButtonClick}
+        >
           Continue
         </Button>
       </Grid>

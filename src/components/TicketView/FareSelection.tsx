@@ -82,7 +82,7 @@ function FareSelection(props: fareSelectionProps) {
             })
             setFares(newFares);
         }
-    }, [totalAmountOfTickets, fares, props.totalAmountOfTickets]);
+    }, [totalAmountOfTickets, fares, props.totalAmountOfTickets, setFares]);
 
     const handleRemoveTicket = (index: number) => {
         let isNumberChanged = false;
@@ -126,9 +126,9 @@ function FareSelection(props: fareSelectionProps) {
     };
 
     return (
-        <Box sx={{ bgcolor: 'background.paper', maxWidth: '23rem'}} alignItems='center'>
-            <Typography variant="h4" sx={{ p: 3, paddingLeft: '5rem' }}>{totalAmountOfTickets} Tickets</Typography>
-            <TableContainer component={Paper} sx={{ maxWidth: '23rem' }}>
+        <Box sx={{ bgcolor: 'background.paper'}} alignItems='center'>
+            <Typography align="center" variant="h4" sx={{ p: 3 }}>{totalAmountOfTickets} Tickets</Typography>
+            <TableContainer component={Paper} elevation={0}>
                 <Table>
                     <TableBody>
                         {fares.map((fare, index) => (

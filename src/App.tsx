@@ -2,6 +2,9 @@ import React from "react";
 import "./App.css";
 import Footer from "./components/Footer";
 import ImpressumView from "./views/ImpressumView";
+import ContactUsView from "./views/ContactUsView";
+import AboutUsView from "./views/AboutUsView";
+import GettingHereView from "./views/GettingHereView";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header, { drawerWidth } from "./components/Header/Header";
 import OverviewView from "./views/OverviewView";
@@ -10,6 +13,7 @@ import type { } from '@mui/x-date-pickers/themeAugmentation';
 import OpeningHoursView from "./views/OpeningHoursView";
 import TicketPricesView from "./views/TicketPricesView";
 import MovieDetailsView, { Movie } from "./views/MovieDetailsView";
+import PrivacyPolicyView from "./views/PrivacyPolicyView";
 import LoginView from "./views/LoginView";
 import PaymentDetailsView from "./views/PaymentDetailsView";
 import TicketView from "./views/TicketView";
@@ -27,7 +31,7 @@ export const data = [
       movieID: "1",
       showID: "1",
       roomID: "1",
-      room: "Saal 1",
+      room: "Room 1",
       dateTime: new Date(2023, 0, 1, 16, 30, 0),
       additionalInfo: { language: "english", isDbox: false, isThreeD: false },
     },
@@ -35,7 +39,7 @@ export const data = [
       movieID: "5",
       showID: "5",
       roomID: "2",
-      room: "Saal 2",
+      room: "Room 2",
       dateTime: new Date(2023, 0, 1, 21, 45, 0),
       additionalInfo: { language: "english", isDbox: false, isThreeD: false },
     },
@@ -45,7 +49,7 @@ export const data = [
       movieID: "2",
       showID: "2",
       roomID: "2",
-      room: "Saal 2",
+      room: "Room 2",
       dateTime: new Date(2023, 0, 2, 17, 30, 0),
       additionalInfo: { language: "english", isDbox: false, isThreeD: false },
     },
@@ -55,7 +59,7 @@ export const data = [
       movieID: "3",
       showID: "3",
       roomID: "3",
-      room: "Saal 3",
+      room: "Room 3",
       dateTime: new Date(2023, 0, 3, 18, 15, 0),
       additionalInfo: { language: "english", isDbox: false, isThreeD: false },
     },
@@ -65,7 +69,7 @@ export const data = [
       movieID: "4",
       showID: "4",
       roomID: "1",
-      room: "Saal 1",
+      room: "Room 1",
       dateTime: new Date(2023, 0, 4, 12, 30, 0),
       additionalInfo: { language: "english", isDbox: false, isThreeD: false },
     },
@@ -73,7 +77,7 @@ export const data = [
       movieID: "6",
       showID: "6",
       roomID: "2",
-      room: "Saal 2",
+      room: "Room 2",
       dateTime: new Date(2023, 0, 4, 16, 15, 0),
       additionalInfo: { language: "english", isDbox: false, isThreeD: false },
     },
@@ -81,7 +85,7 @@ export const data = [
       movieID: "7",
       showID: "7",
       roomID: "1",
-      room: "Saal 1",
+      room: "Room 1",
       dateTime: new Date(2023, 0, 4, 20, 30, 0),
       additionalInfo: { language: "english", isDbox: false, isThreeD: false },
     },
@@ -119,13 +123,7 @@ export const redTheme = createTheme({
     },
   },
   typography: {
-    fontFamily: [
-      "Monospace",
-      "Roboto",
-      "Helvetica",
-      "Arial",
-      "sans-serif",
-    ].join(","),
+    fontFamily: ["Roboto", "Helvetica", "Arial", "sans-serif"].join(","),
   },
   components: {
     MuiDatePicker: {
@@ -217,13 +215,27 @@ function App() {
                     />
                     }
                   />
-                  <Route path="/showDetails/:imdbID/:showID" element={<TicketView selectedMovie={selectedMovie} selectedShow={selectedShow} setOrder={setOrder} />}
+                  <Route
+                    path="/showDetails/:imdbID/:showID"
+                    element={<TicketView selectedMovie={selectedMovie} selectedShow={selectedShow} setOrder={setOrder} />}
                   />
                   <Route path="/orderDetails/:imdbID/:showID/:orderID" element={<PaymentDetailsView order={order} />}
                   />
                   <Route path="/" element={<OverviewView isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} />} />
                   <Route path="/impressum" element={<ImpressumView />} />
+                  <Route path="/contact" element={<ContactUsView />} />
+                  <Route path="/about" element={<AboutUsView />} />
+                  <Route path="/gettingHere" element={<GettingHereView />} />
                   <Route path="/login" element={<LoginView />} />
+                  <Route
+                    path="/privacyPolicy"
+                    element={<PrivacyPolicyView />}
+                  />
+                  <Route
+                    path="/movieDetails/:imdbID"
+                    element={<MovieDetailsView setSelectedMovie={setSelectedMovie} setSelectedShow={setSelectedShow} selectedMovie={selectedMovie} isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} showData={shows} setShowData={setShows} />}
+                  />
+                  <Route path="/order" element={<PaymentDetailsView order={order} />} />
                   <Route path="/openingHours" element={<OpeningHoursView isAdmin={adminProps.isAdmin} />} />
                   <Route path="/ticketPrices" element={<TicketPricesView isAdmin={adminProps.isAdmin} />} />
                   <Route path="/movieDetails/:imdbID/new"
@@ -245,7 +257,10 @@ function App() {
               </Box>
             </Container>
             <Footer />
-            <FormControlLabel control={<Switch onChange={handleChangeAdminMode} />} label="Admin" />
+            <FormControlLabel
+              control={<Switch onChange={handleChangeAdminMode} />}
+              label="Admin"
+            />
           </Main>
         </BrowserRouter>
       </ThemeProvider>
