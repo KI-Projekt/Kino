@@ -83,7 +83,7 @@ function PersonalDataGuestUser(props: PersonalDataProps) {
                     placeholder="69"
                     label="House number"
                     id="houseNumber"
-                    value={props.user.street}
+                    value={props.user.houseNumber}
                     onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleOnChange(e)}
                 />
             </Box>
