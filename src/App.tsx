@@ -21,6 +21,7 @@ import { Show, ShowDate } from "./components/MovieDetailsView/ShowTiles";
 import { Order } from "./views/PaymentDetailsView";
 import AddNewMoviesView from "./views/Admin/AddNewMoviesView";
 import { User } from "./components/PaymentDetailsView/PersonalDataGuestUser";
+import OrderFinalisationView from "./views/OrderFinalisationView";
 
 function createData(date: Date, shows: Array<Show>) {
   return { date, shows };
@@ -275,6 +276,10 @@ function App() {
                     }
                   />
                   <Route path="/addNewMovie" element={<AddNewMoviesView isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} />} />
+                  <Route
+                    path="/order/:imdbID/:showID/:orderID"
+                    element={<OrderFinalisationView order={order} user={user} />}
+                  />
                 </Routes>
               </Box>
             </Container>
