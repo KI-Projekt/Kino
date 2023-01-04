@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import React from "react";
 import html2canvas from "html2canvas";
 import jsPDF from 'jspdf';
-import DownloadFile from "../components/FinalisationView/DownloadFile";
 import OrderOverview from "../components/PaymentDetailsView/OrderOverview";
 import QRCode from "react-qr-code";
 import DownloadIcon from '@mui/icons-material/Download';
