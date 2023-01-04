@@ -13,7 +13,6 @@ import {
   DialogTitle,
   Divider,
   Grid,
-  Snackbar,
   TextField,
   Typography,
   useMediaQuery,
@@ -28,6 +27,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from "react-router-dom";
 import { deleteMovie, postNewMovie, updateMovie } from "../../queries/changeMovies";
 import ShowDetails from "./ShowDetails";
+import Alerts from "../Alerts";
 
 interface MovieDetailsViewAdminProp {
   selectedMovie: Movie;
@@ -35,30 +35,36 @@ interface MovieDetailsViewAdminProp {
   isNew: boolean;
   setIsNew: Function;
   onShowTileClick: (currentShow: Show) => void;
-  showData: Array<ShowDate>;
+  showData: Array<ShowDate> | undefined;
   setShowData: Function;
+  getShowsByMovie: Function;
 }
 
 function AdminMovieDetailsView(props: MovieDetailsViewAdminProp) {
   const theme = useTheme();
 
   const navigate = useNavigate();
-  const [alertOpen, setAlertOpen] = React.useState(false);
   const [dialogOpen, setDialogOpen] = React.useState(false);
+  const [alertOpen, setAlertOpen] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
   const [alertText, setAlertText] = React.useState("The Movie was added successfully!");
 
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-  const handleAlertClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setAlertOpen(false);
-  };
-
   const handleDeleteMovie = () => {
-    deleteMovie(props.selectedMovie.id)
+    deleteMovie(props.selectedMovie.id).then(result => {
+      if (result.error) {
+        setAlertText(result.error);
+        setIsError(true);
+        setAlertOpen(true)
+      } else if (result.errorMessage) {
+        setAlertText(result.errorMessage);
+        setIsError(true);
+        setAlertOpen(true)
+      } else {
+        navigate("/");
+      }
+    })
     setDialogOpen(false);
   }
 
@@ -76,22 +82,24 @@ function AdminMovieDetailsView(props: MovieDetailsViewAdminProp) {
       trailer: undefined,
       imdbId: props.selectedMovie.imdbId,
       imdbRating: props.selectedMovie.imdbRating,
+      director: props.selectedMovie.director,
+      writer: props.selectedMovie.writer,
       imdbRatingCount: props.selectedMovie.imdbVotes
     }
     updateMovie(changedMovie).then((result) => {
-      if (result.errorMessage) {
+      if (result.error) {
+        setAlertText(result.error);
+        setIsError(true);
+      } else if (result.errorMessage) {
         setAlertText(result.errorMessage);
         setIsError(true);
       } else {
+        setIsError(false);
         setAlertText("The Movie was updated successfully!");
       }
       setAlertOpen(true);
       props.setIsNew(false);
     });
-  };
-
-  const handleButtonCklick = (link: String) => {
-    navigate(`/${link}`);
   };
 
   const handleTextChange = (
@@ -116,6 +124,8 @@ function AdminMovieDetailsView(props: MovieDetailsViewAdminProp) {
       trailer: undefined,
       imdbId: props.selectedMovie.imdbId,
       imdbRating: props.selectedMovie.imdbRating,
+      director: props.selectedMovie.director,
+      writer: props.selectedMovie.writer,
       imdbRatingCount: props.selectedMovie.imdbVotes
     }
     postNewMovie(newMovie).then((result) => {
@@ -123,10 +133,10 @@ function AdminMovieDetailsView(props: MovieDetailsViewAdminProp) {
         setAlertText(result.errorMessage);
         setIsError(true);
       } else {
+        setIsError(false);
         setAlertText("The Movie was added successfully!")
+        navigate(`/movieDetails/${result.data.id}`);
       }
-      console.log(result)
-      navigate(`/movieDetails/${result.data.id}`);
       setAlertOpen(true);
       props.setIsNew(false);
     });
@@ -175,6 +185,15 @@ function AdminMovieDetailsView(props: MovieDetailsViewAdminProp) {
                     id="writer"
                     label="Writer"
                     value={props.selectedMovie.writer}
+                    sx={{ my: theme.spacing(1) }}
+                    fullWidth
+                    InputLabelProps={{ shrink: true }}
+                    onChange={handleTextChange}
+                  />
+                  <TextField
+                    id="director"
+                    label="Director"
+                    value={props.selectedMovie.director}
                     sx={{ my: theme.spacing(1) }}
                     fullWidth
                     InputLabelProps={{ shrink: true }}
@@ -267,16 +286,7 @@ function AdminMovieDetailsView(props: MovieDetailsViewAdminProp) {
                     Add new Movie
                   </Button>
                 )}
-                <Snackbar open={alertOpen} sx={{ width: "70%" }} autoHideDuration={4000} onClose={handleAlertClose} anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
-                  {!isError ?
-                    <Alert onClose={handleAlertClose} severity="success" sx={{ width: '100%' }}>
-                      {alertText}
-                    </Alert>
-                    :
-                    <Alert onClose={handleAlertClose} severity="error" sx={{ width: '100%' }}>
-                      {alertText}
-                    </Alert>}
-                </Snackbar>
+                <Alerts alertOpen={alertOpen} alertText={alertText} isError={isError} setAlertOpen={setAlertOpen} />
                 {!props.isNew && (
                   <>
                     <Button
@@ -344,26 +354,12 @@ function AdminMovieDetailsView(props: MovieDetailsViewAdminProp) {
                         Shows
                       </Typography>
                     </Grid>
-                    <Grid item xs={12} sm={12} md={6} xl={6}>
-                      <Box>
-                        <Button
-                          variant="contained"
-                          onClick={() => handleButtonCklick("addNewShow")}
-                          startIcon={<AddIcon />}
-                          sx={{
-                            m: theme.spacing(3),
-                          }}
-                        >
-                          Add new Show
-                        </Button>
-
-                      </Box>
-                    </Grid>
                   </Grid>
                   <ShowDetails
                     showData={props.showData}
                     setShowData={props.setShowData}
                     selectedMovie={props.selectedMovie}
+                    getShowsByMovie={props.getShowsByMovie}
                   />
                 </Box>
               </Grid>
@@ -382,6 +378,7 @@ function AdminMovieDetailsView(props: MovieDetailsViewAdminProp) {
       )}
     </>
   );
+
 }
 
 export default AdminMovieDetailsView;

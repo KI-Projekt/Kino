@@ -13,8 +13,10 @@ import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/system";
 
 export interface Room {
-  roomName: string;
-  roomID: number;
+  name: string;
+  id: number;
+  hasThreeD: boolean;
+  hasDolbyAtmos: boolean;
   rows: Array<Row>;
 }
 

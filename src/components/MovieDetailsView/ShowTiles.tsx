@@ -9,9 +9,8 @@ export interface Show {
     room: string | undefined;
     dateTime: Date | null;
     additionalInfo: {
-        language: string;
         isThreeD: boolean;
-        isDbox: boolean;
+        hasDolbyAtmos: boolean;
     }
 }
 
@@ -114,7 +113,7 @@ function ShowTiles(props: props) {
                                                 pb: (theme) => `calc(${theme.spacing(1)} + 0.6rem)`,
                                             }}
                                         >
-                                            {currentShow.dateTime.getHours()} : {currentShow.dateTime.getMinutes()}
+                                            {currentShow.dateTime.getHours()} : {currentShow.dateTime.getMinutes() === 0 ? "00" : currentShow.dateTime.getMinutes()} h
                                             <ImageMarked className="MuiImageMarked-root" />
                                         </Typography>
                                     </Image>

@@ -1,4 +1,4 @@
-import { Grid, Card, CardHeader, CardMedia, CardContent, Typography, Divider, useTheme } from "@mui/material";
+import { Grid, Card, CardHeader, CardMedia, CardContent, Typography, Divider, useTheme, Alert } from "@mui/material";
 import { Box } from "@mui/system";
 import Youtube from 'react-youtube'
 import ShowTiles, { Show, ShowDate } from "./ShowTiles";
@@ -8,12 +8,13 @@ interface MovieDetailsViewUserProp {
     selectedMovie: Movie,
     setSelectedMovie: React.Dispatch<Movie>,
     onShowTileClick: (currentShow: Show) => void,
-    showData: Array<ShowDate>,
+    showData: Array<ShowDate> | undefined,
 }
 
 function UserMovieDetailsView(props: MovieDetailsViewUserProp) {
 
     const theme = useTheme();
+
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -40,6 +41,7 @@ function UserMovieDetailsView(props: MovieDetailsViewUserProp) {
                             <Typography variant="body2" color="text.secondary">
                                 Runtime: {props.selectedMovie.runtime} <br />
                                 Writer: {props.selectedMovie.writer} <br />
+                                Director: {props.selectedMovie.director} <br />
                                 Cast: {props.selectedMovie.actors} <br />
                                 Genres: {props.selectedMovie.genre} <br />
                                 Age Rating: {props.selectedMovie.rated} <br />
@@ -93,7 +95,8 @@ function UserMovieDetailsView(props: MovieDetailsViewUserProp) {
                         >
                             Shows
                         </Typography>
-                        <ShowTiles shows={props.showData} onShowTileClick={props.onShowTileClick} />
+                        {props.showData && <ShowTiles shows={props.showData} onShowTileClick={props.onShowTileClick} />}
+                        {props.showData === undefined && <Alert severity="warning" sx={{ width: "90%" }}>Currently there are no shows planned. But stay tuned for the future!</Alert>}
                     </Box>
                 </Grid>
             </Grid>
