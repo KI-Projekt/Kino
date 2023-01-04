@@ -22,8 +22,6 @@ interface OrderOverviewProps {
 
 function OrderOverview(prop: OrderOverviewProps) {
 
-  const theme = useTheme();
-
   return (
     <Card
       variant="elevation"
