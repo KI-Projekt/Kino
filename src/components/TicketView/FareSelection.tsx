@@ -6,16 +6,17 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { isMobile } from 'react-device-detect';
 
 interface fareSelectionProps {
-    totalAmountOfTickets: number,
-    fares: fareSelection[],
-    setFares:React.Dispatch<React.SetStateAction<fareSelection[]>>
+    totalAmountOfTickets: number;
+    fares: fareSelection[];
+    setFares: React.Dispatch<React.SetStateAction<fareSelection[]>>;
+    windowWidth: number;
 }
 export interface fareSelection {
-    id: number,
-    name: string,
-    price: number,
-    condition: string,
-    amountOfTickets: number,
+    id: number;
+    name: string;
+    price: number;
+    condition: string;
+    amountOfTickets: number;
 }
 
 function FareSelection(props: fareSelectionProps) {
@@ -55,7 +56,7 @@ function FareSelection(props: fareSelectionProps) {
 
     const fares = props.fares;
     const setFares = props.setFares;
-    
+
     useEffect(() => {
         //initial calculation of ticket amount and add everything to adult fare
         const calculateTotalAmountOfTickets = () => {
@@ -126,24 +127,36 @@ function FareSelection(props: fareSelectionProps) {
     };
 
     return (
-        <Box sx={{ bgcolor: 'background.paper'}} alignItems='center'>
+        <Box sx={{ bgcolor: 'background.paper' }} alignItems='center'>
             <Typography align="center" variant="h4" sx={{ p: 3 }}>{totalAmountOfTickets} Tickets</Typography>
             <TableContainer component={Paper} elevation={0}>
-                <Table>
+                <Table padding="normal">
                     <TableBody>
                         {fares.map((fare, index) => (
-                            <TableRow key={index} >
-                                <TableCell align='center' sx={{ alignContent: 'center' }}>
+                            <TableRow key={index}  >
+                                <TableCell align='center' sx={{ alignContent: 'center', px: {xs: 0, sm: 1} }}>
                                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                         <Typography>{fare.name}</Typography>
                                         {fare.condition !== "" && isMobile &&
-                                            <IconButton aria-describedby={fare.condition} id={fare.condition} onClick={handleClickOnInfo}>
+                                            <IconButton
+                                                aria-describedby={fare.condition}
+                                                id={fare.condition}
+                                                onClick={handleClickOnInfo}
+                                                sx={{
+                                                    width: {
+                                                        xs: `${(props.windowWidth / 260)}rem`,
+                                                        sm: `${(props.windowWidth / 260)}rem`,
+                                                        md: `${(props.windowWidth / 520)}rem`,
+                                                        xl: `${(props.windowWidth / 520)}rem`,
+                                                    }
+                                                }}
+                                            >
                                                 <HelpOutlineIcon color={"info"} />
                                             </IconButton>
                                         }
                                         {fare.condition !== "" && !isMobile &&
                                             <Tooltip title={fare.condition}>
-                                                    <HelpOutlineIcon  sx= {{ ml: '1rem'}} color={"info"} />
+                                                <HelpOutlineIcon sx={{ ml: '1rem' }} color={"info"} />
                                             </Tooltip>
                                         }
                                     </Box>

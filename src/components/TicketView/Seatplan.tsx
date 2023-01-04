@@ -6,30 +6,14 @@ import { Row } from "../../views/PaymentDetailsView";
 import { useTheme } from "@emotion/react";
 
 interface SeatPlanprops {
-  data: Array<Row>,
-  onSeatClick: Function
+  data: Array<Row>;
+  onSeatClick: Function;
+  windowWidth: number;
 }
 
 function Seatplan(props: SeatPlanprops) {
 
   const theme = useTheme();
-
-  const [windowWidth, setWindowWidth] = React.useState(0)
-
-  React.useEffect(() => {
-
-    updateDimensions();
-
-    window.addEventListener("resize", updateDimensions);
-
-    return () =>
-      window.removeEventListener("resize", updateDimensions);
-  }, [])
-
-  const updateDimensions = () => {
-    const windowWidth = window.innerWidth
-    setWindowWidth(windowWidth)
-  }
 
   return (
     <Box
@@ -48,7 +32,14 @@ function Seatplan(props: SeatPlanprops) {
               <>
                 {seat.seatID && seat.booked !== null && (
                   <IconButton
-                    sx={{ width: { xs: `${(windowWidth / 260)}rem`, sm: `${(windowWidth / 260)}rem`, md: `${(windowWidth / 520)}rem`, xl: `${(windowWidth / 520)}rem` } }}
+                    sx={{
+                      width: {
+                        xs: `${(props.windowWidth / 260)}rem`,
+                        sm: `${(props.windowWidth / 260)}rem`,
+                        md: `${(props.windowWidth / 520)}rem`,
+                        xl: `${(props.windowWidth / 520)}rem`
+                      }
+                    }}
                     id={seat.seatID} onClick={(e) => props.onSeatClick(e)} color={seat.selected ? "primary" : "secondary"}
                     disabled={seat.booked}
                   >
@@ -56,7 +47,17 @@ function Seatplan(props: SeatPlanprops) {
                   </IconButton>
                 )}
                 {seat.seatID === null && (
-                  <IconButton disabled sx={{ width: {xs: `${(windowWidth / 260)}rem`, sm: `${(windowWidth / 260)}rem`, md: `${(windowWidth / 520)}rem`, xl: `${(windowWidth / 520)}rem` } }}>
+                  <IconButton
+                    disabled
+                    sx={{
+                      width: {
+                        xs: `${(props.windowWidth / 260)}rem`,
+                        sm: `${(props.windowWidth / 260)}rem`,
+                        md: `${(props.windowWidth / 520)}rem`,
+                        xl: `${(props.windowWidth / 520)}rem`
+                      }
+                    }}
+                  >
                     <StairsOutlinedIcon />
                   </IconButton>
                 )}
