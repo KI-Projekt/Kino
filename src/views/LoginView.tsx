@@ -11,6 +11,10 @@ interface TabPanelProps {
     value: number;
 }
 
+interface LoginViewProps {
+    setUser: Function;
+}
+
 function TabPanel(props: TabPanelProps) {
     const { children, value, index, ...other } = props;
 
@@ -38,7 +42,7 @@ function a11yProps(index: number) {
     };
 }
 
-function LoginView() {
+function LoginView(props: LoginViewProps) {
     const theme = useTheme();
     const [value, setValue] = React.useState(0);
 
@@ -53,7 +57,7 @@ function LoginView() {
                     <Typography
                         variant="h4"
                         sx={{
-                            textAlign:"center"
+                            textAlign: "center"
                         }}
                     >
                         Login
@@ -71,10 +75,10 @@ function LoginView() {
                     </Tabs>
 
                     <TabPanel value={value} index={0} dir={theme.direction}>
-                        <SignUpForm />
+                        <SignUpForm setUser={props.setUser} />
                     </TabPanel>
                     <TabPanel value={value} index={1} dir={theme.direction}>
-                        <Login />
+                        <Login setUser={props.setUser} />
                     </TabPanel>
                 </Box>
             </div>

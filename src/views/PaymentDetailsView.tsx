@@ -68,9 +68,9 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
 
   const navigate = useNavigate();
 
-    function handleOnClick() {
-        navigate(`/order/${props.order?.movieID}/${props.order?.showID}/${props.order?.orderID}`);
-    }
+  function handleOnClick() {
+    navigate(`/order/${props.order?.movieID}/${props.order?.showID}/${props.order?.orderID}`);
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -92,12 +92,12 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
           )}
         </Grid>
         <Grid item xs={12} sm={12} md={6} xl={6}>
-          <PersonalData 
-          personalDataFilled={personalDataFilled} 
-          setPersonalDataFilled={setPersonalDataFilled}  
-          user={props.user}
-          setUser={props.setUser}
-            />
+          <PersonalData
+            personalDataFilled={personalDataFilled}
+            setPersonalDataFilled={setPersonalDataFilled}
+            user={props.user}
+            setUser={props.setUser}
+          />
           <PaymentOptions paymentMethod={paymentMethod} setPaymentMethod={setPaymentMethod} />
           <FormControlLabel
             control={<Checkbox value={privacyPolicyChecked} onChange={handleChangePrivacyPolicyCheck} />}

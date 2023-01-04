@@ -10,7 +10,11 @@ interface State {
   showRepeatedPassword: boolean;
 }
 
-function SignUpForm() {
+interface SignUpFormProps {
+  setUser: Function;
+}
+
+function SignUpForm(props: SignUpFormProps) {
   const [values, setValues] = React.useState<State>({
     password: '',
     repeatedPassword: '',

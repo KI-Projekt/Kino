@@ -8,7 +8,12 @@ interface State {
   showPassword: boolean;
 }
 
-function Login() {
+interface LoginProps {
+  setUser: Function;
+  handleProfileMenuClose?: Function;
+}
+
+function Login(props: LoginProps) {
   const [values, setValues] = React.useState<State>({
     password: '',
     showPassword: false,
@@ -31,6 +36,29 @@ function Login() {
   };
 
   const theme = useTheme();
+
+  function createUserData(
+    firstName: string | undefined,
+    surname: string | undefined,
+    street: string | undefined,
+    houseNumber: string | undefined,
+    postcode: string | undefined,
+    city: string | undefined,
+    emailAdress: string | undefined,) {
+    return { firstName, surname, street, houseNumber, postcode, city, emailAdress };
+  }
+
+  const testUser = (
+    createUserData("Jojo", "Siwaaaa", "Fifth Avenue", "87", "64729", "New York", "jojo.siwaaa@gmail.com")
+  );
+
+
+  function handleSignIn() {
+    props.setUser(testUser);
+    if (props.handleProfileMenuClose)
+      props.handleProfileMenuClose();
+    console.log(testUser)
+  }
 
   return (
     <Box
@@ -73,6 +101,7 @@ function Login() {
       <Button
         sx={{ m: 0.5, width: '100%' }}
         variant="contained"
+        onClick={handleSignIn}
       >
         Sign In
       </Button>

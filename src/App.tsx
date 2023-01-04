@@ -163,15 +163,18 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
 }));
 
 function App() {
+
   const [open, setOpen] = React.useState(false);
 
-  const handleMenuOpen = () => {
-    setOpen(true);
-  };
-
-  const handleMenuClose = () => {
-    setOpen(false);
-  };
+  const appBarProps = {
+    open: open,
+    handleMenuOpen: () => {
+      setOpen(true);
+    },
+    handleMenuClose: () => {
+      setOpen(false);
+    },
+  }
 
   const [selectedMovie, setSelectedMovie] = React.useState<Movie | undefined>(undefined);
   const [selectedShow, setSelectedShow] = React.useState<Show | undefined>(undefined);
@@ -212,7 +215,7 @@ function App() {
     <div>
       <ThemeProvider theme={redTheme}>
         <BrowserRouter>
-          <Header open={open} handleMenuOpen={handleMenuOpen} handleMenuClose={handleMenuClose}
+          <Header appBarProps={appBarProps} user={user} setUser={setUser}
           />
           <Toolbar />
           <Main open={open}>
@@ -250,7 +253,7 @@ function App() {
                   <Route path="/contact" element={<ContactUsView />} />
                   <Route path="/about" element={<AboutUsView />} />
                   <Route path="/gettingHere" element={<GettingHereView />} />
-                  <Route path="/login" element={<LoginView />} />
+                  <Route path="/login" element={<LoginView setUser={setUser} />} />
                   <Route
                     path="/privacyPolicy"
                     element={<PrivacyPolicyView />}

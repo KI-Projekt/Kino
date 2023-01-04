@@ -3,7 +3,11 @@ import React from "react"
 import '../../styles/Login.css';
 import SignUpForm from "./SignUpForm";
 
-function SignUp() {
+interface SignUpProps {
+  setUser: Function;
+}
+
+function SignUp(props: SignUpProps) {
   return (
       <div className="Login-Form-Container">
         <div className="Login-Form">
@@ -12,7 +16,7 @@ function SignUp() {
             <div className="Text-Center">
               Already registered? <Link href={`/signIn`}>Sign In</Link>
             </div>
-          <SignUpForm />
+          <SignUpForm setUser={props.setUser}/>
           </div>
         </div>
       </div>

@@ -1,9 +1,16 @@
 import { AccountCircle } from "@mui/icons-material";
-import { Box, IconButton, Menu } from "@mui/material";
+import { Box, IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import React from "react";
 import Login from '../Login/LoginPopUp';
+import { User } from "../PaymentDetailsView/PersonalDataGuestUser";
+import { useNavigate } from "react-router";
 
-function ProfileMenuButton() {
+interface ProfileMenuButtonProps {
+    user: User;
+    setUser: Function;
+}
+
+function ProfileMenuButton(props: ProfileMenuButtonProps) {
     const profileMenuId = 'primary-search-account-profile-menu';
 
     const [anchorElProfile, setAnchorElProfile] = React.useState<null | HTMLElement>(null);
@@ -12,10 +19,53 @@ function ProfileMenuButton() {
 
     const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElProfile(event.currentTarget);
+        console.log(props.user)
     };
 
     const handleProfileMenuClose = () => {
         setAnchorElProfile(null);
+    };
+
+    function createUserMenuData(
+        label: string,
+        link: string,
+    ) {
+        return { label, link }
+    }
+
+    const userMenuData = [
+        createUserMenuData('My Profile', 'profile'),
+        createUserMenuData('My Order', ''),
+        createUserMenuData("Logout", ''),
+    ];
+
+    const navigate = useNavigate();
+
+    function createUserData(
+        firstName: string | undefined,
+        surname: string | undefined,
+        street: string | undefined,
+        houseNumber: string | undefined,
+        postcode: string | undefined,
+        city: string | undefined,
+        emailAdress: string | undefined,) {
+        return { firstName, surname, street, houseNumber, postcode, city, emailAdress };
+    }
+
+    const initialUser = (
+        createUserData(undefined, undefined, undefined, undefined, undefined, undefined, undefined)
+    )
+
+    const handleListItemClick = (
+        label: string,
+        link: string,
+    ) => {
+        if (label === "Logout") {
+            props.setUser(initialUser);
+        } else {
+            navigate(`/${link}`);
+            handleProfileMenuClose();
+        }
     };
 
     const renderProfile = (
@@ -34,13 +84,24 @@ function ProfileMenuButton() {
             open={isProfileMenuOpen}
             onClose={handleProfileMenuClose}
         >
-            <Box
-                sx={{
-                    width: '20rem',
-                    height: '20rem',
-                }}>
-                <Login />
-            </Box>
+            {!props.user.firstName &&
+                <Box
+                    sx={{
+                        width: '20rem',
+                        height: '20rem',
+                    }}>
+                    <Login setUser={props.setUser} handleProfileMenuClose={handleProfileMenuClose} />
+                </Box>
+            }
+            {props.user.firstName &&
+                <>
+                    {userMenuData.map((setting) => (
+                        <MenuItem key={setting.label} onClick={() => handleListItemClick(setting.label, setting.link)}>
+                            <Typography textAlign="center">{setting.label}</Typography>
+                        </MenuItem>
+                    ))}
+                </>
+            }
         </Menu>
     );
 
