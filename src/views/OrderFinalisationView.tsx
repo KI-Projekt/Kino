@@ -17,7 +17,6 @@ function OrderFinalisationView(props: OrderFinalisationViewProps) {
     const theme = useTheme();
 
     useEffect(() => {
-        console.log(props.order)
     }, []);
 
     const printRef = React.useRef() as React.MutableRefObject<HTMLInputElement>;

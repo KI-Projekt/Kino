@@ -475,6 +475,7 @@ function TicketView(props: TicketViewProps) {
           sx={{ width: "100%", marginY: "1rem" }}
           variant="contained"
           onClick={onButtonClick}
+          disabled={currentTicketAmmount > 0 ? false : true} 
         >
           Continue
         </Button>
