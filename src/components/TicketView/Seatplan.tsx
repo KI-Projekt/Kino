@@ -1,9 +1,7 @@
 import { Box, Divider, IconButton } from "@mui/material";
 import EventSeatIcon from "@mui/icons-material/EventSeat";
-import * as React from "react";
 import StairsOutlinedIcon from "@mui/icons-material/StairsOutlined";
 import { Row } from "../../views/PaymentDetailsView";
-import { useTheme } from "@emotion/react";
 
 interface SeatPlanprops {
   data: Array<Row>;
@@ -12,8 +10,6 @@ interface SeatPlanprops {
 }
 
 function Seatplan(props: SeatPlanprops) {
-
-  const theme = useTheme();
 
   return (
     <Box

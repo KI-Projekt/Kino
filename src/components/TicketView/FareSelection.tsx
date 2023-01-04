@@ -134,7 +134,14 @@ function FareSelection(props: fareSelectionProps) {
                     <TableBody>
                         {fares.map((fare, index) => (
                             <TableRow key={index}  >
-                                <TableCell align='center' sx={{ alignContent: 'center', px: {xs: 0, sm: 1} }}>
+                                <TableCell
+                                    align='center'
+                                    sx={{ 
+                                        alignContent: 'center', 
+                                        px: { xs: "0rem", sm: "1rem" }, 
+                                        mx: { xs: "0rem", sm: "1rem" },
+                                     }}
+                                >
                                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                         <Typography>{fare.name}</Typography>
                                         {fare.condition !== "" && isMobile &&
@@ -156,7 +163,7 @@ function FareSelection(props: fareSelectionProps) {
                                         }
                                         {fare.condition !== "" && !isMobile &&
                                             <Tooltip title={fare.condition}>
-                                                <HelpOutlineIcon sx={{ ml: '1rem' }} color={"info"} />
+                                                <HelpOutlineIcon sx={{ ml: { xs: "0.05rem", sm: "1rem" } }} color={"info"} />
                                             </Tooltip>
                                         }
                                     </Box>
