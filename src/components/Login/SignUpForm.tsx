@@ -11,12 +11,26 @@ interface State {
   showRepeatedPassword: boolean;
 }
 
-interface SignUpFormProps {
-  user: User;
-  setUser: Function;
-}
+function SignUpForm() {
 
-function SignUpForm(props: SignUpFormProps) {
+  function createUserData(
+    userID: number | undefined,
+    firstName: string | undefined,
+    surname: string | undefined,
+    street: string | undefined,
+    houseNumber: string | undefined,
+    postcode: string | undefined,
+    city: string | undefined,
+    emailAdress: string | undefined,) {
+    return { userID, firstName, surname, street, houseNumber, postcode, city, emailAdress };
+  }
+
+  const initialUser = (
+    createUserData(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)
+  )
+
+  const [guestUser, setGuestUser] = React.useState<User>(initialUser);
+
   const [values, setValues] = React.useState<State>({
     password: '',
     repeatedPassword: '',
@@ -49,10 +63,10 @@ function SignUpForm(props: SignUpFormProps) {
 
   const handleOnChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     const newUser = {
-      ...props.user,
+      ...guestUser,
       [e.target.id]: e.target.value
     };
-    props.setUser(newUser);
+    setGuestUser(newUser);
   }
 
   return (
@@ -73,7 +87,7 @@ function SignUpForm(props: SignUpFormProps) {
           placeholder="Jane"
           label="First Name"
           id="firstName"
-          value={props.user.firstName}
+          value={guestUser.firstName}
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleOnChange(e)}
         />
 
@@ -84,7 +98,7 @@ function SignUpForm(props: SignUpFormProps) {
           placeholder="Doe"
           label="Surname"
           id="surname"
-          value={props.user.surname}
+          value={guestUser.surname}
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleOnChange(e)}
         />
 
@@ -95,7 +109,7 @@ function SignUpForm(props: SignUpFormProps) {
             className="Form-Login-Input"
             placeholder="Fifth Avenue"
             label="Street" id="street"
-            value={props.user.street}
+            value={guestUser.street}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleOnChange(e)}
           />
           <TextField
@@ -105,7 +119,7 @@ function SignUpForm(props: SignUpFormProps) {
             placeholder="69"
             label="House number"
             id="houseNumber"
-            value={props.user.houseNumber}
+            value={guestUser.houseNumber}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleOnChange(e)}
           />
         </Box>
@@ -118,7 +132,7 @@ function SignUpForm(props: SignUpFormProps) {
             placeholder="68165"
             label="Postcode"
             id="postcode"
-            value={props.user.postcode}
+            value={guestUser.postcode}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleOnChange(e)}
           />
           <TextField
@@ -128,7 +142,7 @@ function SignUpForm(props: SignUpFormProps) {
             placeholder="Mannheim"
             label="City"
             id="city"
-            value={props.user.city}
+            value={guestUser.city}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleOnChange(e)}
           />
         </Box>
@@ -140,7 +154,7 @@ function SignUpForm(props: SignUpFormProps) {
           placeholder="Jane.doe@example.com"
           label="Email Address"
           id="emailAdress"
-          value={props.user.emailAdress}
+          value={guestUser.emailAdress}
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleOnChange(e)}
         />
 

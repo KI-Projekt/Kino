@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 interface ProfileMenuButtonProps {
     user: User;
     setUser: Function;
+    setPersonalDataFilled: Function;
 }
 
 function ProfileMenuButton(props: ProfileMenuButtonProps) {
@@ -19,7 +20,6 @@ function ProfileMenuButton(props: ProfileMenuButtonProps) {
 
     const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElProfile(event.currentTarget);
-        console.log(props.user)
     };
 
     const handleProfileMenuClose = () => {
@@ -42,6 +42,7 @@ function ProfileMenuButton(props: ProfileMenuButtonProps) {
     const navigate = useNavigate();
 
     function createUserData(
+        userID: number | undefined,
         firstName: string | undefined,
         surname: string | undefined,
         street: string | undefined,
@@ -49,11 +50,11 @@ function ProfileMenuButton(props: ProfileMenuButtonProps) {
         postcode: string | undefined,
         city: string | undefined,
         emailAdress: string | undefined,) {
-        return { firstName, surname, street, houseNumber, postcode, city, emailAdress };
+        return { userID, firstName, surname, street, houseNumber, postcode, city, emailAdress };
     }
 
     const initialUser = (
-        createUserData(undefined, undefined, undefined, undefined, undefined, undefined, undefined)
+        createUserData(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)
     )
 
     const handleListItemClick = async (
@@ -64,6 +65,7 @@ function ProfileMenuButton(props: ProfileMenuButtonProps) {
         if (label === "Logout") {
             await new Promise(f => setTimeout(f, 1000));
             props.setUser(initialUser);
+            props.setPersonalDataFilled(false);
         } else {
             navigate(`/${link}`);
         }

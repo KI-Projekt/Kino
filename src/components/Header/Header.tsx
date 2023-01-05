@@ -18,6 +18,7 @@ export interface AppBarProps extends MuiAppBarProps {
 interface HeaderProps {
   user: User;
   setUser: Function;
+  setPersonalDataFilled: Function;
   appBarProps: AppBarProps;
 }
 
@@ -84,7 +85,7 @@ function Header(props: HeaderProps) {
             />
           </Link>
           <Box sx={{ flexGrow: 1 }} />
-          <ProfileMenuButton user={props.user} setUser={props.setUser} />
+          <ProfileMenuButton user={props.user} setUser={props.setUser} setPersonalDataFilled={props.setPersonalDataFilled} />
         </Toolbar>
       </AppBar>
       <SideMenu open={props.appBarProps.open} handleMenuOpen={props.appBarProps.handleMenuOpen} handleMenuClose={props.appBarProps.handleMenuClose} />

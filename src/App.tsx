@@ -187,6 +187,8 @@ function App() {
 
   const [shows, setShows] = React.useState<Array<ShowDate>>(data);
 
+  const [personalDataFilled, setPersonalDataFilled] = React.useState(false);
+
   function createUserData(
     userID: number | undefined,
     firstName: string | undefined,
@@ -217,7 +219,7 @@ function App() {
     <div>
       <ThemeProvider theme={redTheme}>
         <BrowserRouter>
-          <Header appBarProps={appBarProps} user={user} setUser={setUser}
+          <Header appBarProps={appBarProps} user={user} setUser={setUser} setPersonalDataFilled={setPersonalDataFilled}
           />
           <Toolbar />
           <Main open={open}>
@@ -248,7 +250,10 @@ function App() {
                         order={order}
                         user={user}
                         setUser={setUser}
-                      />}
+                        personalDataFilled={personalDataFilled}
+                        setPersonalDataFilled={setPersonalDataFilled}
+                      />
+                    }
                   />
                   <Route path="/" element={<OverviewView isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} />} />
                   <Route path="/impressum" element={<ImpressumView />} />
