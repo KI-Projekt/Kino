@@ -37,7 +37,7 @@ function Login(props: LoginProps) {
 
   const theme = useTheme();
 
-  function createUserData(
+  /* function createUserData(
     userID: number | undefined,
     firstName: string | undefined,
     surname: string | undefined,
@@ -51,7 +51,7 @@ function Login(props: LoginProps) {
 
   const testUser = (
     createUserData(156548, "Jojo", "Siwaaaa", "Fifth Avenue", "87", "64729", "New York", "jojo.siwaaa@gmail.com")
-  );
+  ); */
 
 
   async function handleSignIn() {
@@ -59,7 +59,7 @@ function Login(props: LoginProps) {
       props.handleProfileMenuClose();
       await new Promise(f => setTimeout(f, 1000));
     }
-    props.setUser(testUser);
+    //props.setUser(testUser);
   }
 
   return (

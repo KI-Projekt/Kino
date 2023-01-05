@@ -17,7 +17,7 @@ function UserProfile(props: UserProfileProps) {
     return (
         <>
             {props.user.firstName &&
-                <Typography>Hallo</Typography>
+                <Typography>You are logged in as {props.user.firstName} {props.user.surname}.</Typography>
             }
             {!props.user.firstName && navigateToLogin()}
         </>
