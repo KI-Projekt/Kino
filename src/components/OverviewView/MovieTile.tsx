@@ -6,9 +6,9 @@ import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import EditIcon from '@mui/icons-material/Edit';
 import { Button } from '@mui/material';
 
-interface MovieProps {
+export interface MovieProps {
     picture: string,
-    imdbID: string,
+    id: number | string,
     isAdmin: boolean,
     isNew: boolean,
 }
@@ -18,7 +18,7 @@ function MovieTile(props: MovieProps) {
     const navigate = useNavigate()
 
     function handleOnClick() {
-        props.isNew ? navigate(`/movieDetails/${props.imdbID}/new`) : navigate(`/movieDetails/${props.imdbID}`);
+        props.isNew ? navigate(`/movieDetails/${props.id}/new`) : navigate(`/movieDetails/${props.id}`);
     }
 
     return (
