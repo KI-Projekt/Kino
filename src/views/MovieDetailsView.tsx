@@ -50,7 +50,7 @@ export interface OMDbMovie {
 }
 
 export interface Movie {
-    id?: number | undefined,
+    id?: number | string | undefined,
     imdbId?: String | undefined
     title?: String | undefined,
     posterImage?: string | undefined,

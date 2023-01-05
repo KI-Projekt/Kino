@@ -167,7 +167,11 @@ function App() {
                   />
                   <Route
                     path="/showDetails/:imdbID/:showID"
-                    element={<TicketView selectedMovie={selectedMovie} selectedShow={selectedShow} setOrder={setOrder} />}
+                    element={<TicketView setSelectedMovie={setSelectedMovie}
+                      setSelectedShow={setSelectedShow}
+                      selectedMovie={selectedMovie}
+                      selectedShow={selectedShow}
+                      setOrder={setOrder} />}
                   />
                   <Route
                     path="/orderDetails/:imdbID/:showID/:orderID"
@@ -176,6 +180,11 @@ function App() {
                         order={order}
                         user={user}
                         setUser={setUser}
+                        setSelectedMovie={setSelectedMovie}
+                        setSelectedShow={setSelectedShow}
+                        selectedMovie={selectedMovie}
+                        selectedShow={selectedShow}
+                        setOrder={setOrder}
                       />}
                   />
                   <Route path="/" element={<OverviewView isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} />} />

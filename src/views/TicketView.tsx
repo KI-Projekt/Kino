@@ -11,6 +11,8 @@ import { getIMDbIDFromURL, Movie } from "./MovieDetailsView";
 import { Show } from "../components/MovieDetailsView/ShowTiles";
 import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/system";
+import { fetchScreeningByID } from "../queries/fetchScreenings";
+import { fetchSpecificMovie } from "../queries/fetchMovieAPI";
 
 export interface Room {
   name: string;
@@ -293,9 +295,46 @@ const data = [
   ]),
 ];
 
+export const getShowAfterReload = async () => {
+  let url = window.location.href;
+
+  let aUrlParts = url.split("/")
+  let showID = aUrlParts[5]
+
+  const response = await fetchScreeningByID(showID).then(show => {
+    let currentShow: Show = {
+      movieID: show.movie.id,
+      dateTime: new Date(show.startDateTime),
+      room: show.room.name,
+      roomID: show.room.id,
+      showID: show.id,
+      additionalInfo: {
+        hasDolbyAtmos: show.room.hasDolbyAtmos,
+        isThreeD: show.movie.isThreeD
+      }
+    }
+    return currentShow
+  })
+  return response;
+}
+
+export const getMovieAfterReload = async () => {
+  let url = window.location.href;
+
+  let aUrlParts = url.split("/")
+  let movieID = aUrlParts[4]
+
+  const response = await fetchSpecificMovie(movieID).then(result => {
+    return result;
+  })
+  return response;
+}
+
 interface TicketViewProps {
   setOrder: React.Dispatch<React.SetStateAction<Order | undefined>>;
+  setSelectedMovie: React.Dispatch<React.SetStateAction<Movie | undefined>>;
   selectedMovie: Movie | undefined;
+  setSelectedShow: React.Dispatch<React.SetStateAction<Show | undefined>>;
   selectedShow: Show | undefined;
 }
 
@@ -306,9 +345,14 @@ function TicketView(props: TicketViewProps) {
 
   const [seats, setSeats] = useState<Array<Row>>(data);
 
-  const newData = seats;
+  const newData = data;
+
+  const setSelectedShow = props.setSelectedShow
+  const setSelectedMovie = props.setSelectedMovie
 
   React.useEffect(() => {
+    getShowAfterReload().then(result => setSelectedShow(result))
+    getMovieAfterReload().then(result => setSelectedMovie(result));
     newData.forEach((row) => {
       row.seats.forEach((seat) => {
         if (seat.selected) {
@@ -317,7 +361,7 @@ function TicketView(props: TicketViewProps) {
       });
     });
     setSeats(newData);
-  }, [newData]);
+  }, [newData, setSelectedShow, setSelectedMovie]);
 
   const navigate = useNavigate();
 
@@ -445,7 +489,7 @@ function TicketView(props: TicketViewProps) {
               }}
             >
               Show on {props.selectedShow?.dateTime.toDateString()} <br />
-              {props.selectedShow?.dateTime.getHours()}:{props.selectedShow?.dateTime.getMinutes()}h in {props.selectedShow?.room}
+              {props.selectedShow?.dateTime.getHours()}:{props.selectedShow?.dateTime.getMinutes() === 0 ? "00" : props.selectedShow?.dateTime.getMinutes()}h in {props.selectedShow?.room}
             </Typography>
           }
         </Box>
