@@ -2,6 +2,7 @@ import { Box, Button, FormControl, IconButton, InputAdornment, InputLabel, Outli
 import React from "react"
 import '../../styles/Login.css';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { waitForDebugger } from "inspector";
 
 interface State {
   password: string;
@@ -53,11 +54,12 @@ function Login(props: LoginProps) {
   );
 
 
-  function handleSignIn() {
-    props.setUser(testUser);
-    if (props.handleProfileMenuClose)
+  async function handleSignIn() {
+    if (props.handleProfileMenuClose){
       props.handleProfileMenuClose();
-    console.log(testUser)
+      await new Promise(f => setTimeout(f, 1000));
+    }
+    props.setUser(testUser);
   }
 
   return (

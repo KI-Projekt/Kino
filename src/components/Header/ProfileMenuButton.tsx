@@ -56,15 +56,16 @@ function ProfileMenuButton(props: ProfileMenuButtonProps) {
         createUserData(undefined, undefined, undefined, undefined, undefined, undefined, undefined)
     )
 
-    const handleListItemClick = (
+    const handleListItemClick = async (
         label: string,
         link: string,
     ) => {
+        handleProfileMenuClose();
         if (label === "Logout") {
+            await new Promise(f => setTimeout(f, 1000));
             props.setUser(initialUser);
         } else {
             navigate(`/${link}`);
-            handleProfileMenuClose();
         }
     };
 
