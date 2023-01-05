@@ -22,6 +22,7 @@ import { Order } from "./views/PaymentDetailsView";
 import AddNewMoviesView from "./views/Admin/AddNewMoviesView";
 import { User } from "./components/PaymentDetailsView/PersonalDataGuestUser";
 import OrderFinalisationView from "./views/OrderFinalisationView";
+import UserProfile from "./views/UserProfile";
 
 function createData(date: Date, shows: Array<Show>) {
   return { date, shows };
@@ -187,6 +188,7 @@ function App() {
   const [shows, setShows] = React.useState<Array<ShowDate>>(data);
 
   function createUserData(
+    userID: number | undefined,
     firstName: string | undefined,
     surname: string | undefined,
     street: string | undefined,
@@ -194,11 +196,11 @@ function App() {
     postcode: string | undefined,
     city: string | undefined,
     emailAdress: string | undefined,) {
-    return { firstName, surname, street, houseNumber, postcode, city, emailAdress };
+    return { userID, firstName, surname, street, houseNumber, postcode, city, emailAdress };
   }
 
   const [user, setUser] = React.useState<User>(
-    createUserData(undefined, undefined, undefined, undefined, undefined, undefined, undefined)
+    createUserData(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)
   )
 
   const handleChangeAdminMode = (
@@ -253,7 +255,7 @@ function App() {
                   <Route path="/contact" element={<ContactUsView />} />
                   <Route path="/about" element={<AboutUsView />} />
                   <Route path="/gettingHere" element={<GettingHereView />} />
-                  <Route path="/login" element={<LoginView setUser={setUser} />} />
+                  <Route path="/login" element={<LoginView setUser={setUser} user={user} />} />
                   <Route
                     path="/privacyPolicy"
                     element={<PrivacyPolicyView />}
@@ -283,6 +285,7 @@ function App() {
                     path="/order/:imdbID/:showID/:orderID"
                     element={<OrderFinalisationView order={order} user={user} />}
                   />
+                  <Route path="/profile/:userID" element={<UserProfile user={user} />} />
                 </Routes>
               </Box>
             </Container>

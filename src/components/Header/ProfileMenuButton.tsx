@@ -34,7 +34,7 @@ function ProfileMenuButton(props: ProfileMenuButtonProps) {
     }
 
     const userMenuData = [
-        createUserMenuData('My Profile', 'profile'),
+        createUserMenuData('My Profile', `profile/${props.user.userID}`),
         createUserMenuData('My Order', ''),
         createUserMenuData("Logout", ''),
     ];

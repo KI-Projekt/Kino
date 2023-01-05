@@ -39,6 +39,7 @@ function Login(props: LoginProps) {
   const theme = useTheme();
 
   function createUserData(
+    userID: number | undefined,
     firstName: string | undefined,
     surname: string | undefined,
     street: string | undefined,
@@ -46,16 +47,16 @@ function Login(props: LoginProps) {
     postcode: string | undefined,
     city: string | undefined,
     emailAdress: string | undefined,) {
-    return { firstName, surname, street, houseNumber, postcode, city, emailAdress };
+    return { userID, firstName, surname, street, houseNumber, postcode, city, emailAdress };
   }
 
   const testUser = (
-    createUserData("Jojo", "Siwaaaa", "Fifth Avenue", "87", "64729", "New York", "jojo.siwaaa@gmail.com")
+    createUserData(156548, "Jojo", "Siwaaaa", "Fifth Avenue", "87", "64729", "New York", "jojo.siwaaa@gmail.com")
   );
 
 
   async function handleSignIn() {
-    if (props.handleProfileMenuClose){
+    if (props.handleProfileMenuClose) {
       props.handleProfileMenuClose();
       await new Promise(f => setTimeout(f, 1000));
     }

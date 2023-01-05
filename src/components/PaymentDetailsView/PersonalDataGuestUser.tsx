@@ -4,6 +4,7 @@ import '../../styles/Login.css';
 import { PersonalDataProps } from "./PersonalData";
 
 export interface User {
+    userID: number | undefined,
     firstName: string | undefined,
     surname: string | undefined,
     street: string | undefined,
