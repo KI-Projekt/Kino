@@ -304,6 +304,8 @@ export const getShowAfterReload = async () => {
   const response = await fetchScreeningByID(showID).then(show => {
     let currentShow: Show = {
       movieID: show.movie.id,
+      movieName: show.movie.posterImage,
+      moviePoster: show.movie.title,
       dateTime: new Date(show.startDateTime),
       room: show.room.name,
       roomID: show.room.id,
@@ -511,10 +513,10 @@ function TicketView(props: TicketViewProps) {
           }
         </Box>
         {seats &&
-         <Seatplan
-          data={seats}
-           onSeatClick={onSeatClick}
-           windowWidth={windowWidth} />}
+          <Seatplan
+            data={seats}
+            onSeatClick={onSeatClick}
+            windowWidth={windowWidth} />}
       </Grid>
       <Grid item xs={12} sm={12} md={5.5} xl={6}>
         <FareSelection

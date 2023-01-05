@@ -4,6 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export interface Show {
     movieID: String | undefined;
+    moviePoster: String | undefined;
+    movieName: String | undefined;
     showID: string | undefined;
     roomID: string | undefined;
     room: string | undefined;
@@ -52,8 +54,6 @@ const ImageBackdrop = styled('span')(({ theme }) => ({
 }));
 
 const ImageMarked = styled('span')(({ theme }) => ({
-    height: "0.2rem",
-    width: "1rem",
     backgroundColor: theme.palette.common.white,
     position: 'absolute',
     bottom: -2,

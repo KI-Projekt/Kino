@@ -23,6 +23,7 @@ import AddNewMoviesView from "./views/Admin/AddNewMoviesView";
 import { User } from "./components/PaymentDetailsView/PersonalDataGuestUser";
 import OrderFinalisationView from "./views/OrderFinalisationView";
 import UserProfile from "./views/UserProfile";
+import ShowOverviewView from "./views/ShowOverviewView";
 
 export interface AdminProps {
   isAdmin: boolean;
@@ -239,6 +240,7 @@ function App() {
                     />}
                   />
                   <Route path="/profile/:userID" element={<UserProfile user={user} />} />
+                  <Route path="/shows" element={<ShowOverviewView />} />
                 </Routes>
               </Box>
             </Container>
