@@ -286,7 +286,7 @@ function App() {
                 </Routes>
               </Box>
             </Container>
-            <Footer />
+            <Footer user={user} />
             <FormControlLabel
               control={<Switch onChange={handleChangeAdminMode} />}
               label="Admin"
