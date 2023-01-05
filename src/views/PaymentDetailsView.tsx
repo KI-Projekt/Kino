@@ -19,6 +19,7 @@ import { User } from "../components/PaymentDetailsView/PersonalDataGuestUser";
 import { Movie } from "./MovieDetailsView";
 import { Show } from "../components/MovieDetailsView/ShowTiles";
 import { getMovieAfterReload, getShowAfterReload } from "./TicketView";
+import { useNavigate } from "react-router-dom";
 
 export interface Seat {
   seatID: string | null;
@@ -87,6 +88,11 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
     getShowAfterReload().then(result => setSelectedShow(result))
     getMovieAfterReload().then(result => setSelectedMovie(result));
   }, [setSelectedShow, setSelectedMovie, setOrder, props.order]);
+  const navigate = useNavigate();
+
+  function handleOnClick() {
+    navigate(`/order/${props.selectedMovie?.id}/${props.selectedShow?.showID}/${props.order?.orderID}`);
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -143,6 +149,7 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
               variant="contained"
               sx={{ paddingX: theme.spacing, width: "100%" }}
               disabled={(paymentMethod && privacyPolicyChecked && personalDataFilled) ? false : true}
+              onClick={handleOnClick}
             >
               Buy with payment
             </Button>

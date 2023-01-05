@@ -457,6 +457,23 @@ function TicketView(props: TicketViewProps) {
       });
   }
 
+  const [windowWidth, setWindowWidth] = React.useState(0)
+
+  React.useEffect(() => {
+
+    updateDimensions();
+
+    window.addEventListener("resize", updateDimensions);
+
+    return () =>
+      window.removeEventListener("resize", updateDimensions);
+  }, [])
+
+  const updateDimensions = () => {
+    const windowWidth = window.innerWidth
+    setWindowWidth(windowWidth)
+  }
+
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} sm={12} md={6.5} xl={6}>
@@ -493,13 +510,18 @@ function TicketView(props: TicketViewProps) {
             </Typography>
           }
         </Box>
-        {seats && <Seatplan data={seats} onSeatClick={onSeatClick} />}
+        {seats &&
+         <Seatplan
+          data={seats}
+           onSeatClick={onSeatClick}
+           windowWidth={windowWidth} />}
       </Grid>
       <Grid item xs={12} sm={12} md={5.5} xl={6}>
         <FareSelection
           totalAmountOfTickets={currentTicketAmmount}
           fares={fares}
           setFares={setFares}
+          windowWidth={windowWidth}
         />
         <Box>
           <Typography
@@ -521,6 +543,7 @@ function TicketView(props: TicketViewProps) {
           sx={{ width: "100%", marginY: "1rem" }}
           variant="contained"
           onClick={onButtonClick}
+          disabled={currentTicketAmmount > 0 ? false : true}
         >
           Continue
         </Button>

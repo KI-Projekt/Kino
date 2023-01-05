@@ -21,6 +21,7 @@ import { Show } from "./components/MovieDetailsView/ShowTiles";
 import { Order } from "./views/PaymentDetailsView";
 import AddNewMoviesView from "./views/Admin/AddNewMoviesView";
 import { User } from "./components/PaymentDetailsView/PersonalDataGuestUser";
+import OrderFinalisationView from "./views/OrderFinalisationView";
 
 export interface AdminProps {
   isAdmin: boolean;
@@ -216,6 +217,18 @@ function App() {
                     }
                   />
                   <Route path="/addNewMovie" element={<AddNewMoviesView isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} />} />
+                  <Route
+                    path="/order/:imdbID/:showID/:orderID"
+                    element={<OrderFinalisationView
+                      order={order}
+                      user={user}
+                      setSelectedMovie={setSelectedMovie}
+                      setSelectedShow={setSelectedShow}
+                      selectedMovie={selectedMovie}
+                      selectedShow={selectedShow}
+                      setOrder={setOrder}
+                    />}
+                  />
                 </Routes>
               </Box>
             </Container>
