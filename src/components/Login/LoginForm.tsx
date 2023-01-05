@@ -2,7 +2,6 @@ import { Box, Button, FormControl, IconButton, InputAdornment, InputLabel, Outli
 import React from "react"
 import '../../styles/Login.css';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { waitForDebugger } from "inspector";
 
 interface State {
   password: string;

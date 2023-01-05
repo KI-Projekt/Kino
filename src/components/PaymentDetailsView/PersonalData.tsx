@@ -83,7 +83,7 @@ function PersonalData(props: PersonalDataProps) {
                 <Login setUser={props.setUser} />
             </TabPanel>
             <TabPanel value={value} index={2} dir={theme.direction}>
-                <SignUpForm setUser={props.setUser} />
+                <SignUpForm setUser={props.setUser} user={props.user} />
             </TabPanel>
         </Box>
     );

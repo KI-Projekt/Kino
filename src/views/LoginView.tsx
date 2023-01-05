@@ -88,7 +88,7 @@ function LoginView(props: LoginViewProps) {
                             </Tabs>
 
                             <TabPanel value={value} index={0} dir={theme.direction}>
-                                <SignUpForm setUser={props.setUser} />
+                                <SignUpForm setUser={props.setUser} user={props.user} />
                             </TabPanel>
                             <TabPanel value={value} index={1} dir={theme.direction}>
                                 <Login setUser={props.setUser} />

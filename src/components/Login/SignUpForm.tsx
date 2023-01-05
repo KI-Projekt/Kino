@@ -2,6 +2,7 @@ import React from "react"
 import '../../styles/Login.css';
 import { Button, Box, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField, useTheme } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { User } from "../PaymentDetailsView/PersonalDataGuestUser";
 
 interface State {
   password: string;
@@ -11,6 +12,7 @@ interface State {
 }
 
 interface SignUpFormProps {
+  user: User;
   setUser: Function;
 }
 
@@ -45,6 +47,14 @@ function SignUpForm(props: SignUpFormProps) {
 
   const theme = useTheme();
 
+  const handleOnChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    const newUser = {
+      ...props.user,
+      [e.target.id]: e.target.value
+    };
+    props.setUser(newUser);
+  }
+
   return (
     <>
       <Box
@@ -62,6 +72,9 @@ function SignUpForm(props: SignUpFormProps) {
           className="Form-Login-Input"
           placeholder="Jane"
           label="First Name"
+          id="firstName"
+          value={props.user.firstName}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleOnChange(e)}
         />
 
         <TextField
@@ -70,6 +83,9 @@ function SignUpForm(props: SignUpFormProps) {
           className="Form-Login-Input"
           placeholder="Doe"
           label="Surname"
+          id="surname"
+          value={props.user.surname}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleOnChange(e)}
         />
 
         <Box sx={{ display: 'flex' }}>
@@ -78,7 +94,9 @@ function SignUpForm(props: SignUpFormProps) {
             type="text"
             className="Form-Login-Input"
             placeholder="Fifth Avenue"
-            label="Street"
+            label="Street" id="street"
+            value={props.user.street}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleOnChange(e)}
           />
           <TextField
             required
@@ -86,6 +104,9 @@ function SignUpForm(props: SignUpFormProps) {
             className="Form-Login-Input"
             placeholder="69"
             label="House number"
+            id="houseNumber"
+            value={props.user.houseNumber}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleOnChange(e)}
           />
         </Box>
 
@@ -96,6 +117,9 @@ function SignUpForm(props: SignUpFormProps) {
             className="Form-Login-Input"
             placeholder="68165"
             label="Postcode"
+            id="postcode"
+            value={props.user.postcode}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleOnChange(e)}
           />
           <TextField
             required
@@ -103,6 +127,9 @@ function SignUpForm(props: SignUpFormProps) {
             className="Form-Login-Input"
             placeholder="Mannheim"
             label="City"
+            id="city"
+            value={props.user.city}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleOnChange(e)}
           />
         </Box>
 
@@ -112,6 +139,9 @@ function SignUpForm(props: SignUpFormProps) {
           className="Form-Login-Input"
           placeholder="Jane.doe@example.com"
           label="Email Address"
+          id="emailAdress"
+          value={props.user.emailAdress}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleOnChange(e)}
         />
 
         <FormControl sx={{ m: 0.5, width: '100%' }} variant="outlined">
