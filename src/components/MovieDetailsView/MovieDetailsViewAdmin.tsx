@@ -20,7 +20,7 @@ import {
 } from "@mui/material";
 import Youtube from "react-youtube";
 import { Show, ShowDate } from "./ShowTiles";
-import { Movie } from "../../views/MovieDetailsView";
+import { getIMDbIDFromURL, Movie, sortShowsToShowDate } from "../../views/MovieDetailsView";
 import AddIcon from "@mui/icons-material/Add";
 import UpdateIcon from '@mui/icons-material/Update';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
@@ -28,6 +28,8 @@ import { useNavigate } from "react-router-dom";
 import { deleteMovie, postNewMovie, updateMovie } from "../../queries/changeMovies";
 import ShowDetails from "./ShowDetails";
 import Alerts from "../Alerts";
+import { fetchMoviesByIMDbID } from "../../queries/fetchMovieAPI";
+import { fetchAllScreeningsByMovie } from "../../queries/fetchScreenings";
 
 interface MovieDetailsViewAdminProp {
   selectedMovie: Movie;
@@ -98,7 +100,6 @@ function AdminMovieDetailsView(props: MovieDetailsViewAdminProp) {
         setAlertText("The Movie was updated successfully!");
       }
       setAlertOpen(true);
-      props.setIsNew(false);
     });
   };
 
@@ -130,6 +131,17 @@ function AdminMovieDetailsView(props: MovieDetailsViewAdminProp) {
     }
     postNewMovie(newMovie).then((result) => {
       if (result.errorMessage) {
+        if (result.errorMessage === "Movie already exists") {
+          props.setIsNew(false);
+          fetchMoviesByIMDbID(getIMDbIDFromURL()).then(result => {
+            navigate(`/movieDetails/${result[0].id}`);
+            fetchAllScreeningsByMovie(result[0].id).then((result: Array<any>) => {
+              if (result.length > 0) {
+                props.setShowData(sortShowsToShowDate(result));
+              }
+            });
+          })
+        }
         setAlertText(result.errorMessage);
         setIsError(true);
       } else {

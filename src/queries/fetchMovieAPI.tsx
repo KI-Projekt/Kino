@@ -18,6 +18,15 @@ export const fetchMoviesWithGenre = async (searchValue: String) => {
     return responseJson;
 };
 
+export const fetchMoviesByIMDbID = async (searchValue: String) => {
+    const url = PATH + `api/movies?imdbId=${searchValue}`;
+
+    const response = await fetch(url);
+    const responseJson = await response.json();
+
+    return responseJson;
+};
+
 export const fetchSpecificMovie = async (searchValue: String) => {
     const url = PATH + `api/movies/${searchValue}`;
 

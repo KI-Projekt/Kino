@@ -134,6 +134,15 @@ function App() {
 
   const [isNew, setIsNew] = React.useState<boolean>(false);
 
+  React.useEffect(() => {
+    let url = window.location.href;
+
+    let aUrlParts = url.split("/")
+    if (aUrlParts[5] === "new") {
+      setIsNew(true)
+    }
+  }, [])
+
   return (
     <div>
       <ThemeProvider theme={redTheme}>
