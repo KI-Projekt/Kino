@@ -22,6 +22,7 @@ import { Order } from "./views/PaymentDetailsView";
 import AddNewMoviesView from "./views/Admin/AddNewMoviesView";
 import { User } from "./components/PaymentDetailsView/PersonalDataGuestUser";
 import OrderFinalisationView from "./views/OrderFinalisationView";
+import UserProfile from "./views/UserProfile";
 
 export interface AdminProps {
   isAdmin: boolean;
@@ -92,15 +93,18 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
 }));
 
 function App() {
+
   const [open, setOpen] = React.useState(false);
 
-  const handleMenuOpen = () => {
-    setOpen(true);
-  };
-
-  const handleMenuClose = () => {
-    setOpen(false);
-  };
+  const appBarProps = {
+    open: open,
+    handleMenuOpen: () => {
+      setOpen(true);
+    },
+    handleMenuClose: () => {
+      setOpen(false);
+    },
+  }
 
   const [selectedMovie, setSelectedMovie] = React.useState<Movie | undefined>(undefined);
   const [selectedShow, setSelectedShow] = React.useState<Show | undefined>(undefined);
@@ -110,7 +114,10 @@ function App() {
 
   const [order, setOrder] = React.useState<Order | undefined>(undefined);
 
+  const [personalDataFilled, setPersonalDataFilled] = React.useState(false);
+
   function createUserData(
+    userID: number | undefined,
     firstName: string | undefined,
     surname: string | undefined,
     street: string | undefined,
@@ -118,11 +125,11 @@ function App() {
     postcode: string | undefined,
     city: string | undefined,
     emailAdress: string | undefined,) {
-    return { firstName, surname, street, houseNumber, postcode, city, emailAdress };
+    return { userID, firstName, surname, street, houseNumber, postcode, city, emailAdress };
   }
 
   const [user, setUser] = React.useState<User>(
-    createUserData(undefined, undefined, undefined, undefined, undefined, undefined, undefined)
+    createUserData(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)
   )
 
   const handleChangeAdminMode = (
@@ -148,7 +155,7 @@ function App() {
     <div>
       <ThemeProvider theme={redTheme}>
         <BrowserRouter>
-          <Header open={open} handleMenuOpen={handleMenuOpen} handleMenuClose={handleMenuClose}
+          <Header appBarProps={appBarProps} user={user} setUser={setUser} setPersonalDataFilled={setPersonalDataFilled}
           />
           <Toolbar />
           <Main open={open}>
@@ -181,6 +188,8 @@ function App() {
                         order={order}
                         user={user}
                         setUser={setUser}
+                        personalDataFilled={personalDataFilled}
+                        setPersonalDataFilled={setPersonalDataFilled}
                         setSelectedMovie={setSelectedMovie}
                         setSelectedShow={setSelectedShow}
                         selectedMovie={selectedMovie}
@@ -193,7 +202,7 @@ function App() {
                   <Route path="/contact" element={<ContactUsView />} />
                   <Route path="/about" element={<AboutUsView />} />
                   <Route path="/gettingHere" element={<GettingHereView />} />
-                  <Route path="/login" element={<LoginView />} />
+                  <Route path="/login" element={<LoginView setUser={setUser} user={user} />} />
                   <Route
                     path="/privacyPolicy"
                     element={<PrivacyPolicyView />}
@@ -229,10 +238,11 @@ function App() {
                       setOrder={setOrder}
                     />}
                   />
+                  <Route path="/profile/:userID" element={<UserProfile user={user} />} />
                 </Routes>
               </Box>
             </Container>
-            <Footer />
+            <Footer user={user} />
             <FormControlLabel
               control={<Switch onChange={handleChangeAdminMode} />}
               label="Admin"

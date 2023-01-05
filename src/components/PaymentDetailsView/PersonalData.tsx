@@ -3,6 +3,7 @@ import React from "react"
 import Login from '../Login/LoginForm'
 import SignUpForm from "../Login/SignUpForm";
 import PersonalDataGuestUser, { User } from "./PersonalDataGuestUser";
+import PersonalDataUserLoggedIn from "./PersonalDataUserLoggedIn";
 
 export interface PersonalDataProps {
     personalDataFilled: boolean;
@@ -53,38 +54,52 @@ function PersonalData(props: PersonalDataProps) {
 
     const handleChangeTabs = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
+        props.setPersonalDataFilled(false);
     };
 
     return (
-        <Box sx={{ bgcolor: 'background.paper' }} alignItems='center'>
+        <Box sx={{ bgcolor: 'background.paper' }} alignItems='center' textAlign="center" justifyContent="center">
             <Typography variant="h4" sx={{ p: 3, paddingLeft: theme.spacing }}>Personal Data</Typography>
-            <Tabs
-                value={value}
-                onChange={handleChangeTabs}
-                indicatorColor="secondary"
-                textColor="inherit"
-                variant="fullWidth"
-                aria-label="full width tabs example"
-                centered
-            >
-                <Tab label="Without Account" {...a11yProps(0)} />
-                <Tab label="Sign In" {...a11yProps(1)} />
-                <Tab label="Sign Up" {...a11yProps(2)} />
-            </Tabs>
-            <TabPanel value={value} index={0} dir={theme.direction}>
-                <PersonalDataGuestUser
-                    personalDataFilled={props.personalDataFilled}
-                    setPersonalDataFilled={props.setPersonalDataFilled}
-                    user={props.user}
-                    setUser={props.setUser}
-                />
-            </TabPanel>
-            <TabPanel value={value} index={1} dir={theme.direction}>
-                <Login />
-            </TabPanel>
-            <TabPanel value={value} index={2} dir={theme.direction}>
-                <SignUpForm />
-            </TabPanel>
+            {!props.user.firstName &&
+                <>
+                    <Tabs
+                        value={value}
+                        onChange={handleChangeTabs}
+                        indicatorColor="secondary"
+                        textColor="inherit"
+                        variant="fullWidth"
+                        aria-label="full width tabs example"
+                        centered
+                    >
+                        <Tab label="Without Account" {...a11yProps(0)} />
+                        <Tab label="Sign In" {...a11yProps(1)} />
+                        <Tab label="Sign Up" {...a11yProps(2)} />
+                    </Tabs>
+                    <TabPanel value={value} index={0} dir={theme.direction}>
+                        <PersonalDataGuestUser
+                            personalDataFilled={props.personalDataFilled}
+                            setPersonalDataFilled={props.setPersonalDataFilled}
+                        />
+                    </TabPanel>
+                    <TabPanel value={value} index={1} dir={theme.direction}>
+                        <Login setUser={props.setUser} />
+                    </TabPanel>
+                    <TabPanel value={value} index={2} dir={theme.direction}>
+                        <SignUpForm />
+                    </TabPanel>
+                </>
+            }
+            {props.user.firstName &&
+                <Box sx={{ p: 3 }}>
+                    <Typography sx={{ pb: 2 }}>You are loggin in as {props.user.firstName} {props.user.surname}.</Typography>
+                    <PersonalDataUserLoggedIn
+                        personalDataFilled={props.personalDataFilled}
+                        setPersonalDataFilled={props.setPersonalDataFilled}
+                        user={props.user}
+                        setUser={props.setUser}
+                    />
+                </Box>
+            }
         </Box>
     );
 }

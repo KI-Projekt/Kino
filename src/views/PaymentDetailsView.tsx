@@ -47,12 +47,13 @@ interface PaymentDetailsViewProps {
   setOrder: React.Dispatch<React.SetStateAction<Order | undefined>>;
   user: User;
   setUser: Function;
+  personalDataFilled: boolean;
+  setPersonalDataFilled: Function;
   setSelectedMovie: React.Dispatch<React.SetStateAction<Movie | undefined>>;
   selectedMovie: Movie | undefined;
   setSelectedShow: React.Dispatch<React.SetStateAction<Show | undefined>>;
   selectedShow: Show | undefined;
 }
-
 
 function PaymentDetailsView(props: PaymentDetailsViewProps) {
 
@@ -61,8 +62,6 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
   const [paymentMethod, setPaymentMethod] = React.useState<string | null>('cash');
 
   const [privacyPolicyChecked, setPrivacyPolicyChecked] = React.useState(false);
-
-  const [personalDataFilled, setPersonalDataFilled] = React.useState(false);
 
   const handleChangePrivacyPolicyCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPrivacyPolicyChecked(event.target.checked);
@@ -115,8 +114,8 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
         </Grid>
         <Grid item xs={12} sm={12} md={6} xl={6}>
           <PersonalData
-            personalDataFilled={personalDataFilled}
-            setPersonalDataFilled={setPersonalDataFilled}
+            personalDataFilled={props.personalDataFilled}
+            setPersonalDataFilled={props.setPersonalDataFilled}
             user={props.user}
             setUser={props.setUser}
           />
@@ -148,7 +147,7 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
             <Button
               variant="contained"
               sx={{ paddingX: theme.spacing, width: "100%" }}
-              disabled={(paymentMethod && privacyPolicyChecked && personalDataFilled) ? false : true}
+              disabled={(paymentMethod && privacyPolicyChecked && props.personalDataFilled) ? false : true}
               onClick={handleOnClick}
             >
               Buy with payment

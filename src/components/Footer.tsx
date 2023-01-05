@@ -14,9 +14,15 @@ import InfoIcon from "@mui/icons-material/Info";
 import AssistantDirectionIcon from "@mui/icons-material/AssistantDirection";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useNavigate } from "react-router-dom";
+import { User } from "./PaymentDetailsView/PersonalDataGuestUser";
 
-export default function Footer() {
+interface FooterProps {
+  user: User;
+}
+
+export default function Footer(props: FooterProps) {
   const navigate = useNavigate();
+
   const handleClick = (link: string) => {
     navigate(`/${link}`);
   };
@@ -54,7 +60,7 @@ export default function Footer() {
                   </IconButton>
                 </Tooltip>
                 <Tooltip title="Account Information">
-                  <IconButton onClick={() => handleClick("")}>
+                  <IconButton onClick={() => handleClick(props.user.firstName ? `profile/${props.user.userID}` : "login")}>
                     <AccountCircleIcon
                       sx={{ color: theme.palette.common.white }}
                       className="Footer-Icons"

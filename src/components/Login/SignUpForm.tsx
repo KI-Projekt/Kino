@@ -2,6 +2,7 @@ import React from "react"
 import '../../styles/Login.css';
 import { Button, Box, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField, useTheme } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { User } from "../PaymentDetailsView/PersonalDataGuestUser";
 
 interface State {
   password: string;
@@ -11,6 +12,25 @@ interface State {
 }
 
 function SignUpForm() {
+
+  function createUserData(
+    userID: number | undefined,
+    firstName: string | undefined,
+    surname: string | undefined,
+    street: string | undefined,
+    houseNumber: string | undefined,
+    postcode: string | undefined,
+    city: string | undefined,
+    emailAdress: string | undefined,) {
+    return { userID, firstName, surname, street, houseNumber, postcode, city, emailAdress };
+  }
+
+  const initialUser = (
+    createUserData(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)
+  )
+
+  const [guestUser, setGuestUser] = React.useState<User>(initialUser);
+
   const [values, setValues] = React.useState<State>({
     password: '',
     repeatedPassword: '',
@@ -41,6 +61,14 @@ function SignUpForm() {
 
   const theme = useTheme();
 
+  const handleOnChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    const newUser = {
+      ...guestUser,
+      [e.target.id]: e.target.value
+    };
+    setGuestUser(newUser);
+  }
+
   return (
     <>
       <Box
@@ -58,6 +86,9 @@ function SignUpForm() {
           className="Form-Login-Input"
           placeholder="Jane"
           label="First Name"
+          id="firstName"
+          value={guestUser.firstName}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleOnChange(e)}
         />
 
         <TextField
@@ -66,6 +97,9 @@ function SignUpForm() {
           className="Form-Login-Input"
           placeholder="Doe"
           label="Surname"
+          id="surname"
+          value={guestUser.surname}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleOnChange(e)}
         />
 
         <Box sx={{ display: 'flex' }}>
@@ -74,7 +108,9 @@ function SignUpForm() {
             type="text"
             className="Form-Login-Input"
             placeholder="Fifth Avenue"
-            label="Street"
+            label="Street" id="street"
+            value={guestUser.street}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleOnChange(e)}
           />
           <TextField
             required
@@ -82,6 +118,9 @@ function SignUpForm() {
             className="Form-Login-Input"
             placeholder="69"
             label="House number"
+            id="houseNumber"
+            value={guestUser.houseNumber}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleOnChange(e)}
           />
         </Box>
 
@@ -92,6 +131,9 @@ function SignUpForm() {
             className="Form-Login-Input"
             placeholder="68165"
             label="Postcode"
+            id="postcode"
+            value={guestUser.postcode}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleOnChange(e)}
           />
           <TextField
             required
@@ -99,6 +141,9 @@ function SignUpForm() {
             className="Form-Login-Input"
             placeholder="Mannheim"
             label="City"
+            id="city"
+            value={guestUser.city}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleOnChange(e)}
           />
         </Box>
 
@@ -108,6 +153,9 @@ function SignUpForm() {
           className="Form-Login-Input"
           placeholder="Jane.doe@example.com"
           label="Email Address"
+          id="emailAdress"
+          value={guestUser.emailAdress}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleOnChange(e)}
         />
 
         <FormControl sx={{ m: 0.5, width: '100%' }} variant="outlined">
