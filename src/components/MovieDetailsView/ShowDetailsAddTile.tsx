@@ -6,28 +6,65 @@ import React from "react";
 import { Movie } from "../../views/MovieDetailsView";
 import AddIcon from '@mui/icons-material/Add';
 import { Dayjs } from "dayjs";
+import { postNewShow } from "../../queries/changeScreenings";
+import Alerts from "../Alerts";
 
 interface ShowDetailsAddTileProps {
     selectedMovie: Movie;
     roomData: Array<Room>;
+    getShowsByMovie: Function;
 }
 
 function ShowDetailsAddTile(props: ShowDetailsAddTileProps) {
 
     const theme = useTheme();
 
+    const [dateChanged, setDateChanged] = React.useState(false)
+    const [alertOpen, setAlertOpen] = React.useState(false);
+    const [isError, setIsError] = React.useState(false);
+    const [alertText, setAlertText] = React.useState("The Movie was added successfully!");
     const [addNewShow, setAddNewShow] = React.useState<Show>(
         {
-            movieID: props.selectedMovie.imdbID,
+            movieID: props.selectedMovie.imdbId,
             showID: undefined,
             roomID: undefined,
             room: undefined,
             dateTime: null,
-            additionalInfo: { language: "english", isDbox: false, isThreeD: false },
+            additionalInfo: { hasDolbyAtmos: false, isThreeD: false },
         }
     );
     function handleAddNewShow() {
-        //POST an Show API schicken und dann
+        if (addNewShow.dateTime) {
+
+
+            let payload = {
+                movieId: props.selectedMovie.id,
+                movieTitle: props.selectedMovie.title,
+                roomId: addNewShow.roomID,
+                roomName: addNewShow.room,
+                startTime: dateChanged ? addNewShow.dateTime : new Date(addNewShow.dateTime?.setHours(addNewShow.dateTime?.getHours() + 1)),
+                endTime: ""
+            }
+            setDateChanged(true)
+            postNewShow(payload).then(result => {
+                if (result.error) {
+                    setAlertText(result.error);
+                    setIsError(true);
+                } else if (result.errorMessage) {
+                    setAlertText(result.errorMessage);
+                    setIsError(true);
+                } else {
+                    setAlertText("Show was successfully added!");
+                    setIsError(false);
+                    setAddNewShow(prev => ({
+                        ...prev,
+                        dateTime: null,
+                    }));
+                }
+                setAlertOpen(true);
+                props.getShowsByMovie()
+            })
+        }
     }
 
     const handleAddRoom = (e: SelectChangeEvent) => {
@@ -43,6 +80,7 @@ function ShowDetailsAddTile(props: ShowDetailsAddTileProps) {
                 ...prev,
                 dateTime: newValue?.toDate(),
             }))
+            setDateChanged(false);
         }
     }
 
@@ -81,9 +119,9 @@ function ShowDetailsAddTile(props: ShowDetailsAddTileProps) {
                 >
                     {props.roomData.map((room) => (
                         <MenuItem
-                            value={room.roomID}
+                            value={room.id}
                         >
-                            {room.roomName}
+                            {room.name}
                         </MenuItem>
                     )
                     )}
@@ -100,6 +138,7 @@ function ShowDetailsAddTile(props: ShowDetailsAddTileProps) {
             >
                 Add Show
             </Button>
+            <Alerts alertOpen={alertOpen} alertText={alertText} isError={isError} setAlertOpen={setAlertOpen} />
         </>
     );
 }

@@ -17,82 +17,11 @@ import PrivacyPolicyView from "./views/PrivacyPolicyView";
 import LoginView from "./views/LoginView";
 import PaymentDetailsView from "./views/PaymentDetailsView";
 import TicketView from "./views/TicketView";
-import { Show, ShowDate } from "./components/MovieDetailsView/ShowTiles";
+import { Show } from "./components/MovieDetailsView/ShowTiles";
 import { Order } from "./views/PaymentDetailsView";
 import AddNewMoviesView from "./views/Admin/AddNewMoviesView";
 import { User } from "./components/PaymentDetailsView/PersonalDataGuestUser";
 import OrderFinalisationView from "./views/OrderFinalisationView";
-
-function createData(date: Date, shows: Array<Show>) {
-  return { date, shows };
-}
-
-export const data = [
-  createData(new Date(2023, 0, 1), [
-    {
-      movieID: "1",
-      showID: "1",
-      roomID: "1",
-      room: "Room 1",
-      dateTime: new Date(2023, 0, 1, 16, 30, 0),
-      additionalInfo: { language: "english", isDbox: false, isThreeD: false },
-    },
-    {
-      movieID: "5",
-      showID: "5",
-      roomID: "2",
-      room: "Room 2",
-      dateTime: new Date(2023, 0, 1, 21, 45, 0),
-      additionalInfo: { language: "english", isDbox: false, isThreeD: false },
-    },
-  ]),
-  createData(new Date(2023, 0, 2), [
-    {
-      movieID: "2",
-      showID: "2",
-      roomID: "2",
-      room: "Room 2",
-      dateTime: new Date(2023, 0, 2, 17, 30, 0),
-      additionalInfo: { language: "english", isDbox: false, isThreeD: false },
-    },
-  ]),
-  createData(new Date(2023, 0, 3), [
-    {
-      movieID: "3",
-      showID: "3",
-      roomID: "3",
-      room: "Room 3",
-      dateTime: new Date(2023, 0, 3, 18, 15, 0),
-      additionalInfo: { language: "english", isDbox: false, isThreeD: false },
-    },
-  ]),
-  createData(new Date(2023, 0, 4), [
-    {
-      movieID: "4",
-      showID: "4",
-      roomID: "1",
-      room: "Room 1",
-      dateTime: new Date(2023, 0, 4, 12, 30, 0),
-      additionalInfo: { language: "english", isDbox: false, isThreeD: false },
-    },
-    {
-      movieID: "6",
-      showID: "6",
-      roomID: "2",
-      room: "Room 2",
-      dateTime: new Date(2023, 0, 4, 16, 15, 0),
-      additionalInfo: { language: "english", isDbox: false, isThreeD: false },
-    },
-    {
-      movieID: "7",
-      showID: "7",
-      roomID: "1",
-      room: "Room 1",
-      dateTime: new Date(2023, 0, 4, 20, 30, 0),
-      additionalInfo: { language: "english", isDbox: false, isThreeD: false },
-    },
-  ]),
-];
 
 export interface AdminProps {
   isAdmin: boolean;
@@ -181,8 +110,6 @@ function App() {
 
   const [order, setOrder] = React.useState<Order | undefined>(undefined);
 
-  const [shows, setShows] = React.useState<Array<ShowDate>>(data);
-
   function createUserData(
     firstName: string | undefined,
     surname: string | undefined,
@@ -208,6 +135,15 @@ function App() {
 
   const [isNew, setIsNew] = React.useState<boolean>(false);
 
+  React.useEffect(() => {
+    let url = window.location.href;
+
+    let aUrlParts = url.split("/")
+    if (aUrlParts[5] === "new") {
+      setIsNew(true)
+    }
+  }, [])
+
   return (
     <div>
       <ThemeProvider theme={redTheme}>
@@ -227,14 +163,16 @@ function App() {
                       isAdmin={adminProps.isAdmin}
                       isNew={isNew}
                       setIsNew={setIsNew}
-                      showData={shows}
-                      setShowData={setShows}
                     />
                     }
                   />
                   <Route
                     path="/showDetails/:imdbID/:showID"
-                    element={<TicketView selectedMovie={selectedMovie} selectedShow={selectedShow} setOrder={setOrder} />}
+                    element={<TicketView setSelectedMovie={setSelectedMovie}
+                      setSelectedShow={setSelectedShow}
+                      selectedMovie={selectedMovie}
+                      selectedShow={selectedShow}
+                      setOrder={setOrder} />}
                   />
                   <Route
                     path="/orderDetails/:imdbID/:showID/:orderID"
@@ -243,6 +181,11 @@ function App() {
                         order={order}
                         user={user}
                         setUser={setUser}
+                        setSelectedMovie={setSelectedMovie}
+                        setSelectedShow={setSelectedShow}
+                        selectedMovie={selectedMovie}
+                        selectedShow={selectedShow}
+                        setOrder={setOrder}
                       />}
                   />
                   <Route path="/" element={<OverviewView isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} />} />
@@ -257,7 +200,7 @@ function App() {
                   />
                   <Route
                     path="/movieDetails/:imdbID"
-                    element={<MovieDetailsView setSelectedMovie={setSelectedMovie} setSelectedShow={setSelectedShow} selectedMovie={selectedMovie} isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} showData={shows} setShowData={setShows} />}
+                    element={<MovieDetailsView setSelectedMovie={setSelectedMovie} setSelectedShow={setSelectedShow} selectedMovie={selectedMovie} isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} />}
                   />
                   <Route path="/openingHours" element={<OpeningHoursView isAdmin={adminProps.isAdmin} />} />
                   <Route path="/ticketPrices" element={<TicketPricesView isAdmin={adminProps.isAdmin} />} />
@@ -270,15 +213,21 @@ function App() {
                         isAdmin={adminProps.isAdmin}
                         isNew={isNew}
                         setIsNew={setIsNew}
-                        showData={shows}
-                        setShowData={setShows}
                       />
                     }
                   />
                   <Route path="/addNewMovie" element={<AddNewMoviesView isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} />} />
                   <Route
                     path="/order/:imdbID/:showID/:orderID"
-                    element={<OrderFinalisationView order={order} user={user} />}
+                    element={<OrderFinalisationView
+                      order={order}
+                      user={user}
+                      setSelectedMovie={setSelectedMovie}
+                      setSelectedShow={setSelectedShow}
+                      selectedMovie={selectedMovie}
+                      selectedShow={selectedShow}
+                      setOrder={setOrder}
+                    />}
                   />
                 </Routes>
               </Box>

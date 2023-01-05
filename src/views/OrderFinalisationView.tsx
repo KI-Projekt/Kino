@@ -8,10 +8,18 @@ import jsPDF from 'jspdf';
 import OrderOverview from "../components/PaymentDetailsView/OrderOverview";
 import QRCode from "react-qr-code";
 import DownloadIcon from '@mui/icons-material/Download';
+import { Movie } from "./MovieDetailsView";
+import { Show } from "../components/MovieDetailsView/ShowTiles";
+import { getMovieAfterReload, getShowAfterReload } from "./TicketView";
 
 interface OrderFinalisationViewProps {
     order: Order | undefined;
+    setOrder: React.Dispatch<React.SetStateAction<Order | undefined>>;
     user: User;
+    setSelectedMovie: React.Dispatch<React.SetStateAction<Movie | undefined>>;
+    selectedMovie: Movie | undefined;
+    setSelectedShow: React.Dispatch<React.SetStateAction<Show | undefined>>;
+    selectedShow: Show | undefined;
 }
 
 function OrderFinalisationView(props: OrderFinalisationViewProps) {
@@ -20,9 +28,26 @@ function OrderFinalisationView(props: OrderFinalisationViewProps) {
 
     const printRef = React.useRef() as React.MutableRefObject<HTMLInputElement>;
 
+    const setSelectedShow = props.setSelectedShow;
+    const setSelectedMovie = props.setSelectedMovie;
+    const setOrder = props.setOrder;
+
     useEffect(() => {
-        console.log(printRef)
-    }, [])
+        if (props.order === undefined) {
+            let url = window.location.href;
+
+            let aUrlParts = url.split("/")
+            let initialOrder: Order = {
+                orderID: aUrlParts[6],
+                price: undefined,
+                fares: undefined,
+                seats: undefined
+            }
+            setOrder(initialOrder)
+        }
+        getShowAfterReload().then(result => setSelectedShow(result))
+        getMovieAfterReload().then(result => setSelectedMovie(result));
+    }, [setSelectedShow, setSelectedMovie, setOrder, props.order])
 
     async function handleDownloadPDF() {
         const element = printRef.current;
@@ -44,7 +69,7 @@ function OrderFinalisationView(props: OrderFinalisationViewProps) {
 
     return (
         <>
-            {props.order && (
+            {props.order && props.selectedMovie && props.selectedShow && (
                 <div ref={printRef}>
                     <Box sx={{ flexGrow: 1, p: theme.spacing(3) }}>
                         <Grid container spacing={3}>
@@ -87,12 +112,12 @@ function OrderFinalisationView(props: OrderFinalisationViewProps) {
                                     <Card >
                                         <OrderOverview
                                             orderID={props.order.orderID}
-                                            movieID={props.order.movieID}
-                                            showID={props.order.orderID}
-                                            movie={props.order.movie}
-                                            picture={props.order.picture}
-                                            showDate={props.order.showDate}
-                                            room={props.order.room}
+                                            movieID={props.selectedMovie.id}
+                                            showID={props.selectedShow.showID}
+                                            movie={props.selectedMovie.title}
+                                            picture={props.selectedMovie.posterImage}
+                                            showDate={props.selectedShow.dateTime}
+                                            room={props.selectedShow.room}
                                             seats={props.order.seats}
                                             fares={props.order.fares}
                                             price={props.order.price}

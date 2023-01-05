@@ -8,16 +8,16 @@ import { Box, Divider, Grid } from "@mui/material";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 interface OrderOverviewProps {
-  orderID: string;
-  movieID: string;
-  showID: string;
+  orderID: string | number | undefined;
+  movieID: string | number | undefined;
+  showID: string | number | undefined;
   movie: String | undefined;
   picture: string | undefined;
   showDate: Date | null | undefined;
   room: string | undefined;
-  seats: Array<Row>;
-  fares: Array<fareSelection>;
-  price: number;
+  seats: Array<Row> | undefined;
+  fares: Array<fareSelection> | undefined;
+  price: number | undefined;
 }
 
 function OrderOverview(prop: OrderOverviewProps) {
@@ -62,7 +62,7 @@ function OrderOverview(prop: OrderOverviewProps) {
                   <Typography variant="body1" color="text.secondary">
                     {prop.room}
                   </Typography>
-                  {prop.seats.map((seatRow, index) => {
+                  {prop.seats && prop.seats.map((seatRow, index) => {
                     return (
                       <div key={index}>
                         <Typography variant="body1" color="text.secondary">
@@ -98,7 +98,7 @@ function OrderOverview(prop: OrderOverviewProps) {
               <Divider />
               <Box sx={{ paddingBottom: "1rem" }}>
                 <Typography variant="h6">Fares:</Typography>
-                {prop.fares.map((fareItem) => (
+                {prop.fares && prop.fares.map((fareItem) => (
                   <>
                     {fareItem.amountOfTickets !== 0 && (
                       <Typography variant="body1" color="text.secondary">
