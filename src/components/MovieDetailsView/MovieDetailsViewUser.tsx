@@ -1,8 +1,9 @@
-import { Grid, Card, CardHeader, CardMedia, CardContent, Typography, Divider, useTheme, Alert } from "@mui/material";
+import { Grid, Typography, Divider, useTheme, Alert } from "@mui/material";
 import { Box } from "@mui/system";
-import Youtube from 'react-youtube'
 import ShowTiles, { Show, ShowDate } from "./ShowTiles";
 import { Movie } from "../../views/MovieDetailsView";
+import MovieFacts from "./MovieFacts";
+import MoviePlot from "./MoviePlot";
 
 interface MovieDetailsViewUserProp {
     selectedMovie: Movie,
@@ -20,68 +21,10 @@ function UserMovieDetailsView(props: MovieDetailsViewUserProp) {
         <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={3}>
                 <Grid item xs={12} sm={12} md={6} xl={4} >
-                    <Card
-                        sx={{
-                            marginLeft: theme.spacing(1),
-                            marginRight: theme.spacing(1),
-                        }}
-                        elevation={0}
-                    >
-                        <CardHeader
-                            title={props.selectedMovie.title}
-                            titleTypographyProps={{ p: theme.spacing(3), pt: theme.spacing(2), paddingLeft: 0, fontSize: theme.typography.h4.fontSize }}
-                        />
-
-                        <CardMedia
-                            component="img"
-                            alt="movie poster"
-                            image={props.selectedMovie.posterImage} />
-
-                        <CardContent>
-                            <Typography variant="body2" color="text.secondary">
-                                Runtime: {props.selectedMovie.runtime} <br />
-                                Writer: {props.selectedMovie.writer} <br />
-                                Director: {props.selectedMovie.director} <br />
-                                Cast: {props.selectedMovie.actors} <br />
-                                Genres: {props.selectedMovie.genre} <br />
-                                Age Rating: {props.selectedMovie.rated} <br />
-                            </Typography>
-                        </CardContent>
-                    </Card>
+                    <MovieFacts selectedMovie={props.selectedMovie} />
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} xl={4} >
-                    <Divider orientation="vertical" flexItem sx={{ borderBottomWidth: "0.2rem" }} />
-                    <Box sx={{ marginTop: theme.spacing(1) }}>
-                        <Card sx={{ marginLeft: theme.spacing(1), marginRight: theme.spacing(1), overflowY: 'auto' }} elevation={0}>
-                            <Typography
-                                variant="h4"
-                                sx={{
-                                    p: theme.spacing(3),
-                                    pt: {
-                                        xs: theme.spacing(1),
-                                        sm: theme.spacing(3)
-                                    },
-                                    paddingLeft: theme.spacing(1)
-                                }}
-                            >
-                                Plot
-                            </Typography>
-                            <Typography sx={{ padding: theme.spacing(1) }}>
-                                {props.selectedMovie.plot}
-                            </Typography>
-                        </Card>
-                        {props.selectedMovie.trailer &&
-                            <Card
-                                sx={{
-                                    marginLeft: theme.spacing(1),
-                                    marginRight: theme.spacing(1),
-                                    marginTop: theme.spacing(1),
-                                }}
-                                elevation={0}
-                            >
-                                <Youtube videoId={props.selectedMovie.trailer.key} opts={{ width: "100%", outerHeight: '56.25%' }} />
-                            </Card>}
-                    </Box>
+                    <MoviePlot selectedMovie={props.selectedMovie} />
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} xl={4} >
                     <Divider orientation='vertical' flexItem sx={{ borderBottomWidth: "0.2rem" }} />

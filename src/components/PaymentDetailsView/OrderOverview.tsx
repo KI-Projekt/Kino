@@ -51,7 +51,7 @@ function OrderOverview(prop: OrderOverviewProps) {
                 {prop.showDate && (
                   <Typography variant="body1" color="text.secondary">
                     {prop.showDate.toDateString()}, {prop.showDate.getHours()}:
-                    {prop.showDate.getMinutes()}h
+                    {prop.showDate.getMinutes() === 0 ? "00" : prop.showDate.getMinutes()}h
                   </Typography>
                 )}
               </Box>

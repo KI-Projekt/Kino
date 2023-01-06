@@ -1,18 +1,29 @@
-import { Divider, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography, useTheme } from "@mui/material";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { Show, ShowDate } from "./ShowTiles";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import { Room } from "../../views/TicketView";
 import { Dayjs } from "dayjs";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import UpdateIcon from '@mui/icons-material/Update';
+import { deleteShow, updateShow } from "../../queries/changeScreenings";
+import { Movie } from "../../views/MovieDetailsView";
+import React from "react";
 
 interface ShowDetailsEditTileProps {
     showData: Array<ShowDate>;
     setShowData: Function;
     roomData: Array<Room>;
+    selectedMovie: Movie | undefined;
 }
 
 function ShowDetailsEditTiles(props: ShowDetailsEditTileProps) {
 
     const theme = useTheme();
+
+    const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+    const [dialogOpen, setDialogOpen] = React.useState(false);
+    const [showID, setShowID] = React.useState<String | undefined>(undefined);
+
 
     const handleChangeDateTime = (newValue: Dayjs | null, changedShow: Show) => {
         const newShowData = props.showData.map((currentShowDate) => {
@@ -58,6 +69,33 @@ function ShowDetailsEditTiles(props: ShowDetailsEditTileProps) {
         props.setShowData(newShowData);
     };
 
+
+    const onDeleteClick = () => {
+        if (showID) {
+            deleteShow(showID);
+            setDialogOpen(false);
+        }
+    }
+
+    const onUpdateClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        const TRAILER_ADD = 15;
+
+        props.showData.forEach((currentShowDate) => {
+            currentShowDate.shows.forEach((currentShow) => {
+                if (currentShow.showID?.toString() === e.currentTarget.id && props.selectedMovie?.runtime && currentShow.dateTime) {
+                    let newShow = {
+                        movieId: currentShow.movieID,
+                        roomId: currentShow.roomID,
+                        startDateTime: new Date(currentShow.dateTime),
+                        endDateTime: new Date(currentShow.dateTime?.setMinutes(currentShow.dateTime?.getMinutes() + parseInt(props.selectedMovie.runtime) + TRAILER_ADD)),
+                        status: "TICKET_SALE_OPEN"
+                    }
+                    updateShow(newShow, currentShow.showID);
+                }
+            })
+        })
+    }
+
     return (
         <>
             {props.showData.map((currentShowDate: ShowDate) => (
@@ -77,38 +115,75 @@ function ShowDetailsEditTiles(props: ShowDetailsEditTileProps) {
                                 {currentShow.dateTime.toLocaleDateString()} at {currentShow.dateTime.getHours()}:{currentShow.dateTime.getMinutes() === 0 ? "00" : currentShow.dateTime.getMinutes()}h
                             </Typography>
                         }
-                        <FormControl sx={{ m: theme.spacing(1) }}>
-                            <DateTimePicker
-                                label="Show starts at"
-                                value={currentShow.dateTime}
-                                onChange={(newValue: Dayjs | null) => handleChangeDateTime(newValue, currentShow)}
-                                renderInput={(params) => <TextField {...params} />}
-                            />
-                        </FormControl>
-                        <FormControl
-                            sx={{
-                                m: theme.spacing(1),
-                                width: theme.spacing(15)
-                            }}
-                        >
-                            <InputLabel id="show-room">Room</InputLabel>
-                            <Select
-                                id="roomID"
-                                label="Room"
-                                value={currentShow.roomID}
-                                onChange={(e) => handleChangeRoom(e, currentShow)}
-                            >
-                                {props.roomData.map((room) => (
-                                    <MenuItem
-                                        value={room.id}
+                        <Grid container>
+                            <Grid item xs={6} sm={6} md={6} xl={6}>
+                                <FormControl sx={{ m: theme.spacing(1) }}>
+                                    <DateTimePicker
+                                        label="Show starts at"
+                                        value={currentShow.dateTime}
+                                        onChange={(newValue: Dayjs | null) => handleChangeDateTime(newValue, currentShow)}
+                                        renderInput={(params) => <TextField {...params} />}
+                                    />
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={4} sm={4} md={4} xl={4}>
+                                <FormControl
+                                    sx={{
+                                        m: theme.spacing(1),
+                                        width: theme.spacing(15)
+                                    }}
+                                >
+                                    <InputLabel id="show-room">Room</InputLabel>
+                                    <Select
+                                        id="roomID"
+                                        label="Room"
+                                        value={currentShow.roomID}
+                                        onChange={(e) => handleChangeRoom(e, currentShow)}
                                     >
-                                        {room.name}
-                                    </MenuItem>
-                                )
-                                )}
+                                        {props.roomData.map((room) => (
+                                            <MenuItem
+                                                value={room.id}
+                                            >
+                                                {room.name}
+                                            </MenuItem>
+                                        )
+                                        )}
 
-                            </Select>
-                        </FormControl>
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={2} sm={2} md={2} xl={2}>
+                                <Box
+                                    sx={{ flexDirection: "row", flexGrow: 1 }}
+                                >
+                                    <Button startIcon={<DeleteForeverIcon />} id={currentShow.showID} onClick={() => { setDialogOpen(true); setShowID(currentShow.showID) }} />
+                                    <Button startIcon={<UpdateIcon />} id={currentShow.showID} onClick={onUpdateClick} disabled />
+                                </Box>
+                            </Grid>
+                        </Grid>
+                        <Dialog
+                            fullScreen={fullScreen}
+                            open={dialogOpen}
+                            onClose={() => setDialogOpen(false)}
+                            aria-labelledby="responsive-dialog-title"
+                        >
+                            <DialogTitle id="responsive-dialog-title">
+                                Deleting Show
+                            </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    Are you sure you want to delete this Show from our Database?
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={onDeleteClick} autoFocus startIcon={<DeleteForeverIcon />}>
+                                    Delete
+                                </Button>
+                                <Button autoFocus onClick={() => setDialogOpen(false)} variant="contained">
+                                    Cancel
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
                     </>
                 ))
             ))

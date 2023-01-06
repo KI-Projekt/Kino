@@ -32,9 +32,9 @@ function createData(
 };
 
 const rows = [
-    createData('Adults', 10.00, "People older than 16 and younger than 65 years old"),
-    createData('Kids', 7.00, "Kids under 16 years old"),
-    createData('Students', 8.00, "Students with a student ID"),
+    createData('Adult', 10.00, "People older than 16 and younger than 65 years old"),
+    createData('Kid', 7.00, "Kids under 16 years old"),
+    createData('Student', 8.00, "Students with a student ID"),
     createData('Pensioner', 9.00, "People older than 65"),
 ];
 

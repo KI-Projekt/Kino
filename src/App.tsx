@@ -8,7 +8,7 @@ import GettingHereView from "./views/GettingHereView";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header, { drawerWidth } from "./components/Header/Header";
 import OverviewView from "./views/OverviewView";
-import { Box, Container, createTheme, FormControlLabel, styled, Switch, ThemeProvider, Toolbar, } from "@mui/material";
+import { Box, Container, createTheme, /* FormControlLabel ,*/ styled, /* Switch ,*/ ThemeProvider, Toolbar, } from "@mui/material";
 import type { } from '@mui/x-date-pickers/themeAugmentation';
 import OpeningHoursView from "./views/OpeningHoursView";
 import TicketPricesView from "./views/TicketPricesView";
@@ -23,6 +23,8 @@ import AddNewMoviesView from "./views/Admin/AddNewMoviesView";
 import { User } from "./components/PaymentDetailsView/PersonalDataGuestUser";
 import OrderFinalisationView from "./views/OrderFinalisationView";
 import UserProfile from "./views/UserProfile";
+import ShowOverviewView from "./views/ShowOverviewView";
+import MovieShowDetails from "./views/MovieShowDetails";
 
 export interface AdminProps {
   isAdmin: boolean;
@@ -108,7 +110,7 @@ function App() {
 
   const [selectedMovie, setSelectedMovie] = React.useState<Movie | undefined>(undefined);
   const [selectedShow, setSelectedShow] = React.useState<Show | undefined>(undefined);
-  const [adminProps, setAdminProps] = React.useState<AdminProps>({
+  const [adminProps, /* setAdminProps */] = React.useState<AdminProps>({
     isAdmin: false,
   });
 
@@ -132,13 +134,13 @@ function App() {
     createUserData(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)
   )
 
-  const handleChangeAdminMode = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setAdminProps({
-      isAdmin: event.target.checked,
-    });
-  };
+  /*   const handleChangeAdminMode = (
+      event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+      setAdminProps({
+        isAdmin: event.target.checked,
+      });
+    }; */
 
   const [isNew, setIsNew] = React.useState<boolean>(false);
 
@@ -180,6 +182,14 @@ function App() {
                       selectedMovie={selectedMovie}
                       selectedShow={selectedShow}
                       setOrder={setOrder} />}
+                  />
+                  <Route
+                    path="/movieDetails/:imdbID/:showID"
+                    element={<MovieShowDetails setSelectedMovie={setSelectedMovie}
+                      setSelectedShow={setSelectedShow}
+                      selectedMovie={selectedMovie}
+                      selectedShow={selectedShow}
+                    />}
                   />
                   <Route
                     path="/orderDetails/:imdbID/:showID/:orderID"
@@ -239,14 +249,15 @@ function App() {
                     />}
                   />
                   <Route path="/profile/:userID" element={<UserProfile user={user} />} />
+                  <Route path="/shows" element={<ShowOverviewView isAdmin={adminProps.isAdmin} />} />
                 </Routes>
               </Box>
             </Container>
             <Footer user={user} />
-            <FormControlLabel
+            {/*             <FormControlLabel
               control={<Switch onChange={handleChangeAdminMode} />}
               label="Admin"
-            />
+            /> */}
           </Main>
         </BrowserRouter>
       </ThemeProvider>

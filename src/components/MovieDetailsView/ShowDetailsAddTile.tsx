@@ -26,6 +26,8 @@ function ShowDetailsAddTile(props: ShowDetailsAddTileProps) {
     const [addNewShow, setAddNewShow] = React.useState<Show>(
         {
             movieID: props.selectedMovie.imdbId,
+            movieName: undefined,
+            moviePoster: undefined,
             showID: undefined,
             roomID: undefined,
             room: undefined,
@@ -34,16 +36,16 @@ function ShowDetailsAddTile(props: ShowDetailsAddTileProps) {
         }
     );
     function handleAddNewShow() {
-        if (addNewShow.dateTime) {
-
+        if (addNewShow.dateTime && props.selectedMovie.runtime) {
+            const TRAILER_ADD = 15;
+            let startTime = dateChanged ? addNewShow.dateTime : new Date(addNewShow.dateTime?.setHours(addNewShow.dateTime?.getHours() + 1))
+            let endTime = new Date(addNewShow.dateTime?.setMinutes(addNewShow.dateTime?.getMinutes() + parseInt(props.selectedMovie.runtime) + TRAILER_ADD))
 
             let payload = {
                 movieId: props.selectedMovie.id,
-                movieTitle: props.selectedMovie.title,
                 roomId: addNewShow.roomID,
-                roomName: addNewShow.room,
-                startTime: dateChanged ? addNewShow.dateTime : new Date(addNewShow.dateTime?.setHours(addNewShow.dateTime?.getHours() + 1)),
-                endTime: ""
+                startDateTime: startTime,
+                endDateTime: endTime,
             }
             setDateChanged(true)
             postNewShow(payload).then(result => {

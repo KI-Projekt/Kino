@@ -1,7 +1,7 @@
 import { PATH } from "./fetchMovieAPI";
 
-export const fetchAllScreenings = async () => {
-    const url = PATH + "api/screenings";
+export const fetchAllScreenings = async (date: String) => {
+    const url = PATH + `api/screenings?startTime=${date}`;
 
     const response = await fetch(url);
     const responseJson = await response.json();
