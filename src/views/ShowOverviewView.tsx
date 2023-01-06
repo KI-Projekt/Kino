@@ -7,6 +7,7 @@ import { sortShowsToShowDate } from './MovieDetailsView';
 
 
 interface ShowOverviewViewProps {
+    isAdmin: boolean;
 }
 
 function ShowOverviewView(props: ShowOverviewViewProps) {
@@ -23,8 +24,13 @@ function ShowOverviewView(props: ShowOverviewViewProps) {
 
 
     const onMovieShowTileClick = (currentShow: Show) => {
-        navigate(`/showDetails/${currentShow.movieID}/${currentShow.showID}`);
+        if (props.isAdmin) {
+            navigate(`/movieDetails/${currentShow.movieID}`)
+        } else {
+            navigate(`/movieDetails/${currentShow.movieID}/${currentShow.showID}`);
+        }
     }
+
     return (
         <>
             {allShows && <MovieShowTiles shows={allShows} onShowTileClick={onMovieShowTileClick} />}

@@ -33,7 +33,7 @@ function ShowDetails(props: ShowDetailsProps) {
                     {roomData &&
                         <>
                             {props.showData &&
-                                <ShowDetailsEditTiles roomData={roomData} showData={props.showData} setShowData={props.setShowData} />
+                                <ShowDetailsEditTiles roomData={roomData} showData={props.showData} setShowData={props.setShowData} selectedMovie={props.selectedMovie} />
                             }
                             <ShowDetailsAddTile roomData={roomData} selectedMovie={props.selectedMovie} getShowsByMovie={props.getShowsByMovie} />
                         </>

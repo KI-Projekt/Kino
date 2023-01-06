@@ -18,7 +18,7 @@ interface MovieDetailsViewProps {
     setIsNew: Function,
 }
 
-interface TrailerType {
+export interface TrailerType {
     id: string
     iso_639_1: string
     iso_3166_1: string
@@ -54,7 +54,7 @@ export interface Movie {
     imdbId?: String | undefined
     title?: String | undefined,
     posterImage?: string | undefined,
-    runtime?: String | undefined,
+    runtime?: string | undefined,
     writer?: String | undefined,
     director?: String | undefined,
     actors?: String | undefined,
@@ -63,6 +63,8 @@ export interface Movie {
     plot?: String | undefined,
     releaseYear?: String | undefined,
     imdbRating?: String | undefined,
+    imdbRatingCount?: String | undefined,
+    movieStatus?: String | undefined,
     imdbVotes?: String | undefined,
     trailer: TrailerType | undefined,
 }

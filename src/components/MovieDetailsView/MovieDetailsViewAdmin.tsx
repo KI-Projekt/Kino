@@ -113,12 +113,12 @@ function AdminMovieDetailsView(props: MovieDetailsViewAdminProp) {
   };
 
   function handleAddNewMovie() {
-    let newMovie = {
+    let newMovie: Movie = {
       title: props.selectedMovie.title,
       releaseYear: props.selectedMovie.releaseYear,
       posterImage: props.selectedMovie.posterImage,
-      rated: props.selectedMovie.rated,
-      runtime: props.selectedMovie.runtime,
+/*       rated: props.selectedMovie.rated,
+ */      runtime: props.selectedMovie.runtime,
       genre: props.selectedMovie.genre,
       actors: props.selectedMovie.actors,
       plot: props.selectedMovie.plot,
@@ -144,13 +144,16 @@ function AdminMovieDetailsView(props: MovieDetailsViewAdminProp) {
         }
         setAlertText(result.errorMessage);
         setIsError(true);
+      } else if (result.error) {
+        setIsError(true);
+        setAlertText(result.error)
       } else {
         setIsError(false);
         setAlertText("The Movie was added successfully!")
         navigate(`/movieDetails/${result.data.id}`);
+        props.setIsNew(false);
       }
       setAlertOpen(true);
-      props.setIsNew(false);
     });
   }
 

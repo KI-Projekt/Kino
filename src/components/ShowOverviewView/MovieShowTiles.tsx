@@ -26,7 +26,7 @@ const ImageButton = styled(ButtonBase)(({ theme }) => ({
         '& .MuiImageMarked-root': {
             opacity: 0,
         },
-        '& .MuiTypography-root': {
+        '& .mainTypography': {
             border: '4px solid currentColor',
         },
     },
@@ -97,8 +97,8 @@ function MovieShowTiles(props: MovieShowTilesProps) {
                                         <ImageBackdrop className="MuiImageBackdrop-root" />
                                         <Image>
                                             <Typography
+                                                className='mainTypography'
                                                 component="span"
-                                                variant="body1"
                                                 color="inherit"
                                                 sx={{
                                                     position: 'relative',
@@ -107,8 +107,12 @@ function MovieShowTiles(props: MovieShowTilesProps) {
                                                     pb: (theme) => `calc(${theme.spacing(1)} + 0.6rem)`,
                                                 }}
                                             >
-                                                {currentShow.dateTime.getHours()} : {currentShow.dateTime.getMinutes() === 0 ? "00" : currentShow.dateTime.getMinutes()} h <br />
-                                                {currentShow.room}
+                                                <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
+                                                    {currentShow.dateTime.getHours()} : {currentShow.dateTime.getMinutes() === 0 ? "00" : currentShow.dateTime.getMinutes()} h <br />
+                                                </Typography>
+                                                <Typography variant='body1'>
+                                                    {currentShow.room}
+                                                </Typography>
                                                 <ImageMarked className="MuiImageMarked-root" />
                                             </Typography>
                                         </Image>

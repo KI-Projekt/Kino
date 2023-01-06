@@ -378,15 +378,9 @@ function TicketView(props: TicketViewProps) {
   }
 
   const rows = [
-    createFareData(
-      0,
-      "Adults",
-      10.0,
-      "People older than 16 and younger than 65 years old",
-      0
-    ),
-    createFareData(1, "Kids", 7.0, "Kids under 16 years old", 0),
-    createFareData(2, "Students", 8.0, "Students with a student ID", 0),
+    createFareData(0, "Adult", 10.0, "People older than 16 and younger than 65 years old", 0),
+    createFareData(1, "Kid", 7.0, "Kids under 16 years old", 0),
+    createFareData(2, "Student", 8.0, "Students with a student ID", 0),
     createFareData(3, "Pensioner", 9.0, "People older than 65", 0),
   ];
 

@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { fetchOMDbAPI } from '../../queries/fetchOMDbAPI';
+import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MovieTile from '../../components/OverviewView/MovieTile';
 import '../../styles/OverviewView.css'
 import { Typography, useTheme } from '@mui/material';
-import { fetchAllMovies } from '../../queries/fetchMovieAPI';
+import { fetchAllMovies, fetchMoviesByAgeRating } from '../../queries/fetchMovieAPI';
 
 export interface MovieProps {
     posterImage: string,
@@ -23,7 +22,7 @@ function TileBar(props: TilebarProps) {
 
     useEffect(() => {
         props.query ?
-            fetchOMDbAPI(props.query).then((result) => { setMovies(result.Search) })
+            fetchMoviesByAgeRating(props.query).then((result) => { setMovies(result) })
             :
             fetchAllMovies().then((result) => { setMovies(result) })
     }, [props.query]);
