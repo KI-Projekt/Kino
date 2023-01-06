@@ -7,11 +7,19 @@ import CinetastischIcon from '../../img/Cinetastisch_icon.png';
 import SideMenu from './SideMenu';
 import SideMenuButton from './SideMenuButton';
 import ProfileMenuButton from './ProfileMenuButton';
+import { User } from '../PaymentDetailsView/PersonalDataGuestUser';
 
 export interface AppBarProps extends MuiAppBarProps {
-  open?: boolean,
-  handleMenuOpen: Function,
-  handleMenuClose: Function,
+  open?: boolean;
+  handleMenuOpen: Function;
+  handleMenuClose: Function;
+}
+
+interface HeaderProps {
+  user: User;
+  setUser: Function;
+  setPersonalDataFilled: Function;
+  appBarProps: AppBarProps;
 }
 
 export const drawerWidth = '15rem';
@@ -42,45 +50,45 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-function Header(props: AppBarProps) {
+function Header(props: HeaderProps) {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
         position="fixed"
-        open={props.open}
-        handleMenuClose={props.handleMenuClose}
-        handleMenuOpen={props.handleMenuOpen}
+        open={props.appBarProps.open}
+        handleMenuClose={props.appBarProps.handleMenuClose}
+        handleMenuOpen={props.appBarProps.handleMenuOpen}
       >
         <Toolbar>
-          <SideMenuButton open={props.open} handleMenuOpen={props.handleMenuOpen} handleMenuClose={props.handleMenuClose} />
+          <SideMenuButton open={props.appBarProps.open} handleMenuOpen={props.appBarProps.handleMenuOpen} handleMenuClose={props.appBarProps.handleMenuClose} />
           <Link href={`/`} underline='none'>
-              <Box
-                component="img"
-                sx={{
-                  content: {
-                    xs: `url(${CinetastischIcon})`, //img src from xs up to sm
-                    sm: `url(${CinetastischHorizontal})`,  //img src from sm and up
-                  },
-                  height: '3rem',
-                  position: 'absolute',
-                  zIndex: 1,
-                  top: {
-                    xs: '0.2rem',
-                    sm: '0.5rem',
-                  } ,
-                  left: 0,
-                  right: 0,
-                  margin: '0 auto',
-                }}
-                alt="Logo"
-              />
+            <Box
+              component="img"
+              sx={{
+                content: {
+                  xs: `url(${CinetastischIcon})`, //img src from xs up to sm
+                  sm: `url(${CinetastischHorizontal})`,  //img src from sm and up
+                },
+                height: '3rem',
+                position: 'absolute',
+                zIndex: 1,
+                top: {
+                  xs: '0.2rem',
+                  sm: '0.5rem',
+                },
+                left: 0,
+                right: 0,
+                margin: '0 auto',
+              }}
+              alt="Logo"
+            />
           </Link>
           <Box sx={{ flexGrow: 1 }} />
-          <ProfileMenuButton />
+          <ProfileMenuButton user={props.user} setUser={props.setUser} setPersonalDataFilled={props.setPersonalDataFilled} />
         </Toolbar>
       </AppBar>
-      <SideMenu open={props.open} handleMenuOpen={props.handleMenuOpen} handleMenuClose={props.handleMenuClose} />
+      <SideMenu open={props.appBarProps.open} handleMenuOpen={props.appBarProps.handleMenuOpen} handleMenuClose={props.appBarProps.handleMenuClose} />
     </Box >
   );
 }

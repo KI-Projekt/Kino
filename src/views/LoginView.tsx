@@ -3,12 +3,19 @@ import '../styles/Login.css';
 import Login from "../components/Login/LoginForm";
 import { Box, Tab, Tabs, Typography, useTheme } from "@mui/material";
 import SignUpForm from "../components/Login/SignUpForm";
+import { User } from "../components/PaymentDetailsView/PersonalDataGuestUser";
+import { useNavigate } from "react-router";
 
 interface TabPanelProps {
     children?: React.ReactNode;
     dir?: string;
     index: number;
     value: number;
+}
+
+interface LoginViewProps {
+    user: User;
+    setUser: Function;
 }
 
 function TabPanel(props: TabPanelProps) {
@@ -38,39 +45,62 @@ function a11yProps(index: number) {
     };
 }
 
-function LoginView() {
+function LoginView(props: LoginViewProps) {
+
     const theme = useTheme();
+
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };
 
-    return (
-        <div className="Login-Form-Container">
-            <div className="Login-Form">
-                <Box sx={{ bgcolor: 'background.paper'}}>
-                    <Tabs
-                        value={value}
-                        onChange={handleChange}
-                        indicatorColor="secondary"
-                        textColor="inherit"
-                        variant="fullWidth"
-                        aria-label="full width tabs example"
-                    >
-                        <Tab label="Sign Up" {...a11yProps(0)} />
-                        <Tab label="Sign In" {...a11yProps(1)} />
-                    </Tabs>
+    const navigate = useNavigate();
 
-                    <TabPanel value={value} index={0} dir={theme.direction}>
-                        <SignUpForm />
-                    </TabPanel>
-                    <TabPanel value={value} index={1} dir={theme.direction}>
-                        <Login />
-                    </TabPanel>
-                </Box>
-            </div>
-        </div>
+    function navigateToProfileMenu() {
+        navigate(`/profile/${props.user.userID}`);
+    }
+
+    return (
+        <>
+            {!props.user.firstName &&
+                <div className="Login-Form-Container">
+                    <div className="Login-Form">
+                        <Box sx={{ bgcolor: 'background.paper' }}>
+                            <Typography
+                                variant="h4"
+                                sx={{
+                                    textAlign: "center"
+                                }}
+                            >
+                                Login
+                            </Typography>
+                            <Tabs
+                                value={value}
+                                onChange={handleChange}
+                                indicatorColor="secondary"
+                                textColor="inherit"
+                                variant="fullWidth"
+                                aria-label="full width tabs example"
+                            >
+                                <Tab label="Sign Up" {...a11yProps(0)} />
+                                <Tab label="Sign In" {...a11yProps(1)} />
+                            </Tabs>
+
+                            <TabPanel value={value} index={0} dir={theme.direction}>
+                                <SignUpForm />
+                            </TabPanel>
+                            <TabPanel value={value} index={1} dir={theme.direction}>
+                                <Login setUser={props.setUser} />
+                            </TabPanel>
+                        </Box>
+                    </div>
+                </div>
+            }
+            {props.user.firstName &&
+                navigateToProfileMenu()
+            }
+        </>
     );
 }
 

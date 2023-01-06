@@ -39,10 +39,7 @@ function OverviewView(props: OverviewViewProps) {
                     </Button>
                 </Box>
             }
-            <TileBar title='Star Wars' query='Star Wars' isAdmin={props.isAdmin} isNew={props.isNew} />
-            <TileBar title='Marvel' query='Marvel' isAdmin={props.isAdmin} isNew={props.isNew} />
-            <TileBar title='Harry Potter' query='Harry Potter' isAdmin={props.isAdmin} isNew={props.isNew} />
-
+            <TileBar title='All Movies in this Cinema' isAdmin={props.isAdmin} isNew={props.isNew} />
         </div>
     );
 }

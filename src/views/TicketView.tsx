@@ -11,10 +11,14 @@ import { getIMDbIDFromURL, Movie } from "./MovieDetailsView";
 import { Show } from "../components/MovieDetailsView/ShowTiles";
 import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/system";
+import { fetchScreeningByID } from "../queries/fetchScreenings";
+import { fetchSpecificMovie } from "../queries/fetchMovieAPI";
 
 export interface Room {
-  roomName: string;
-  roomID: number;
+  name: string;
+  id: number;
+  hasThreeD: boolean;
+  hasDolbyAtmos: boolean;
   rows: Array<Row>;
 }
 
@@ -280,7 +284,7 @@ const data = [
       booked: false,
       selected: false,
       seatRowID: 4,
-    }, 
+    },
     {
       seatNumber: null,
       seatID: null,
@@ -291,9 +295,48 @@ const data = [
   ]),
 ];
 
+export const getShowAfterReload = async () => {
+  let url = window.location.href;
+
+  let aUrlParts = url.split("/")
+  let showID = aUrlParts[5]
+
+  const response = await fetchScreeningByID(showID).then(show => {
+    let currentShow: Show = {
+      movieID: show.movie.id,
+      movieName: show.movie.posterImage,
+      moviePoster: show.movie.title,
+      dateTime: new Date(show.startDateTime),
+      room: show.room.name,
+      roomID: show.room.id,
+      showID: show.id,
+      additionalInfo: {
+        hasDolbyAtmos: show.room.hasDolbyAtmos,
+        isThreeD: show.movie.isThreeD
+      }
+    }
+    return currentShow
+  })
+  return response;
+}
+
+export const getMovieAfterReload = async () => {
+  let url = window.location.href;
+
+  let aUrlParts = url.split("/")
+  let movieID = aUrlParts[4]
+
+  const response = await fetchSpecificMovie(movieID).then(result => {
+    return result;
+  })
+  return response;
+}
+
 interface TicketViewProps {
   setOrder: React.Dispatch<React.SetStateAction<Order | undefined>>;
+  setSelectedMovie: React.Dispatch<React.SetStateAction<Movie | undefined>>;
   selectedMovie: Movie | undefined;
+  setSelectedShow: React.Dispatch<React.SetStateAction<Show | undefined>>;
   selectedShow: Show | undefined;
 }
 
@@ -304,9 +347,14 @@ function TicketView(props: TicketViewProps) {
 
   const [seats, setSeats] = useState<Array<Row>>(data);
 
-  const newData = seats;
+  const newData = data;
+
+  const setSelectedShow = props.setSelectedShow
+  const setSelectedMovie = props.setSelectedMovie
 
   React.useEffect(() => {
+    getShowAfterReload().then(result => setSelectedShow(result))
+    getMovieAfterReload().then(result => setSelectedMovie(result));
     newData.forEach((row) => {
       row.seats.forEach((seat) => {
         if (seat.selected) {
@@ -315,7 +363,7 @@ function TicketView(props: TicketViewProps) {
       });
     });
     setSeats(newData);
-  }, [newData]);
+  }, [newData, setSelectedShow, setSelectedMovie]);
 
   const navigate = useNavigate();
 
@@ -330,15 +378,9 @@ function TicketView(props: TicketViewProps) {
   }
 
   const rows = [
-    createFareData(
-      0,
-      "Adults",
-      10.0,
-      "People older than 16 and younger than 65 years old",
-      0
-    ),
-    createFareData(1, "Kids", 7.0, "Kids under 16 years old", 0),
-    createFareData(2, "Students", 8.0, "Students with a student ID", 0),
+    createFareData(0, "Adult", 10.0, "People older than 16 and younger than 65 years old", 0),
+    createFareData(1, "Kid", 7.0, "Kids under 16 years old", 0),
+    createFareData(2, "Student", 8.0, "Students with a student ID", 0),
     createFareData(3, "Pensioner", 9.0, "People older than 65", 0),
   ];
 
@@ -376,9 +418,9 @@ function TicketView(props: TicketViewProps) {
     let newOrder = {
       fares: fares,
       movieID: getIMDbIDFromURL(),
-      movie: props.selectedMovie?.Title,
+      movie: props.selectedMovie?.title,
       orderID: "1",
-      picture: props.selectedMovie?.Poster,
+      picture: props.selectedMovie?.posterImage,
       price: calculatePrice(),
       room: props.selectedShow?.room,
       seats: selectedSeats,
@@ -388,8 +430,7 @@ function TicketView(props: TicketViewProps) {
     props.setOrder(newOrder);
     if (props.selectedShow) {
       navigate(
-        `/orderDetails/${getIMDbIDFromURL()}/${props.selectedShow.showID}/${
-          newOrder.orderID
+        `/orderDetails/${getIMDbIDFromURL()}/${props.selectedShow.showID}/${newOrder.orderID
         }`
       );
     }
@@ -412,6 +453,23 @@ function TicketView(props: TicketViewProps) {
       });
   }
 
+  const [windowWidth, setWindowWidth] = React.useState(0)
+
+  React.useEffect(() => {
+
+    updateDimensions();
+
+    window.addEventListener("resize", updateDimensions);
+
+    return () =>
+      window.removeEventListener("resize", updateDimensions);
+  }, [])
+
+  const updateDimensions = () => {
+    const windowWidth = window.innerWidth
+    setWindowWidth(windowWidth)
+  }
+
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} sm={12} md={6.5} xl={6}>
@@ -428,33 +486,40 @@ function TicketView(props: TicketViewProps) {
               paddingLeft: theme.spacing,
             }}
           >
-            {props.selectedMovie?.Title}
+            {props.selectedMovie?.title}
           </Typography>
-          <Typography
-            align="center"
-            variant="body1"
-            sx={{
-              p: theme.spacing(1),
-              pt: {
-                xs: theme.spacing(1),
-                sm: theme.spacing(3),
-              },
-              paddingLeft: theme.spacing,
-            }}
-          >
-            Show on {props.selectedShow?.dateTime.toDateString()} <br />
-            {props.selectedShow?.dateTime.getHours()}:{props.selectedShow?.dateTime.getMinutes()}h in {props.selectedShow?.room}
-          </Typography>
+          {props.selectedShow?.dateTime &&
+            <Typography
+              align="center"
+              variant="body1"
+              sx={{
+                p: theme.spacing(1),
+                pt: {
+                  xs: theme.spacing(1),
+                  sm: theme.spacing(3),
+                },
+                paddingLeft: theme.spacing,
+              }}
+            >
+              Show on {props.selectedShow?.dateTime.toDateString()} <br />
+              {props.selectedShow?.dateTime.getHours()}:{props.selectedShow?.dateTime.getMinutes() === 0 ? "00" : props.selectedShow?.dateTime.getMinutes()}h in {props.selectedShow?.room}
+            </Typography>
+          }
         </Box>
-        {seats && <Seatplan data={seats} onSeatClick={onSeatClick} />}
+        {seats &&
+          <Seatplan
+            data={seats}
+            onSeatClick={onSeatClick}
+            windowWidth={windowWidth} />}
       </Grid>
       <Grid item xs={12} sm={12} md={5.5} xl={6}>
         <FareSelection
           totalAmountOfTickets={currentTicketAmmount}
           fares={fares}
           setFares={setFares}
+          windowWidth={windowWidth}
         />
-                <Box>
+        <Box>
           <Typography
             align="center"
             variant="h5"
@@ -474,6 +539,7 @@ function TicketView(props: TicketViewProps) {
           sx={{ width: "100%", marginY: "1rem" }}
           variant="contained"
           onClick={onButtonClick}
+          disabled={currentTicketAmmount > 0 ? false : true}
         >
           Continue
         </Button>

@@ -1,12 +1,12 @@
 import { Box, Divider, IconButton } from "@mui/material";
 import EventSeatIcon from "@mui/icons-material/EventSeat";
-import * as React from "react";
 import StairsOutlinedIcon from "@mui/icons-material/StairsOutlined";
 import { Row } from "../../views/PaymentDetailsView";
 
 interface SeatPlanprops {
-  data: Array<Row>,
-  onSeatClick: Function
+  data: Array<Row>;
+  onSeatClick: Function;
+  windowWidth: number;
 }
 
 function Seatplan(props: SeatPlanprops) {
@@ -23,16 +23,37 @@ function Seatplan(props: SeatPlanprops) {
     >
       <>
         {props.data.map((row) => (
-          <div style={{ width: "fit-content", margin: "auto" }}>
+          <div style={{ width: "fit-content", margin: "auto", alignItems: "center", justifyContent: "center" }}>
             {row.seats.map((seat) => (
               <>
                 {seat.seatID && seat.booked !== null && (
-                  <IconButton sx={{ width: { xs: "1.5rem", sm: "2.5rem", md: "2rem", xl: "3rem" } }} id={seat.seatID} onClick={(e) => props.onSeatClick(e)} color={seat.selected ? "primary" : "secondary"} disabled={seat.booked}>
+                  <IconButton
+                    sx={{
+                      width: {
+                        xs: `${(props.windowWidth / 260)}rem`,
+                        sm: `${(props.windowWidth / 260)}rem`,
+                        md: `${(props.windowWidth / 520)}rem`,
+                        xl: `${(props.windowWidth / 520)}rem`
+                      }
+                    }}
+                    id={seat.seatID} onClick={(e) => props.onSeatClick(e)} color={seat.selected ? "primary" : "secondary"}
+                    disabled={seat.booked}
+                  >
                     <EventSeatIcon id={seat.seatID} />
                   </IconButton>
                 )}
                 {seat.seatID === null && (
-                  <IconButton disabled sx={{ width: { xs: "1.5rem", sm: "1.5rem", md: "2rem", xl: "3rem" } }}>
+                  <IconButton
+                    disabled
+                    sx={{
+                      width: {
+                        xs: `${(props.windowWidth / 260)}rem`,
+                        sm: `${(props.windowWidth / 260)}rem`,
+                        md: `${(props.windowWidth / 520)}rem`,
+                        xl: `${(props.windowWidth / 520)}rem`
+                      }
+                    }}
+                  >
                     <StairsOutlinedIcon />
                   </IconButton>
                 )}
@@ -43,7 +64,7 @@ function Seatplan(props: SeatPlanprops) {
         ))}
         <Divider sx={{ marginBottom: "2rem", marginTop: "1rem" }}>Screen</Divider>
       </>
-    </Box>
+    </Box >
   );
 }
 
