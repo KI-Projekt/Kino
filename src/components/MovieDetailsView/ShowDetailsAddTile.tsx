@@ -64,7 +64,7 @@ function ShowDetailsAddTile(props: ShowDetailsAddTileProps) {
                     }));
                 }
                 setAlertOpen(true);
-                props.getShowsByMovie()
+                props.getShowsByMovie();
             })
         }
     }

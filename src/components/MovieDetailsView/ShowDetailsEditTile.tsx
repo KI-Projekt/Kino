@@ -8,12 +8,14 @@ import UpdateIcon from '@mui/icons-material/Update';
 import { deleteShow, updateShow } from "../../queries/changeScreenings";
 import { Movie } from "../../views/MovieDetailsView";
 import React from "react";
+import Alerts from "../Alerts";
 
 interface ShowDetailsEditTileProps {
     showData: Array<ShowDate>;
     setShowData: Function;
     roomData: Array<Room>;
     selectedMovie: Movie | undefined;
+    getShowsByMovie: Function;
 }
 
 function ShowDetailsEditTiles(props: ShowDetailsEditTileProps) {
@@ -23,7 +25,9 @@ function ShowDetailsEditTiles(props: ShowDetailsEditTileProps) {
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
     const [dialogOpen, setDialogOpen] = React.useState(false);
     const [showID, setShowID] = React.useState<String | undefined>(undefined);
-
+    const [alertOpen, setAlertOpen] = React.useState(false);
+    const [isError, setIsError] = React.useState(false);
+    const [alertText, setAlertText] = React.useState("Show was deleted");
 
     const handleChangeDateTime = (newValue: Dayjs | null, changedShow: Show) => {
         const newShowData = props.showData.map((currentShowDate) => {
@@ -72,8 +76,21 @@ function ShowDetailsEditTiles(props: ShowDetailsEditTileProps) {
 
     const onDeleteClick = () => {
         if (showID) {
-            deleteShow(showID);
-            setDialogOpen(false);
+            deleteShow(showID).then(result => {
+                if (result.error) {
+                    setAlertText(result.error);
+                    setIsError(true);
+                } else if (result.errorMessage) {
+                    setAlertText(result.errorMessage);
+                    setIsError(true);
+                } else {
+                    setAlertText("Show was deleted successfully!");
+                    setIsError(false);
+                }
+                setAlertOpen(true);;
+                setDialogOpen(false);
+                props.getShowsByMovie()
+            })
         }
     }
 
@@ -184,6 +201,7 @@ function ShowDetailsEditTiles(props: ShowDetailsEditTileProps) {
                                 </Button>
                             </DialogActions>
                         </Dialog>
+                        <Alerts alertOpen={alertOpen} alertText={alertText} isError={isError} setAlertOpen={setAlertOpen} />
                     </>
                 ))
             ))
@@ -191,5 +209,6 @@ function ShowDetailsEditTiles(props: ShowDetailsEditTileProps) {
         </>
     );
 }
+
 
 export default ShowDetailsEditTiles;
