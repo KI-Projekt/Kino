@@ -5,7 +5,6 @@ import MovieShowTiles from '../components/ShowOverviewView/MovieShowTiles';
 import { fetchAllScreenings } from "../queries/fetchScreenings";
 import { sortShowsToShowDate } from './MovieDetailsView';
 
-
 interface ShowOverviewViewProps {
     isAdmin: boolean;
 }
@@ -21,7 +20,6 @@ function ShowOverviewView(props: ShowOverviewViewProps) {
             setAllShows(sortShowsToShowDate(result));
         })
     }, [])
-
 
     const onMovieShowTileClick = (currentShow: Show) => {
         if (props.isAdmin) {

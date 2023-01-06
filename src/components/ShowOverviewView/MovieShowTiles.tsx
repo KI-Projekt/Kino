@@ -71,7 +71,6 @@ function MovieShowTiles(props: MovieShowTilesProps) {
 
     const theme = useTheme();
 
-
     return (
         <Box sx={{ p: theme.spacing(3), flexGrow: 1 }}>
             <Grid container spacing={3}>
@@ -122,8 +121,7 @@ function MovieShowTiles(props: MovieShowTilesProps) {
                             <Divider sx={{ borderBottomWidth: "0.2rem" }} />
                         </>
                     </Grid>
-                )
-                }
+                )}
             </Grid >
         </Box >
 

@@ -22,7 +22,6 @@ function UserMovieDetailsView(props: MovieDetailsViewUserProp) {
 
     const theme = useTheme();
 
-
     const setSelectedShow = props.setSelectedShow
     const setSelectedMovie = props.setSelectedMovie
 
@@ -42,7 +41,6 @@ function UserMovieDetailsView(props: MovieDetailsViewUserProp) {
     }, [setSelectedShow, setSelectedMovie]);
 
     const navigate = useNavigate();
-
 
     return (
         <Box sx={{ flexGrow: 1 }}>
