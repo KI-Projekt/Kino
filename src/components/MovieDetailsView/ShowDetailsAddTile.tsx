@@ -37,15 +37,12 @@ function ShowDetailsAddTile(props: ShowDetailsAddTileProps) {
     );
     function handleAddNewShow() {
         if (addNewShow.dateTime && props.selectedMovie.runtime) {
-            const TRAILER_ADD = 15;
             let startTime = dateChanged ? addNewShow.dateTime : new Date(addNewShow.dateTime?.setHours(addNewShow.dateTime?.getHours() + 1))
-            let endTime = new Date(addNewShow.dateTime?.setMinutes(addNewShow.dateTime?.getMinutes() + parseInt(props.selectedMovie.runtime) + TRAILER_ADD))
 
             let payload = {
                 movieId: props.selectedMovie.id,
                 roomId: addNewShow.roomID,
                 startDateTime: startTime,
-                endDateTime: endTime,
             }
             setDateChanged(true)
             postNewShow(payload).then(result => {
