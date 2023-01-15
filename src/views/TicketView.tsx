@@ -11,7 +11,7 @@ import { getIMDbIDFromURL, Movie } from "./MovieDetailsView";
 import { Show } from "../components/MovieDetailsView/ShowTiles";
 import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/system";
-import { fetchScreeningByID } from "../queries/fetchScreenings";
+import { fetchScreeningByID, fetchSeatplanByScreening } from "../queries/fetchScreenings";
 import { fetchSpecificMovie } from "../queries/fetchMovieAPI";
 
 export interface Room {
@@ -85,7 +85,7 @@ function TicketView(props: TicketViewProps) {
 
   const [currentTicketAmmount, setCurrentTicketAmount] = useState(0);
 
-  const [seats, setSeats] = useState< Array<Row> | undefined >(undefined);
+  const [seats, setSeats] = useState<Array<Row> | undefined>(undefined);
 
   const setSelectedShow = props.setSelectedShow
   const setSelectedMovie = props.setSelectedMovie
@@ -93,7 +93,35 @@ function TicketView(props: TicketViewProps) {
   React.useEffect(() => {
     getShowAfterReload().then(result => setSelectedShow(result))
     getMovieAfterReload().then(result => setSelectedMovie(result));
+    let url = window.location.href;
+
+    let aUrlParts = url.split("/")
+    let showID = aUrlParts[5]
+    fetchSeatplanByScreening(showID).then(result => initializeSeatingPlan(result.plan))
+
+    //Responsibility for Seatplan
+    updateDimensions();
+    window.addEventListener("resize", updateDimensions);
+    return () =>
+      window.removeEventListener("resize", updateDimensions);
   }, [setSelectedShow, setSelectedMovie]);
+
+  function initializeSeatingPlan(room: any) {
+    const newRoom = room.map((row: any) => {
+      const newRow = row.seats.map((seat: any) => {
+        return {
+          ...seat,
+          selected: false,
+        }
+      });
+      return {
+        ...row,
+        seats: newRow,
+      }
+    });
+    console.log(newRoom);
+    setSeats(newRoom);
+  }
 
   const navigate = useNavigate();
 
@@ -159,10 +187,10 @@ function TicketView(props: TicketViewProps) {
     props.setOrder(newOrder);
     if (props.selectedShow) {
       navigate(
-        `/orderDetails/${getIMDbIDFromURL()}/${props.selectedShow.showID}/${newOrder.orderID
-        }`
+        `/orderDetails/${getIMDbIDFromURL()}/${props.selectedShow.showID}/${newOrder.orderID}`
       );
     }
+    console.log("###",props.selectedShow);
   };
 
   function onSeatClick(e: React.ChangeEvent<HTMLButtonElement>) {
@@ -183,16 +211,6 @@ function TicketView(props: TicketViewProps) {
   }
 
   const [windowWidth, setWindowWidth] = React.useState(0)
-
-  React.useEffect(() => {
-
-    updateDimensions();
-
-    window.addEventListener("resize", updateDimensions);
-
-    return () =>
-      window.removeEventListener("resize", updateDimensions);
-  }, [])
 
   const updateDimensions = () => {
     const windowWidth = window.innerWidth

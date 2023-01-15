@@ -26,3 +26,12 @@ export const fetchAllScreeningsByMovie = async (movieID: String) => {
 
     return responseJson;
 };
+
+export const fetchSeatplanByScreening = async (screeningID: String) => {
+    const url = PATH + `api/screenings/${screeningID}/seatingplan`;
+
+    const response = await fetch(url);
+    const responseJson = await response.json();
+
+    return responseJson;
+};
