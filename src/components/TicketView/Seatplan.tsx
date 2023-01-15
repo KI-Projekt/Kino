@@ -26,7 +26,7 @@ function Seatplan(props: SeatPlanprops) {
           <div style={{ width: "fit-content", margin: "auto", alignItems: "center", justifyContent: "center" }}>
             {row.seats.map((seat) => (
               <>
-                {seat.seatID && seat.booked !== null && (
+                {seat.seat.id && seat.reserved !== null && (
                   <IconButton
                     sx={{
                       width: {
@@ -36,13 +36,13 @@ function Seatplan(props: SeatPlanprops) {
                         xl: `${(props.windowWidth / 520)}rem`
                       }
                     }}
-                    id={seat.seatID} onClick={(e) => props.onSeatClick(e)} color={seat.selected ? "primary" : "secondary"}
-                    disabled={seat.booked}
+                    id={seat.seat.id.toString()} onClick={(e) => props.onSeatClick(e)} color={seat.selected ? "primary" : "secondary"}
+                    disabled={seat.reserved}
                   >
-                    <EventSeatIcon id={seat.seatID} />
+                    <EventSeatIcon id={seat.seat.id.toString()} />
                   </IconButton>
                 )}
-                {seat.seatID === null && (
+                {seat.seat.id === null && (
                   <IconButton
                     disabled
                     sx={{

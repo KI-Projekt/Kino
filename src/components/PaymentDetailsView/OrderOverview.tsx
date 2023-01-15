@@ -86,7 +86,7 @@ function OrderOverview(prop: OrderOverviewProps) {
                                 marginRight: "0.1rem",
                               }}
                             >
-                              {seatItem.seatNumber}
+                              {seatItem.seat.column}
                             </Typography>
                           ))}
                         </div>

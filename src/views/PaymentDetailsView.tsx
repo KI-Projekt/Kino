@@ -22,17 +22,21 @@ import { getMovieAfterReload, getShowAfterReload } from "./TicketView";
 import { useNavigate } from "react-router-dom";
 
 export interface Seat {
-  seatID: string | null;
-  seatNumber: number | null;
-  booked: boolean | null;
-  selected: boolean | null;
-  seatRowID: number;
+  id: number | null;
+  category: String;
+  row: number;
+  column: number;
+}
+
+export interface ShowSeat {
+  seat: Seat;
+  reserved: boolean;
+  selected: boolean;
 }
 
 export interface Row {
-  seatRowID: number;
   rowDescription: String;
-  seats: Array<Seat>;
+  seats: Array<ShowSeat>;
 }
 
 export interface Order {
