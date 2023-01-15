@@ -35,8 +35,8 @@ function MovieFacts(props: MovieFactsProps) {
                     Director: {props.selectedMovie.director} <br />
                     Cast: {props.selectedMovie.actors} <br />
                     Genres: {props.selectedMovie.genre} <br />
-                    {/*                     Age Rating: {props.selectedMovie.rated} <br />
- */}                </Typography>
+                    Age Rating: {props.selectedMovie.rated} <br />
+                </Typography>
             </CardContent>
         </Card>
     );

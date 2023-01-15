@@ -81,16 +81,16 @@ export const sortShowsToShowDate = (input: Array<any>) => {
     input.forEach((show: any) => {
         let isNew = true;
         let newShow: Show = {
-            movieID: show.movie.id,
-            movieName: show.movie.title,
-            moviePoster: show.movie.posterImage,
+            movieID: show.movieId,
+            movieName: "",
+            moviePoster: "",
             dateTime: new Date(show.startDateTime),
             room: show.room.name,
             roomID: show.room.id,
             showID: show.id,
             additionalInfo: {
                 hasDolbyAtmos: show.room.hasDolbyAtmos,
-                isThreeD: show.movie.isThreeD
+                isThreeD: show.room.hasThreeD
             }
         }
         showDate.forEach(showDate => {
@@ -107,7 +107,7 @@ export const sortShowsToShowDate = (input: Array<any>) => {
         }
     }
     );
-    return showDate
+    return showDate;
 }
 
 
@@ -133,7 +133,7 @@ function MovieDetailsView(props: MovieDetailsViewProps) {
     }
     useEffect(() => {
         if (!props.isNew) {
-            getShowsByMovie()
+            getShowsByMovie();
         }
 
         let fetchedMovie: any;

@@ -18,7 +18,7 @@ interface ShowDetailsProps {
 
 function ShowDetails(props: ShowDetailsProps) {
 
-    const [roomData, setRoomData] = useState<Array<Room> | undefined>(undefined)
+    const [roomData, setRoomData] = useState<Array<Room>>([])
 
     useEffect(() => {
         fetchAllRooms().then(result => setRoomData(result))
@@ -30,14 +30,12 @@ function ShowDetails(props: ShowDetailsProps) {
         <>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Box sx={{ p: theme.spacing(1) }}>
-                    {roomData &&
                         <>
                             {props.showData &&
-                                <ShowDetailsEditTiles roomData={roomData} showData={props.showData} setShowData={props.setShowData} selectedMovie={props.selectedMovie} />
+                                <ShowDetailsEditTiles roomData={roomData} showData={props.showData} getShowsByMovie={props.getShowsByMovie} setShowData={props.setShowData} selectedMovie={props.selectedMovie} />
                             }
                             <ShowDetailsAddTile roomData={roomData} selectedMovie={props.selectedMovie} getShowsByMovie={props.getShowsByMovie} />
                         </>
-                    }
                 </Box>
             </LocalizationProvider>
         </>
