@@ -82,8 +82,8 @@ export const sortShowsToShowDate = (input: Array<any>) => {
         let isNew = true;
         let newShow: Show = {
             movieID: show.movieId,
-            movieName: "",
-            moviePoster: "",
+            movieName: show.movie.name,
+            moviePoster: show.movie.posterImage,
             dateTime: new Date(show.startDateTime),
             room: show.room.name,
             roomID: show.room.id,

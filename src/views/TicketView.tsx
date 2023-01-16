@@ -22,19 +22,6 @@ export interface Room {
   rows: Array<Row>;
 }
 
-function createData(
-  seatRowID: number,
-  rowDescription: String,
-  seats: Array<Seat>
-) {
-  return {
-    seatRowID,
-    rowDescription,
-    seats,
-  };
-}
-
-
 export const getShowAfterReload = async () => {
   let url = window.location.href;
 
@@ -107,19 +94,18 @@ function TicketView(props: TicketViewProps) {
   }, [setSelectedShow, setSelectedMovie]);
 
   function initializeSeatingPlan(room: any) {
-    const newRoom = room.map((row: any) => {
-      const newRow = row.seats.map((seat: any) => {
+    const newRoom = room.map((currentRow: any) => {
+      const newRow = currentRow.row.map((seat: any) => {
         return {
           ...seat,
           selected: false,
         }
       });
       return {
-        ...row,
+        ...currentRow,
         seats: newRow,
       }
     });
-    console.log(newRoom);
     setSeats(newRoom);
   }
 
@@ -190,7 +176,7 @@ function TicketView(props: TicketViewProps) {
         `/orderDetails/${getIMDbIDFromURL()}/${props.selectedShow.showID}/${newOrder.orderID}`
       );
     }
-    console.log("###",props.selectedShow);
+    console.log("###", props.selectedShow);
   };
 
   function onSeatClick(e: React.ChangeEvent<HTMLButtonElement>) {

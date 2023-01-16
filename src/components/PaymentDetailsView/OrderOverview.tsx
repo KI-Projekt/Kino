@@ -66,7 +66,7 @@ function OrderOverview(prop: OrderOverviewProps) {
                     return (
                       <div key={index}>
                         <Typography variant="body1" color="text.secondary">
-                          Row: {seatRow.rowDescription}
+                          {seatRow.rowDescription}
                         </Typography>
                         <div className="row">
                           <Typography

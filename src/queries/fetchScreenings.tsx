@@ -19,7 +19,7 @@ export const fetchScreeningByID = async (showID: String) => {
 };
 
 export const fetchAllScreeningsByMovie = async (movieID: String) => {
-    const url = PATH + `api/movies/${movieID}/screenings`;
+    const url = PATH + `api/screenings?movieId=${movieID}`;
 
     const response = await fetch(url);
     const responseJson = await response.json();
