@@ -5,7 +5,7 @@ import FareSelection, {
 } from "../components/TicketView/FareSelection";
 import Seatplan from "../components/TicketView/Seatplan";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Order, Row, Seat } from "../views/PaymentDetailsView";
+import { Order, Row } from "../views/PaymentDetailsView";
 import { Button, Grid, Typography, useTheme } from "@mui/material";
 import { getIMDbIDFromURL, Movie } from "./MovieDetailsView";
 import { Show } from "../components/MovieDetailsView/ShowTiles";
@@ -13,6 +13,10 @@ import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/system";
 import { fetchScreeningByID, fetchSeatplanByScreening } from "../queries/fetchScreenings";
 import { fetchSpecificMovie } from "../queries/fetchMovieAPI";
+import { User } from "../components/PaymentDetailsView/PersonalDataGuestUser";
+import { deleteReservation, postNewReservation } from "../queries/changeReservations";
+import { fetchOrderByID } from "../queries/fetchOrder";
+import { updateOrderFares } from "../queries/changeOrders";
 
 export interface Room {
   id: number;
@@ -61,10 +65,12 @@ export const getMovieAfterReload = async () => {
 
 interface TicketViewProps {
   setOrder: React.Dispatch<React.SetStateAction<Order | undefined>>;
+  order: Order | undefined;
   setSelectedMovie: React.Dispatch<React.SetStateAction<Movie | undefined>>;
   selectedMovie: Movie | undefined;
   setSelectedShow: React.Dispatch<React.SetStateAction<Show | undefined>>;
   selectedShow: Show | undefined;
+  user: User | undefined;
 }
 
 function TicketView(props: TicketViewProps) {
@@ -158,25 +164,27 @@ function TicketView(props: TicketViewProps) {
 
   const onButtonClick = () => {
     let selectedSeats = calculateSelectedSeats();
-    let newOrder = {
-      fares: fares,
-      movieID: getIMDbIDFromURL(),
-      movie: props.selectedMovie?.title,
-      orderID: "1",
-      picture: props.selectedMovie?.posterImage,
-      price: calculatePrice(),
-      room: props.selectedShow?.room,
-      seats: selectedSeats,
-      showDate: props.selectedShow?.dateTime,
-      showID: props.selectedShow?.showID,
-    };
-    props.setOrder(newOrder);
-    if (props.selectedShow) {
+
+    let fareQuery = {
+      kidsCount: fares[1].amountOfTickets,
+      studentCounts: fares[2].amountOfTickets,
+      adultsCount: fares[0].amountOfTickets,
+      pensionerCount: fares[3].amountOfTickets
+    }
+    if (props.selectedShow && props.order?.id) {
+      updateOrderFares(fareQuery, props.order.id).then(result => {
+        let order = {
+          ...props.order,
+          seats: selectedSeats,
+          fares: fares,
+          price: result.total
+        }
+        props.setOrder(order);
+      })
       navigate(
-        `/orderDetails/${getIMDbIDFromURL()}/${props.selectedShow.showID}/${newOrder.orderID}`
+        `/orderDetails/${getIMDbIDFromURL()}/${props.selectedShow.showID}/${props.order.id}`
       );
     }
-    console.log("###", props.selectedShow);
   };
 
   function onSeatClick(e: React.ChangeEvent<HTMLButtonElement>) {
@@ -185,8 +193,23 @@ function TicketView(props: TicketViewProps) {
         row.seats.forEach((seat) => {
           if (seat.seat.id === parseInt(e.currentTarget.id)) {
             if (seat.selected === false) {
+              let reservation = {
+                userId: props.user?.userID,
+                screeningId: props.selectedShow?.showID,
+                seatId: seat.seat.id
+              }
+              postNewReservation(reservation).then((result) => {
+                fetchOrderByID(result.data.orderId).then((order) => {
+                  props.setOrder(order);
+                })
+              })
               setCurrentTicketAmount(currentTicketAmmount + 1);
             } else {
+              props.order?.reservations?.map(reservation => {
+                if (reservation.seat.id === parseInt(e.currentTarget.id)) {
+                  deleteReservation(reservation.id);
+                }
+              })
               setCurrentTicketAmount(currentTicketAmmount - 1);
             }
             seat.selected = !seat.selected;

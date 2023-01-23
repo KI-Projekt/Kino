@@ -24,7 +24,7 @@ function ShowDetailsEditTiles(props: ShowDetailsEditTileProps) {
 
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
     const [dialogOpen, setDialogOpen] = React.useState(false);
-    const [showID, setShowID] = React.useState<String | undefined>(undefined);
+    const [showID, setShowID] = React.useState<number | undefined>(undefined);
     const [alertOpen, setAlertOpen] = React.useState(false);
     const [isError, setIsError] = React.useState(false);
     const [alertText, setAlertText] = React.useState("Show was deleted");
@@ -173,8 +173,8 @@ function ShowDetailsEditTiles(props: ShowDetailsEditTileProps) {
                                 <Box
                                     sx={{ flexDirection: "row", flexGrow: 1 }}
                                 >
-                                    <Button startIcon={<DeleteForeverIcon />} id={currentShow.showID} onClick={() => { setDialogOpen(true); setShowID(currentShow.showID) }} />
-                                    <Button startIcon={<UpdateIcon />} id={currentShow.showID} onClick={onUpdateClick} disabled />
+                                    <Button startIcon={<DeleteForeverIcon />} id={currentShow.showID?.toString()} onClick={() => { setDialogOpen(true); setShowID(currentShow.showID) }} />
+                                    <Button startIcon={<UpdateIcon />} id={currentShow.showID?.toString()} onClick={onUpdateClick} disabled />
                                 </Box>
                             </Grid>
                         </Grid>

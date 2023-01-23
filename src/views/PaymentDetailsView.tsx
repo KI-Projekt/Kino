@@ -18,8 +18,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { User } from "../components/PaymentDetailsView/PersonalDataGuestUser";
 import { Movie } from "./MovieDetailsView";
 import { Show } from "../components/MovieDetailsView/ShowTiles";
-import { getMovieAfterReload, getShowAfterReload } from "./TicketView";
+import { getMovieAfterReload, getShowAfterReload, Room } from "./TicketView";
 import { useNavigate } from "react-router-dom";
+import { fetchOrderByID } from "../queries/fetchOrder";
+import { payOrder } from "../queries/changeOrders";
 
 export interface Seat {
   id: number | null;
@@ -39,11 +41,33 @@ export interface Row {
   seats: Array<ShowSeat>;
 }
 
+export interface Reservation {
+  id: number;
+  screeningId: number;
+  orderId: number;
+  seat: Seat;
+  category: string;
+  expiresAt: Date;
+}
+
+export interface Ticket {
+  id: number;
+  orderId: number;
+  screening: Show;
+  seat: Seat;
+  category: string
+}
+
 export interface Order {
-  orderID: string;
+  id?: number | undefined;
+  user?: User | undefined;
+  orderStatus?: string | undefined;
+  total?: | undefined;
+  reservations?: Array<Reservation> | undefined;
+  tickets?: Array<Ticket> | undefined;
   seats: Array<Row> | undefined;
   fares: Array<fareSelection> | undefined;
-  price: number | undefined;
+  price?: number | undefined;
 }
 
 interface PaymentDetailsViewProps {
@@ -76,25 +100,22 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
   const setOrder = props.setOrder;
 
   React.useEffect(() => {
-    if (props.order === undefined) {
-      let url = window.location.href;
-
-      let aUrlParts = url.split("/")
-      let initialOrder: Order = {
-        orderID: aUrlParts[6],
-        price: undefined,
-        fares: undefined,
-        seats: undefined
-      }
-      setOrder(initialOrder)
-    }
     getShowAfterReload().then(result => setSelectedShow(result))
     getMovieAfterReload().then(result => setSelectedMovie(result));
-  }, [setSelectedShow, setSelectedMovie, setOrder, props.order]);
+    let url = window.location.href;
+
+    let aUrlParts = url.split("/")
+    let orderID = aUrlParts[6]
+    //fetchOrderByID(parseInt(orderID)).then(result => setOrder(result))
+  }, [setSelectedShow, setSelectedMovie, setOrder]);
   const navigate = useNavigate();
 
   function handleOnClick() {
-    navigate(`/order/${props.selectedMovie?.id}/${props.selectedShow?.showID}/${props.order?.orderID}`);
+    if (props.order?.id)
+      payOrder(props.order?.id).then(result => {
+        console.log(result);
+      })
+    navigate(`/order/${props.selectedMovie?.id}/${props.selectedShow?.showID}/${props.order?.id}`);
   }
 
   return (
@@ -103,7 +124,7 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
         <Grid item xs={12} sm={12} md={6} xl={6}>
           {props.selectedMovie && props.selectedShow && props.order && (
             <OrderOverview
-              orderID={props.order.orderID}
+              orderID={props.order.id}
               movieID={props.selectedMovie?.id}
               showID={props.selectedShow?.showID}
               movie={props.selectedMovie?.title}

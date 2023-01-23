@@ -6,7 +6,7 @@ export interface Show {
     movieID: String | undefined;
     moviePoster: String | undefined;
     movieName: String | undefined;
-    showID: string | undefined;
+    showID: number | undefined;
     roomID: string | undefined;
     room: string | undefined;
     dateTime: Date | null;

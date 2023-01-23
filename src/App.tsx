@@ -8,7 +8,7 @@ import GettingHereView from "./views/GettingHereView";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header, { drawerWidth } from "./components/Header/Header";
 import OverviewView from "./views/OverviewView";
-import { Box, Container, createTheme, FormControlLabel , styled, Switch , ThemeProvider, Toolbar, } from "@mui/material";
+import { Box, Container, createTheme, FormControlLabel, styled, Switch, ThemeProvider, Toolbar, } from "@mui/material";
 import type { } from '@mui/x-date-pickers/themeAugmentation';
 import OpeningHoursView from "./views/OpeningHoursView";
 import TicketPricesView from "./views/TicketPricesView";
@@ -133,16 +133,16 @@ function App() {
   }
 
   const [user, setUser] = React.useState<User>(
-    createUserData(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)
+    createUserData(1, undefined, undefined, undefined, undefined, undefined, undefined, undefined)
   )
 
-    const handleChangeAdminMode = (
-      event: React.ChangeEvent<HTMLInputElement>
-    ) => {
-      setAdminProps({
-        isAdmin: event.target.checked,
-      });
-    };
+  const handleChangeAdminMode = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setAdminProps({
+      isAdmin: event.target.checked,
+    });
+  };
 
   const [isNew, setIsNew] = React.useState<boolean>(false);
 
@@ -183,7 +183,10 @@ function App() {
                       setSelectedShow={setSelectedShow}
                       selectedMovie={selectedMovie}
                       selectedShow={selectedShow}
-                      setOrder={setOrder} />}
+                      setOrder={setOrder}
+                      order={order}
+                      user={user}
+                    />}
                   />
                   <Route
                     path="/movieDetails/:imdbID/:showID"
