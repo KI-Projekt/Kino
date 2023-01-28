@@ -1,9 +1,9 @@
 import { Grid, Typography, Divider, useTheme, Alert } from "@mui/material";
 import { Box } from "@mui/system";
-import ShowTiles, { Show, ShowDate } from "./ShowTiles";
-import { Movie } from "../../views/MovieDetailsView";
+import ShowTiles from "./ShowTiles";
 import MovieFacts from "./MovieFacts";
 import MoviePlot from "./MoviePlot";
+import { Movie, Show, ShowDate } from "../../interfaces/Interfaces";
 
 interface MovieDetailsViewUserProp {
     selectedMovie: Movie,

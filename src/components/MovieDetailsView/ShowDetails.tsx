@@ -1,13 +1,11 @@
 import { Box, useTheme } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { ShowDate } from "./ShowTiles";
-import { Movie } from "../../views/MovieDetailsView";
 import ShowDetailsEditTiles from "./ShowDetailsEditTile";
 import ShowDetailsAddTile from "./ShowDetailsAddTile";
 import { useEffect, useState } from "react";
-import { Room } from "../../views/TicketView";
 import { fetchAllRooms } from "../../queries/fetchRoomAPI";
+import { Movie, Room, ShowDate } from "../../interfaces/Interfaces";
 
 interface ShowDetailsProps {
     showData: Array<ShowDate> | undefined,

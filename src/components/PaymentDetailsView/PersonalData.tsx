@@ -1,8 +1,9 @@
 import { Box, Typography, Tab, Tabs, useTheme } from "@mui/material";
 import React from "react"
+import { User } from "../../interfaces/Interfaces";
 import Login from '../Login/LoginForm'
 import SignUpForm from "../Login/SignUpForm";
-import PersonalDataGuestUser, { User } from "./PersonalDataGuestUser";
+import PersonalDataGuestUser from "./PersonalDataGuestUser";
 import PersonalDataUserLoggedIn from "./PersonalDataUserLoggedIn";
 
 export interface PersonalDataProps {

@@ -1,30 +1,19 @@
 import * as React from "react";
 import { useState } from "react";
-import FareSelection, {
-  fareSelection,
-} from "../components/TicketView/FareSelection";
+import FareSelection from "../components/TicketView/FareSelection";
 import Seatplan from "../components/TicketView/Seatplan";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Order, Row } from "../views/PaymentDetailsView";
 import { Button, Grid, Typography, useTheme } from "@mui/material";
-import { getIMDbIDFromURL, Movie } from "./MovieDetailsView";
-import { Show } from "../components/MovieDetailsView/ShowTiles";
+import { getIMDbIDFromURL } from "./MovieDetailsView";
 import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/system";
-import { fetchScreeningByID, fetchSeatplanByScreening } from "../queries/fetchScreenings";
+import { fetchScreeningByID } from "../queries/fetchScreenings";
 import { fetchSpecificMovie } from "../queries/fetchMovieAPI";
-import { User } from "../components/PaymentDetailsView/PersonalDataGuestUser";
 import { deleteReservation, postNewReservation } from "../queries/changeReservations";
 import { fetchOrderByID } from "../queries/fetchOrder";
 import { updateOrderFares } from "../queries/changeOrders";
+import { fareSelection, Movie, Order, Row, Show, User } from "../interfaces/Interfaces";
 
-export interface Room {
-  id: number;
-  name: string;
-  hasThreeD: boolean;
-  hasDolbyAtmos: boolean;
-  rows: Array<Row>;
-}
 
 export const getShowAfterReload = async () => {
   let url = window.location.href;
@@ -44,7 +33,8 @@ export const getShowAfterReload = async () => {
       additionalInfo: {
         hasDolbyAtmos: show.room.hasDolbyAtmos,
         isThreeD: show.movie.isThreeD
-      }
+      },
+      seatingPlan: show.seatingPlan
     }
     return currentShow
   })
@@ -84,13 +74,11 @@ function TicketView(props: TicketViewProps) {
   const setSelectedMovie = props.setSelectedMovie
 
   React.useEffect(() => {
-    getShowAfterReload().then(result => setSelectedShow(result))
-    getMovieAfterReload().then(result => setSelectedMovie(result));
-    let url = window.location.href;
-
-    let aUrlParts = url.split("/")
-    let showID = aUrlParts[5]
-    fetchSeatplanByScreening(showID).then(result => initializeSeatingPlan(result.plan))
+    getShowAfterReload().then(result => {
+      setSelectedShow(result)
+      initializeSeatingPlan(result.seatingPlan);
+    });
+    getMovieAfterReload().then(result =>  setSelectedMovie(result));
 
     //Responsibility for Seatplan
     updateDimensions();
@@ -193,21 +181,23 @@ function TicketView(props: TicketViewProps) {
         row.seats.forEach((seat) => {
           if (seat.seat.id === parseInt(e.currentTarget.id)) {
             if (seat.selected === false) {
-              let reservation = {
-                userId: props.user?.userID,
+              let reservation: any = {
                 screeningId: props.selectedShow?.showID,
                 seatId: seat.seat.id
               }
+              if (props.user?.userID) {
+                reservation.userId = props.user?.userID;
+              } 
               postNewReservation(reservation).then((result) => {
-                fetchOrderByID(result.data.orderId).then((order) => {
+                fetchOrderByID(result.data.id).then((order) => {
                   props.setOrder(order);
                 })
               })
               setCurrentTicketAmount(currentTicketAmmount + 1);
             } else {
-              props.order?.reservations?.map(reservation => {
-                if (reservation.seat.id === parseInt(e.currentTarget.id)) {
-                  deleteReservation(reservation.id);
+              props.order?.tickets?.forEach(ticket => {
+                if (ticket.seat.id === parseInt(e.currentTarget.id)) {
+                  deleteReservation(ticket.id);
                 }
               })
               setCurrentTicketAmount(currentTicketAmmount - 1);

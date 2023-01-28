@@ -3,8 +3,8 @@ import '../styles/Login.css';
 import Login from "../components/Login/LoginForm";
 import { Box, Tab, Tabs, Typography, useTheme } from "@mui/material";
 import SignUpForm from "../components/Login/SignUpForm";
-import { User } from "../components/PaymentDetailsView/PersonalDataGuestUser";
 import { useNavigate } from "react-router";
+import { User } from "../interfaces/Interfaces";
 
 interface TabPanelProps {
     children?: React.ReactNode;

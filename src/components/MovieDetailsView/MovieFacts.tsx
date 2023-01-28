@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardMedia, Typography, useTheme } from '@mui/material';
 import * as React from 'react';
-import { Movie } from '../../views/MovieDetailsView';
+import { Movie } from '../../interfaces/Interfaces';
 
 interface MovieFactsProps {
     selectedMovie: Movie,

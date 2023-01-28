@@ -1,14 +1,12 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography, useMediaQuery, useTheme } from "@mui/material";
-import { Show, ShowDate } from "./ShowTiles";
 import { DateTimePicker } from "@mui/x-date-pickers";
-import { Room } from "../../views/TicketView";
 import { Dayjs } from "dayjs";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import UpdateIcon from '@mui/icons-material/Update';
 import { deleteShow, updateShow } from "../../queries/changeScreenings";
-import { Movie } from "../../views/MovieDetailsView";
 import React from "react";
 import Alerts from "../Alerts";
+import { Movie, Room, Show, ShowDate } from "../../interfaces/Interfaces";
 
 interface ShowDetailsEditTileProps {
     showData: Array<ShowDate>;

@@ -1,6 +1,5 @@
 import React from "react";
 import OrderOverview from "../components/PaymentDetailsView/OrderOverview";
-import { fareSelection } from "../components/TicketView/FareSelection";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PersonalData from "../components/PaymentDetailsView/PersonalData";
 import {
@@ -15,60 +14,10 @@ import {
 } from "@mui/material";
 import PaymentOptions from "../components/PaymentDetailsView/PaymentOptions";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { User } from "../components/PaymentDetailsView/PersonalDataGuestUser";
-import { Movie } from "./MovieDetailsView";
-import { Show } from "../components/MovieDetailsView/ShowTiles";
-import { getMovieAfterReload, getShowAfterReload, Room } from "./TicketView";
+import { getMovieAfterReload, getShowAfterReload } from "./TicketView";
 import { useNavigate } from "react-router-dom";
-import { fetchOrderByID } from "../queries/fetchOrder";
 import { payOrder } from "../queries/changeOrders";
-
-export interface Seat {
-  id: number | null;
-  category: String;
-  row: number;
-  column: number;
-}
-
-export interface ShowSeat {
-  seat: Seat;
-  reserved: boolean;
-  selected: boolean;
-}
-
-export interface Row {
-  rowDescription: String;
-  seats: Array<ShowSeat>;
-}
-
-export interface Reservation {
-  id: number;
-  screeningId: number;
-  orderId: number;
-  seat: Seat;
-  category: string;
-  expiresAt: Date;
-}
-
-export interface Ticket {
-  id: number;
-  orderId: number;
-  screening: Show;
-  seat: Seat;
-  category: string
-}
-
-export interface Order {
-  id?: number | undefined;
-  user?: User | undefined;
-  orderStatus?: string | undefined;
-  total?: | undefined;
-  reservations?: Array<Reservation> | undefined;
-  tickets?: Array<Ticket> | undefined;
-  seats: Array<Row> | undefined;
-  fares: Array<fareSelection> | undefined;
-  price?: number | undefined;
-}
+import { Movie, Order, Show, User } from "../interfaces/Interfaces";
 
 interface PaymentDetailsViewProps {
   order: Order | undefined;
@@ -102,10 +51,10 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
   React.useEffect(() => {
     getShowAfterReload().then(result => setSelectedShow(result))
     getMovieAfterReload().then(result => setSelectedMovie(result));
-    let url = window.location.href;
+    /* let url = window.location.href;
 
-    let aUrlParts = url.split("/")
-    let orderID = aUrlParts[6]
+    let aUrlParts = url.split("/") */
+    //let orderID = aUrlParts[6]
     //fetchOrderByID(parseInt(orderID)).then(result => setOrder(result))
   }, [setSelectedShow, setSelectedMovie, setOrder]);
   const navigate = useNavigate();

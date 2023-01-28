@@ -1,13 +1,11 @@
 import { Button, Divider, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography, useTheme } from "@mui/material";
-import { Show } from "./ShowTiles";
 import { DateTimePicker } from "@mui/x-date-pickers";
-import { Room } from "../../views/TicketView";
 import React from "react";
-import { Movie } from "../../views/MovieDetailsView";
 import AddIcon from '@mui/icons-material/Add';
 import { Dayjs } from "dayjs";
 import { postNewShow } from "../../queries/changeScreenings";
 import Alerts from "../Alerts";
+import { Movie, Room, Show } from "../../interfaces/Interfaces";
 
 interface ShowDetailsAddTileProps {
     selectedMovie: Movie;

@@ -1,6 +1,4 @@
 import { Box, Button, Card, Grid, Typography, useTheme } from "@mui/material";
-import { User } from "../components/PaymentDetailsView/PersonalDataGuestUser";
-import { Order } from "./PaymentDetailsView";
 import { useEffect } from "react";
 import React from "react";
 import html2canvas from "html2canvas";
@@ -8,9 +6,8 @@ import jsPDF from 'jspdf';
 import OrderOverview from "../components/PaymentDetailsView/OrderOverview";
 import QRCode from "react-qr-code";
 import DownloadIcon from '@mui/icons-material/Download';
-import { Movie } from "./MovieDetailsView";
-import { Show } from "../components/MovieDetailsView/ShowTiles";
 import { getMovieAfterReload, getShowAfterReload } from "./TicketView";
+import { Movie, Order, Show, User } from "../interfaces/Interfaces";
 
 interface OrderFinalisationViewProps {
     order: Order | undefined;

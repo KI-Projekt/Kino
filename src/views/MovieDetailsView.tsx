@@ -2,12 +2,12 @@ import * as React from 'react';
 import { Alert } from '@mui/material';
 import { useEffect } from 'react';
 import { fetchMovie, fetchTrailerFromTMDb } from '../queries/fetchOMDbAPI';
-import { Show, ShowDate } from '../components/MovieDetailsView/ShowTiles';
 import AdminMovieDetailsView from '../components/MovieDetailsView/MovieDetailsViewAdmin';
 import UserMovieDetailsView from '../components/MovieDetailsView/MovieDetailsViewUser';
 import { useNavigate } from 'react-router-dom';
 import { fetchSpecificMovie } from '../queries/fetchMovieAPI';
 import { fetchAllScreeningsByMovie } from '../queries/fetchScreenings';
+import { Movie, Show, ShowDate, TrailerType } from '../interfaces/Interfaces';
 
 interface MovieDetailsViewProps {
     selectedMovie: Movie | undefined,
@@ -18,56 +18,6 @@ interface MovieDetailsViewProps {
     setIsNew: Function,
 }
 
-export interface TrailerType {
-    id: string
-    iso_639_1: string
-    iso_3166_1: string
-    key: string
-    name: string
-    official: boolean
-    published_at: string
-    site: string
-    size: number
-    type: string
-}
-
-export interface OMDbMovie {
-    id?: number | string | undefined,
-    imdbID?: String | undefined
-    Title?: String | undefined,
-    Poster?: string | undefined,
-    Runtime?: String | undefined,
-    Writer?: String | undefined,
-    Actors?: String | undefined,
-    Genre?: String | undefined,
-    Rated?: String | undefined,
-    Plot?: String | undefined,
-    Year?: String | undefined,
-    Director?: String | undefined,
-    imdbRating?: String | undefined,
-    imdbVotes?: String | undefined,
-    trailer: TrailerType | undefined,
-}
-
-export interface Movie {
-    id?: number | string | undefined,
-    imdbId?: String | undefined
-    title?: String | undefined,
-    posterImage?: string | undefined,
-    runtime?: string | undefined,
-    writer?: String | undefined,
-    director?: String | undefined,
-    actors?: String | undefined,
-    genre?: String | undefined,
-    rated?: String | undefined,
-    plot?: String | undefined,
-    releaseYear?: String | undefined,
-    imdbRating?: String | undefined,
-    imdbRatingCount?: String | undefined,
-    movieStatus?: String | undefined,
-    imdbVotes?: String | undefined,
-    trailer: TrailerType | undefined,
-}
 
 export const getIMDbIDFromURL = () => {
     let url = window.location.href;

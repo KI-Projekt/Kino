@@ -1,7 +1,7 @@
 import { Box, Divider, IconButton } from "@mui/material";
 import EventSeatIcon from "@mui/icons-material/EventSeat";
 import StairsOutlinedIcon from "@mui/icons-material/StairsOutlined";
-import { Row } from "../../views/PaymentDetailsView";
+import { Row } from "../../interfaces/Interfaces";
 
 interface SeatPlanprops {
   data: Array<Row>;

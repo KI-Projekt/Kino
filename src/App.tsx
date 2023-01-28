@@ -12,21 +12,19 @@ import { Box, Container, createTheme, FormControlLabel, styled, Switch, ThemePro
 import type { } from '@mui/x-date-pickers/themeAugmentation';
 import OpeningHoursView from "./views/OpeningHoursView";
 import TicketPricesView from "./views/TicketPricesView";
-import MovieDetailsView, { Movie } from "./views/MovieDetailsView";
+import MovieDetailsView from "./views/MovieDetailsView";
 import PrivacyPolicyView from "./views/PrivacyPolicyView";
 import LoginView from "./views/LoginView";
 import PaymentDetailsView from "./views/PaymentDetailsView";
 import TicketView from "./views/TicketView";
-import { Show } from "./components/MovieDetailsView/ShowTiles";
-import { Order } from "./views/PaymentDetailsView";
 import AddNewMoviesView from "./views/Admin/AddNewMoviesView";
-import { User } from "./components/PaymentDetailsView/PersonalDataGuestUser";
 import OrderFinalisationView from "./views/OrderFinalisationView";
 import UserProfile from "./views/UserProfile";
 import ShowOverviewView from "./views/ShowOverviewView";
 import MovieShowDetails from "./views/MovieShowDetails";
 import RoomOverviewView from "./views/Admin/RoomOverviewView";
 import RoomDetailsView from "./views/Admin/RoomDetailsView";
+import { Movie, Order, Show, User } from "./interfaces/Interfaces";
 
 export interface AdminProps {
   isAdmin: boolean;
@@ -133,7 +131,7 @@ function App() {
   }
 
   const [user, setUser] = React.useState<User>(
-    createUserData(1, undefined, undefined, undefined, undefined, undefined, undefined, undefined)
+    createUserData(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)
   )
 
   const handleChangeAdminMode = (

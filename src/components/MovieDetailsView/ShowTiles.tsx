@@ -1,25 +1,8 @@
 import { Box, ButtonBase, Divider, styled, Typography, useTheme } from '@mui/material';
 import * as React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Show, ShowDate } from '../../interfaces/Interfaces';
 
-export interface Show {
-    movieID: String | undefined;
-    moviePoster: String | undefined;
-    movieName: String | undefined;
-    showID: number | undefined;
-    roomID: string | undefined;
-    room: string | undefined;
-    dateTime: Date | null;
-    additionalInfo: {
-        isThreeD: boolean;
-        hasDolbyAtmos: boolean;
-    }
-}
-
-export interface ShowDate {
-    date: Date
-    shows: Array<Show>
-}
 
 interface props {
     shows: Array<ShowDate>,
