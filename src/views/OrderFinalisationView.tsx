@@ -8,6 +8,7 @@ import QRCode from "react-qr-code";
 import DownloadIcon from '@mui/icons-material/Download';
 import { getMovieAfterReload, getShowAfterReload } from "./TicketView";
 import { Movie, Order, Show, User } from "../interfaces/Interfaces";
+import { getOrderAfterReload } from "./PaymentDetailsView";
 
 interface OrderFinalisationViewProps {
     order: Order | undefined;
@@ -30,20 +31,9 @@ function OrderFinalisationView(props: OrderFinalisationViewProps) {
     const setOrder = props.setOrder;
 
     useEffect(() => {
-        /*  if (props.order === undefined) {
-             let url = window.location.href;
- 
-             let aUrlParts = url.split("/")
-             let initialOrder: Order = {
-                 id: aUrlParts[6],
-                 price: undefined,
-                 fares: undefined,
-                 seats: undefined
-             }
-             setOrder(initialOrder)
-         } */
         getShowAfterReload().then(result => setSelectedShow(result))
         getMovieAfterReload().then(result => setSelectedMovie(result));
+        getOrderAfterReload().then(result => setOrder(result));
     }, [setSelectedShow, setSelectedMovie, setOrder, props.order])
 
     async function handleDownloadPDF() {

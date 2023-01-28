@@ -8,7 +8,11 @@ export interface ReservationInput {
 }
 
 export const postNewReservation = async (newReservation: ReservationInput) => {
-    const data = await axios.post(`${PATH}api/reservations`, newReservation)
+    const data = await axios(`${PATH}api/reservations`,{
+        method: "POST",
+        data: newReservation,
+        withCredentials: true,
+    })
         .then(response => {
             return response
         })
@@ -20,7 +24,7 @@ export const postNewReservation = async (newReservation: ReservationInput) => {
 };
 
 export const deleteReservation = async (id: number) => {
-    const data = await axios.delete(`${PATH}api/reservations/${id}`)
+    const data = await axios.delete(`${PATH}api/reservations/${id}`, { withCredentials: true })
         .then(response => {
             return response
         })

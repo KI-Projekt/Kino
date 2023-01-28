@@ -18,6 +18,7 @@ import { getMovieAfterReload, getShowAfterReload } from "./TicketView";
 import { useNavigate } from "react-router-dom";
 import { payOrder } from "../queries/changeOrders";
 import { Movie, Order, Show, User } from "../interfaces/Interfaces";
+import { fetchOrderByID } from "../queries/fetchOrder";
 
 interface PaymentDetailsViewProps {
   order: Order | undefined;
@@ -30,6 +31,17 @@ interface PaymentDetailsViewProps {
   selectedMovie: Movie | undefined;
   setSelectedShow: React.Dispatch<React.SetStateAction<Show | undefined>>;
   selectedShow: Show | undefined;
+}
+
+export const  getOrderAfterReload = async() => {
+  let url = window.location.href;
+
+  let aUrlParts = url.split("/") 
+  let orderID = aUrlParts[6]
+  const response = await fetchOrderByID(parseInt(orderID)).then(result => {
+    return result;
+})
+  return response
 }
 
 function PaymentDetailsView(props: PaymentDetailsViewProps) {
@@ -51,11 +63,7 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
   React.useEffect(() => {
     getShowAfterReload().then(result => setSelectedShow(result))
     getMovieAfterReload().then(result => setSelectedMovie(result));
-    /* let url = window.location.href;
-
-    let aUrlParts = url.split("/") */
-    //let orderID = aUrlParts[6]
-    //fetchOrderByID(parseInt(orderID)).then(result => setOrder(result))
+    getOrderAfterReload().then(result => setOrder(result));
   }, [setSelectedShow, setSelectedMovie, setOrder]);
   const navigate = useNavigate();
 
