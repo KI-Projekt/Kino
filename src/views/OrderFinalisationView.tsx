@@ -1,6 +1,4 @@
 import { Box, Button, Card, Grid, Typography, useTheme } from "@mui/material";
-import { User } from "../components/PaymentDetailsView/PersonalDataGuestUser";
-import { Order } from "./PaymentDetailsView";
 import { useEffect } from "react";
 import React from "react";
 import html2canvas from "html2canvas";
@@ -8,9 +6,9 @@ import jsPDF from 'jspdf';
 import OrderOverview from "../components/PaymentDetailsView/OrderOverview";
 import QRCode from "react-qr-code";
 import DownloadIcon from '@mui/icons-material/Download';
-import { Movie } from "./MovieDetailsView";
-import { Show } from "../components/MovieDetailsView/ShowTiles";
 import { getMovieAfterReload, getShowAfterReload } from "./TicketView";
+import { Movie, Order, Show, User } from "../interfaces/Interfaces";
+import { getOrderAfterReload } from "./PaymentDetailsView";
 
 interface OrderFinalisationViewProps {
     order: Order | undefined;
@@ -33,20 +31,9 @@ function OrderFinalisationView(props: OrderFinalisationViewProps) {
     const setOrder = props.setOrder;
 
     useEffect(() => {
-        if (props.order === undefined) {
-            let url = window.location.href;
-
-            let aUrlParts = url.split("/")
-            let initialOrder: Order = {
-                orderID: aUrlParts[6],
-                price: undefined,
-                fares: undefined,
-                seats: undefined
-            }
-            setOrder(initialOrder)
-        }
         getShowAfterReload().then(result => setSelectedShow(result))
         getMovieAfterReload().then(result => setSelectedMovie(result));
+        getOrderAfterReload().then(result => setOrder(result));
     }, [setSelectedShow, setSelectedMovie, setOrder, props.order])
 
     async function handleDownloadPDF() {
@@ -64,7 +51,7 @@ function OrderFinalisationView(props: OrderFinalisationViewProps) {
         const pdfHeight = (imgProperties.height * pdfWidth) / imgProperties.width;
 
         pdf.addImage(data, 'PNG', 0, 0, pdfWidth, pdfHeight);
-        pdf.save(`Cinetastisch_Order_${props.order?.orderID}.pdf`);
+        pdf.save(`Cinetastisch_Order_${props.order?.id}.pdf`);
     }
 
     return (
@@ -94,8 +81,8 @@ function OrderFinalisationView(props: OrderFinalisationViewProps) {
                                         <Typography variant="body1" sx={{ pb: theme.spacing(2) }}>
                                             Below you can find the QR-Code with your order.
                                         </Typography>
-                                        <QRCode value={props.order?.orderID} size={150} />
-                                        <Typography sx={{ pt: theme.spacing(2) }}>Order-ID: {props.order?.orderID}</Typography>
+                                        {props.order.id && <QRCode value={props.order?.id.toString()} size={150} />}
+                                        <Typography sx={{ pt: theme.spacing(2) }}>Order-ID: {props.order?.id}</Typography>
                                     </Box>
                                     <Box sx={{ p: theme.spacing(2), textAlign: "center", textJustify: "center", }}>
                                         <Button
@@ -111,7 +98,7 @@ function OrderFinalisationView(props: OrderFinalisationViewProps) {
                                 <>
                                     <Card >
                                         <OrderOverview
-                                            orderID={props.order.orderID}
+                                            orderID={props.order.id}
                                             movieID={props.selectedMovie.id}
                                             showID={props.selectedShow.showID}
                                             movie={props.selectedMovie.title}

@@ -2,8 +2,8 @@ import { AccountCircle } from "@mui/icons-material";
 import { Box, IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import React from "react";
 import Login from '../Login/LoginPopUp';
-import { User } from "../PaymentDetailsView/PersonalDataGuestUser";
 import { useNavigate } from "react-router";
+import { User } from "../../interfaces/Interfaces";
 
 interface ProfileMenuButtonProps {
     user: User;

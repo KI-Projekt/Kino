@@ -1,6 +1,5 @@
 import React from "react";
 import OrderOverview from "../components/PaymentDetailsView/OrderOverview";
-import { fareSelection } from "../components/TicketView/FareSelection";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PersonalData from "../components/PaymentDetailsView/PersonalData";
 import {
@@ -15,32 +14,11 @@ import {
 } from "@mui/material";
 import PaymentOptions from "../components/PaymentDetailsView/PaymentOptions";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { User } from "../components/PaymentDetailsView/PersonalDataGuestUser";
-import { Movie } from "./MovieDetailsView";
-import { Show } from "../components/MovieDetailsView/ShowTiles";
 import { getMovieAfterReload, getShowAfterReload } from "./TicketView";
 import { useNavigate } from "react-router-dom";
-
-export interface Seat {
-  seatID: string | null;
-  seatNumber: number | null;
-  booked: boolean | null;
-  selected: boolean | null;
-  seatRowID: number;
-}
-
-export interface Row {
-  seatRowID: number;
-  rowDescription: String;
-  seats: Array<Seat>;
-}
-
-export interface Order {
-  orderID: string;
-  seats: Array<Row> | undefined;
-  fares: Array<fareSelection> | undefined;
-  price: number | undefined;
-}
+import { payOrder } from "../queries/changeOrders";
+import { Movie, Order, Show, User } from "../interfaces/Interfaces";
+import { fetchOrderByID } from "../queries/fetchOrder";
 
 interface PaymentDetailsViewProps {
   order: Order | undefined;
@@ -53,6 +31,17 @@ interface PaymentDetailsViewProps {
   selectedMovie: Movie | undefined;
   setSelectedShow: React.Dispatch<React.SetStateAction<Show | undefined>>;
   selectedShow: Show | undefined;
+}
+
+export const  getOrderAfterReload = async() => {
+  let url = window.location.href;
+
+  let aUrlParts = url.split("/") 
+  let orderID = aUrlParts[6]
+  const response = await fetchOrderByID(parseInt(orderID)).then(result => {
+    return result;
+})
+  return response
 }
 
 function PaymentDetailsView(props: PaymentDetailsViewProps) {
@@ -72,25 +61,18 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
   const setOrder = props.setOrder;
 
   React.useEffect(() => {
-    if (props.order === undefined) {
-      let url = window.location.href;
-
-      let aUrlParts = url.split("/")
-      let initialOrder: Order = {
-        orderID: aUrlParts[6],
-        price: undefined,
-        fares: undefined,
-        seats: undefined
-      }
-      setOrder(initialOrder)
-    }
     getShowAfterReload().then(result => setSelectedShow(result))
     getMovieAfterReload().then(result => setSelectedMovie(result));
-  }, [setSelectedShow, setSelectedMovie, setOrder, props.order]);
+    getOrderAfterReload().then(result => setOrder(result));
+  }, [setSelectedShow, setSelectedMovie, setOrder]);
   const navigate = useNavigate();
 
   function handleOnClick() {
-    navigate(`/order/${props.selectedMovie?.id}/${props.selectedShow?.showID}/${props.order?.orderID}`);
+    if (props.order?.id)
+      payOrder(props.order?.id).then(result => {
+        console.log(result);
+      })
+    navigate(`/order/${props.selectedMovie?.id}/${props.selectedShow?.showID}/${props.order?.id}`);
   }
 
   return (
@@ -99,7 +81,7 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
         <Grid item xs={12} sm={12} md={6} xl={6}>
           {props.selectedMovie && props.selectedShow && props.order && (
             <OrderOverview
-              orderID={props.order.orderID}
+              orderID={props.order.id}
               movieID={props.selectedMovie?.id}
               showID={props.selectedShow?.showID}
               movie={props.selectedMovie?.title}

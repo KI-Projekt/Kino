@@ -3,13 +3,11 @@ import { Box } from "@mui/system";
 import { useEffect } from "react";
 import MovieFacts from "../components/MovieDetailsView/MovieFacts";
 import MoviePlot from "../components/MovieDetailsView/MoviePlot";
-import { Show } from "../components/MovieDetailsView/ShowTiles";
-import { Movie } from "./MovieDetailsView";
 import { getMovieAfterReload, getShowAfterReload } from "./TicketView";
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import { useNavigate } from "react-router-dom";
 import { fetchTrailerFromTMDb } from "../queries/fetchOMDbAPI";
-import { TrailerType } from "./MovieDetailsView"
+import { Movie, Show, TrailerType } from "../interfaces/Interfaces";
 
 interface MovieDetailsViewUserProp {
     selectedMovie: Movie | undefined,

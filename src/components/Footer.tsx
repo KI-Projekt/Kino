@@ -14,7 +14,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import AssistantDirectionIcon from "@mui/icons-material/AssistantDirection";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useNavigate } from "react-router-dom";
-import { User } from "./PaymentDetailsView/PersonalDataGuestUser";
+import { User } from "../interfaces/Interfaces";
 
 interface FooterProps {
   user: User;

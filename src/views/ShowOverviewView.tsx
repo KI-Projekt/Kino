@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Show, ShowDate } from '../components/MovieDetailsView/ShowTiles';
 import MovieShowTiles from '../components/ShowOverviewView/MovieShowTiles';
+import { Show, ShowDate } from '../interfaces/Interfaces';
 import { fetchAllScreenings } from "../queries/fetchScreenings";
 import { sortShowsToShowDate } from './MovieDetailsView';
 
