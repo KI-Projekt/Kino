@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Movie } from "../views/MovieDetailsView";
+import { Movie } from "../interfaces/Interfaces";
 import { PATH } from "./fetchMovieAPI";
 
 export const postNewMovie = async (newMovie: Movie) => {

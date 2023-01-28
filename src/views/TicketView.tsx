@@ -1,299 +1,19 @@
 import * as React from "react";
 import { useState } from "react";
-import FareSelection, {
-  fareSelection,
-} from "../components/TicketView/FareSelection";
+import FareSelection from "../components/TicketView/FareSelection";
 import Seatplan from "../components/TicketView/Seatplan";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Order, Row, Seat } from "../views/PaymentDetailsView";
 import { Button, Grid, Typography, useTheme } from "@mui/material";
-import { getIMDbIDFromURL, Movie } from "./MovieDetailsView";
-import { Show } from "../components/MovieDetailsView/ShowTiles";
+import { getIMDbIDFromURL } from "./MovieDetailsView";
 import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/system";
 import { fetchScreeningByID } from "../queries/fetchScreenings";
 import { fetchSpecificMovie } from "../queries/fetchMovieAPI";
+import { deleteReservation, postNewReservation } from "../queries/changeReservations";
+import { fetchOrderByID } from "../queries/fetchOrder";
+import { updateOrderFares } from "../queries/changeOrders";
+import { fareSelection, Movie, Order, Row, Show, User } from "../interfaces/Interfaces";
 
-export interface Room {
-  name: string;
-  id: number;
-  hasThreeD: boolean;
-  hasDolbyAtmos: boolean;
-  rows: Array<Row>;
-}
-
-function createData(
-  seatRowID: number,
-  rowDescription: String,
-  seats: Array<Seat>
-) {
-  return {
-    seatRowID,
-    rowDescription,
-    seats,
-  };
-}
-
-const data = [
-  createData(1, "A", [
-    {
-      seatNumber: null,
-      seatID: null,
-      booked: null,
-      selected: null,
-      seatRowID: 1,
-    },
-    {
-      seatNumber: 1,
-      seatID: "1",
-      booked: false,
-      selected: false,
-      seatRowID: 1,
-    },
-    {
-      seatNumber: 2,
-      seatID: "2",
-      booked: false,
-      selected: false,
-      seatRowID: 1,
-    },
-    {
-      seatNumber: 3,
-      seatID: "3",
-      booked: false,
-      selected: false,
-      seatRowID: 1,
-    },
-    {
-      seatNumber: 4,
-      seatID: "4",
-      booked: false,
-      selected: false,
-      seatRowID: 1,
-    },
-    {
-      seatNumber: 5,
-      seatID: "5",
-      booked: false,
-      selected: false,
-      seatRowID: 1,
-    },
-    {
-      seatNumber: 6,
-      seatID: "6",
-      booked: false,
-      selected: false,
-      seatRowID: 1,
-    },
-    {
-      seatNumber: 7,
-      seatID: "7",
-      booked: false,
-      selected: false,
-      seatRowID: 2,
-    },
-    {
-      seatNumber: 8,
-      seatID: "8",
-      booked: false,
-      selected: false,
-      seatRowID: 2,
-    },
-    {
-      seatNumber: 9,
-      seatID: "9",
-      booked: false,
-      selected: false,
-      seatRowID: 2,
-    },
-    {
-      seatNumber: 10,
-      seatID: "10",
-      booked: false,
-      selected: false,
-      seatRowID: 2,
-    },
-    {
-      seatNumber: null,
-      seatID: null,
-      booked: null,
-      selected: null,
-      seatRowID: 1,
-    },
-  ]),
-  createData(2, "B", [
-    {
-      seatNumber: null,
-      seatID: null,
-      booked: null,
-      selected: null,
-      seatRowID: 2,
-    },
-    {
-      seatNumber: 11,
-      seatID: "11",
-      booked: false,
-      selected: false,
-      seatRowID: 2,
-    },
-    {
-      seatNumber: 12,
-      seatID: "12",
-      booked: false,
-      selected: false,
-      seatRowID: 2,
-    },
-    {
-      seatNumber: 13,
-      seatID: "13",
-      booked: false,
-      selected: false,
-      seatRowID: 3,
-    },
-    {
-      seatNumber: 14,
-      seatID: "14",
-      booked: false,
-      selected: false,
-      seatRowID: 3,
-    },
-    {
-      seatNumber: 15,
-      seatID: "15",
-      booked: false,
-      selected: false,
-      seatRowID: 3,
-    },
-    {
-      seatNumber: 16,
-      seatID: "16",
-      booked: false,
-      selected: false,
-      seatRowID: 3,
-    },
-    {
-      seatNumber: 17,
-      seatID: "17",
-      booked: false,
-      selected: false,
-      seatRowID: 3,
-    },
-    {
-      seatNumber: 18,
-      seatID: "18",
-      booked: false,
-      selected: false,
-      seatRowID: 3,
-    },
-    {
-      seatNumber: 19,
-      seatID: "19",
-      booked: false,
-      selected: false,
-      seatRowID: 4,
-    },
-    {
-      seatNumber: 20,
-      seatID: "20",
-      booked: false,
-      selected: false,
-      seatRowID: 4,
-    },
-    {
-      seatNumber: null,
-      seatID: null,
-      booked: null,
-      selected: null,
-      seatRowID: 2,
-    },
-  ]),
-  createData(3, "C", [
-    {
-      seatNumber: null,
-      seatID: null,
-      booked: null,
-      selected: null,
-      seatRowID: 3,
-    },
-    {
-      seatNumber: 21,
-      seatID: "21",
-      booked: false,
-      selected: false,
-      seatRowID: 4,
-    },
-    {
-      seatNumber: 22,
-      seatID: "22",
-      booked: false,
-      selected: false,
-      seatRowID: 4,
-    },
-    {
-      seatNumber: 23,
-      seatID: "23",
-      booked: false,
-      selected: false,
-      seatRowID: 4,
-    },
-    {
-      seatNumber: 24,
-      seatID: "24",
-      booked: true,
-      selected: false,
-      seatRowID: 4,
-    },
-    {
-      seatNumber: 25,
-      seatID: "25",
-      booked: false,
-      selected: false,
-      seatRowID: 4,
-    },
-    {
-      seatNumber: 26,
-      seatID: "26",
-      booked: false,
-      selected: false,
-      seatRowID: 4,
-    },
-    {
-      seatNumber: 27,
-      seatID: "27",
-      booked: false,
-      selected: false,
-      seatRowID: 4,
-    },
-    {
-      seatNumber: 28,
-      seatID: "28",
-      booked: true,
-      selected: false,
-      seatRowID: 4,
-    },
-    {
-      seatNumber: 29,
-      seatID: "29",
-      booked: false,
-      selected: false,
-      seatRowID: 4,
-    },
-    {
-      seatNumber: 30,
-      seatID: "30",
-      booked: false,
-      selected: false,
-      seatRowID: 4,
-    },
-    {
-      seatNumber: null,
-      seatID: null,
-      booked: null,
-      selected: false,
-      seatRowID: 3,
-    },
-  ]),
-];
 
 export const getShowAfterReload = async () => {
   let url = window.location.href;
@@ -313,7 +33,8 @@ export const getShowAfterReload = async () => {
       additionalInfo: {
         hasDolbyAtmos: show.room.hasDolbyAtmos,
         isThreeD: show.movie.isThreeD
-      }
+      },
+      seatingPlan: show.seatingPlan
     }
     return currentShow
   })
@@ -334,10 +55,12 @@ export const getMovieAfterReload = async () => {
 
 interface TicketViewProps {
   setOrder: React.Dispatch<React.SetStateAction<Order | undefined>>;
+  order: Order | undefined;
   setSelectedMovie: React.Dispatch<React.SetStateAction<Movie | undefined>>;
   selectedMovie: Movie | undefined;
   setSelectedShow: React.Dispatch<React.SetStateAction<Show | undefined>>;
   selectedShow: Show | undefined;
+  user: User | undefined;
 }
 
 function TicketView(props: TicketViewProps) {
@@ -345,25 +68,40 @@ function TicketView(props: TicketViewProps) {
 
   const [currentTicketAmmount, setCurrentTicketAmount] = useState(0);
 
-  const [seats, setSeats] = useState<Array<Row>>(data);
-
-  const newData = data;
+  const [seats, setSeats] = useState<Array<Row> | undefined>(undefined);
 
   const setSelectedShow = props.setSelectedShow
   const setSelectedMovie = props.setSelectedMovie
 
   React.useEffect(() => {
-    getShowAfterReload().then(result => setSelectedShow(result))
-    getMovieAfterReload().then(result => setSelectedMovie(result));
-    newData.forEach((row) => {
-      row.seats.forEach((seat) => {
-        if (seat.selected) {
-          seat.selected = false;
+    getShowAfterReload().then(result => {
+      setSelectedShow(result)
+      initializeSeatingPlan(result.seatingPlan);
+    });
+    getMovieAfterReload().then(result =>  setSelectedMovie(result));
+
+    //Responsibility for Seatplan
+    updateDimensions();
+    window.addEventListener("resize", updateDimensions);
+    return () =>
+      window.removeEventListener("resize", updateDimensions);
+  }, [setSelectedShow, setSelectedMovie]);
+
+  function initializeSeatingPlan(room: any) {
+    const newRoom = room.map((currentRow: any) => {
+      const newRow = currentRow.row.map((seat: any) => {
+        return {
+          ...seat,
+          selected: false,
         }
       });
+      return {
+        ...currentRow,
+        seats: newRow,
+      }
     });
-    setSeats(newData);
-  }, [newData, setSelectedShow, setSelectedMovie]);
+    setSeats(newRoom);
+  }
 
   const navigate = useNavigate();
 
@@ -390,14 +128,13 @@ function TicketView(props: TicketViewProps) {
     let array: Array<Row> = [];
     seats &&
       seats.forEach((row: Row) => {
-        let newRow: Row = { seatRowID: -1, rowDescription: "-1", seats: [] };
+        let newRow: Row = { rowDescription: "-1", seats: [] };
         row.seats.forEach((seat) => {
           if (seat.selected) {
             newRow.seats.push(seat);
           }
         });
         if (newRow.seats.length > 0) {
-          newRow.seatRowID = row.seatRowID;
           newRow.rowDescription = row.rowDescription;
           array.push(newRow);
         }
@@ -415,23 +152,25 @@ function TicketView(props: TicketViewProps) {
 
   const onButtonClick = () => {
     let selectedSeats = calculateSelectedSeats();
-    let newOrder = {
-      fares: fares,
-      movieID: getIMDbIDFromURL(),
-      movie: props.selectedMovie?.title,
-      orderID: "1",
-      picture: props.selectedMovie?.posterImage,
-      price: calculatePrice(),
-      room: props.selectedShow?.room,
-      seats: selectedSeats,
-      showDate: props.selectedShow?.dateTime,
-      showID: props.selectedShow?.showID,
-    };
-    props.setOrder(newOrder);
-    if (props.selectedShow) {
+
+    let fareQuery = {
+      kidsCount: fares[1].amountOfTickets,
+      studentCounts: fares[2].amountOfTickets,
+      adultsCount: fares[0].amountOfTickets,
+      pensionerCount: fares[3].amountOfTickets
+    }
+    if (props.selectedShow && props.order?.id) {
+      updateOrderFares(fareQuery, props.order.id).then(result => {
+        let order = {
+          ...props.order,
+          seats: selectedSeats,
+          fares: fares,
+          price: result.total
+        }
+        props.setOrder(order);
+      })
       navigate(
-        `/orderDetails/${getIMDbIDFromURL()}/${props.selectedShow.showID}/${newOrder.orderID
-        }`
+        `/orderDetails/${getIMDbIDFromURL()}/${props.selectedShow.showID}/${props.order.id}`
       );
     }
   };
@@ -440,10 +179,27 @@ function TicketView(props: TicketViewProps) {
     seats &&
       seats.forEach((row) => {
         row.seats.forEach((seat) => {
-          if (seat.seatID === e.currentTarget.id) {
+          if (seat.seat.id === parseInt(e.currentTarget.id)) {
             if (seat.selected === false) {
+              let reservation: any = {
+                screeningId: props.selectedShow?.showID,
+                seatId: seat.seat.id
+              }
+              if (props.user?.userID) {
+                reservation.userId = props.user?.userID;
+              } 
+              postNewReservation(reservation).then((result) => {
+                fetchOrderByID(result.data.id).then((order) => {
+                  props.setOrder(order);
+                })
+              })
               setCurrentTicketAmount(currentTicketAmmount + 1);
             } else {
+              props.order?.tickets?.forEach(ticket => {
+                if (ticket.seat.id === parseInt(e.currentTarget.id)) {
+                  deleteReservation(ticket.id);
+                }
+              })
               setCurrentTicketAmount(currentTicketAmmount - 1);
             }
             seat.selected = !seat.selected;
@@ -454,16 +210,6 @@ function TicketView(props: TicketViewProps) {
   }
 
   const [windowWidth, setWindowWidth] = React.useState(0)
-
-  React.useEffect(() => {
-
-    updateDimensions();
-
-    window.addEventListener("resize", updateDimensions);
-
-    return () =>
-      window.removeEventListener("resize", updateDimensions);
-  }, [])
 
   const updateDimensions = () => {
     const windowWidth = window.innerWidth

@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardMedia, Typography, useTheme } from '@mui/material';
 import * as React from 'react';
-import { Movie } from '../../views/MovieDetailsView';
+import { Movie } from '../../interfaces/Interfaces';
 
 interface MovieFactsProps {
     selectedMovie: Movie,
@@ -35,8 +35,8 @@ function MovieFacts(props: MovieFactsProps) {
                     Director: {props.selectedMovie.director} <br />
                     Cast: {props.selectedMovie.actors} <br />
                     Genres: {props.selectedMovie.genre} <br />
-                    {/*                     Age Rating: {props.selectedMovie.rated} <br />
- */}                </Typography>
+                    Age Rating: {props.selectedMovie.rated} <br />
+                </Typography>
             </CardContent>
         </Card>
     );

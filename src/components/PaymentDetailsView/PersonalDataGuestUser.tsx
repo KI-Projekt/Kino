@@ -1,17 +1,8 @@
 import { Box, TextField, useTheme } from "@mui/material";
 import React from "react"
+import { User } from "../../interfaces/Interfaces";
 import '../../styles/Login.css';
 
-export interface User {
-    userID: number | undefined,
-    firstName: string | undefined,
-    surname: string | undefined,
-    street: string | undefined,
-    houseNumber: string | undefined,
-    postcode: string | undefined,
-    city: string | undefined,
-    emailAdress: string | undefined,
-}
 
 interface PersonalDataGuestUserProps {
     personalDataFilled: boolean;

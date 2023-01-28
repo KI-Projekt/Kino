@@ -19,8 +19,7 @@ import {
   useTheme,
 } from "@mui/material";
 import Youtube from "react-youtube";
-import { Show, ShowDate } from "./ShowTiles";
-import { getIMDbIDFromURL, Movie, sortShowsToShowDate } from "../../views/MovieDetailsView";
+import { getIMDbIDFromURL, sortShowsToShowDate } from "../../views/MovieDetailsView";
 import AddIcon from "@mui/icons-material/Add";
 import UpdateIcon from '@mui/icons-material/Update';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
@@ -30,6 +29,7 @@ import ShowDetails from "./ShowDetails";
 import Alerts from "../Alerts";
 import { fetchMoviesByIMDbID } from "../../queries/fetchMovieAPI";
 import { fetchAllScreeningsByMovie } from "../../queries/fetchScreenings";
+import { Movie, Show, ShowDate } from "../../interfaces/Interfaces";
 
 interface MovieDetailsViewAdminProp {
   selectedMovie: Movie;
@@ -117,8 +117,8 @@ function AdminMovieDetailsView(props: MovieDetailsViewAdminProp) {
       title: props.selectedMovie.title,
       releaseYear: props.selectedMovie.releaseYear,
       posterImage: props.selectedMovie.posterImage,
-/*       rated: props.selectedMovie.rated,
- */      runtime: props.selectedMovie.runtime,
+      rated: props.selectedMovie.rated,
+      runtime: props.selectedMovie.runtime,
       genre: props.selectedMovie.genre,
       actors: props.selectedMovie.actors,
       plot: props.selectedMovie.plot,
