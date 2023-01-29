@@ -1,16 +1,16 @@
 import { Box, Divider, IconButton } from "@mui/material";
 import EventSeatIcon from "@mui/icons-material/EventSeat";
 import StairsOutlinedIcon from "@mui/icons-material/StairsOutlined";
-import { ShowRow } from "../../interfaces/Interfaces";
+import { Row } from "../../interfaces/Interfaces";
 
 interface SeatPlanprops {
-  data: Array<ShowRow>;
+  rows: Array<Row>;
   onSeatClick: Function;
   windowWidth: number;
 }
 
-function Seatplan(props: SeatPlanprops) {
-
+function SeatplanEditable(props: SeatPlanprops) {
+ 
   return (
     <Box
       sx={{
@@ -22,11 +22,11 @@ function Seatplan(props: SeatPlanprops) {
       justifyContent="center"
     >
       <>
-        {props.data.map((row) => (
+        {props.rows.map((row) => (
           <div style={{ width: "fit-content", margin: "auto", alignItems: "center", justifyContent: "center" }}>
             {row.seats.map((seat) => (
               <>
-                {seat.seat.id && seat.reserved !== null && (
+                {seat.id && seat.category !== null && (
                   <IconButton
                     sx={{
                       width: {
@@ -36,13 +36,12 @@ function Seatplan(props: SeatPlanprops) {
                         xl: `${(props.windowWidth / 540)}rem`
                       }
                     }}
-                    id={seat.seat.id.toString()} onClick={(e) => props.onSeatClick(e)} color={seat.selected ? "primary" : "secondary"}
-                    disabled={seat.reserved}
+                    id={seat.id.toString()} onClick={(e) => props.onSeatClick(e)}
                   >
-                    <EventSeatIcon id={seat.seat.id.toString()} />
+                    <EventSeatIcon id={seat.id.toString()} />
                   </IconButton>
                 )}
-                {seat.seat.id === null && (
+                {seat.id === null && (
                   <IconButton
                     disabled
                     sx={{
@@ -68,4 +67,4 @@ function Seatplan(props: SeatPlanprops) {
   );
 }
 
-export default Seatplan;
+export default SeatplanEditable;

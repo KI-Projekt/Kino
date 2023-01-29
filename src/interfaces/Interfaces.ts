@@ -83,9 +83,14 @@ export interface Seat {
     selected: boolean;
   }
   
-  export interface Row {
+  export interface ShowRow {
     rowDescription: String;
     seats: Array<ShowSeat>;
+  }
+
+  export interface Row {
+    rowDescription: String;
+    seats: Array<Seat>;
   }
   
   export interface Reservation {
@@ -121,6 +126,14 @@ export interface Room {
     rows: Array<Row>;
   }
 
+  export interface ShowRoom {
+    id: number;
+    name: string;
+    hasThreeD: boolean;
+    hasDolbyAtmos: boolean;
+    rows: Array<ShowRow>;
+  }
+
   export interface User {
     userID: number | undefined,
     firstName: string | undefined,
@@ -139,7 +152,7 @@ export interface Room {
     total?: | undefined;
     reservations?: Array<Reservation> | undefined;
     tickets?: Array<Ticket> | undefined;
-    seats: Array<Row> | undefined;
+    seats: Array<ShowRow> | undefined;
     fares: Array<fareSelection> | undefined;
     price?: number | undefined;
   }

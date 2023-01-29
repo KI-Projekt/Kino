@@ -23,7 +23,6 @@ import UserProfile from "./views/UserProfile";
 import ShowOverviewView from "./views/ShowOverviewView";
 import MovieShowDetails from "./views/MovieShowDetails";
 import RoomOverviewView from "./views/Admin/RoomOverviewView";
-import RoomDetailsView from "./views/Admin/RoomDetailsView";
 import { Movie, Order, Show, User } from "./interfaces/Interfaces";
 
 export interface AdminProps {
@@ -144,6 +143,13 @@ function App() {
 
   const [isNew, setIsNew] = React.useState<boolean>(false);
 
+  const [windowWidth, setWindowWidth] = React.useState(0)
+
+  const updateDimensions = () => {
+    const windowWidth = window.innerWidth
+    setWindowWidth(windowWidth)
+  }
+
   React.useEffect(() => {
     let url = window.location.href;
 
@@ -151,6 +157,12 @@ function App() {
     if (aUrlParts[5] === "new") {
       setIsNew(true)
     }
+
+     //Responsibility for Seatplan
+     updateDimensions();
+     window.addEventListener("resize", updateDimensions);
+     return () =>
+       window.removeEventListener("resize", updateDimensions);
   }, [])
 
   return (
@@ -177,13 +189,15 @@ function App() {
                   />
                   <Route
                     path="/showDetails/:imdbID/:showID"
-                    element={<TicketView setSelectedMovie={setSelectedMovie}
+                    element={<TicketView 
+                      setSelectedMovie={setSelectedMovie}
                       setSelectedShow={setSelectedShow}
                       selectedMovie={selectedMovie}
                       selectedShow={selectedShow}
                       setOrder={setOrder}
                       order={order}
                       user={user}
+                      windowWidth={windowWidth}
                     />}
                   />
                   <Route
@@ -253,8 +267,7 @@ function App() {
                   />
                   <Route path="/profile/:userID" element={<UserProfile user={user} />} />
                   <Route path="/shows" element={<ShowOverviewView isAdmin={adminProps.isAdmin} />} />
-                  <Route path="/rooms" element={<RoomOverviewView isAdmin={adminProps.isAdmin} />} />
-                  <Route path="/roomDetails/:roomID" element={<RoomDetailsView isAdmin={adminProps.isAdmin} />} />
+                  <Route path="/rooms" element={<RoomOverviewView isAdmin={adminProps.isAdmin} windowWidth={windowWidth} />} />
                 </Routes>
               </Box>
             </Container>
