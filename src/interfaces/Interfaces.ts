@@ -157,3 +157,11 @@ export interface Room {
     price?: number | undefined;
   }
   
+  export interface AdminProps {
+    isAdmin: boolean;
+  }
+  
+  export interface AdminPropsChange {
+    isAdmin: boolean;
+    handleChangeAdminMode: Function;
+  }

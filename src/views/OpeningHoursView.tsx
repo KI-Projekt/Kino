@@ -1,6 +1,7 @@
 import { TableCell, tableCellClasses, TableRow, Container, Typography, TableContainer, Paper, Table, TableHead, TableBody, styled, TextField } from '@mui/material';
 import * as React from 'react';
-import { AdminProps, redTheme } from '../App';
+import { AdminProps } from '../interfaces/Interfaces';
+import { redTheme } from '../interfaces/Theme';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
