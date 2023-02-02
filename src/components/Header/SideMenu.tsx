@@ -101,95 +101,112 @@ function SideMenu(props: AppBarProps) {
     const [searchOpen, setSearchOpen] = React.useState<boolean>(false);
 
     return (
-        <Drawer
-            variant="permanent"
-            anchor="left"
-            open={props.open}
-            ModalProps={{
-                keepMounted: true, // Better open performance on mobile.
+      <Drawer
+        variant="permanent"
+        anchor="left"
+        open={props.open}
+        ModalProps={{
+          keepMounted: true, // Better open performance on mobile.
+        }}
+      >
+        <DrawerHeader>
+          <Typography
+            variant="h5"
+            align="left"
+            sx={{ color: theme.palette.primary.contrastText }}
+          >
+            Navigation
+          </Typography>
+          <IconButton
+            onClick={() => props.handleMenuClose()}
+            sx={{ color: theme.palette.primary.contrastText }}
+          >
+            {theme.direction === "ltr" ? (
+              <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
+            )}
+          </IconButton>
+        </DrawerHeader>
+        <Divider />
+        {!props.open && (
+          <ListItem disablePadding>
+            <ListItemButton
+              sx={{
+                "&.Mui-selected": {
+                  // backgroundColor: "#f04265",
+                  backgroundColor: "#871313",
+                },
+              }}
+              onClick={() => props.handleMenuOpen()}
+            >
+              <ListItemIcon sx={{ color: theme.palette.primary.contrastText }}>
+                <SearchIcon />
+              </ListItemIcon>
+              <ListItemText
+                sx={{ color: theme.palette.primary.contrastText }}
+                primary={
+                  <SearchBar
+                    searchOpen={searchOpen}
+                    setSearchOpen={setSearchOpen}
+                  />
+                }
+              />
+            </ListItemButton>
+          </ListItem>
+        )}
+        {props.open && (
+          <ListItem
+            disablePadding
+            sx={{
+              ml: "1rem",
+              "&.Mui-selected": {
+                // backgroundColor: "#f04265",
+                backgroundColor: "#871313",
+              },
             }}
-        >
-            <DrawerHeader>
-                <Typography
-                    variant="h5"
-                    align='left'
-                    sx={{ color: theme.palette.primary.contrastText }}
+          >
+            <ListItemIcon sx={{ color: theme.palette.primary.contrastText }}>
+              <SearchIcon />
+            </ListItemIcon>
+            <ListItemText
+              sx={{ color: theme.palette.primary.contrastText }}
+              primary={
+                <SearchBar
+                  searchOpen={searchOpen}
+                  setSearchOpen={setSearchOpen}
+                />
+              }
+            />
+          </ListItem>
+        )}
+        <List>
+          {menuData.map((item) => (
+            <ListItem key={item.index} disablePadding>
+              <ListItemButton
+                sx={{
+                  "&.Mui-selected": {
+                    // backgroundColor: "#f04265",
+                    backgroundColor: "#871313",
+                  },
+                }}
+                selected={selectedIndex === item.index}
+                onClick={() => handleListItemClick(item.link, item.index)}
+              >
+                <ListItemIcon
+                  sx={{ color: theme.palette.primary.contrastText }}
                 >
-                    Navigation
-                </Typography>
-                <IconButton
-                    onClick={() => props.handleMenuClose()}
-                    sx={{ color: theme.palette.primary.contrastText }}
-                >
-                    {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                </IconButton>
-            </DrawerHeader>
-            <Divider />
-            {!props.open &&
-                <ListItem
-                    disablePadding >
-                    <ListItemButton
-                        sx={{
-                            "&.Mui-selected": {
-                                backgroundColor: "#f04265",
-                            }
-                        }}
-                        onClick={() => props.handleMenuOpen()}
-                    >
-                        <ListItemIcon sx={{ color: theme.palette.primary.contrastText }}>
-                            <SearchIcon />
-                        </ListItemIcon>
-                        <ListItemText
-                            sx={{ color: theme.palette.primary.contrastText }}
-                            primary={
-                                <SearchBar searchOpen={searchOpen} setSearchOpen={setSearchOpen} />
-                            }
-                        />
-                    </ListItemButton>
-                </ListItem>
-            }
-            {props.open &&
-                <ListItem
-                    disablePadding 
-                        sx={{
-                            ml:'1rem',
-                            "&.Mui-selected": {
-                                backgroundColor: "#f04265",
-                            }
-                        }}
-                    >
-                        <ListItemIcon sx={{ color: theme.palette.primary.contrastText }}>
-                            <SearchIcon />
-                        </ListItemIcon>
-                        <ListItemText
-                            sx={{ color: theme.palette.primary.contrastText }}
-                            primary={
-                                <SearchBar searchOpen={searchOpen} setSearchOpen={setSearchOpen} />
-                            }
-                        />
-                </ListItem>
-            }
-            <List >
-                {menuData.map((item) => (
-                    <ListItem key={item.index} disablePadding>
-                        <ListItemButton
-                            sx={{
-                                "&.Mui-selected": {
-                                    backgroundColor: "#f04265",
-                                },
-                            }}
-                            selected={selectedIndex === item.index}
-                            onClick={() => handleListItemClick(item.link, item.index)}
-                        >
-                            <ListItemIcon sx={{ color: theme.palette.primary.contrastText }}>
-                                {item.icon}
-                            </ListItemIcon>
-                            <ListItemText sx={{ color: theme.palette.primary.contrastText }} primary={item.label} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-            </List>
-        </Drawer >
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText
+                  sx={{ color: theme.palette.primary.contrastText }}
+                  primary={item.label}
+                />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>
     );
 }
 

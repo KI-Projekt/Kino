@@ -5,10 +5,10 @@ import { User } from "./PersonalDataGuestUser";
 import SaveIcon from '@mui/icons-material/Save';
 
 interface PersonalDataUserLoggedInProps {
-    personalDataFilled: boolean;
-    setPersonalDataFilled: Function;
-    user: User;
-    setUser: Function;
+  personalDataFilled: boolean;
+  setPersonalDataFilled: Function;
+  user: User;
+  setUser: Function;
 }
 
 function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {

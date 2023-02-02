@@ -14,7 +14,7 @@
 }
 
 .App-Header {
-  background-color: #282c34;
+  /* background-color: #282c34; */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -39,4 +39,13 @@
 
 .App-Box {
   box-shadow: rgb(0 0 0 / 16%) 0.063rem 0.063rem 0.625rem;
+}
+
+.App-Main{
+  background-color: #291647;
+  /* background-image: url("../img/pexels-donald-tong-109669.jpg") ; */
+}
+
+.App-Container{
+  background-color: #8f79a7;
 }

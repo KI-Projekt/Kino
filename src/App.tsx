@@ -22,10 +22,9 @@ import { Order } from "./views/PaymentDetailsView";
 import AddNewMoviesView from "./views/Admin/AddNewMoviesView";
 import { User } from "./components/PaymentDetailsView/PersonalDataGuestUser";
 import OrderFinalisationView from "./views/OrderFinalisationView";
-import UserProfile from "./views/UserProfile";
+import UserProfileView from "./views/UserProfileView";
 import ShowOverviewView from "./views/ShowOverviewView";
 import MovieShowDetails from "./views/MovieShowDetails";
-
 export interface AdminProps {
   isAdmin: boolean;
 }
@@ -42,7 +41,8 @@ export const redTheme = createTheme({
       black: "#1D1E2A",
     },
     primary: {
-      main: "#ED254E",
+      // main: "#ED254E",
+      main: "#cb1d1d",
       contrastText: "#1D1E2A",
     },
     secondary: {
@@ -63,7 +63,8 @@ export const redTheme = createTheme({
     MuiDatePicker: {
       styleOverrides: {
         root: {
-          backgroundColor: '#ED254E',
+          // backgroundColor: "#ED254E",
+          backgroundColor: "#cb1d1d",
         },
       },
     },
@@ -95,7 +96,6 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
 }));
 
 function App() {
-
   const [open, setOpen] = React.useState(false);
 
   const appBarProps = {
@@ -106,11 +106,15 @@ function App() {
     handleMenuClose: () => {
       setOpen(false);
     },
-  }
+  };
 
-  const [selectedMovie, setSelectedMovie] = React.useState<Movie | undefined>(undefined);
-  const [selectedShow, setSelectedShow] = React.useState<Show | undefined>(undefined);
-  const [adminProps, /* setAdminProps */] = React.useState<AdminProps>({
+  const [selectedMovie, setSelectedMovie] = React.useState<Movie | undefined>(
+    undefined
+  );
+  const [selectedShow, setSelectedShow] = React.useState<Show | undefined>(
+    undefined
+  );
+  const [adminProps /* setAdminProps */] = React.useState<AdminProps>({
     isAdmin: false,
   });
 
@@ -126,13 +130,32 @@ function App() {
     houseNumber: string | undefined,
     postcode: string | undefined,
     city: string | undefined,
-    emailAdress: string | undefined,) {
-    return { userID, firstName, surname, street, houseNumber, postcode, city, emailAdress };
+    emailAdress: string | undefined
+  ) {
+    return {
+      userID,
+      firstName,
+      surname,
+      street,
+      houseNumber,
+      postcode,
+      city,
+      emailAdress,
+    };
   }
 
   const [user, setUser] = React.useState<User>(
-    createUserData(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)
-  )
+    createUserData(
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined
+    )
+  );
 
   /*   const handleChangeAdminMode = (
       event: React.ChangeEvent<HTMLInputElement>
@@ -147,49 +170,62 @@ function App() {
   React.useEffect(() => {
     let url = window.location.href;
 
-    let aUrlParts = url.split("/")
+    let aUrlParts = url.split("/");
     if (aUrlParts[5] === "new") {
-      setIsNew(true)
+      setIsNew(true);
     }
-  }, [])
+  }, []);
 
   return (
     <div>
       <ThemeProvider theme={redTheme}>
         <BrowserRouter>
-          <Header appBarProps={appBarProps} user={user} setUser={setUser} setPersonalDataFilled={setPersonalDataFilled}
+          <Header
+            appBarProps={appBarProps}
+            user={user}
+            setUser={setUser}
+            setPersonalDataFilled={setPersonalDataFilled}
           />
           <Toolbar />
-          <Main open={open}>
-            <Container maxWidth="xl">
+          <Main open={open} className="App-Main">
+            <Container maxWidth="lg" className="App-Container">
               <Box className="App-Box" sx={{ minHeight: "82vh" }}>
                 <Routes>
-                  <Route path="/movieDetails/:imdbID"
-                    element={<MovieDetailsView
-                      setSelectedMovie={setSelectedMovie}
-                      setSelectedShow={setSelectedShow}
-                      selectedMovie={selectedMovie}
-                      isAdmin={adminProps.isAdmin}
-                      isNew={isNew}
-                      setIsNew={setIsNew}
-                    />
+                  <Route
+                    path="/movieDetails/:imdbID"
+                    element={
+                      <MovieDetailsView
+                        setSelectedMovie={setSelectedMovie}
+                        setSelectedShow={setSelectedShow}
+                        selectedMovie={selectedMovie}
+                        isAdmin={adminProps.isAdmin}
+                        isNew={isNew}
+                        setIsNew={setIsNew}
+                      />
                     }
                   />
                   <Route
                     path="/showDetails/:imdbID/:showID"
-                    element={<TicketView setSelectedMovie={setSelectedMovie}
-                      setSelectedShow={setSelectedShow}
-                      selectedMovie={selectedMovie}
-                      selectedShow={selectedShow}
-                      setOrder={setOrder} />}
+                    element={
+                      <TicketView
+                        setSelectedMovie={setSelectedMovie}
+                        setSelectedShow={setSelectedShow}
+                        selectedMovie={selectedMovie}
+                        selectedShow={selectedShow}
+                        setOrder={setOrder}
+                      />
+                    }
                   />
                   <Route
                     path="/movieDetails/:imdbID/:showID"
-                    element={<MovieShowDetails setSelectedMovie={setSelectedMovie}
-                      setSelectedShow={setSelectedShow}
-                      selectedMovie={selectedMovie}
-                      selectedShow={selectedShow}
-                    />}
+                    element={
+                      <MovieShowDetails
+                        setSelectedMovie={setSelectedMovie}
+                        setSelectedShow={setSelectedShow}
+                        selectedMovie={selectedMovie}
+                        selectedShow={selectedShow}
+                      />
+                    }
                   />
                   <Route
                     path="/orderDetails/:imdbID/:showID/:orderID"
@@ -205,25 +241,33 @@ function App() {
                         selectedMovie={selectedMovie}
                         selectedShow={selectedShow}
                         setOrder={setOrder}
-                      />}
+                      />
+                    }
                   />
-                  <Route path="/" element={<OverviewView isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} />} />
+                  <Route
+                    path="/"
+                    element={
+                      <OverviewView
+                        isAdmin={adminProps.isAdmin}
+                        isNew={isNew}
+                        setIsNew={setIsNew}
+                      />
+                    }
+                  />
                   <Route path="/impressum" element={<ImpressumView />} />
                   <Route path="/contact" element={<ContactUsView />} />
                   <Route path="/about" element={<AboutUsView />} />
                   <Route path="/gettingHere" element={<GettingHereView />} />
-                  <Route path="/login" element={<LoginView setUser={setUser} user={user} />} />
+                  <Route
+                    path="/login"
+                    element={<LoginView setUser={setUser} user={user} />}
+                  />
                   <Route
                     path="/privacyPolicy"
                     element={<PrivacyPolicyView />}
                   />
                   <Route
                     path="/movieDetails/:imdbID"
-                    element={<MovieDetailsView setSelectedMovie={setSelectedMovie} setSelectedShow={setSelectedShow} selectedMovie={selectedMovie} isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} />}
-                  />
-                  <Route path="/openingHours" element={<OpeningHoursView isAdmin={adminProps.isAdmin} />} />
-                  <Route path="/ticketPrices" element={<TicketPricesView isAdmin={adminProps.isAdmin} />} />
-                  <Route path="/movieDetails/:imdbID/new"
                     element={
                       <MovieDetailsView
                         setSelectedMovie={setSelectedMovie}
@@ -235,21 +279,66 @@ function App() {
                       />
                     }
                   />
-                  <Route path="/addNewMovie" element={<AddNewMoviesView isAdmin={adminProps.isAdmin} isNew={isNew} setIsNew={setIsNew} />} />
+                  <Route
+                    path="/openingHours"
+                    element={<OpeningHoursView isAdmin={adminProps.isAdmin} />}
+                  />
+                  <Route
+                    path="/ticketPrices"
+                    element={<TicketPricesView isAdmin={adminProps.isAdmin} />}
+                  />
+                  <Route
+                    path="/movieDetails/:imdbID/new"
+                    element={
+                      <MovieDetailsView
+                        setSelectedMovie={setSelectedMovie}
+                        setSelectedShow={setSelectedShow}
+                        selectedMovie={selectedMovie}
+                        isAdmin={adminProps.isAdmin}
+                        isNew={isNew}
+                        setIsNew={setIsNew}
+                      />
+                    }
+                  />
+                  <Route
+                    path="/addNewMovie"
+                    element={
+                      <AddNewMoviesView
+                        isAdmin={adminProps.isAdmin}
+                        isNew={isNew}
+                        setIsNew={setIsNew}
+                      />
+                    }
+                  />
                   <Route
                     path="/order/:imdbID/:showID/:orderID"
-                    element={<OrderFinalisationView
-                      order={order}
-                      user={user}
-                      setSelectedMovie={setSelectedMovie}
-                      setSelectedShow={setSelectedShow}
-                      selectedMovie={selectedMovie}
-                      selectedShow={selectedShow}
-                      setOrder={setOrder}
-                    />}
+                    element={
+                      <OrderFinalisationView
+                        order={order}
+                        user={user}
+                        setSelectedMovie={setSelectedMovie}
+                        setSelectedShow={setSelectedShow}
+                        selectedMovie={selectedMovie}
+                        selectedShow={selectedShow}
+                        setOrder={setOrder}
+                      />
+                    }
                   />
-                  <Route path="/profile/:userID" element={<UserProfile user={user} />} />
-                  <Route path="/shows" element={<ShowOverviewView isAdmin={adminProps.isAdmin} />} />
+                  <Route
+                    path="/profile/:userID"
+                    element={
+                      <UserProfileView
+                        user={user}
+                        personalDataFilled={personalDataFilled}
+                        setPersonalDataFilled={setPersonalDataFilled}
+                        setUser={setUser}
+                      />
+                    }
+                  />
+                  <Route
+                    path="/shows"
+                    element={<ShowOverviewView isAdmin={adminProps.isAdmin} />}
+                  />
                 </Routes>
               </Box>
             </Container>
