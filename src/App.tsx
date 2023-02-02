@@ -8,23 +8,24 @@ import GettingHereView from "./views/GettingHereView";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header, { drawerWidth } from "./components/Header/Header";
 import OverviewView from "./views/OverviewView";
-import { Box, Container, createTheme, /* FormControlLabel ,*/ styled, /* Switch ,*/ ThemeProvider, Toolbar, } from "@mui/material";
+import { Box, Container, createTheme, FormControlLabel, styled, Switch, ThemeProvider, Toolbar, } from "@mui/material";
 import type { } from '@mui/x-date-pickers/themeAugmentation';
 import OpeningHoursView from "./views/OpeningHoursView";
 import TicketPricesView from "./views/TicketPricesView";
-import MovieDetailsView, { Movie } from "./views/MovieDetailsView";
+import MovieDetailsView from "./views/MovieDetailsView";
 import PrivacyPolicyView from "./views/PrivacyPolicyView";
 import LoginView from "./views/LoginView";
 import PaymentDetailsView from "./views/PaymentDetailsView";
 import TicketView from "./views/TicketView";
-import { Show } from "./components/MovieDetailsView/ShowTiles";
-import { Order } from "./views/PaymentDetailsView";
 import AddNewMoviesView from "./views/Admin/AddNewMoviesView";
-import { User } from "./components/PaymentDetailsView/PersonalDataGuestUser";
 import OrderFinalisationView from "./views/OrderFinalisationView";
 import UserProfileView from "./views/UserProfileView";
 import ShowOverviewView from "./views/ShowOverviewView";
 import MovieShowDetails from "./views/MovieShowDetails";
+import RoomOverviewView from "./views/Admin/RoomOverviewView";
+import RoomDetailsView from "./views/Admin/RoomDetailsView";
+import { Movie, Order, Show, User } from "./interfaces/Interfaces";
+
 export interface AdminProps {
   isAdmin: boolean;
 }
@@ -108,13 +109,9 @@ function App() {
     },
   };
 
-  const [selectedMovie, setSelectedMovie] = React.useState<Movie | undefined>(
-    undefined
-  );
-  const [selectedShow, setSelectedShow] = React.useState<Show | undefined>(
-    undefined
-  );
-  const [adminProps /* setAdminProps */] = React.useState<AdminProps>({
+  const [selectedMovie, setSelectedMovie] = React.useState<Movie | undefined>(undefined);
+  const [selectedShow, setSelectedShow] = React.useState<Show | undefined>(undefined);
+  const [adminProps, setAdminProps] = React.useState<AdminProps>({
     isAdmin: false,
   });
 
@@ -157,13 +154,13 @@ function App() {
     )
   );
 
-  /*   const handleChangeAdminMode = (
-      event: React.ChangeEvent<HTMLInputElement>
-    ) => {
-      setAdminProps({
-        isAdmin: event.target.checked,
-      });
-    }; */
+  const handleChangeAdminMode = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setAdminProps({
+      isAdmin: event.target.checked,
+    });
+  };
 
   const [isNew, setIsNew] = React.useState<boolean>(false);
 
@@ -206,15 +203,14 @@ function App() {
                   />
                   <Route
                     path="/showDetails/:imdbID/:showID"
-                    element={
-                      <TicketView
-                        setSelectedMovie={setSelectedMovie}
-                        setSelectedShow={setSelectedShow}
-                        selectedMovie={selectedMovie}
-                        selectedShow={selectedShow}
-                        setOrder={setOrder}
-                      />
-                    }
+                    element={<TicketView setSelectedMovie={setSelectedMovie}
+                      setSelectedShow={setSelectedShow}
+                      selectedMovie={selectedMovie}
+                      selectedShow={selectedShow}
+                      setOrder={setOrder}
+                      order={order}
+                      user={user}
+                    />}
                   />
                   <Route
                     path="/movieDetails/:imdbID/:showID"
@@ -339,14 +335,18 @@ function App() {
                     path="/shows"
                     element={<ShowOverviewView isAdmin={adminProps.isAdmin} />}
                   />
+                  <Route path="/profile/:userID" element={<UserProfileView personalDataFilled={personalDataFilled} setUser={setUser} setPersonalDataFilled={setPersonalDataFilled} user={user} />} />
+                  <Route path="/shows" element={<ShowOverviewView isAdmin={adminProps.isAdmin} />} />
+                  <Route path="/rooms" element={<RoomOverviewView isAdmin={adminProps.isAdmin} />} />
+                  <Route path="/roomDetails/:roomID" element={<RoomDetailsView isAdmin={adminProps.isAdmin} />} />
                 </Routes>
               </Box>
             </Container>
             <Footer user={user} />
-            {/*             <FormControlLabel
+            <FormControlLabel
               control={<Switch onChange={handleChangeAdminMode} />}
               label="Admin"
-            /> */}
+            />
           </Main>
         </BrowserRouter>
       </ThemeProvider>

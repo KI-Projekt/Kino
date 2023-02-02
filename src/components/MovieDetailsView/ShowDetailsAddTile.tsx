@@ -1,13 +1,11 @@
 import { Button, Divider, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography, useTheme } from "@mui/material";
-import { Show } from "./ShowTiles";
 import { DateTimePicker } from "@mui/x-date-pickers";
-import { Room } from "../../views/TicketView";
 import React from "react";
-import { Movie } from "../../views/MovieDetailsView";
 import AddIcon from '@mui/icons-material/Add';
 import { Dayjs } from "dayjs";
 import { postNewShow } from "../../queries/changeScreenings";
 import Alerts from "../Alerts";
+import { Movie, Room, Show } from "../../interfaces/Interfaces";
 
 interface ShowDetailsAddTileProps {
     selectedMovie: Movie;
@@ -37,15 +35,12 @@ function ShowDetailsAddTile(props: ShowDetailsAddTileProps) {
     );
     function handleAddNewShow() {
         if (addNewShow.dateTime && props.selectedMovie.runtime) {
-            const TRAILER_ADD = 15;
             let startTime = dateChanged ? addNewShow.dateTime : new Date(addNewShow.dateTime?.setHours(addNewShow.dateTime?.getHours() + 1))
-            let endTime = new Date(addNewShow.dateTime?.setMinutes(addNewShow.dateTime?.getMinutes() + parseInt(props.selectedMovie.runtime) + TRAILER_ADD))
 
             let payload = {
                 movieId: props.selectedMovie.id,
                 roomId: addNewShow.roomID,
                 startDateTime: startTime,
-                endDateTime: endTime,
             }
             setDateChanged(true)
             postNewShow(payload).then(result => {
@@ -64,7 +59,7 @@ function ShowDetailsAddTile(props: ShowDetailsAddTileProps) {
                     }));
                 }
                 setAlertOpen(true);
-                props.getShowsByMovie()
+                props.getShowsByMovie();
             })
         }
     }

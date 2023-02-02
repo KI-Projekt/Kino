@@ -2,7 +2,7 @@ import React from "react"
 import '../../styles/Login.css';
 import { Button, Box, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField, useTheme } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { User } from "../PaymentDetailsView/PersonalDataGuestUser";
+import { User } from "../../interfaces/Interfaces";
 
 interface State {
   password: string;

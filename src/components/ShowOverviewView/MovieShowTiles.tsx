@@ -3,8 +3,8 @@ import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import ButtonBase from '@mui/material/ButtonBase';
 import Typography from '@mui/material/Typography';
-import { Show, ShowDate } from '../MovieDetailsView/ShowTiles';
 import { Divider, Grid } from '@mui/material';
+import { Show, ShowDate } from '../../interfaces/Interfaces';
 
 const ImageSrc = styled('span')({
     position: 'absolute',

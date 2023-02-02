@@ -1,8 +1,8 @@
 import { Link } from "@mui/material";
 import React from "react"
+import { User } from "../../interfaces/Interfaces";
 import '../../styles/Login.css';
 import SignUpForm from "./SignUpForm";
-import { User } from "../PaymentDetailsView/PersonalDataGuestUser";
 
 interface SignUpProps {
   user: User;

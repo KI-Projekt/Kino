@@ -13,7 +13,7 @@ export const postNewShow = async (newShow: any) => {
     return data;
 };
 
-export const deleteShow = async (id: String) => {
+export const deleteShow = async (id: number) => {
     const data = await axios.delete(`${PATH}api/screenings/${id}`)
         .then(response => {
             return response

@@ -2,10 +2,9 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { fareSelection } from "../TicketView/FareSelection";
-import { Row } from "../../views/PaymentDetailsView";
 import { Box, Divider, Grid } from "@mui/material";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { fareSelection, Row } from "../../interfaces/Interfaces";
 
 interface OrderOverviewProps {
   orderID: string | number | undefined;
@@ -66,7 +65,7 @@ function OrderOverview(prop: OrderOverviewProps) {
                     return (
                       <div key={index}>
                         <Typography variant="body1" color="text.secondary">
-                          Row: {seatRow.rowDescription}
+                          {seatRow.rowDescription}
                         </Typography>
                         <div className="row">
                           <Typography
@@ -86,7 +85,7 @@ function OrderOverview(prop: OrderOverviewProps) {
                                 marginRight: "0.1rem",
                               }}
                             >
-                              {seatItem.seatNumber}
+                              {seatItem.seat.column}
                             </Typography>
                           ))}
                         </div>

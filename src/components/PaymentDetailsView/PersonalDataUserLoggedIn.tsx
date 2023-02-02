@@ -1,8 +1,8 @@
 import { Box, Button, TextField, useTheme } from "@mui/material";
 import React from "react"
 import '../../styles/Login.css';
-import { User } from "./PersonalDataGuestUser";
 import SaveIcon from '@mui/icons-material/Save';
+import { User } from "../../interfaces/Interfaces";
 
 interface PersonalDataUserLoggedInProps {
   personalDataFilled: boolean;

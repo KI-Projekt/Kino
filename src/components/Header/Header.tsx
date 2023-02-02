@@ -7,7 +7,7 @@ import CinetastischIcon from '../../img/Cinetastisch_icon.png';
 import SideMenu from './SideMenu';
 import SideMenuButton from './SideMenuButton';
 import ProfileMenuButton from './ProfileMenuButton';
-import { User } from '../PaymentDetailsView/PersonalDataGuestUser';
+import { User } from '../../interfaces/Interfaces';
 
 export interface AppBarProps extends MuiAppBarProps {
   open?: boolean;

@@ -1,13 +1,11 @@
 import { Box, useTheme } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { ShowDate } from "./ShowTiles";
-import { Movie } from "../../views/MovieDetailsView";
 import ShowDetailsEditTiles from "./ShowDetailsEditTile";
 import ShowDetailsAddTile from "./ShowDetailsAddTile";
 import { useEffect, useState } from "react";
-import { Room } from "../../views/TicketView";
 import { fetchAllRooms } from "../../queries/fetchRoomAPI";
+import { Movie, Room, ShowDate } from "../../interfaces/Interfaces";
 
 interface ShowDetailsProps {
     showData: Array<ShowDate> | undefined,
@@ -18,7 +16,7 @@ interface ShowDetailsProps {
 
 function ShowDetails(props: ShowDetailsProps) {
 
-    const [roomData, setRoomData] = useState<Array<Room> | undefined>(undefined)
+    const [roomData, setRoomData] = useState<Array<Room>>([])
 
     useEffect(() => {
         fetchAllRooms().then(result => setRoomData(result))
@@ -30,14 +28,12 @@ function ShowDetails(props: ShowDetailsProps) {
         <>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Box sx={{ p: theme.spacing(1) }}>
-                    {roomData &&
                         <>
                             {props.showData &&
-                                <ShowDetailsEditTiles roomData={roomData} showData={props.showData} setShowData={props.setShowData} selectedMovie={props.selectedMovie} />
+                                <ShowDetailsEditTiles roomData={roomData} showData={props.showData} getShowsByMovie={props.getShowsByMovie} setShowData={props.setShowData} selectedMovie={props.selectedMovie} />
                             }
                             <ShowDetailsAddTile roomData={roomData} selectedMovie={props.selectedMovie} getShowsByMovie={props.getShowsByMovie} />
                         </>
-                    }
                 </Box>
             </LocalizationProvider>
         </>

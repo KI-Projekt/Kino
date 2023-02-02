@@ -8,3 +8,12 @@ export const fetchAllRooms = async () => {
 
     return responseJson;
 };
+
+export const fetchSeatplanByRoom = async (roomID: String) => {
+    const url = PATH + `api/rooms/${roomID}`;
+
+    const response = await fetch(url);
+    const responseJson = await response.json();
+
+    return responseJson;
+};

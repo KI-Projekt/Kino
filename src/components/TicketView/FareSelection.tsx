@@ -4,6 +4,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { isMobile } from 'react-device-detect';
+import { fareSelection } from "../../interfaces/Interfaces";
 
 interface fareSelectionProps {
     totalAmountOfTickets: number;
@@ -11,13 +12,7 @@ interface fareSelectionProps {
     setFares: React.Dispatch<React.SetStateAction<fareSelection[]>>;
     windowWidth: number;
 }
-export interface fareSelection {
-    id: number;
-    name: string;
-    price: number;
-    condition: string;
-    amountOfTickets: number;
-}
+
 
 function FareSelection(props: fareSelectionProps) {
 

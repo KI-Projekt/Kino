@@ -1,7 +1,7 @@
 import { Box, Card, Divider, Typography, useTheme } from '@mui/material';
 import * as React from 'react';
 import Youtube from 'react-youtube'
-import { Movie } from '../../views/MovieDetailsView';
+import { Movie } from '../../interfaces/Interfaces';
 
 interface MovieFactsProps {
     selectedMovie: Movie,
