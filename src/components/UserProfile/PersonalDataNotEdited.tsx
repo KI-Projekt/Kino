@@ -9,6 +9,7 @@ interface UserProfileViewProps {
   setPersonalDataFilled: Function;
   user: User;
   setUser: Function;
+  personalDataChanged: boolean;
 }
 
 function UserProfileView(props: UserProfileViewProps) {
@@ -17,8 +18,6 @@ function UserProfileView(props: UserProfileViewProps) {
   });
 
   const theme = useTheme();
-
-  const [dataChanged, setDataChanged] = React.useState<boolean>(false);
 
   const setAllRequiredDataFilled = (newUser: User) => {
     if (
@@ -46,7 +45,6 @@ function UserProfileView(props: UserProfileViewProps) {
     };
     props.setUser(newUser);
     setAllRequiredDataFilled(newUser);
-    setDataChanged(true);
   };
 
   return (
@@ -156,15 +154,16 @@ function UserProfileView(props: UserProfileViewProps) {
         ) => handleOnChange(e)}
       />
 
-      <Button
-        sx={{ my: 2 }}
-        startIcon={<SaveIcon />}
-        variant="contained"
-        fullWidth
-        disabled={!dataChanged}
-      >
-        Save
-      </Button>
+      {props.personalDataChanged && (
+        <Button
+          sx={{ my: 2 }}
+          startIcon={<SaveIcon />}
+          variant="contained"
+          fullWidth
+        >
+          Save
+        </Button>
+      )}
     </Box>
   );
 }

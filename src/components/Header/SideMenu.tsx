@@ -134,7 +134,6 @@ function SideMenu(props: AppBarProps) {
             <ListItemButton
               sx={{
                 "&.Mui-selected": {
-                  // backgroundColor: "#f04265",
                   backgroundColor: "#871313",
                 },
               }}
@@ -161,7 +160,6 @@ function SideMenu(props: AppBarProps) {
             sx={{
               ml: "1rem",
               "&.Mui-selected": {
-                // backgroundColor: "#f04265",
                 backgroundColor: "#871313",
               },
             }}
@@ -186,7 +184,6 @@ function SideMenu(props: AppBarProps) {
               <ListItemButton
                 sx={{
                   "&.Mui-selected": {
-                    // backgroundColor: "#f04265",
                     backgroundColor: "#871313",
                   },
                 }}

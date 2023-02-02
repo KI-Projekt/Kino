@@ -42,7 +42,6 @@ export const redTheme = createTheme({
       black: "#1D1E2A",
     },
     primary: {
-      // main: "#ED254E",
       main: "#cb1d1d",
       contrastText: "#1D1E2A",
     },
@@ -64,7 +63,6 @@ export const redTheme = createTheme({
     MuiDatePicker: {
       styleOverrides: {
         root: {
-          // backgroundColor: "#ED254E",
           backgroundColor: "#cb1d1d",
         },
       },
@@ -109,11 +107,18 @@ function App() {
     },
   };
 
-  const [selectedMovie, setSelectedMovie] = React.useState<Movie | undefined>(undefined);
-  const [selectedShow, setSelectedShow] = React.useState<Show | undefined>(undefined);
+  const [selectedMovie, setSelectedMovie] = React.useState<Movie | undefined>(
+    undefined
+  );
+  const [selectedShow, setSelectedShow] = React.useState<Show | undefined>(
+    undefined
+  );
   const [adminProps, setAdminProps] = React.useState<AdminProps>({
     isAdmin: false,
   });
+
+  const [personalDataChanged, setPersonalDataChanged] =
+    React.useState<boolean>(false);
 
   const [order, setOrder] = React.useState<Order | undefined>(undefined);
 
@@ -185,7 +190,7 @@ function App() {
           />
           <Toolbar />
           <Main open={open} className="App-Main">
-            <Container maxWidth="lg" className="App-Container">
+            <Container maxWidth="xl" className="App-Container">
               <Box className="App-Box" sx={{ minHeight: "82vh" }}>
                 <Routes>
                   <Route
@@ -203,14 +208,17 @@ function App() {
                   />
                   <Route
                     path="/showDetails/:imdbID/:showID"
-                    element={<TicketView setSelectedMovie={setSelectedMovie}
-                      setSelectedShow={setSelectedShow}
-                      selectedMovie={selectedMovie}
-                      selectedShow={selectedShow}
-                      setOrder={setOrder}
-                      order={order}
-                      user={user}
-                    />}
+                    element={
+                      <TicketView
+                        setSelectedMovie={setSelectedMovie}
+                        setSelectedShow={setSelectedShow}
+                        selectedMovie={selectedMovie}
+                        selectedShow={selectedShow}
+                        setOrder={setOrder}
+                        order={order}
+                        user={user}
+                      />
+                    }
                   />
                   <Route
                     path="/movieDetails/:imdbID/:showID"
@@ -237,6 +245,8 @@ function App() {
                         selectedMovie={selectedMovie}
                         selectedShow={selectedShow}
                         setOrder={setOrder}
+                        setPersonalDataChanged={setPersonalDataChanged}
+                        personalDataChanged={personalDataChanged}
                       />
                     }
                   />
@@ -328,6 +338,8 @@ function App() {
                         personalDataFilled={personalDataFilled}
                         setPersonalDataFilled={setPersonalDataFilled}
                         setUser={setUser}
+                        personalUserDataChanged={personalDataChanged}
+                        setPersonalUserDataChanged={setPersonalDataChanged}
                       />
                     }
                   />
@@ -335,10 +347,14 @@ function App() {
                     path="/shows"
                     element={<ShowOverviewView isAdmin={adminProps.isAdmin} />}
                   />
-                  <Route path="/profile/:userID" element={<UserProfileView personalDataFilled={personalDataFilled} setUser={setUser} setPersonalDataFilled={setPersonalDataFilled} user={user} />} />
-                  <Route path="/shows" element={<ShowOverviewView isAdmin={adminProps.isAdmin} />} />
-                  <Route path="/rooms" element={<RoomOverviewView isAdmin={adminProps.isAdmin} />} />
-                  <Route path="/roomDetails/:roomID" element={<RoomDetailsView isAdmin={adminProps.isAdmin} />} />
+                  <Route
+                    path="/rooms"
+                    element={<RoomOverviewView isAdmin={adminProps.isAdmin} />}
+                  />
+                  <Route
+                    path="/roomDetails/:roomID"
+                    element={<RoomDetailsView isAdmin={adminProps.isAdmin} />}
+                  />
                 </Routes>
               </Box>
             </Container>

@@ -12,6 +12,8 @@ interface UserProfileProps {
   personalDataFilled: boolean;
   setPersonalDataFilled: Function;
   setUser: Function;
+  personalUserDataChanged: boolean;
+  setPersonalUserDataChanged: Function;
 }
 
 function UserProfileView(props: UserProfileProps) {
@@ -27,55 +29,60 @@ function UserProfileView(props: UserProfileProps) {
   }
 
   return (
-    <>
-      {props.user.firstName && (
-        <>
-          <Box>
-            {!isEdited && (
-              <Button
-                variant="contained"
-                onClick={handleEdit}
-                className="UserProfile-Button"
-                startIcon={<Edit />}
-              >
-                Edit
-              </Button>
-            )}
+    <Box sx={{ p: 3 }}>
+      <>
+        {props.user.firstName && (
+          <>
+            <Box>
+              {!isEdited && (
+                <Button
+                  variant="contained"
+                  onClick={handleEdit}
+                  className="UserProfile-Button"
+                  startIcon={<Edit />}
+                >
+                  Edit
+                </Button>
+              )}
+              {isEdited && (
+                <Button
+                  variant="contained"
+                  onClick={handleEdit}
+                  className="UserProfile-Button"
+                  startIcon={<ArrowBack />}
+                >
+                  Back
+                </Button>
+              )}
+            </Box>
+            <Typography variant="h4" className="UserProfile-Headline">
+              {" "}
+              Personal Data
+            </Typography>
             {isEdited && (
-              <Button
-                variant="contained"
-                onClick={handleEdit}
-                className="UserProfile-Button"
-                startIcon={<ArrowBack />}
-              >
-                Back
-              </Button>
+              <PersonalDataUserLoggedIn
+                user={props.user}
+                personalDataFilled={props.personalDataFilled}
+                setPersonalDataFilled={props.setPersonalDataFilled}
+                setUser={props.setUser}
+                setPersonalDataChanged={props.setPersonalUserDataChanged}
+                personalDataChanged={props.personalUserDataChanged}
+              />
+            )}{" "}
+            {!isEdited && (
+              <PersonalDataNotEdited
+                user={props.user}
+                personalDataFilled={props.personalDataFilled}
+                setPersonalDataFilled={props.setPersonalDataFilled}
+                setUser={props.setUser}
+                personalDataChanged={props.personalUserDataChanged}
+              />
             )}
-          </Box>
-          <Typography variant="h4" className="UserProfile-Headline">
-            {" "}
-            Personal Data
-          </Typography>
-          {isEdited && (
-            <PersonalDataUserLoggedIn
-              user={props.user}
-              personalDataFilled={props.personalDataFilled}
-              setPersonalDataFilled={props.setPersonalDataFilled}
-              setUser={props.setUser}
-            />
-          )}{" "}
-          {!isEdited && (
-            <PersonalDataNotEdited
-              user={props.user}
-              personalDataFilled={props.personalDataFilled}
-              setPersonalDataFilled={props.setPersonalDataFilled}
-              setUser={props.setUser}
-            />
-          )}
-        </>
-      )}
-      {!props.user.firstName && navigateToLogin()}
-    </>
+          </>
+        )}
+        {!props.user.firstName && navigateToLogin()}
+      </>
+    </Box>
   );
 }
 
