@@ -1,7 +1,7 @@
 import { Box, Button, TextField, useTheme } from "@mui/material";
 import React from "react";
 import "../../styles/Login.css";
-import { User } from "../PaymentDetailsView/PersonalDataGuestUser";
+import { User } from "../../interfaces/Interfaces";
 import SaveIcon from "@mui/icons-material/Save";
 
 interface UserProfileViewProps {
@@ -156,7 +156,7 @@ function UserProfileView(props: UserProfileViewProps) {
         ) => handleOnChange(e)}
       />
 
-      {/* <Button
+      <Button
         sx={{ my: 2 }}
         startIcon={<SaveIcon />}
         variant="contained"
@@ -164,7 +164,7 @@ function UserProfileView(props: UserProfileViewProps) {
         disabled={!dataChanged}
       >
         Save
-      </Button> */}
+      </Button>
     </Box>
   );
 }

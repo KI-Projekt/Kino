@@ -1,6 +1,6 @@
 import React from "react";
-import { Box, Button, Typography, useTheme } from "@mui/material";
-import { User } from "../components/PaymentDetailsView/PersonalDataGuestUser";
+import { Box, Button, Typography } from "@mui/material";
+import { User } from "../interfaces/Interfaces";
 import { useNavigate } from "react-router";
 import PersonalDataUserLoggedIn from "../components/PaymentDetailsView/PersonalDataUserLoggedIn";
 import PersonalDataNotEdited from "../components/UserProfile/PersonalDataNotEdited";
@@ -21,7 +21,6 @@ function UserProfileView(props: UserProfileProps) {
     navigate("/login");
   }
   const [isEdited, setIsEdited] = React.useState<boolean>(false);
-  const theme = useTheme();
 
   function handleEdit() {
     setIsEdited(!isEdited);
