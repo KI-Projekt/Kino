@@ -37,30 +37,46 @@ function Login(props: LoginProps) {
 
   const theme = useTheme();
 
-  /* function createUserData(
-    userID: number | undefined,
-    firstName: string | undefined,
-    surname: string | undefined,
-    street: string | undefined,
-    houseNumber: string | undefined,
-    postcode: string | undefined,
-    city: string | undefined,
-    emailAdress: string | undefined,) {
-    return { userID, firstName, surname, street, houseNumber, postcode, city, emailAdress };
-  }
+   function createUserData(
+     userID: number | undefined,
+     firstName: string | undefined,
+     surname: string | undefined,
+     street: string | undefined,
+     houseNumber: string | undefined,
+     postcode: string | undefined,
+     city: string | undefined,
+     emailAdress: string | undefined
+   ) {
+     return {
+       userID,
+       firstName,
+       surname,
+       street,
+       houseNumber,
+       postcode,
+       city,
+       emailAdress,
+     };
+   }
 
-  const testUser = (
-    createUserData(156548, "Jojo", "Siwaaaa", "Fifth Avenue", "87", "64729", "New York", "jojo.siwaaa@gmail.com")
-  ); */
+   const testUser = createUserData(
+     156548,
+     "Jojo",
+     "Siwaaaa",
+     "Fifth Avenue",
+     "87",
+     "64729",
+     "New York",
+     "jojo.siwaaa@gmail.com"
+   );
 
-
-  async function handleSignIn() {
-    if (props.handleProfileMenuClose) {
-      props.handleProfileMenuClose();
-      await new Promise(f => setTimeout(f, 1000));
-    }
-    //props.setUser(testUser);
-  }
+   async function handleSignIn() {
+     if (props.handleProfileMenuClose) {
+       props.handleProfileMenuClose();
+       await new Promise((f) => setTimeout(f, 1000));
+     }
+     props.setUser(testUser);
+   }
 
   return (
     <Box

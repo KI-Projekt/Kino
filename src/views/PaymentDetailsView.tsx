@@ -31,28 +31,33 @@ interface PaymentDetailsViewProps {
   selectedMovie: Movie | undefined;
   setSelectedShow: React.Dispatch<React.SetStateAction<Show | undefined>>;
   selectedShow: Show | undefined;
+  setPersonalDataChanged: Function;
+  personalDataChanged: boolean;
 }
 
-export const  getOrderAfterReload = async() => {
+export const getOrderAfterReload = async () => {
   let url = window.location.href;
 
-  let aUrlParts = url.split("/") 
-  let orderID = aUrlParts[6]
-  const response = await fetchOrderByID(parseInt(orderID)).then(result => {
+  let aUrlParts = url.split("/");
+  let orderID = aUrlParts[6];
+  const response = await fetchOrderByID(parseInt(orderID)).then((result) => {
     return result;
-})
-  return response
-}
+  });
+  return response;
+};
 
 function PaymentDetailsView(props: PaymentDetailsViewProps) {
-
   const theme = useTheme();
 
-  const [paymentMethod, setPaymentMethod] = React.useState<string | null>('cash');
+  const [paymentMethod, setPaymentMethod] = React.useState<string | null>(
+    "cash"
+  );
 
   const [privacyPolicyChecked, setPrivacyPolicyChecked] = React.useState(false);
 
-  const handleChangePrivacyPolicyCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangePrivacyPolicyCheck = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setPrivacyPolicyChecked(event.target.checked);
   };
 
@@ -61,18 +66,20 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
   const setOrder = props.setOrder;
 
   React.useEffect(() => {
-    getShowAfterReload().then(result => setSelectedShow(result))
-    getMovieAfterReload().then(result => setSelectedMovie(result));
-    getOrderAfterReload().then(result => setOrder(result));
+    getShowAfterReload().then((result) => setSelectedShow(result));
+    getMovieAfterReload().then((result) => setSelectedMovie(result));
+    getOrderAfterReload().then((result) => setOrder(result));
   }, [setSelectedShow, setSelectedMovie, setOrder]);
   const navigate = useNavigate();
 
   function handleOnClick() {
     if (props.order?.id)
-      payOrder(props.order?.id).then(result => {
+      payOrder(props.order?.id).then((result) => {
         console.log(result);
-      })
-    navigate(`/order/${props.selectedMovie?.id}/${props.selectedShow?.showID}/${props.order?.id}`);
+      });
+    navigate(
+      `/order/${props.selectedMovie?.id}/${props.selectedShow?.showID}/${props.order?.id}`
+    );
   }
 
   return (
@@ -100,19 +107,25 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
             setPersonalDataFilled={props.setPersonalDataFilled}
             user={props.user}
             setUser={props.setUser}
+            personalDataChanged={props.personalDataChanged}
+            setPersonalDataChanged={props.setPersonalDataChanged}
           />
-          <PaymentOptions paymentMethod={paymentMethod} setPaymentMethod={setPaymentMethod} />
+          <PaymentOptions
+            paymentMethod={paymentMethod}
+            setPaymentMethod={setPaymentMethod}
+          />
           <FormControlLabel
-            control={<Checkbox value={privacyPolicyChecked} onChange={handleChangePrivacyPolicyCheck} />}
+            control={
+              <Checkbox
+                value={privacyPolicyChecked}
+                onChange={handleChangePrivacyPolicyCheck}
+              />
+            }
             sx={{ paddingLeft: "3rem" }}
             label={
               <Typography>
-                I accept the
-                {" "}
-                <Link
-                  href={`/privacyPolicy`}
-                  target="_blank"
-                >
+                I accept the{" "}
+                <Link href={`/privacyPolicy`} target="_blank">
                   Privacy Policy
                 </Link>
               </Typography>
@@ -129,7 +142,13 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
             <Button
               variant="contained"
               sx={{ paddingX: theme.spacing, width: "100%" }}
-              disabled={(paymentMethod && privacyPolicyChecked && props.personalDataFilled) ? false : true}
+              disabled={
+                paymentMethod &&
+                privacyPolicyChecked &&
+                props.personalDataFilled
+                  ? false
+                  : true
+              }
               onClick={handleOnClick}
             >
               Buy with payment

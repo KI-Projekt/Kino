@@ -14,7 +14,6 @@
 }
 
 .App-Header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -39,4 +38,13 @@
 
 .App-Box {
   box-shadow: rgb(0 0 0 / 16%) 0.063rem 0.063rem 0.625rem;
+  background-color: white;
+}
+
+.App-Main{
+  background-color: #291647;
+}
+
+.App-Container{
+  background-color: #8f79a7;
 }
