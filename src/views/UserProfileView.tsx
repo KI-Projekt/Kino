@@ -30,27 +30,35 @@ function UserProfileView(props: UserProfileProps) {
   }
 
   return (
-    <Container maxWidth='sm' sx={{ pt: 3 }} >
-      <Card sx={{ maxWidth: 700, backgroundColor: redTheme.palette.common.white }}>
+    <Container maxWidth='sm' sx={{ pt: { xs: 3, sm: 12 }, pb: 3 }} >
+      <Card sx={{ backgroundColor: redTheme.palette.common.white }}>
         <Box sx={{ p: 3 }}>
           <>
             {props.user.firstName && (
               <>
                 <Grid container spacing={3}>
-                  <Grid item xs={12} sm={12} md={8} xl={8}>
-                    <Typography variant="h4" sx={{ p: redTheme.spacing(3) }}>
+                  <Grid item xs={12} sm={8} md={8} xl={8}>
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        p: {
+                          xs: redTheme.spacing(0),
+                          sm: redTheme.spacing(3)
+                        }
+                      }}
+                    >
                       {" "}
                       Personal Data
                     </Typography>
                   </Grid>
-                  <Grid item xs={12} sm={12} md={4} xl={4} sx={{ textAlign: 'end' }}>
+                  <Grid item xs={12} sm={4} md={4} xl={4} sx={{ textAlign: 'end' }}>
                     {!isEdited && (
                       <Button
                         variant="contained"
                         onClick={handleEdit}
                         startIcon={<Edit />}
 
-                        sx={{ m: redTheme.spacing(3) }}
+                        sx={{ m: { xs: redTheme.spacing(0), sm: redTheme.spacing(3) }, mb: { xs: redTheme.spacing(3) } }}
                       >
                         Edit
                       </Button>
@@ -61,7 +69,7 @@ function UserProfileView(props: UserProfileProps) {
                         onClick={handleEdit}
                         className="UserProfile-Button"
                         startIcon={<ArrowBack />}
-                        sx={{ m: redTheme.spacing(3) }}
+                        sx={{ m: { xs: redTheme.spacing(0), sm: redTheme.spacing(3) }, mb: { xs: redTheme.spacing(3) } }}
                       >
                         Back
                       </Button>
