@@ -46,15 +46,17 @@ export const getOrderAfterReload = async () => {
     let order: Order = result;
     let selectedSeats: Array<Row> = []
     order.tickets && order.tickets.forEach((ticket: Ticket) => {
+      let rowExists = false;
       let newRow: Row = { rowDescription: `${ticket.seat.row}`, seats: [ticket.seat] };
       if (selectedSeats.length > 0){
       selectedSeats.forEach(row => {
         if (`${ticket.seat.row}` === row.rowDescription) {
-          row.seats.push(ticket.seat)
-        } else {
-          selectedSeats.push(newRow)
+          rowExists = true;
+          row.seats.push(ticket.seat);
         }
       })
+      if(!rowExists)
+        selectedSeats.push(newRow);
     } else {
       selectedSeats.push(newRow)
     }
