@@ -20,11 +20,14 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 .App-Link {
   color: #61dafb;
+}
+.MuiMenu-list {
+  background-color: white;
+  padding: 0;
 }
 
 @keyframes App-logo-spin {

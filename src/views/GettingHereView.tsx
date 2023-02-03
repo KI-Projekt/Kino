@@ -7,17 +7,16 @@ import {
 } from "@mui/material";
 import * as React from "react";
 import Map from "../components/MapView/MapComponent";
+import { redTheme } from "../interfaces/Theme";
 import "../styles/GettingHereView.css";
 
-interface Props {}
 
-interface State {}
 
-class GettingHereView extends React.Component<Props, State> {
+class GettingHereView extends React.Component {
   render() {
     return (
-      <Container>
-        <Card className="GettingHere-Card" sx={{ maxWidth: 700 }}>
+      <Container sx={{ p: redTheme.spacing(3) }}>
+        <Card className="GettingHere-Card" sx={{ maxWidth: 700, backgroundColor: redTheme.palette.common.white }}>
           <CardActionArea>
             <CardContent>
               <Map />

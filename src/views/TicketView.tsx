@@ -12,7 +12,7 @@ import { fetchSpecificMovie } from "../queries/fetchMovieAPI";
 import { deleteReservation, postNewReservation } from "../queries/changeReservations";
 import { fetchOrderByID } from "../queries/fetchOrder";
 import { updateOrderFares } from "../queries/changeOrders";
-import { fareSelection, Movie, Order, Show, ShowRow, User } from "../interfaces/Interfaces";
+import { fareSelection, Movie, Order, Row, Show, ShowRow, User } from "../interfaces/Interfaces";
 
 
 export const getShowAfterReload = async () => {
@@ -120,11 +120,11 @@ function TicketView(props: TicketViewProps) {
   const [fares, setFares] = useState<Array<fareSelection>>(rows);
 
   function calculateSelectedSeats() {
-    let array: Array<ShowRow> = [];
+    let array: Array<Row> = [];
     seats &&
-      seats.forEach((row: ShowRow) => {
-        let newRow: ShowRow = { rowDescription: "-1", seats: [] };
-        row.seats.forEach((seat) => {
+      seats.forEach((row: any) => {
+        let newRow: Row = { rowDescription: "-1", seats: [] };
+        row.seats.forEach((seat: any) => {
           if (seat.selected) {
             newRow.seats.push(seat);
           }

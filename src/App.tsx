@@ -26,7 +26,6 @@ import RoomOverviewView from "./views/Admin/RoomOverviewView";
 import { AdminProps, Movie, Order, Show, User } from "./interfaces/Interfaces";
 import { redTheme } from "./interfaces/Theme";
 import backgroundImage from './img/background.jpg';
-import { SportsRugbySharp } from "@mui/icons-material";
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
   open?: boolean;
@@ -134,6 +133,10 @@ function App() {
     setWindowWidth(windowWidth)
   }
 
+  function saveUserProfile() {
+    setPersonalDataChanged(false);
+  };
+
   React.useEffect(() => {
     let url = window.location.href;
 
@@ -153,16 +156,18 @@ function App() {
     <div>
       <ThemeProvider theme={redTheme}>
         <BrowserRouter>
-          <Header
-            appBarProps={appBarProps}
-            user={user}
-            setUser={setUser}
-            setPersonalDataFilled={setPersonalDataFilled}
-          />
-          <Toolbar />
-          <Main open={open} sx={{backgroundImage: `url(${backgroundImage})`, backgroundSize: "100%"}}>
-            <Container maxWidth="xl" sx={{backgroundColor: "rgba(255,255,255,0.8)"}}>
-                <Box  sx={{ minHeight: "82vh"}}>
+          <Box sx={{ backgroundColor: redTheme.palette.primary.main }}>
+            <Header
+              appBarProps={appBarProps}
+              user={user}
+              setUser={setUser}
+              setPersonalDataFilled={setPersonalDataFilled}
+            />
+            <Toolbar />
+
+            <Main open={open} sx={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: "100%" }}>
+              <Container maxWidth="xl" sx={{ backgroundColor: "rgba(255,255,255,0.87)" }}>
+                <Box sx={{ minHeight: "82vh" }}>
                   <Routes>
                     <Route
                       path="/movieDetails/:imdbID"
@@ -217,6 +222,7 @@ function App() {
                           setOrder={setOrder}
                           setPersonalDataChanged={setPersonalDataChanged}
                           personalDataChanged={personalDataChanged}
+                          saveUserProfile={saveUserProfile}
                         />
                       }
                     />
@@ -310,6 +316,7 @@ function App() {
                           setUser={setUser}
                           personalUserDataChanged={personalDataChanged}
                           setPersonalUserDataChanged={setPersonalDataChanged}
+                          saveUserProfile={saveUserProfile}
                         />
                       }
                     />
@@ -322,14 +329,15 @@ function App() {
                       element={<RoomOverviewView isAdmin={adminProps.isAdmin} windowWidth={windowWidth} />}
                     />
                   </Routes>
-              </Box>
-            </Container>
-            <Footer user={user} />
-            <FormControlLabel
-              control={<Switch onChange={handleChangeAdminMode} />}
-              label="Admin"
-            />
-          </Main>
+                </Box>
+              </Container>
+              <Footer user={user} />
+              <FormControlLabel
+                control={<Switch onChange={handleChangeAdminMode} />}
+                label="Admin"
+              />
+            </Main>
+          </Box>
         </BrowserRouter>
       </ThemeProvider>
     </div>

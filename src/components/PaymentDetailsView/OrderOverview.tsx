@@ -4,7 +4,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Box, Divider, Grid } from "@mui/material";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { fareSelection, ShowRow } from "../../interfaces/Interfaces";
+import { fareSelection, Row } from "../../interfaces/Interfaces";
 
 interface OrderOverviewProps {
   orderID: string | number | undefined;
@@ -14,7 +14,7 @@ interface OrderOverviewProps {
   picture: string | undefined;
   showDate: Date | null | undefined;
   room: string | undefined;
-  seats: Array<ShowRow> | undefined;
+  seats: Array<Row> | undefined;
   fares: Array<fareSelection> | undefined;
   price: number | undefined;
 }
@@ -65,7 +65,7 @@ function OrderOverview(prop: OrderOverviewProps) {
                     return (
                       <div key={index}>
                         <Typography variant="body1" color="text.secondary">
-                          {seatRow.rowDescription}
+                        Row:  {seatRow.rowDescription}
                         </Typography>
                         <div className="row">
                           <Typography
@@ -85,7 +85,7 @@ function OrderOverview(prop: OrderOverviewProps) {
                                 marginRight: "0.1rem",
                               }}
                             >
-                              {seatItem.seat.column}
+                              {seatItem.column}
                             </Typography>
                           ))}
                         </div>

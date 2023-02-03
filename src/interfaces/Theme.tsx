@@ -36,5 +36,19 @@ export const redTheme = createTheme({
           },
         },
       },
+      MuiCalendarPicker: {
+        styleOverrides: {
+          root: {
+            backgroundColor: "#ffffff",
+          },
+        },
+      },
+      MuiClockPicker: {
+        styleOverrides: {
+          root: {
+            backgroundColor: "#ffffff",
+          },
+        },
+      },
     },
   });

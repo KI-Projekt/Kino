@@ -43,7 +43,7 @@ const rows = [
 function OpeningHoursView(prop: AdminProps) {
 
     return (
-        <Container maxWidth='xs' >
+        <Container maxWidth='xs'>
             <Typography
                 variant='h4'
                 align='left'
@@ -51,7 +51,7 @@ function OpeningHoursView(prop: AdminProps) {
             >
                 Opening hours
             </Typography>
-            <TableContainer component={Paper} >
+            <TableContainer component={Paper} sx={{backgroundColor: redTheme.palette.common.white}} >
                 <Table aria-label="customized table">
                     <TableHead >
                         <TableRow >

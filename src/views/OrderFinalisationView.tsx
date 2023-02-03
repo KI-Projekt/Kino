@@ -107,7 +107,7 @@ function OrderFinalisationView(props: OrderFinalisationViewProps) {
                                             room={props.selectedShow.room}
                                             seats={props.order.seats}
                                             fares={props.order.fares}
-                                            price={props.order.price}
+                                            price={props.order.total}
                                         />
                                     </Card>
                                 </>

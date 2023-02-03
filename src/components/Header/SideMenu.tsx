@@ -136,6 +136,8 @@ function SideMenu(props: AppBarProps) {
                 "&.Mui-selected": {
                   backgroundColor: "#871313",
                 },
+                py: 0,
+                my:0
               }}
               onClick={() => props.handleMenuOpen()}
             >
@@ -163,7 +165,7 @@ function SideMenu(props: AppBarProps) {
                 backgroundColor: "#871313",
               },
             }}
-          >
+          > 
             <ListItemIcon sx={{ color: theme.palette.primary.contrastText }}>
               <SearchIcon />
             </ListItemIcon>

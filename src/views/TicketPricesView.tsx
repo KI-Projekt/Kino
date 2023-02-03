@@ -44,7 +44,7 @@ function TicketPricesView(adminProp: AdminProps) {
     return (
         <Container maxWidth='md' >
             <Typography variant='h4' align='left' sx={{ paddingBottom: '3rem', paddingTop: '3rem', color: redTheme.palette.primary.contrastText }}>Ticket Prices</Typography>
-            <TableContainer component={Paper} >
+            <TableContainer component={Paper} sx={{backgroundColor: redTheme.palette.common.white}} >
                 <Table aria-label="customized table">
                     <TableHead >
                         <TableRow >

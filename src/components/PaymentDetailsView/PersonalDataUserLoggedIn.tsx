@@ -11,6 +11,7 @@ interface PersonalDataUserLoggedInProps {
   setUser: Function;
   personalDataChanged: boolean;
   setPersonalDataChanged: Function;
+  saveUserProfile: Function
 }
 
 function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {
@@ -59,29 +60,33 @@ function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {
       noValidate
       autoComplete="on"
     >
-      <TextField
-        required
-        type="text"
-        placeholder="Jane"
-        label="First Name"
-        id="firstName"
-        value={props.user.firstName}
-        onChange={(
-          e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-        ) => handleOnChange(e)}
-      />
+      <Box sx={{ display: "flex" }}>
+        <TextField
+          required
+          type="text"
+          placeholder="Jane"
+          label="First Name"
+          id="firstName"
+          value={props.user.firstName}
+          onChange={(
+            e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+          ) => handleOnChange(e)}
+        />
+      </Box>
 
-      <TextField
-        required
-        type="text"
-        placeholder="Doe"
-        label="Surname"
-        id="surname"
-        value={props.user.surname}
-        onChange={(
-          e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-        ) => handleOnChange(e)}
-      />
+      <Box sx={{ display: "flex" }}>
+        <TextField
+          required
+          type="text"
+          placeholder="Doe"
+          label="Surname"
+          id="surname"
+          value={props.user.surname}
+          onChange={(
+            e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+          ) => handleOnChange(e)}
+        />
+      </Box>
 
       <Box sx={{ display: "flex" }}>
         <TextField
@@ -137,24 +142,27 @@ function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {
         />
       </Box>
 
-      <TextField
-        required
-        type="email"
-        placeholder="Jane.doe@example.com"
-        label="Email Address"
-        id="emailAdress"
-        value={props.user.emailAdress}
-        onChange={(
-          e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-        ) => handleOnChange(e)}
-      />
+      <Box sx={{ display: "flex" }}>
+        <TextField
+          required
+          type="email"
+          placeholder="Jane.doe@example.com"
+          label="Email Address"
+          id="emailAdress"
+          value={props.user.emailAdress}
+          onChange={(
+            e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+          ) => handleOnChange(e)}
+        />
+      </Box>
 
       <Button
         sx={{ my: 2 }}
         startIcon={<SaveIcon />}
         variant="contained"
         fullWidth
-        disabled={!props.setPersonalDataChanged}
+        disabled={!props.personalDataChanged}
+        onClick={() => props.saveUserProfile()}
       >
         Save
       </Button>

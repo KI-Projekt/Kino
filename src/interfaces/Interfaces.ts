@@ -89,7 +89,7 @@ export interface Seat {
   }
 
   export interface Row {
-    rowDescription: String;
+    rowDescription: string;
     seats: Array<Seat>;
   }
   
@@ -152,7 +152,7 @@ export interface Room {
     total?: | undefined;
     reservations?: Array<Reservation> | undefined;
     tickets?: Array<Ticket> | undefined;
-    seats: Array<ShowRow> | undefined;
+    seats: Array<Row> | undefined;
     fares: Array<fareSelection> | undefined;
     price?: number | undefined;
   }
