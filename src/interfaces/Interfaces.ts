@@ -13,6 +13,23 @@ export interface Show {
   seatingPlan?: any;
 }
 
+export interface ShowWithMovieObject {
+  id: number | undefined;
+  endDdateTime: Date | null;
+  startDateTime: Date | null;
+  duration: number | undefined;
+  isThreeD: boolean;
+  isDolbyAtmos: boolean;
+  movie: Movie;
+  room: {
+    id: number;
+    name: string;
+    hasThreeD: boolean;
+    hasDolbyAtmos: boolean;
+  }
+  status: string | undefined;
+}
+
 export interface ShowDate {
   date: Date
   shows: Array<Show>
