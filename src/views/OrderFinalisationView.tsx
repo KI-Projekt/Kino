@@ -34,7 +34,7 @@ function OrderFinalisationView(props: OrderFinalisationViewProps) {
         getShowAfterReload().then(result => setSelectedShow(result))
         getMovieAfterReload().then(result => setSelectedMovie(result));
         getOrderAfterReload().then(result => setOrder(result));
-    }, [setSelectedShow, setSelectedMovie, setOrder, props.order])
+    }, [setSelectedShow, setSelectedMovie, setOrder])
 
     async function handleDownloadPDF() {
         const element = printRef.current;

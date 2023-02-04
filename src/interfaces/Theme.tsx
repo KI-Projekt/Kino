@@ -50,5 +50,26 @@ export const redTheme = createTheme({
           },
         },
       },
+      MuiDialogTitle: {
+        styleOverrides: {
+          root: {
+            backgroundColor: "#ffffff",
+          },
+        },
+      },
+      MuiDialogActions: {
+        styleOverrides: {
+          root: {
+            backgroundColor: "#ffffff",
+          },
+        },
+      },
+      MuiDialogContent: {
+        styleOverrides: {
+          root: {
+            backgroundColor: "#ffffff",
+          },
+        },
+      },
     },
   });
