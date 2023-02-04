@@ -9,6 +9,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import { getMovieAfterReload, getShowAfterReload } from "./TicketView";
 import { Movie, Order, Show, User } from "../interfaces/Interfaces";
 import { getOrderAfterReload } from "./PaymentDetailsView";
+import { redTheme } from "../interfaces/Theme";
 
 interface OrderFinalisationViewProps {
     order: Order | undefined;
@@ -96,7 +97,7 @@ function OrderFinalisationView(props: OrderFinalisationViewProps) {
                             </Grid>
                             <Grid item xs={12} sm={12} md={6} xl={6}>
                                 <>
-                                    <Card >
+                                    <Card sx={{backgroundColor: redTheme.palette.common.white}}>
                                         <OrderOverview
                                             orderID={props.order.id}
                                             movieID={props.selectedMovie.id}
