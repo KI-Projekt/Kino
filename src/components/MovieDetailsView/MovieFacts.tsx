@@ -29,7 +29,7 @@ function MovieFacts(props: MovieFactsProps) {
                 image={props.selectedMovie.posterImage} />
 
             <CardContent>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2">
                     Runtime: {props.selectedMovie.runtime} <br />
                     Writer: {props.selectedMovie.writer} <br />
                     Director: {props.selectedMovie.director} <br />

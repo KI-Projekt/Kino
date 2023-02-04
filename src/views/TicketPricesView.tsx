@@ -1,7 +1,8 @@
 import { styled } from '@mui/material/styles';
 import { TableCell, tableCellClasses, TableRow, TableContainer, Paper, Table, TableHead, TableBody, Container, Typography, TextField } from '@mui/material';
 import * as React from 'react';
-import { AdminProps, redTheme } from '../App';
+import { AdminProps } from '../interfaces/Interfaces';
+import { redTheme } from '../interfaces/Theme';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -43,7 +44,7 @@ function TicketPricesView(adminProp: AdminProps) {
     return (
         <Container maxWidth='md' >
             <Typography variant='h4' align='left' sx={{ paddingBottom: '3rem', paddingTop: '3rem', color: redTheme.palette.primary.contrastText }}>Ticket Prices</Typography>
-            <TableContainer component={Paper} >
+            <TableContainer component={Paper} sx={{backgroundColor: redTheme.palette.common.white}} >
                 <Table aria-label="customized table">
                     <TableHead >
                         <TableRow >

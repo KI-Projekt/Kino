@@ -9,6 +9,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import { getMovieAfterReload, getShowAfterReload } from "./TicketView";
 import { Movie, Order, Show, User } from "../interfaces/Interfaces";
 import { getOrderAfterReload } from "./PaymentDetailsView";
+import { redTheme } from "../interfaces/Theme";
 
 interface OrderFinalisationViewProps {
     order: Order | undefined;
@@ -34,7 +35,7 @@ function OrderFinalisationView(props: OrderFinalisationViewProps) {
         getShowAfterReload().then(result => setSelectedShow(result))
         getMovieAfterReload().then(result => setSelectedMovie(result));
         getOrderAfterReload().then(result => setOrder(result));
-    }, [setSelectedShow, setSelectedMovie, setOrder, props.order])
+    }, [setSelectedShow, setSelectedMovie, setOrder])
 
     async function handleDownloadPDF() {
         const element = printRef.current;
@@ -96,7 +97,7 @@ function OrderFinalisationView(props: OrderFinalisationViewProps) {
                             </Grid>
                             <Grid item xs={12} sm={12} md={6} xl={6}>
                                 <>
-                                    <Card >
+                                    <Card sx={{backgroundColor: redTheme.palette.common.white}}>
                                         <OrderOverview
                                             orderID={props.order.id}
                                             movieID={props.selectedMovie.id}
@@ -107,7 +108,7 @@ function OrderFinalisationView(props: OrderFinalisationViewProps) {
                                             room={props.selectedShow.room}
                                             seats={props.order.seats}
                                             fares={props.order.fares}
-                                            price={props.order.price}
+                                            price={props.order.total}
                                         />
                                     </Card>
                                 </>

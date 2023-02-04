@@ -17,7 +17,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { getMovieAfterReload, getShowAfterReload } from "./TicketView";
 import { useNavigate } from "react-router-dom";
 import { payOrder } from "../queries/changeOrders";
-import { Movie, Order, Show, User } from "../interfaces/Interfaces";
+import { Movie, Order, Row, Show, Ticket, User } from "../interfaces/Interfaces";
 import { fetchOrderByID } from "../queries/fetchOrder";
 
 interface PaymentDetailsViewProps {
@@ -31,28 +31,57 @@ interface PaymentDetailsViewProps {
   selectedMovie: Movie | undefined;
   setSelectedShow: React.Dispatch<React.SetStateAction<Show | undefined>>;
   selectedShow: Show | undefined;
+  setPersonalDataChanged: Function;
+  personalDataChanged: boolean;
+  saveUserProfile: Function;
 }
 
-export const  getOrderAfterReload = async() => {
+export const getOrderAfterReload = async () => {
+
   let url = window.location.href;
 
-  let aUrlParts = url.split("/") 
-  let orderID = aUrlParts[6]
-  const response = await fetchOrderByID(parseInt(orderID)).then(result => {
-    return result;
-})
-  return response
-}
+  let aUrlParts = url.split("/");
+  let orderID = aUrlParts[6];
+  const response = await fetchOrderByID(parseInt(orderID)).then((result) => {
+    let order: Order = result;
+    let selectedSeats: Array<Row> = []
+    order.tickets && order.tickets.forEach((ticket: Ticket) => {
+      let rowExists = false;
+      let newRow: Row = { rowDescription: `${ticket.seat.row}`, seats: [ticket.seat] };
+      if (selectedSeats.length > 0){
+      selectedSeats.forEach(row => {
+        if (`${ticket.seat.row}` === row.rowDescription) {
+          rowExists = true;
+          row.seats.push(ticket.seat);
+        }
+      })
+      if(!rowExists)
+        selectedSeats.push(newRow);
+    } else {
+      selectedSeats.push(newRow)
+    }
+    })
+    order.seats = selectedSeats;
+
+    /* let fares: fareSelection = [{}]
+    order.fares =  */
+    return order;
+  });
+  return response;
+};
 
 function PaymentDetailsView(props: PaymentDetailsViewProps) {
-
   const theme = useTheme();
 
-  const [paymentMethod, setPaymentMethod] = React.useState<string | null>('cash');
+  const [paymentMethod, setPaymentMethod] = React.useState<string | null>(
+    "cash"
+  );
 
   const [privacyPolicyChecked, setPrivacyPolicyChecked] = React.useState(false);
 
-  const handleChangePrivacyPolicyCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangePrivacyPolicyCheck = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setPrivacyPolicyChecked(event.target.checked);
   };
 
@@ -61,18 +90,20 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
   const setOrder = props.setOrder;
 
   React.useEffect(() => {
-    getShowAfterReload().then(result => setSelectedShow(result))
-    getMovieAfterReload().then(result => setSelectedMovie(result));
-    getOrderAfterReload().then(result => setOrder(result));
+    getShowAfterReload().then((result) => setSelectedShow(result));
+    getMovieAfterReload().then((result) => setSelectedMovie(result));
+    getOrderAfterReload().then((result) => setOrder(result));
   }, [setSelectedShow, setSelectedMovie, setOrder]);
   const navigate = useNavigate();
 
   function handleOnClick() {
     if (props.order?.id)
-      payOrder(props.order?.id).then(result => {
+      payOrder(props.order?.id).then((result) => {
         console.log(result);
-      })
-    navigate(`/order/${props.selectedMovie?.id}/${props.selectedShow?.showID}/${props.order?.id}`);
+      });
+    navigate(
+      `/order/${props.selectedMovie?.id}/${props.selectedShow?.showID}/${props.order?.id}`
+    );
   }
 
   return (
@@ -90,7 +121,7 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
               room={props.selectedShow?.room}
               seats={props.order.seats}
               fares={props.order.fares}
-              price={props.order.price}
+              price={props.order.total}
             />
           )}
         </Grid>
@@ -100,19 +131,26 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
             setPersonalDataFilled={props.setPersonalDataFilled}
             user={props.user}
             setUser={props.setUser}
+            personalDataChanged={props.personalDataChanged}
+            setPersonalDataChanged={props.setPersonalDataChanged}
+            saveUserProfile={props.saveUserProfile}
           />
-          <PaymentOptions paymentMethod={paymentMethod} setPaymentMethod={setPaymentMethod} />
+          <PaymentOptions
+            paymentMethod={paymentMethod}
+            setPaymentMethod={setPaymentMethod}
+          />
           <FormControlLabel
-            control={<Checkbox value={privacyPolicyChecked} onChange={handleChangePrivacyPolicyCheck} />}
+            control={
+              <Checkbox
+                value={privacyPolicyChecked}
+                onChange={handleChangePrivacyPolicyCheck}
+              />
+            }
             sx={{ paddingLeft: "3rem" }}
             label={
               <Typography>
-                I accept the
-                {" "}
-                <Link
-                  href={`/privacyPolicy`}
-                  target="_blank"
-                >
+                I accept the{" "}
+                <Link href={`/privacyPolicy`} target="_blank">
                   Privacy Policy
                 </Link>
               </Typography>
@@ -129,7 +167,13 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
             <Button
               variant="contained"
               sx={{ paddingX: theme.spacing, width: "100%" }}
-              disabled={(paymentMethod && privacyPolicyChecked && props.personalDataFilled) ? false : true}
+              disabled={
+                paymentMethod &&
+                  privacyPolicyChecked &&
+                  props.personalDataFilled
+                  ? false
+                  : true
+              }
               onClick={handleOnClick}
             >
               Buy with payment

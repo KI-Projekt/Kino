@@ -1,20 +1,18 @@
 import { Box, Button, TextField, useTheme } from "@mui/material";
-import React from "react"
-import '../../styles/Login.css';
-import SaveIcon from '@mui/icons-material/Save';
+import React from "react";
+import "../../styles/Login.css";
 import { User } from "../../interfaces/Interfaces";
+import SaveIcon from "@mui/icons-material/Save";
 
-interface PersonalDataUserLoggedInProps {
+interface UserProfileViewProps {
   personalDataFilled: boolean;
   setPersonalDataFilled: Function;
   user: User;
   setUser: Function;
   personalDataChanged: boolean;
-  setPersonalDataChanged: Function;
-  saveUserProfile: Function
 }
 
-function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {
+function UserProfileView(props: UserProfileViewProps) {
   React.useEffect(() => {
     setAllRequiredDataFilled(props.user);
   });
@@ -47,7 +45,6 @@ function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {
     };
     props.setUser(newUser);
     setAllRequiredDataFilled(newUser);
-    props.setPersonalDataChanged(true);
   };
 
   return (
@@ -62,11 +59,12 @@ function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {
     >
       <Box sx={{ display: "flex" }}>
         <TextField
-          required
+          disabled
           type="text"
           placeholder="Jane"
           label="First Name"
           id="firstName"
+          variant="outlined"
           value={props.user.firstName}
           onChange={(
             e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -76,7 +74,8 @@ function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {
 
       <Box sx={{ display: "flex" }}>
         <TextField
-          required
+          disabled
+          variant="outlined"
           type="text"
           placeholder="Doe"
           label="Surname"
@@ -90,7 +89,8 @@ function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {
 
       <Box sx={{ display: "flex" }}>
         <TextField
-          required
+          disabled
+          variant="outlined"
           type="text"
           className="Form-Login-Input"
           placeholder="Fifth Avenue"
@@ -102,7 +102,8 @@ function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {
           ) => handleOnChange(e)}
         />
         <TextField
-          required
+          disabled
+          variant="outlined"
           type="text"
           className="Form-Login-Input"
           placeholder="69"
@@ -117,7 +118,8 @@ function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {
 
       <Box sx={{ display: "flex" }}>
         <TextField
-          required
+          disabled
+          variant="outlined"
           type="text"
           className="Form-Login-Input"
           placeholder="68165"
@@ -129,7 +131,8 @@ function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {
           ) => handleOnChange(e)}
         />
         <TextField
-          required
+          disabled
+          variant="outlined"
           type="text"
           className="Form-Login-Input"
           placeholder="Mannheim"
@@ -144,7 +147,8 @@ function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {
 
       <Box sx={{ display: "flex" }}>
         <TextField
-          required
+          disabled
+          variant="outlined"
           type="email"
           placeholder="Jane.doe@example.com"
           label="Email Address"
@@ -156,18 +160,19 @@ function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {
         />
       </Box>
 
-      <Button
-        sx={{ my: 2 }}
-        startIcon={<SaveIcon />}
-        variant="contained"
-        fullWidth
-        disabled={!props.personalDataChanged}
-        onClick={() => props.saveUserProfile()}
-      >
-        Save
-      </Button>
+      {props.personalDataChanged && (
+        <Button
+          sx={{ my: 2 }}
+          startIcon={<SaveIcon />}
+          variant="contained"
+          fullWidth
+          disabled={!props.personalDataChanged}
+        >
+          Save
+        </Button>
+      )}
     </Box>
   );
 }
 
-export default PersonalDataUserLoggedIn;
+export default UserProfileView;

@@ -7,7 +7,7 @@ import UserMovieDetailsView from '../components/MovieDetailsView/MovieDetailsVie
 import { useNavigate } from 'react-router-dom';
 import { fetchSpecificMovie } from '../queries/fetchMovieAPI';
 import { fetchAllScreeningsByMovie } from '../queries/fetchScreenings';
-import { Movie, Show, ShowDate, TrailerType } from '../interfaces/Interfaces';
+import { Movie, Show, ShowDate, ShowWithMovieObject, TrailerType } from '../interfaces/Interfaces';
 
 interface MovieDetailsViewProps {
     selectedMovie: Movie | undefined,
@@ -26,17 +26,18 @@ export const getIMDbIDFromURL = () => {
     return aUrlParts[4]
 }
 
-export const sortShowsToShowDate = (input: Array<any>) => {
+export const sortShowsToShowDate = (input: Array<ShowWithMovieObject>) => {
     let showDate: Array<ShowDate> = [];
-    input.forEach((show: any) => {
+    input.forEach((show: ShowWithMovieObject) => {
         let isNew = true;
+        if (show.startDateTime){
         let newShow: Show = {
-            movieID: show.movieId,
-            movieName: show.movie.name,
+            movieID: show.movie.id?.toString(),
+            movieName: show.movie.title,
             moviePoster: show.movie.posterImage,
             dateTime: new Date(show.startDateTime),
             room: show.room.name,
-            roomID: show.room.id,
+            roomID: show.room.id.toString(),
             showID: show.id,
             additionalInfo: {
                 hasDolbyAtmos: show.room.hasDolbyAtmos,
@@ -44,7 +45,7 @@ export const sortShowsToShowDate = (input: Array<any>) => {
             }
         }
         showDate.forEach(showDate => {
-            if (showDate.date.toDateString() === new Date(show.startDateTime).toDateString()) {
+            if (show.startDateTime && showDate.date.toDateString() === new Date(show.startDateTime).toDateString()) {
                 showDate.shows.push(newShow)
                 isNew = false
             }
@@ -55,6 +56,7 @@ export const sortShowsToShowDate = (input: Array<any>) => {
                 shows: [newShow]
             })
         }
+    }
     }
     );
     return showDate;
