@@ -35,36 +35,8 @@ export const redTheme = createTheme({
           backgroundColor: "#cb1d1d",
         },
       },
-      MuiDialogTitle: {
-        styleOverrides: {
-          root: {
-            backgroundColor: "#ffffff",
-          },
-        },
-      },
-      MuiDialogActions: {
-        styleOverrides: {
-          root: {
-            backgroundColor: "#ffffff",
-          },
-        },
-      },
-      MuiDialogContent: {
-        styleOverrides: {
-          root: {
-            backgroundColor: "#ffffff",
-          },
-        },
-      },
     },
     MuiCalendarOrClockPicker: {
-      styleOverrides: {
-        root: {
-          backgroundColor: "#ffffff",
-        },
-      },
-    },
-    MuiDialogActions: {
       styleOverrides: {
         root: {
           backgroundColor: "#ffffff",
@@ -79,6 +51,27 @@ export const redTheme = createTheme({
       },
     },
     MuiClockPicker: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#ffffff",
+        },
+      },
+    },
+    MuiDialogTitle: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#ffffff",
+        },
+      },
+    },
+    MuiDialogActions: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#ffffff",
+        },
+      },
+    },
+    MuiDialogContent: {
       styleOverrides: {
         root: {
           backgroundColor: "#ffffff",
