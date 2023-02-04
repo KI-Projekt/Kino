@@ -43,7 +43,7 @@ const rows = [
 function OpeningHoursView(prop: AdminProps) {
 
     return (
-        <Container maxWidth='xs'>
+        <Container maxWidth='xs' sx={{pb:3}}>
             <Typography
                 variant='h4'
                 align='left'
