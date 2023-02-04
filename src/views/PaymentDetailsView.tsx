@@ -17,7 +17,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { getMovieAfterReload, getShowAfterReload } from "./TicketView";
 import { useNavigate } from "react-router-dom";
 import { payOrder } from "../queries/changeOrders";
-import { Movie, Order, Show, User } from "../interfaces/Interfaces";
+import { Movie, Order, Row, Show, Ticket, User } from "../interfaces/Interfaces";
 import { fetchOrderByID } from "../queries/fetchOrder";
 
 interface PaymentDetailsViewProps {
@@ -33,15 +33,39 @@ interface PaymentDetailsViewProps {
   selectedShow: Show | undefined;
   setPersonalDataChanged: Function;
   personalDataChanged: boolean;
+  saveUserProfile: Function;
 }
 
 export const getOrderAfterReload = async () => {
+
   let url = window.location.href;
 
   let aUrlParts = url.split("/");
   let orderID = aUrlParts[6];
   const response = await fetchOrderByID(parseInt(orderID)).then((result) => {
-    return result;
+    let order: Order = result;
+    let selectedSeats: Array<Row> = []
+    order.tickets && order.tickets.forEach((ticket: Ticket) => {
+      let rowExists = false;
+      let newRow: Row = { rowDescription: `${ticket.seat.row}`, seats: [ticket.seat] };
+      if (selectedSeats.length > 0){
+      selectedSeats.forEach(row => {
+        if (`${ticket.seat.row}` === row.rowDescription) {
+          rowExists = true;
+          row.seats.push(ticket.seat);
+        }
+      })
+      if(!rowExists)
+        selectedSeats.push(newRow);
+    } else {
+      selectedSeats.push(newRow)
+    }
+    })
+    order.seats = selectedSeats;
+
+    /* let fares: fareSelection = [{}]
+    order.fares =  */
+    return order;
   });
   return response;
 };
@@ -97,7 +121,7 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
               room={props.selectedShow?.room}
               seats={props.order.seats}
               fares={props.order.fares}
-              price={props.order.price}
+              price={props.order.total}
             />
           )}
         </Grid>
@@ -109,6 +133,7 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
             setUser={props.setUser}
             personalDataChanged={props.personalDataChanged}
             setPersonalDataChanged={props.setPersonalDataChanged}
+            saveUserProfile={props.saveUserProfile}
           />
           <PaymentOptions
             paymentMethod={paymentMethod}
@@ -144,8 +169,8 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
               sx={{ paddingX: theme.spacing, width: "100%" }}
               disabled={
                 paymentMethod &&
-                privacyPolicyChecked &&
-                props.personalDataFilled
+                  privacyPolicyChecked &&
+                  props.personalDataFilled
                   ? false
                   : true
               }

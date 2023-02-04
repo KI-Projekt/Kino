@@ -12,7 +12,7 @@ import { fetchSpecificMovie } from "../queries/fetchMovieAPI";
 import { deleteReservation, postNewReservation } from "../queries/changeReservations";
 import { fetchOrderByID } from "../queries/fetchOrder";
 import { updateOrderFares } from "../queries/changeOrders";
-import { fareSelection, Movie, Order, Row, Show, User } from "../interfaces/Interfaces";
+import { fareSelection, Movie, Order, Row, Show, ShowRow, User } from "../interfaces/Interfaces";
 
 
 export const getShowAfterReload = async () => {
@@ -61,6 +61,7 @@ interface TicketViewProps {
   setSelectedShow: React.Dispatch<React.SetStateAction<Show | undefined>>;
   selectedShow: Show | undefined;
   user: User | undefined;
+  windowWidth: number;
 }
 
 function TicketView(props: TicketViewProps) {
@@ -68,7 +69,7 @@ function TicketView(props: TicketViewProps) {
 
   const [currentTicketAmmount, setCurrentTicketAmount] = useState(0);
 
-  const [seats, setSeats] = useState<Array<Row> | undefined>(undefined);
+  const [seats, setSeats] = useState<Array<ShowRow> | undefined>(undefined);
 
   const setSelectedShow = props.setSelectedShow
   const setSelectedMovie = props.setSelectedMovie
@@ -79,12 +80,6 @@ function TicketView(props: TicketViewProps) {
       initializeSeatingPlan(result.seatingPlan);
     });
     getMovieAfterReload().then(result =>  setSelectedMovie(result));
-
-    //Responsibility for Seatplan
-    updateDimensions();
-    window.addEventListener("resize", updateDimensions);
-    return () =>
-      window.removeEventListener("resize", updateDimensions);
   }, [setSelectedShow, setSelectedMovie]);
 
   function initializeSeatingPlan(room: any) {
@@ -127,9 +122,9 @@ function TicketView(props: TicketViewProps) {
   function calculateSelectedSeats() {
     let array: Array<Row> = [];
     seats &&
-      seats.forEach((row: Row) => {
+      seats.forEach((row: any) => {
         let newRow: Row = { rowDescription: "-1", seats: [] };
-        row.seats.forEach((seat) => {
+        row.seats.forEach((seat: any) => {
           if (seat.selected) {
             newRow.seats.push(seat);
           }
@@ -209,13 +204,6 @@ function TicketView(props: TicketViewProps) {
       });
   }
 
-  const [windowWidth, setWindowWidth] = React.useState(0)
-
-  const updateDimensions = () => {
-    const windowWidth = window.innerWidth
-    setWindowWidth(windowWidth)
-  }
-
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} sm={12} md={6.5} xl={6}>
@@ -256,14 +244,14 @@ function TicketView(props: TicketViewProps) {
           <Seatplan
             data={seats}
             onSeatClick={onSeatClick}
-            windowWidth={windowWidth} />}
+            windowWidth={props.windowWidth} />}
       </Grid>
       <Grid item xs={12} sm={12} md={5.5} xl={6}>
         <FareSelection
           totalAmountOfTickets={currentTicketAmmount}
           fares={fares}
           setFares={setFares}
-          windowWidth={windowWidth}
+          windowWidth={props.windowWidth}
         />
         <Box>
           <Typography

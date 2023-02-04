@@ -13,6 +13,7 @@ export interface PersonalDataProps {
   setUser: Function;
   setPersonalDataChanged: Function;
   personalDataChanged: boolean;
+  saveUserProfile: Function;
 }
 
 interface TabPanelProps {
@@ -110,6 +111,7 @@ function PersonalData(props: PersonalDataProps) {
             setUser={props.setUser}
             personalDataChanged={props.personalDataChanged}
             setPersonalDataChanged={props.setPersonalDataChanged}
+            saveUserProfile={props.saveUserProfile}
           />
         </Box>
       )}

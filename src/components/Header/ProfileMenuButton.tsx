@@ -4,12 +4,14 @@ import React from "react";
 import Login from '../Login/LoginPopUp';
 import { useNavigate } from "react-router";
 import { User } from "../../interfaces/Interfaces";
+import '../../App.css'
 
 interface ProfileMenuButtonProps {
     user: User;
     setUser: Function;
     setPersonalDataFilled: Function;
 }
+
 
 function ProfileMenuButton(props: ProfileMenuButtonProps) {
     const profileMenuId = 'primary-search-account-profile-menu';
@@ -71,6 +73,7 @@ function ProfileMenuButton(props: ProfileMenuButtonProps) {
         }
     };
 
+
     const renderProfile = (
         <Menu
             anchorEl={anchorElProfile}
@@ -97,13 +100,13 @@ function ProfileMenuButton(props: ProfileMenuButtonProps) {
                 </Box>
             }
             {props.user.firstName &&
-                <>
+                <Box sx={{ backgroundColor: 'white', }}>
                     {userMenuData.map((setting) => (
                         <MenuItem key={setting.label} onClick={() => handleListItemClick(setting.label, setting.link)}>
                             <Typography textAlign="center">{setting.label}</Typography>
                         </MenuItem>
                     ))}
-                </>
+                </Box>
             }
         </Menu>
     );

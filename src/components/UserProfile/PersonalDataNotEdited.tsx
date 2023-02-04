@@ -57,31 +57,35 @@ function UserProfileView(props: UserProfileViewProps) {
       noValidate
       autoComplete="on"
     >
-      <TextField
-        disabled
-        type="text"
-        placeholder="Jane"
-        label="First Name"
-        id="firstName"
-        variant="outlined"
-        value={props.user.firstName}
-        onChange={(
-          e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-        ) => handleOnChange(e)}
-      />
+      <Box sx={{ display: "flex" }}>
+        <TextField
+          disabled
+          type="text"
+          placeholder="Jane"
+          label="First Name"
+          id="firstName"
+          variant="outlined"
+          value={props.user.firstName}
+          onChange={(
+            e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+          ) => handleOnChange(e)}
+        />
+      </Box>
 
-      <TextField
-        disabled
-        variant="outlined"
-        type="text"
-        placeholder="Doe"
-        label="Surname"
-        id="surname"
-        value={props.user.surname}
-        onChange={(
-          e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-        ) => handleOnChange(e)}
-      />
+      <Box sx={{ display: "flex" }}>
+        <TextField
+          disabled
+          variant="outlined"
+          type="text"
+          placeholder="Doe"
+          label="Surname"
+          id="surname"
+          value={props.user.surname}
+          onChange={(
+            e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+          ) => handleOnChange(e)}
+        />
+      </Box>
 
       <Box sx={{ display: "flex" }}>
         <TextField
@@ -141,18 +145,20 @@ function UserProfileView(props: UserProfileViewProps) {
         />
       </Box>
 
-      <TextField
-        disabled
-        variant="outlined"
-        type="email"
-        placeholder="Jane.doe@example.com"
-        label="Email Address"
-        id="emailAdress"
-        value={props.user.emailAdress}
-        onChange={(
-          e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-        ) => handleOnChange(e)}
-      />
+      <Box sx={{ display: "flex" }}>
+        <TextField
+          disabled
+          variant="outlined"
+          type="email"
+          placeholder="Jane.doe@example.com"
+          label="Email Address"
+          id="emailAdress"
+          value={props.user.emailAdress}
+          onChange={(
+            e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+          ) => handleOnChange(e)}
+        />
+      </Box>
 
       {props.personalDataChanged && (
         <Button
@@ -160,6 +166,7 @@ function UserProfileView(props: UserProfileViewProps) {
           startIcon={<SaveIcon />}
           variant="contained"
           fullWidth
+          disabled={!props.personalDataChanged}
         >
           Save
         </Button>

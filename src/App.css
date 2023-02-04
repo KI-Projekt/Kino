@@ -20,11 +20,14 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 .App-Link {
   color: #61dafb;
+}
+.MuiMenu-list {
+  background-color: white;
+  padding: 0;
 }
 
 @keyframes App-logo-spin {
@@ -34,17 +37,4 @@
   to {
     transform: rotate(360deg);
   }
-}
-
-.App-Box {
-  box-shadow: rgb(0 0 0 / 16%) 0.063rem 0.063rem 0.625rem;
-  background-color: white;
-}
-
-.App-Main{
-  background-color: #291647;
-}
-
-.App-Container{
-  background-color: #8f79a7;
 }

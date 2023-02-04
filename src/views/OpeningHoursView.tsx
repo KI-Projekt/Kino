@@ -1,6 +1,7 @@
 import { TableCell, tableCellClasses, TableRow, Container, Typography, TableContainer, Paper, Table, TableHead, TableBody, styled, TextField } from '@mui/material';
 import * as React from 'react';
-import { AdminProps, redTheme } from '../App';
+import { AdminProps } from '../interfaces/Interfaces';
+import { redTheme } from '../interfaces/Theme';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -42,7 +43,7 @@ const rows = [
 function OpeningHoursView(prop: AdminProps) {
 
     return (
-        <Container maxWidth='xs' >
+        <Container maxWidth='xs' sx={{pb:3}}>
             <Typography
                 variant='h4'
                 align='left'
@@ -50,7 +51,7 @@ function OpeningHoursView(prop: AdminProps) {
             >
                 Opening hours
             </Typography>
-            <TableContainer component={Paper} >
+            <TableContainer component={Paper} sx={{backgroundColor: redTheme.palette.common.white}} >
                 <Table aria-label="customized table">
                     <TableHead >
                         <TableRow >
