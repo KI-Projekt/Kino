@@ -1,7 +1,6 @@
 import { Divider, Grid, Typography } from "@mui/material";
 import { Room } from "../../interfaces/Interfaces";
 import SeatplanEditable from "./SeatplanEditable";
-import { redTheme } from "../../interfaces/Theme";
 import RoomMetadata from "./RoomMetadata";
 import React from "react";
 
