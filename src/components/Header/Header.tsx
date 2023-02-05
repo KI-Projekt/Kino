@@ -19,6 +19,7 @@ interface HeaderProps {
   user: User;
   setUser: Function;
   setPersonalDataFilled: Function;
+  isAdmin: boolean;
   appBarProps: AppBarProps;
 }
 
@@ -88,7 +89,7 @@ function Header(props: HeaderProps) {
           <ProfileMenuButton user={props.user} setUser={props.setUser} setPersonalDataFilled={props.setPersonalDataFilled} />
         </Toolbar>
       </AppBar>
-      <SideMenu open={props.appBarProps.open} handleMenuOpen={props.appBarProps.handleMenuOpen} handleMenuClose={props.appBarProps.handleMenuClose} />
+      <SideMenu appBarProps={props.appBarProps} isAdmin={props.isAdmin} />
     </Box >
   );
 }

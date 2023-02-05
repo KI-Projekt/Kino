@@ -47,10 +47,10 @@ function Seatplan(props: SeatPlanprops) {
                     disabled
                     sx={{
                       width: {
-                        xs: `${(props.windowWidth / 260)}rem`,
-                        sm: `${(props.windowWidth / 260)}rem`,
-                        md: `${(props.windowWidth / 520)}rem`,
-                        xl: `${(props.windowWidth / 520)}rem`
+                        xs: `${(props.windowWidth / 290)}rem`,
+                        sm: `${(props.windowWidth / 290)}rem`,
+                        md: `${(props.windowWidth / 580)}rem`,
+                        xl: `${(props.windowWidth / 580)}rem`
                       }
                     }}
                   >

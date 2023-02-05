@@ -162,6 +162,7 @@ function App() {
               user={user}
               setUser={setUser}
               setPersonalDataFilled={setPersonalDataFilled}
+              isAdmin={adminProps.isAdmin}
             />
             <Toolbar />
 

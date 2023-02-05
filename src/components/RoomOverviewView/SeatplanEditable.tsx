@@ -30,10 +30,10 @@ function SeatplanEditable(props: SeatPlanprops) {
                   <IconButton
                     sx={{
                       width: {
-                        xs: `${(props.windowWidth / 280)}rem`,
-                        sm: `${(props.windowWidth / 280)}rem`,
-                        md: `${(props.windowWidth / 540)}rem`,
-                        xl: `${(props.windowWidth / 540)}rem`
+                        xs: `${(props.windowWidth / 290)}rem`,
+                        sm: `${(props.windowWidth / 290)}rem`,
+                        md: `${(props.windowWidth / 580)}rem`,
+                        xl: `${(props.windowWidth / 580)}rem`
                       }
                     }}
                     id={seat.id.toString()} onClick={(e) => props.onSeatClick(e)}
