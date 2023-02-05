@@ -67,6 +67,7 @@ function TicketPricesView(adminProp: AdminProps) {
                 setIsError(true);
                 setAlertOpen(true)
             } else {
+                setIsError(false);
                 fetchAllFares().then(fares => setAllFares(fares));
                 setAlertText("Fare added successfully");
                 setAlertOpen(true)
@@ -99,6 +100,7 @@ function TicketPricesView(adminProp: AdminProps) {
                 setIsError(true);
                 setAlertOpen(true)
             } else {
+                setIsError(false);
                 setAlertText("Fare changed successfully");
                 setAlertOpen(true)
             }
@@ -116,6 +118,7 @@ function TicketPricesView(adminProp: AdminProps) {
                 setIsError(true);
                 setAlertOpen(true)
             } else {
+                setIsError(false);
                 fetchAllFares().then(fares => setAllFares(fares));
                 setAlertText("Fare deleted successfully");
                 setAlertOpen(true)

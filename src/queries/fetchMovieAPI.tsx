@@ -44,3 +44,12 @@ export const fetchSpecificMovie = async (searchValue: String) => {
 
     return responseJson;
 };
+
+export const fetchAllArchivedMovies = async () => {
+    const url = PATH + "api/movies?page=0&size=10&sort=id%2CASC&status=ARCHIVED'";
+
+    const response = await fetch(url);
+    const responseJson = await response.json();
+
+    return responseJson;
+};

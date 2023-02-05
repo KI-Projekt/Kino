@@ -4,7 +4,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Box, Divider, Grid } from "@mui/material";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { fareSelection, Row } from "../../interfaces/Interfaces";
+import { Row, SimpleFare } from "../../interfaces/Interfaces";
 
 interface OrderOverviewProps {
   orderID: string | number | undefined;
@@ -15,7 +15,7 @@ interface OrderOverviewProps {
   showDate: Date | null | undefined;
   room: string | undefined;
   seats: Array<Row> | undefined;
-  fares: Array<fareSelection> | undefined;
+  fares: Array<SimpleFare> | undefined;
   price: number | undefined;
 }
 
@@ -99,9 +99,9 @@ function OrderOverview(prop: OrderOverviewProps) {
                 <Typography variant="h6">Fares:</Typography>
                 {prop.fares && prop.fares.map((fareItem) => (
                   <>
-                    {fareItem.amountOfTickets !== 0 && (
+                    {fareItem.ammount !== 0 && (
                       <Typography variant="body1" color="text.secondary">
-                        {fareItem.amountOfTickets} {fareItem.name}
+                        {fareItem.ammount} {fareItem.name}
                       </Typography>
                     )}
                   </>

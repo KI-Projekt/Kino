@@ -3,7 +3,7 @@ import { DateTimePicker } from "@mui/x-date-pickers";
 import { Dayjs } from "dayjs";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import UpdateIcon from '@mui/icons-material/Update';
-import { deleteShow, updateShow } from "../../queries/changeScreenings";
+import { cancelShow, updateShow } from "../../queries/changeScreenings";
 import React from "react";
 import Alerts from "../Alerts";
 import { Movie, Room, Show, ShowDate } from "../../interfaces/Interfaces";
@@ -74,7 +74,7 @@ function ShowDetailsEditTiles(props: ShowDetailsEditTileProps) {
 
     const onDeleteClick = () => {
         if (showID) {
-            deleteShow(showID).then(result => {
+            cancelShow(showID).then(result => {
                 if (result.error) {
                     setAlertText(result.error);
                     setIsError(true);
@@ -172,7 +172,7 @@ function ShowDetailsEditTiles(props: ShowDetailsEditTileProps) {
                                     sx={{ flexDirection: "row", flexGrow: 1 }}
                                 >
                                     <Button startIcon={<DeleteForeverIcon />} id={currentShow.showID?.toString()} onClick={() => { setDialogOpen(true); setShowID(currentShow.showID) }} />
-                                    <Button startIcon={<UpdateIcon />} id={currentShow.showID?.toString()} onClick={onUpdateClick} disabled />
+                                    <Button startIcon={<UpdateIcon />} id={currentShow.showID?.toString()} onClick={onUpdateClick} />
                                 </Box>
                             </Grid>
                         </Grid>

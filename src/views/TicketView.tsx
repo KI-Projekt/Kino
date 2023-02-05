@@ -12,7 +12,7 @@ import { fetchSpecificMovie } from "../queries/fetchMovieAPI";
 import { deleteReservation, postNewReservation } from "../queries/changeReservations";
 import { fetchOrderByID } from "../queries/fetchOrder";
 import { updateOrderFares } from "../queries/changeOrders";
-import { fareSelection, Movie, Order, Row, Show, ShowRow, User } from "../interfaces/Interfaces";
+import { fareSelection, Movie, Order, Show, ShowRow, User } from "../interfaces/Interfaces";
 import { fetchAllFares } from "../queries/fetchFares";
 
 
@@ -102,24 +102,6 @@ function TicketView(props: TicketViewProps) {
 
   const navigate = useNavigate();
 
-  function calculateSelectedSeats() {
-    let array: Array<Row> = [];
-    seats &&
-      seats.forEach((row: any) => {
-        let newRow: Row = { rowDescription: "-1", seats: [] };
-        row.seats.forEach((seat: any) => {
-          if (seat.selected) {
-            newRow.seats.push(seat);
-          }
-        });
-        if (newRow.seats.length > 0) {
-          newRow.rowDescription = row.rowDescription;
-          array.push(newRow);
-        }
-      });
-    return array;
-  }
-
   const calculatePrice = () => {
     let price = 0;
     fares && fares.forEach((fare) => {
@@ -129,23 +111,15 @@ function TicketView(props: TicketViewProps) {
   };
 
   const onButtonClick = () => {
-    let selectedSeats = calculateSelectedSeats();
     if (props.selectedShow && props.order?.id && fares) {
-    let fareQuery = {
-      kidsCount: fares[1].amountOfTickets,
-      studentCounts: fares[2].amountOfTickets,
-      adultsCount: fares[0].amountOfTickets,
-      pensionerCount: fares[3].amountOfTickets
-    }
-      updateOrderFares(fareQuery, props.order.id).then(result => {
-        let order = {
-          ...props.order,
-          seats: selectedSeats,
-          fares: fares,
-          price: result.total
-        }
-        props.setOrder(order);
-      })
+    let fareQuery = {}
+    fares.forEach(fare=> {
+      fareQuery = {
+        ...fareQuery,
+        [fare.name]: fare.amountOfTickets
+      }
+    });
+      updateOrderFares(fareQuery, props.order.id);
       navigate(
         `/orderDetails/${getIMDbIDFromURL()}/${props.selectedShow.showID}/${props.order.id}`
       );

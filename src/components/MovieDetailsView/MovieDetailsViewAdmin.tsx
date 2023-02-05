@@ -22,12 +22,13 @@ import Youtube from "react-youtube";
 import { getIMDbIDFromURL, sortShowsToShowDate } from "../../views/MovieDetailsView";
 import AddIcon from "@mui/icons-material/Add";
 import UpdateIcon from '@mui/icons-material/Update';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import ArchiveIcon from '@mui/icons-material/Archive';
+import RestoreIcon from '@mui/icons-material/Restore';
 import { useNavigate } from "react-router-dom";
-import { deleteMovie, postNewMovie, updateMovie } from "../../queries/changeMovies";
+import { archiveMovie, postNewMovie, updateMovie } from "../../queries/changeMovies";
 import ShowDetails from "./ShowDetails";
 import Alerts from "../Alerts";
-import { fetchMoviesByIMDbID } from "../../queries/fetchMovieAPI";
+import { fetchMoviesByIMDbID, fetchSpecificMovie } from "../../queries/fetchMovieAPI";
 import { fetchAllScreeningsByMovie } from "../../queries/fetchScreenings";
 import { Movie, Show, ShowDate } from "../../interfaces/Interfaces";
 
@@ -54,7 +55,7 @@ function AdminMovieDetailsView(props: MovieDetailsViewAdminProp) {
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleDeleteMovie = () => {
-    deleteMovie(props.selectedMovie.id).then(result => {
+    archiveMovie(props.selectedMovie.id).then(result => {
       if (result.error) {
         setAlertText(result.error);
         setIsError(true);
@@ -65,6 +66,25 @@ function AdminMovieDetailsView(props: MovieDetailsViewAdminProp) {
         setAlertOpen(true)
       } else {
         navigate("/");
+      }
+    })
+    setDialogOpen(false);
+  }
+
+  const handleCatalogMovie = () => {
+    archiveMovie(props.selectedMovie.id).then(result => {
+      if (result.error) {
+        setAlertText(result.error);
+        setIsError(true);
+        setAlertOpen(true)
+      } else if (result.errorMessage) {
+        setAlertText(result.errorMessage);
+        setIsError(true);
+        setAlertOpen(true)
+      } else {
+        setIsError(false);
+        setAlertText("The Movie was brought back to catalog!");
+        fetchSpecificMovie(getIMDbIDFromURL()).then((result) =>  props.setSelectedMovie(result));
       }
     })
     setDialogOpen(false);
@@ -304,15 +324,39 @@ function AdminMovieDetailsView(props: MovieDetailsViewAdminProp) {
                 <Alerts alertOpen={alertOpen} alertText={alertText} isError={isError} setAlertOpen={setAlertOpen} />
                 {!props.isNew && (
                   <>
-                    <Button
-                      variant="contained"
-                      fullWidth
-                      onClick={handleUpdateMovie}
-                      sx={{ marginBottom: theme.spacing(2) }}
-                      startIcon={<UpdateIcon />}
-                    >
-                      Update Movie
-                    </Button>
+                    {props.selectedMovie.movieStatus === "IN_CATALOG" &&
+                      <>
+                        <Button
+                          variant="contained"
+                          fullWidth
+                          onClick={handleUpdateMovie}
+                          sx={{ marginBottom: theme.spacing(2) }}
+                          startIcon={<UpdateIcon />}
+                        >
+                          Update Movie
+                        </Button>
+                        <Button
+                          variant="outlined"
+                          fullWidth
+                          onClick={() => setDialogOpen(true)}
+                          sx={{ marginBottom: theme.spacing(2) }}
+                          startIcon={<ArchiveIcon />}
+                        >
+                          Archive Movie
+                        </Button>
+                      </>
+                    }
+                    {props.selectedMovie.movieStatus !== "IN_CATALOG" &&
+                        <Button
+                          variant="contained"
+                          fullWidth
+                          onClick={handleCatalogMovie}
+                          sx={{ marginBottom: theme.spacing(2) }}
+                          startIcon={<RestoreIcon />}
+                        >
+                          Put Movie Back in Catalog
+                        </Button>
+                    }
                     <Dialog
                       fullScreen={fullScreen}
                       open={dialogOpen}
@@ -324,27 +368,18 @@ function AdminMovieDetailsView(props: MovieDetailsViewAdminProp) {
                       </DialogTitle>
                       <DialogContent>
                         <DialogContentText>
-                          Are you sure you want to delete this Movie from our Database?
+                          Are you sure you want to archive this?
                         </DialogContentText>
                       </DialogContent>
                       <DialogActions>
-                        <Button onClick={handleDeleteMovie} autoFocus startIcon={<DeleteForeverIcon />}>
-                          Delete
+                        <Button onClick={handleDeleteMovie} autoFocus startIcon={<ArchiveIcon />}>
+                          Archive
                         </Button>
                         <Button autoFocus onClick={() => setDialogOpen(false)} variant="contained">
                           Cancel
                         </Button>
                       </DialogActions>
                     </Dialog>
-                    <Button
-                      variant="outlined"
-                      fullWidth
-                      onClick={() => setDialogOpen(true)}
-                      sx={{ marginBottom: theme.spacing(2) }}
-                      startIcon={<DeleteForeverIcon />}
-                    >
-                      Delete Movie
-                    </Button>
                   </>
                 )}
               </Box>
@@ -370,12 +405,12 @@ function AdminMovieDetailsView(props: MovieDetailsViewAdminProp) {
                       </Typography>
                     </Grid>
                   </Grid>
-                  <ShowDetails
+                  {props.selectedMovie.movieStatus === "IN_CATALOG" && <ShowDetails
                     showData={props.showData}
                     setShowData={props.setShowData}
                     selectedMovie={props.selectedMovie}
                     getShowsByMovie={props.getShowsByMovie}
-                  />
+                  />}
                 </Box>
               </Grid>
             )}
