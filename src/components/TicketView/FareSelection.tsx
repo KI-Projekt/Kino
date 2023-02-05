@@ -9,7 +9,7 @@ import { fareSelection } from "../../interfaces/Interfaces";
 interface fareSelectionProps {
     totalAmountOfTickets: number;
     fares: fareSelection[];
-    setFares: React.Dispatch<React.SetStateAction<fareSelection[]>>;
+    setFares: React.Dispatch<React.SetStateAction<fareSelection[] | undefined>>;
     windowWidth: number;
 }
 
@@ -139,10 +139,10 @@ function FareSelection(props: fareSelectionProps) {
                                 >
                                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                         <Typography>{fare.name}</Typography>
-                                        {fare.condition !== "" && isMobile &&
+                                        {fare.fareCondition !== "" && isMobile &&
                                             <IconButton
-                                                aria-describedby={fare.condition}
-                                                id={fare.condition}
+                                                aria-describedby={fare.fareCondition}
+                                                id={fare.fareCondition}
                                                 onClick={handleClickOnInfo}
                                                 sx={{
                                                     width: {
@@ -156,8 +156,8 @@ function FareSelection(props: fareSelectionProps) {
                                                 <HelpOutlineIcon color={"info"} />
                                             </IconButton>
                                         }
-                                        {fare.condition !== "" && !isMobile &&
-                                            <Tooltip title={fare.condition}>
+                                        {fare.fareCondition !== "" && !isMobile &&
+                                            <Tooltip title={fare.fareCondition}>
                                                 <HelpOutlineIcon sx={{ ml: { xs: "0.05rem", sm: "1rem" } }} color={"info"} />
                                             </Tooltip>
                                         }

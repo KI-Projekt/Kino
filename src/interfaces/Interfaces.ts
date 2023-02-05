@@ -131,9 +131,16 @@ export interface fareSelection {
   id: number;
   name: string;
   price: number;
-  condition: string;
+  fareCondition: string;
   amountOfTickets: number;
 }
+
+export interface fareInput {
+  name: string;
+  price: number;
+  fareCondition: string;
+}
+
 
 export interface Room {
   id: number;
