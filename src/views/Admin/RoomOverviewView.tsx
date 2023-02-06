@@ -47,18 +47,19 @@ function RoomOverviewView(props: RoomOverviewViewProps) {
         });
         return roomResults;
     }
-
-    async function reloadUseState() {
-        await new Promise(f => setTimeout(f, 500));
-        setReload(!reload);
-    }
+    
 
     useEffect(() => {
+        const reloadUseState = async () => {
+            await new Promise(f => setTimeout(f, 500));
+            setReload(!reload);
+        }
+
         fetchNewRooms().then((allRooms) => {
-            console.log("###", allRooms)
             setRooms(allRooms);
         });
-        reloadUseState();
+        
+        reloadUseState(); // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
