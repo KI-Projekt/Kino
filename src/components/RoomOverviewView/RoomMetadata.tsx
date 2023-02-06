@@ -1,7 +1,8 @@
 import { Grid, TextField, FormControlLabel, Checkbox, Button } from "@mui/material";
-import { Room, Seat } from "../../interfaces/Interfaces";
+import { Room } from "../../interfaces/Interfaces";
 import React from "react";
 import SaveIcon from '@mui/icons-material/Save';
+import { RoomUpdate, updateRoom } from "../../queries/changeRoom";
 
 interface RoomMetadataProps {
     room: Room;
@@ -17,7 +18,18 @@ function RoomMetadata(props: RoomMetadataProps) {
 
     const saveRoom = () => {
         props.setEditMode(false);
+        props.setRoomChanged(false);
         console.log("###", props.seats);
+
+        let updatedRoom: RoomUpdate = {
+            id: props.room.id,
+            name: props.room.name,
+            hasDolbyAtmos: props.room.hasDolbyAtmos.toString(),
+            hasThreeD: props.room.hasThreeD.toString(),
+            seats: props.seats,
+        }
+
+        updateRoom(updatedRoom);
     }
 
     return (

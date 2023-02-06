@@ -15,9 +15,7 @@ interface SeatProps {
 
 function SeatIcon(props: SeatProps) {
 
-    const [seatIcon, setSeatIcon] = React.useState<Element | undefined>(undefined);
-
-     function jvda() {
+     function setSeatIcon() {
         switch (props.seat.category) {
             case "NORMAL":
                 return <EventSeatIcon />;
@@ -30,10 +28,6 @@ function SeatIcon(props: SeatProps) {
         }
     }
  
-    React.useEffect(() => {
-
-    }, [])
-
     return (
         <>
             {props.seat.id && (
@@ -49,7 +43,7 @@ function SeatIcon(props: SeatProps) {
                     id={props.seat.id.toString()} onClick={() => props.onSeatClick()}
                     disabled={!props.editMode}
                 >
-                    {jvda()}
+                    {setSeatIcon()}
                 </IconButton>
             )}
         </>
