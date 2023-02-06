@@ -40,7 +40,7 @@ function SeatplanEditable(props: SeatPlanpropsEditable) {
     <Box
       sx={{
         border: "0.1rem dashed grey",
-        marginX: "1rem",
+        marginX: 1,
         marginTop: "1rem",
       }}
       alignItems="center"

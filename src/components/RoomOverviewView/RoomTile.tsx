@@ -4,6 +4,7 @@ import SeatplanEditable from "./SeatplanEditable";
 import RoomMetadata from "./RoomMetadata";
 import React from "react";
 import EditIcon from '@mui/icons-material/Edit';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 interface RoomTileProps {
     room: Room
@@ -23,14 +24,14 @@ function RoomTile(props: RoomTileProps) {
     return (
         <>
             <Typography sx={{ pt: 3 }} variant="h5">{room.name}</Typography>
-            <Box textAlign='end'>
+            <Box textAlign='end' sx={{ mt: -3 }}>
                 <Button
-                    startIcon={<EditIcon />}
-                    variant={editMode ? 'contained' : 'outlined'}
+                    startIcon={editMode ? <ArrowBackIcon /> : <EditIcon />}
+                    variant={'contained'}
                     onClick={() => setEditMode(!editMode)}
                     disabled={editMode && roomChanged}
                 >
-                    Edit
+                    {editMode ? "Back" : "Edit"}
                 </Button>
             </Box>
             <Grid container spacing={2} alignItems='center' justifyContent='center' sx={{ pt: 3 }}>
