@@ -51,7 +51,7 @@ function SeatplanEditable(props: SeatPlanpropsEditable) {
           <div style={{ width: "fit-content", margin: "auto", alignItems: "center", justifyContent: "center" }}>
             {row.seats.map((seat) => (
               <>
-                <Seat editMode={props.editMode} onSeatClick={props.onSeatClick} seat={seat} windowWidth={props.windowWidth} />
+                <Seat editMode={props.editMode} onSeatClick={() => props.onSeatClick(seat, selectedIndex)} seat={seat} windowWidth={props.windowWidth} />
               </>
             ))}
             <Divider />

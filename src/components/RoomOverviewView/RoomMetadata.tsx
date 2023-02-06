@@ -1,5 +1,5 @@
 import { Grid, TextField, FormControlLabel, Checkbox, Button } from "@mui/material";
-import { Room } from "../../interfaces/Interfaces";
+import { Room, Seat } from "../../interfaces/Interfaces";
 import React from "react";
 import SaveIcon from '@mui/icons-material/Save';
 
@@ -10,12 +10,14 @@ interface RoomMetadataProps {
     setEditMode: Function;
     roomChanged: boolean;
     setRoomChanged: Function;
+    seats: Array<{ id: number, seatCategory: string }>;
 }
 
 function RoomMetadata(props: RoomMetadataProps) {
 
     const saveRoom = () => {
-        props.setEditMode(false)
+        props.setEditMode(false);
+        console.log("###", props.seats);
     }
 
     return (

@@ -1,5 +1,5 @@
 import { Box, Button, Divider, Grid, Typography } from "@mui/material";
-import { Room } from "../../interfaces/Interfaces";
+import { Room, Seat } from "../../interfaces/Interfaces";
 import SeatplanEditable from "./SeatplanEditable";
 import RoomMetadata from "./RoomMetadata";
 import React from "react";
@@ -13,13 +13,61 @@ interface RoomTileProps {
 
 function RoomTile(props: RoomTileProps) {
 
-    function onSeatClick() { }
+    function setCategoryOfSelectedSeat(seat: Seat, selectedIndex: number) {
+        switch (selectedIndex) {
+            case 1:
+                return "NORMAL";
+            case 2:
+                return "PREMIUM";
+            case 3:
+                return "WHEELCHAIR_ACCESSIBLE";
+            case 4:
+                return "STAIRS";
+        }
+        return "";
+    }
+
+    function setChangedSeats(seat: Seat, newStatus: string) {
+        let exists = false;
+        seats.map(currentSeat => {
+            if (currentSeat.id === seat.id) {
+                exists = true;
+                currentSeat.seatCategory = newStatus;
+            }
+            return currentSeat;
+        })
+        if (!exists && seat.id)
+            seats.push({ id: seat.id, seatCategory: newStatus });
+        setSeats(seats);
+    }
+
+    function setChangedRoom(seat: Seat, newStatus: string) {
+        const newRows = room.rows.map(row => {
+            row.seats.map(currentSeat => {
+                if (seat.id === currentSeat.id) {
+                    seat.category = newStatus;
+                }
+                return currentSeat;
+            })
+            return row;
+        })
+        setRoom({ ...room, rows: newRows });
+    }
+
+    function onSeatClick(seat: Seat, selectedIndex: number) {
+        let newStatus = setCategoryOfSelectedSeat(seat, selectedIndex);
+        setChangedSeats(seat, newStatus);
+        setChangedRoom(seat, newStatus);
+        setRoomChanged(true);
+    }
 
     const [editMode, setEditMode] = React.useState<boolean>(false);
 
     const [roomChanged, setRoomChanged] = React.useState<boolean>(false);
 
     const [room, setRoom] = React.useState<Room>(props.room);
+
+    const [seats, setSeats] = React.useState<Array<{ id: number, seatCategory: string }>>([]);
 
     return (
         <>
@@ -53,6 +101,7 @@ function RoomTile(props: RoomTileProps) {
                         setEditMode={setEditMode}
                         roomChanged={roomChanged}
                         setRoomChanged={setRoomChanged}
+                        seats={seats}
                     />
                 </Grid>
             </Grid>

@@ -17,14 +17,26 @@ function SeatIcon(props: SeatProps) {
 
     const [seatIcon, setSeatIcon] = React.useState<Element | undefined>(undefined);
 
+     function jvda() {
+        switch (props.seat.category) {
+            case "NORMAL":
+                return <EventSeatIcon />;
+            case "PREMIUM":
+                return <ChairIcon />;
+            case "WHEELCHAIR_ACCESSIBLE":
+                return <AccessibleIcon />;
+            case "STAIRS":
+                return <StairsOutlinedIcon />;
+        }
+    }
+ 
     React.useEffect(() => {
-        //
 
     }, [])
 
     return (
         <>
-            {props.seat.id && props.seat.category === "NORMAL" && (
+            {props.seat.id && (
                 <IconButton
                     sx={{
                         width: {
@@ -34,25 +46,10 @@ function SeatIcon(props: SeatProps) {
                             xl: `${(props.windowWidth / 580)}rem`
                         }
                     }}
-                    id={props.seat.id.toString()} onClick={(e) => props.onSeatClick(e)}
+                    id={props.seat.id.toString()} onClick={() => props.onSeatClick()}
                     disabled={!props.editMode}
                 >
-                    <EventSeatIcon id={props.seat.id.toString()} />
-                </IconButton>
-            )}
-            {props.seat.id === null && (
-                <IconButton
-                    sx={{
-                        width: {
-                            xs: `${(props.windowWidth / 320)}rem`,
-                            sm: `${(props.windowWidth / 300)}rem`,
-                            md: `${(props.windowWidth / 580)}rem`,
-                            xl: `${(props.windowWidth / 580)}rem`
-                        }
-                    }}
-                    disabled={!props.editMode}
-                >
-                    <StairsOutlinedIcon />
+                    {jvda()}
                 </IconButton>
             )}
         </>
