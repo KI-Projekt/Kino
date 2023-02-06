@@ -1,12 +1,12 @@
-import { Box, Button, Divider, Grid, Typography } from "@mui/material";
+import { Box, Divider} from "@mui/material";
 import EventSeatIcon from "@mui/icons-material/EventSeat";
 import StairsOutlinedIcon from "@mui/icons-material/StairsOutlined";
 import { Row } from "../../interfaces/Interfaces";
 import ChairIcon from '@mui/icons-material/Chair';
 import AccessibleIcon from '@mui/icons-material/Accessible';
 import React from "react";
-import { redTheme } from "../../interfaces/Theme";
 import Seat from "./Seat";
+import LegendSeatplan from "./LegendSeatplan";
 
 interface SeatPlanpropsEditable {
   rows: Array<Row>;
@@ -58,22 +58,7 @@ function SeatplanEditable(props: SeatPlanpropsEditable) {
           </div>
         ))}
         <Divider sx={{ pb: "2rem", pt: "1rem" }}>Screen</Divider>
-        <Grid container spacing={3}>
-          {ButtonData.map((item) => (
-            <Grid item xs={12} sm={6} md={6} xl={3}>
-              <Button
-                onClick={() => setSelectedIndex(item.index)}
-                startIcon={item.icon}
-                variant={item.index === selectedIndex ? 'contained': 'outlined'}
-                disabled={!props.editMode}
-              >
-                <Typography sx={{ color: redTheme.palette.primary.contrastText }}>
-                  {item.label}
-                </Typography>
-              </Button>
-            </Grid>
-          ))}
-        </Grid>
+        <LegendSeatplan ButtonData={ButtonData} editMode={props.editMode} roomChanged={props.roomChanged} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
       </Box>
     </Box >
   );

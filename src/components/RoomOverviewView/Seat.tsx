@@ -1,11 +1,10 @@
-import { IconButton, SvgIconTypeMap } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { Seat } from "../../interfaces/Interfaces";
 import EventSeatIcon from "@mui/icons-material/EventSeat";
 import StairsOutlinedIcon from "@mui/icons-material/StairsOutlined";
 import ChairIcon from '@mui/icons-material/Chair';
 import AccessibleIcon from '@mui/icons-material/Accessible';
 import React from "react";
-import { OverridableComponent } from "@mui/material/OverridableComponent";
 
 interface SeatProps {
     onSeatClick: Function;
