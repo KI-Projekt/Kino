@@ -6,14 +6,18 @@ import ChairIcon from '@mui/icons-material/Chair';
 import AccessibleIcon from '@mui/icons-material/Accessible';
 import React from "react";
 import { redTheme } from "../../interfaces/Theme";
+import Seat from "./Seat";
 
-interface SeatPlanprops {
+interface SeatPlanpropsEditable {
   rows: Array<Row>;
   onSeatClick: Function;
   windowWidth: number;
+  editMode: boolean;
+  roomChanged: boolean;
+  setRoomChanged: Function;
 }
 
-function SeatplanEditable(props: SeatPlanprops) {
+function SeatplanEditable(props: SeatPlanpropsEditable) {
 
   const [selectedIndex, setSelectedIndex] = React.useState(1);
 
@@ -47,36 +51,7 @@ function SeatplanEditable(props: SeatPlanprops) {
           <div style={{ width: "fit-content", margin: "auto", alignItems: "center", justifyContent: "center" }}>
             {row.seats.map((seat) => (
               <>
-                {seat.id && seat.category !== null && (
-                  <IconButton
-                    sx={{
-                      width: {
-                        xs: `${(props.windowWidth / 290)}rem`,
-                        sm: `${(props.windowWidth / 290)}rem`,
-                        md: `${(props.windowWidth / 580)}rem`,
-                        xl: `${(props.windowWidth / 580)}rem`
-                      }
-                    }}
-                    id={seat.id.toString()} onClick={(e) => props.onSeatClick(e)}
-                  >
-                    <EventSeatIcon id={seat.id.toString()} />
-                  </IconButton>
-                )}
-                {seat.id === null && (
-                  <IconButton
-                    disabled
-                    sx={{
-                      width: {
-                        xs: `${(props.windowWidth / 260)}rem`,
-                        sm: `${(props.windowWidth / 260)}rem`,
-                        md: `${(props.windowWidth / 520)}rem`,
-                        xl: `${(props.windowWidth / 520)}rem`
-                      }
-                    }}
-                  >
-                    <StairsOutlinedIcon />
-                  </IconButton>
-                )}
+                <Seat editMode={props.editMode} onSeatClick={props.onSeatClick} seat={seat} windowWidth={props.windowWidth} />
               </>
             ))}
             <Divider />
@@ -90,6 +65,7 @@ function SeatplanEditable(props: SeatPlanprops) {
                 onClick={() => setSelectedIndex(item.index)}
                 startIcon={item.icon}
                 variant={item.index === selectedIndex ? 'contained': 'outlined'}
+                disabled={!props.editMode}
               >
                 <Typography sx={{ color: redTheme.palette.primary.contrastText }}>
                   {item.label}

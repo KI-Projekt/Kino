@@ -1,4 +1,4 @@
-import { Box, Button, Checkbox, Divider, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography } from "@mui/material";
+import { Box, Button, Checkbox, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography } from "@mui/material";
 import { redTheme } from "../../interfaces/Theme";
 import { NewRoom } from "../../interfaces/Interfaces";
 import SaveIcon from '@mui/icons-material/Save';
@@ -22,7 +22,6 @@ function NewRoomAdd(props: NewRoomProps) {
 
     return (
         <>
-            <Divider />
             <Box textAlign='left' justifyContent='bottom' sx={{ p: redTheme.spacing(3) }}>
                 <Grid container spacing={3} alignItems='center' justifyContent='center'>
                     <Grid item xs={12} sm={12} md={12} xl={12}>

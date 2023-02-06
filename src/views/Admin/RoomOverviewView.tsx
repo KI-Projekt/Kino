@@ -12,7 +12,10 @@ interface RoomOverviewViewProps {
 }
 
 function RoomOverviewView(props: RoomOverviewViewProps) {
-    const [rooms, setRooms] = useState<Array<Room> | undefined>(undefined)
+    const [rooms, setRooms] = useState<Array<Room> | undefined>(undefined);
+
+    const [reload, setReload] = useState<boolean>(false);
+
 
     const [newRoom, setNewRoom] = React.useState<NewRoom>(
         { name: "", hasDolbyAtmos: false, hasThreeD: false, numberOfColumns: 1, numberOfRows: 1 }
@@ -45,28 +48,32 @@ function RoomOverviewView(props: RoomOverviewViewProps) {
         return roomResults;
     }
 
+    async function reloadUseState() {
+        await new Promise(f => setTimeout(f, 500));
+        setReload(!reload);
+    }
+
     useEffect(() => {
         fetchNewRooms().then((allRooms) => {
             console.log("###", allRooms)
-            setRooms(allRooms)
+            setRooms(allRooms);
         });
-
+        reloadUseState();
     }, []);
 
     return (
         <Box sx={{ marginX: 2, p: 2, alignItems: 'center' }} textAlign='center' >
             <Typography variant="h4">Rooms</Typography>
-            {props.isAdmin && rooms &&
+            {props.isAdmin &&
                 <>
-                    {rooms.map((currentRoom) =>
+                    {rooms && rooms.map((currentRoom) =>
                         <>
                             <RoomTile room={currentRoom} windowWidth={props.windowWidth} />
                         </>
                     )}
-
+                    <NewRoomAdd newRoom={newRoom} saveRoom={saveRoom} setNewRoom={setNewRoom} />
                 </>
             }
-            <NewRoomAdd newRoom={newRoom} saveRoom={saveRoom} setNewRoom={setNewRoom} />
             {!props.isAdmin &&
                 <Alert
                     sx={{ marginTop: "1rem" }}

@@ -6,12 +6,16 @@ import SaveIcon from '@mui/icons-material/Save';
 interface RoomMetadataProps {
     room: Room;
     setRoom: Function;
+    editMode: boolean;
+    setEditMode: Function;
+    roomChanged: boolean;
+    setRoomChanged: Function;
 }
 
 function RoomMetadata(props: RoomMetadataProps) {
 
     const saveRoom = () => {
-
+        props.setEditMode(false)
     }
 
     return (
@@ -25,11 +29,13 @@ function RoomMetadata(props: RoomMetadataProps) {
                         label="Roomname"
                         value={props.room?.name}
                         fullWidth
+                        disabled={!props.editMode}
                         onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
                             props.setRoom({
                                 ...props.room,
                                 [e.target.id]: e.target.value,
                             });
+                            props.setRoomChanged(true);
                         }}
                     />
                 </Grid>
@@ -39,11 +45,13 @@ function RoomMetadata(props: RoomMetadataProps) {
                         control={<Checkbox defaultChecked={props.room.hasThreeD} />}
                         label="3D"
                         value={props.room.hasThreeD}
+                        disabled={!props.editMode}
                         onChange={() => {
                             props.setRoom({
                                 ...props.room,
                                 hasThreeD: !props.room.hasThreeD,
                             });
+                            props.setRoomChanged(true);
                         }}
                     />
                 </Grid>
@@ -53,11 +61,13 @@ function RoomMetadata(props: RoomMetadataProps) {
                         control={<Checkbox defaultChecked={props.room.hasDolbyAtmos} />}
                         label="DolbyAtmos"
                         value={props.room.hasDolbyAtmos}
+                        disabled={!props.editMode}
                         onChange={() => {
                             props.setRoom({
                                 ...props.room,
                                 hasDolbyAtmos: !props.room.hasDolbyAtmos,
                             });
+                            props.setRoomChanged(true);
                         }}
                     />
                 </Grid>
@@ -66,6 +76,7 @@ function RoomMetadata(props: RoomMetadataProps) {
                         variant='contained'
                         startIcon={<SaveIcon />}
                         fullWidth
+                        disabled={!props.editMode || !props.roomChanged}
                         onClick={() => saveRoom()}
                     >
                         Save
