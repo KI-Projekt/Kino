@@ -337,7 +337,6 @@ function App() {
               <FormControlLabel
                 control={<Switch onChange={handleChangeAdminMode} />}
                 label="Admin"
-                value={adminProps.isAdmin}
               />
             </Main>
           </Box>

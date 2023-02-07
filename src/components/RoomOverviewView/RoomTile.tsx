@@ -72,7 +72,7 @@ function RoomTile(props: RoomTileProps) {
     return (
         <>
             <Typography sx={{ pt: 3 }} variant="h5">{room.name}</Typography>
-            <Box textAlign='end' sx={{ mt: -3 }}>
+            <Box textAlign='end' sx={{ mt: {sm: -3} }}>
                 <Button
                     startIcon={editMode ? <ArrowBackIcon /> : <EditIcon />}
                     variant={'contained'}

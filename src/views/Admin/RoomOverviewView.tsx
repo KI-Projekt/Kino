@@ -32,6 +32,8 @@ function RoomOverviewView(props: RoomOverviewViewProps) {
         postnewRoom(postNewRoom).then(() => {
             fetchNewRooms().then((allRooms) => setRooms(allRooms));
         })
+
+        reloadUseState();
     };
 
     async function fetchNewRooms() {
@@ -47,23 +49,24 @@ function RoomOverviewView(props: RoomOverviewViewProps) {
         });
         return roomResults;
     }
-    
+
+    const reloadUseState = async () => {
+        await new Promise(f => setTimeout(f, 500));
+        setReload(!reload);
+    }
 
     useEffect(() => {
-        const reloadUseState = async () => {
-            await new Promise(f => setTimeout(f, 500));
-            setReload(!reload);
-        }
+
 
         fetchNewRooms().then((allRooms) => {
             setRooms(allRooms);
         });
-        
+
         reloadUseState(); // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
-        <Box sx={{ marginX: 2, p: 2, alignItems: 'center' }} textAlign='center' >
+        <Box sx={{ marginX: 2, py: 2, alignItems: 'center' }} textAlign='center' >
             <Typography variant="h4">Rooms</Typography>
             {props.isAdmin &&
                 <>
