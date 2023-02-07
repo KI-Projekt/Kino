@@ -1,8 +1,7 @@
-import { Box, Divider, IconButton } from "@mui/material";
-import EventSeatIcon from "@mui/icons-material/EventSeat";
-import StairsOutlinedIcon from "@mui/icons-material/StairsOutlined";
+import { Box, Divider } from "@mui/material";
 import { ShowRow } from "../../interfaces/Interfaces";
 import ShowSeatIcon from "./ShowSeatIcon";
+import LegendSeatplanUser from "./LegendSeatplanUser";
 
 interface SeatPlanprops {
   data: Array<ShowRow>;
@@ -34,6 +33,7 @@ function Seatplan(props: SeatPlanprops) {
           </div>
         ))}
         <Divider sx={{ marginBottom: "2rem", marginTop: "1rem" }}>Screen</Divider>
+        <LegendSeatplanUser />
       </>
     </Box >
   );

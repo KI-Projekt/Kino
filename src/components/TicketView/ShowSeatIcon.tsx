@@ -39,7 +39,7 @@ function ShowSeatIcon(props: ShowSeatIconProps) {
                     }}
                     id={props.seat.seat.id.toString()}
                     onClick={(e) => props.onSeatClick(e)}
-                    disabled={props.seat.seat.category == "STAIRS" || props.seat.reserved}
+                    disabled={props.seat.seat.category === "STAIRS" || props.seat.reserved}
                     color={props.seat.selected ? "primary" : "secondary"}
                 >
                     {setSeatIcon()}
