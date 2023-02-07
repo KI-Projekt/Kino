@@ -163,6 +163,7 @@ function App() {
               setUser={setUser}
               setPersonalDataFilled={setPersonalDataFilled}
               isAdmin={adminProps.isAdmin}
+              setIsAdmin={setAdminProps}
             />
             <Toolbar />
 
@@ -336,6 +337,7 @@ function App() {
               <FormControlLabel
                 control={<Switch onChange={handleChangeAdminMode} />}
                 label="Admin"
+                value={adminProps.isAdmin}
               />
             </Main>
           </Box>
