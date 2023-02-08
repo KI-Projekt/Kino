@@ -25,7 +25,7 @@ import UpdateIcon from '@mui/icons-material/Update';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import RestoreIcon from '@mui/icons-material/Restore';
 import { useNavigate } from "react-router-dom";
-import { archiveMovie, postNewMovie, updateMovie } from "../../queries/changeMovies";
+import { archiveMovie, catalogMovie, postNewMovie, updateMovie } from "../../queries/changeMovies";
 import ShowDetails from "./ShowDetails";
 import Alerts from "../Alerts";
 import { fetchMoviesByIMDbID, fetchSpecificMovie } from "../../queries/fetchMovieAPI";
@@ -72,7 +72,7 @@ function AdminMovieDetailsView(props: MovieDetailsViewAdminProp) {
   }
 
   const handleCatalogMovie = () => {
-    archiveMovie(props.selectedMovie.id).then(result => {
+    catalogMovie(props.selectedMovie.id).then(result => {
       if (result.error) {
         setAlertText(result.error);
         setIsError(true);

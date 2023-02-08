@@ -2,8 +2,7 @@ import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, D
 import { DateTimePicker } from "@mui/x-date-pickers";
 import { Dayjs } from "dayjs";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import UpdateIcon from '@mui/icons-material/Update';
-import { cancelShow, updateShow } from "../../queries/changeScreenings";
+import { cancelShow } from "../../queries/changeScreenings";
 import React from "react";
 import Alerts from "../Alerts";
 import { Movie, Room, Show, ShowDate } from "../../interfaces/Interfaces";
@@ -92,25 +91,6 @@ function ShowDetailsEditTiles(props: ShowDetailsEditTileProps) {
         }
     }
 
-    const onUpdateClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-        const TRAILER_ADD = 15;
-
-        props.showData.forEach((currentShowDate) => {
-            currentShowDate.shows.forEach((currentShow) => {
-                if (currentShow.showID?.toString() === e.currentTarget.id && props.selectedMovie?.runtime && currentShow.dateTime) {
-                    let newShow = {
-                        movieId: currentShow.movieID,
-                        roomId: currentShow.roomID,
-                        startDateTime: new Date(currentShow.dateTime),
-                        endDateTime: new Date(currentShow.dateTime?.setMinutes(currentShow.dateTime?.getMinutes() + parseInt(props.selectedMovie.runtime) + TRAILER_ADD)),
-                        status: "TICKET_SALE_OPEN"
-                    }
-                    updateShow(newShow, currentShow.showID);
-                }
-            })
-        })
-    }
-
     return (
         <>
             {props.showData.map((currentShowDate: ShowDate) => (
@@ -130,7 +110,7 @@ function ShowDetailsEditTiles(props: ShowDetailsEditTileProps) {
                                 {currentShow.dateTime.toLocaleDateString()} at {currentShow.dateTime.getHours()}:{currentShow.dateTime.getMinutes() === 0 ? "00" : currentShow.dateTime.getMinutes()}h
                             </Typography>
                         }
-                        <Grid container>
+                        <Grid container alignItems="center">
                             <Grid item xs={6} sm={6} md={6} xl={6}>
                                 <FormControl sx={{ m: theme.spacing(1) }}>
                                     <DateTimePicker
@@ -168,12 +148,7 @@ function ShowDetailsEditTiles(props: ShowDetailsEditTileProps) {
                                 </FormControl>
                             </Grid>
                             <Grid item xs={2} sm={2} md={2} xl={2}>
-                                <Box
-                                    sx={{ flexDirection: "row", flexGrow: 1 }}
-                                >
-                                    <Button startIcon={<DeleteForeverIcon />} id={currentShow.showID?.toString()} onClick={() => { setDialogOpen(true); setShowID(currentShow.showID) }} />
-                                    <Button startIcon={<UpdateIcon />} id={currentShow.showID?.toString()} onClick={onUpdateClick} />
-                                </Box>
+                                <Button startIcon={<DeleteForeverIcon />} id={currentShow.showID?.toString()} onClick={() => { setDialogOpen(true); setShowID(currentShow.showID) }} />
                             </Grid>
                         </Grid>
                         <Dialog

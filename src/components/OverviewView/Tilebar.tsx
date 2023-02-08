@@ -26,7 +26,7 @@ function TileBar(props: TilebarProps) {
     const [alertText, setAlertText] = useState("");
 
     useEffect(() => {
-        if (props.status) {
+        if (props.status === "ARCHIVED") {
             fetchAllArchivedMovies().then(result => setMovies(result))
         } else if (props.query) {
             fetchMoviesByAgeRating(props.query).then((result) => { setMovies(result) })
