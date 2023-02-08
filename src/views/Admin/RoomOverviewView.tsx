@@ -5,6 +5,7 @@ import { Alert, Box, Typography } from "@mui/material";
 import { fetchAllRooms, fetchSeatplanByRoom } from "../../queries/fetchRoomAPI";
 import { postnewRoom, RoomInput } from "../../queries/changeRoom";
 import NewRoomAdd from "../../components/RoomOverviewView/NewRoom";
+import Alerts from "../../components/Alerts";
 
 interface RoomOverviewViewProps {
     isAdmin: boolean;
@@ -16,10 +17,13 @@ function RoomOverviewView(props: RoomOverviewViewProps) {
 
     const [reload, setReload] = useState<boolean>(false);
 
-
     const [newRoom, setNewRoom] = React.useState<NewRoom>(
         { name: "", hasDolbyAtmos: false, hasThreeD: false, numberOfColumns: 1, numberOfRows: 1 }
-    )
+    );
+
+    const [alertOpen, setAlertOpen] = React.useState(false);
+    const [isError, setIsError] = React.useState(false);
+    const [alertText, setAlertText] = React.useState("");
 
     function saveRoom() {
         let postNewRoom: RoomInput = {
@@ -29,10 +33,23 @@ function RoomOverviewView(props: RoomOverviewViewProps) {
             numberOfColumns: newRoom.numberOfColumns,
             numberOfRows: newRoom.numberOfRows
         }
-        postnewRoom(postNewRoom).then(() => {
-            fetchNewRooms().then((allRooms) => setRooms(allRooms));
-        })
-
+        postnewRoom(postNewRoom).then((result: any) => {
+            if (result.error) {
+                setAlertText(result.error);
+                setIsError(true);
+                setAlertOpen(true);
+            } else if (result.errorMessage) {
+                setAlertText(result.errorMessage);
+                setIsError(true);
+                setAlertOpen(true);
+            } else {
+                setAlertText("The room was added successfully!");
+                setAlertOpen(true);
+                setIsError(false);
+                fetchNewRooms().then((allRooms) => setRooms(allRooms));
+                setNewRoom({ name: "", hasDolbyAtmos: false, hasThreeD: false, numberOfColumns: 1, numberOfRows: 1 });
+            }
+        });
         reloadUseState();
     };
 
@@ -70,7 +87,13 @@ function RoomOverviewView(props: RoomOverviewViewProps) {
                 <>
                     {rooms && rooms.map((currentRoom) =>
                         <>
-                            <RoomTile room={currentRoom} windowWidth={props.windowWidth} />
+                            <RoomTile
+                                room={currentRoom}
+                                windowWidth={props.windowWidth}
+                                setAlertOpen={setAlertOpen}
+                                setAlertText={setAlertText}
+                                setIsError={setIsError}
+                            />
                         </>
                     )}
                     <NewRoomAdd newRoom={newRoom} saveRoom={saveRoom} setNewRoom={setNewRoom} />
@@ -84,6 +107,7 @@ function RoomOverviewView(props: RoomOverviewViewProps) {
                     You are not allowed to change the rooms
                 </Alert>
             }
+            <Alerts alertOpen={alertOpen} alertText={alertText} isError={isError} setAlertOpen={setAlertOpen} />
         </Box>
     );
 }
