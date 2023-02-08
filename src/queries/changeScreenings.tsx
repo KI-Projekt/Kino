@@ -36,3 +36,15 @@ export const updateShow = async (updatedShow: any, showID: any) => {
 
     return data;
 };
+
+export const cancelShow = async (showID: any) => {
+    const data = await axios.put(`${PATH}api/screenings/${showID}/cancel`)
+        .then(response => {
+            return response
+        })
+        .catch(error => {
+            return error.response.data;
+        });
+
+    return data;
+};

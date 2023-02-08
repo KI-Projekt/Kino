@@ -131,9 +131,21 @@ export interface fareSelection {
   id: number;
   name: string;
   price: number;
-  condition: string;
+  fareCondition: string;
   amountOfTickets: number;
 }
+
+export interface SimpleFare {
+  name: string,
+  ammount: number
+}
+
+export interface fareInput {
+  name: string;
+  price: number;
+  fareCondition: string;
+}
+
 
 export interface Room {
   id: number;
@@ -180,8 +192,9 @@ export interface Order {
   reservations?: Array<Reservation> | undefined;
   tickets?: Array<Ticket> | undefined;
   seats: Array<Row> | undefined;
-  fares: Array<fareSelection> | undefined;
+  fares: Array<SimpleFare> | undefined;
   price?: number | undefined;
+  faresSelected?: any | undefined;
 }
 
 export interface AdminProps {

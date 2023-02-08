@@ -12,7 +12,8 @@ import { fetchSpecificMovie } from "../queries/fetchMovieAPI";
 import { deleteReservation, postNewReservation } from "../queries/changeReservations";
 import { fetchOrderByID } from "../queries/fetchOrder";
 import { updateOrderFares } from "../queries/changeOrders";
-import { fareSelection, Movie, Order, Row, Show, ShowRow, User } from "../interfaces/Interfaces";
+import { fareSelection, Movie, Order, Show, ShowRow, User } from "../interfaces/Interfaces";
+import { fetchAllFares } from "../queries/fetchFares";
 
 
 export const getShowAfterReload = async () => {
@@ -68,7 +69,7 @@ function TicketView(props: TicketViewProps) {
   const theme = useTheme();
 
   const [currentTicketAmmount, setCurrentTicketAmount] = useState(0);
-
+  const [fares, setFares] = useState<Array<fareSelection> | undefined>(undefined);
   const [seats, setSeats] = useState<Array<ShowRow> | undefined>(undefined);
 
   const setSelectedShow = props.setSelectedShow
@@ -80,6 +81,7 @@ function TicketView(props: TicketViewProps) {
       initializeSeatingPlan(result.seatingPlan);
     });
     getMovieAfterReload().then(result =>  setSelectedMovie(result));
+    fetchAllFares().then(fares => setFares(fares));
   }, [setSelectedShow, setSelectedMovie]);
 
   function initializeSeatingPlan(room: any) {
@@ -100,70 +102,24 @@ function TicketView(props: TicketViewProps) {
 
   const navigate = useNavigate();
 
-  function createFareData(
-    id: number,
-    name: string,
-    price: number,
-    condition: string,
-    amountOfTickets: number
-  ) {
-    return { id, name, price, condition, amountOfTickets };
-  }
-
-  const rows = [
-    createFareData(0, "Adult", 10.0, "People older than 16 and younger than 65 years old", 0),
-    createFareData(1, "Kid", 7.0, "Kids under 16 years old", 0),
-    createFareData(2, "Student", 8.0, "Students with a student ID", 0),
-    createFareData(3, "Pensioner", 9.0, "People older than 65", 0),
-  ];
-
-  const [fares, setFares] = useState<Array<fareSelection>>(rows);
-
-  function calculateSelectedSeats() {
-    let array: Array<Row> = [];
-    seats &&
-      seats.forEach((row: any) => {
-        let newRow: Row = { rowDescription: "-1", seats: [] };
-        row.seats.forEach((seat: any) => {
-          if (seat.selected) {
-            newRow.seats.push(seat);
-          }
-        });
-        if (newRow.seats.length > 0) {
-          newRow.rowDescription = row.rowDescription;
-          array.push(newRow);
-        }
-      });
-    return array;
-  }
-
   const calculatePrice = () => {
     let price = 0;
-    fares.forEach((fare) => {
+    fares && fares.forEach((fare) => {
       price += fare.amountOfTickets * fare.price;
     });
     return price;
   };
 
   const onButtonClick = () => {
-    let selectedSeats = calculateSelectedSeats();
-
-    let fareQuery = {
-      kidsCount: fares[1].amountOfTickets,
-      studentCounts: fares[2].amountOfTickets,
-      adultsCount: fares[0].amountOfTickets,
-      pensionerCount: fares[3].amountOfTickets
-    }
-    if (props.selectedShow && props.order?.id) {
-      updateOrderFares(fareQuery, props.order.id).then(result => {
-        let order = {
-          ...props.order,
-          seats: selectedSeats,
-          fares: fares,
-          price: result.total
-        }
-        props.setOrder(order);
-      })
+    if (props.selectedShow && props.order?.id && fares) {
+    let fareQuery = {}
+    fares.forEach(fare=> {
+      fareQuery = {
+        ...fareQuery,
+        [fare.name]: fare.amountOfTickets
+      }
+    });
+      updateOrderFares(fareQuery, props.order.id);
       navigate(
         `/orderDetails/${getIMDbIDFromURL()}/${props.selectedShow.showID}/${props.order.id}`
       );
@@ -247,12 +203,12 @@ function TicketView(props: TicketViewProps) {
             windowWidth={props.windowWidth} />}
       </Grid>
       <Grid item xs={12} sm={12} md={5.5} xl={6}>
-        <FareSelection
+        {fares && <FareSelection
           totalAmountOfTickets={currentTicketAmmount}
           fares={fares}
           setFares={setFares}
           windowWidth={props.windowWidth}
-        />
+        /> }
         <Box>
           <Typography
             align="center"

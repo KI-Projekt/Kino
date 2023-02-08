@@ -12,6 +12,9 @@ interface RoomMetadataProps {
     roomChanged: boolean;
     setRoomChanged: Function;
     seats: Array<{ id: number, seatCategory: string }>;
+    setAlertText: Function;
+    setIsError: Function;
+    setAlertOpen: Function;
 }
 
 function RoomMetadata(props: RoomMetadataProps) {
@@ -29,7 +32,21 @@ function RoomMetadata(props: RoomMetadataProps) {
             seats: props.seats,
         }
 
-        updateRoom(updatedRoom);
+        updateRoom(updatedRoom).then((result) =>{
+            if (result.error) {
+                props.setAlertText(result.error);
+                props.setIsError(true);
+                props.setAlertOpen(true);
+              } else if (result.errorMessage) {
+                props.setAlertText(result.errorMessage);
+                props.setIsError(true);
+                props.setAlertOpen(true);
+              } else {
+                props.setAlertText("The room was updated successfully!");
+                props.setAlertOpen(true);
+                props.setIsError(false);
+              }
+        });
     }
 
     return (

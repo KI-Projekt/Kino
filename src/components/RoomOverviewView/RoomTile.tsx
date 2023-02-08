@@ -9,6 +9,9 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 interface RoomTileProps {
     room: Room
     windowWidth: number;
+    setAlertText: Function;
+    setIsError: Function;
+    setAlertOpen: Function;
 }
 
 function RoomTile(props: RoomTileProps) {
@@ -102,6 +105,9 @@ function RoomTile(props: RoomTileProps) {
                         roomChanged={roomChanged}
                         setRoomChanged={setRoomChanged}
                         seats={seats}
+                        setAlertOpen={props.setAlertOpen}
+                        setAlertText={props.setAlertText}
+                        setIsError={props.setIsError}
                     />
                 </Grid>
             </Grid>
