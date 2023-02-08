@@ -33,7 +33,7 @@ function RoomOverviewView(props: RoomOverviewViewProps) {
             numberOfColumns: newRoom.numberOfColumns,
             numberOfRows: newRoom.numberOfRows
         }
-        postnewRoom(postNewRoom).then((result) => {
+        postnewRoom(postNewRoom).then((result: any) => {
             if (result.error) {
                 setAlertText(result.error);
                 setIsError(true);
