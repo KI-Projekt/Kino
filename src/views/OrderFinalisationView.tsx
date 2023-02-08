@@ -10,6 +10,7 @@ import { getMovieAfterReload, getShowAfterReload } from "./TicketView";
 import { Movie, Order, Show, User } from "../interfaces/Interfaces";
 import { getOrderAfterReload } from "./PaymentDetailsView";
 import { redTheme } from "../interfaces/Theme";
+import { useNavigate } from "react-router-dom";
 
 interface OrderFinalisationViewProps {
     order: Order | undefined;
@@ -55,6 +56,8 @@ function OrderFinalisationView(props: OrderFinalisationViewProps) {
         pdf.save(`Cinetastisch_Order_${props.order?.id}.pdf`);
     }
 
+    const navigate = useNavigate();
+
     return (
         <>
             {props.order && props.selectedMovie && props.selectedShow && (
@@ -82,7 +85,7 @@ function OrderFinalisationView(props: OrderFinalisationViewProps) {
                                         {props.user?.id &&
                                             <Typography variant="body1">
                                                 You can also find this order {" "}
-                                                <Link href={`/profile/${props.user.id}/myOrders`} target="_blank" >
+                                                <Link onClick={() => navigate(`/profile/${props.user?.id}/myOrders`)}>
                                                     here
                                                 </Link>
                                                 .
