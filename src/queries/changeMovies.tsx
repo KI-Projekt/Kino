@@ -38,3 +38,27 @@ export const deleteMovie = async (id: number | string | undefined) => {
 
     return data;
 };
+
+export const archiveMovie = async (movieId: number | string | undefined) => {
+    const data = await axios.put(`${PATH}api/movies/${movieId}/archive`)
+        .then(response => {
+            return response
+        })
+        .catch(error => {
+            return error.response.data;
+        });
+
+    return data;
+};
+
+export const catalogMovie = async (movieId: number | string | undefined) => {
+    const data = await axios.put(`${PATH}api/movies/${movieId}/catalog`)
+        .then(response => {
+            return response
+        })
+        .catch(error => {
+            return error.response.data;
+        });
+
+    return data;
+};
