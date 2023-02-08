@@ -75,7 +75,8 @@ function UserMovieDetailsView(props: MovieDetailsViewUserProp) {
                                 variant="contained"
                                 onClick={() => navigate(`/showDetails/${props.selectedMovie?.id}/${props.selectedShow?.showID}`)}
                                 startIcon={<ConfirmationNumberIcon />}
-                            >Continue
+                            >
+                                Continue
                             </Button></>
                     }
                 </Grid>

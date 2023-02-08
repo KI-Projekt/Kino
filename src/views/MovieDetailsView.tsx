@@ -41,7 +41,7 @@ export const sortShowsToShowDate = (input: Array<ShowWithMovieObject>) => {
             additionalInfo: {
                 hasDolbyAtmos: show.room.hasDolbyAtmos,
                 isThreeD: show.room.hasThreeD
-            }
+            },
         }
         showDate.forEach(showDate => {
             if (show.startDateTime && showDate.date.toDateString() === new Date(show.startDateTime).toDateString()) {

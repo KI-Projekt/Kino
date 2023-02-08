@@ -2,7 +2,8 @@ import { Box, ButtonBase, Divider, styled, Typography, useTheme } from '@mui/mat
 import * as React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Show, ShowDate } from '../../interfaces/Interfaces';
-
+import ThreeDRotationIcon from '@mui/icons-material/ThreeDRotation';
+import SpeakerGroupIcon from '@mui/icons-material/SpeakerGroup';
 
 interface props {
     shows: Array<ShowDate>,
@@ -98,6 +99,13 @@ function ShowTiles(props: props) {
                                         >
                                             {currentShow.dateTime.getHours()} : {currentShow.dateTime.getMinutes() === 0 ? "00" : currentShow.dateTime.getMinutes()} h
                                             <ImageMarked className="MuiImageMarked-root" />
+                                            <br />
+                                            {currentShow.additionalInfo.isThreeD &&
+                                                <ThreeDRotationIcon color='inherit' />
+                                            }
+                                            {currentShow.additionalInfo.hasDolbyAtmos &&
+                                                <SpeakerGroupIcon color='inherit' />
+                                            }
                                         </Typography>
                                     </Image>
                                 </ImageButton>
