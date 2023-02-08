@@ -12,7 +12,11 @@ interface State {
   showRepeatedPassword: boolean;
 }
 
-function SignUpForm() {
+interface SignUpFormProps {
+  setValue?: Function;
+}
+
+function SignUpForm(props: SignUpFormProps) {
 
   function createUserData(
     id: number | undefined,
@@ -25,9 +29,9 @@ function SignUpForm() {
     email: string | undefined,
     password: string | undefined,
     matchingPassword: string | undefined,
-) {
+  ) {
     return { id, firstName, lastName, street, houseNumber, zip, city, email, password, matchingPassword };
-}
+  }
 
   const initialUser = (
     createUserData(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)
@@ -46,7 +50,7 @@ function SignUpForm() {
 
   const handleChangePassword =
     (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setGuestUser({...guestUser, [prop]: event.target.value})
+      setGuestUser({ ...guestUser, [prop]: event.target.value })
       setValues({ ...values, [prop]: event.target.value });
     };
 
@@ -89,10 +93,13 @@ function SignUpForm() {
       } else {
         setIsError(false);
         setAlertOpen(true);
+        setAlertText("Successfully registered. Please sign in to continue.");
+        if (props.setValue)
+          props.setValue(2);
       }
+    });
+  };
 
-    })
-  }
   return (
     <>
       <Box
