@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import RoomTile from "../../components/RoomOverviewView/RoomTile";
 import { NewRoom, Room } from "../../interfaces/Interfaces";
-import { Box, Button, Checkbox, Divider, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography } from "@mui/material";
+import { Alert, Box, Typography } from "@mui/material";
 import { fetchAllRooms, fetchSeatplanByRoom } from "../../queries/fetchRoomAPI";
-import { redTheme } from "../../interfaces/Theme";
-import SaveIcon from '@mui/icons-material/Save';
 import { postnewRoom, RoomInput } from "../../queries/changeRoom";
+import NewRoomAdd from "../../components/RoomOverviewView/NewRoom";
+import Alerts from "../../components/Alerts";
 
 interface RoomOverviewViewProps {
     isAdmin: boolean;
@@ -13,13 +13,17 @@ interface RoomOverviewViewProps {
 }
 
 function RoomOverviewView(props: RoomOverviewViewProps) {
-    const [rooms, setRooms] = useState<Array<Room> | undefined>(undefined)
+    const [rooms, setRooms] = useState<Array<Room> | undefined>(undefined);
+
+    const [reload, setReload] = useState<boolean>(false);
 
     const [newRoom, setNewRoom] = React.useState<NewRoom>(
         { name: "", hasDolbyAtmos: false, hasThreeD: false, numberOfColumns: 1, numberOfRows: 1 }
-    )
+    );
 
-    const colums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    const [alertOpen, setAlertOpen] = React.useState(false);
+    const [isError, setIsError] = React.useState(false);
+    const [alertText, setAlertText] = React.useState("");
 
     function saveRoom() {
         let postNewRoom: RoomInput = {
@@ -29,9 +33,24 @@ function RoomOverviewView(props: RoomOverviewViewProps) {
             numberOfColumns: newRoom.numberOfColumns,
             numberOfRows: newRoom.numberOfRows
         }
-        postnewRoom(postNewRoom).then(() => {
-            fetchNewRooms().then((allRooms) => setRooms(allRooms));
-        })
+        postnewRoom(postNewRoom).then((result: any) => {
+            if (result.error) {
+                setAlertText(result.error);
+                setIsError(true);
+                setAlertOpen(true);
+            } else if (result.errorMessage) {
+                setAlertText(result.errorMessage);
+                setIsError(true);
+                setAlertOpen(true);
+            } else {
+                setAlertText("The room was added successfully!");
+                setAlertOpen(true);
+                setIsError(false);
+                fetchNewRooms().then((allRooms) => setRooms(allRooms));
+                setNewRoom({ name: "", hasDolbyAtmos: false, hasThreeD: false, numberOfColumns: 1, numberOfRows: 1 });
+            }
+        });
+        reloadUseState();
     };
 
     async function fetchNewRooms() {
@@ -48,121 +67,47 @@ function RoomOverviewView(props: RoomOverviewViewProps) {
         return roomResults;
     }
 
-    function changeNewRoomSelectsValues(e: SelectChangeEvent) {
-        setNewRoom({
-            ...newRoom,
-            [e.target.name]: e.target.value,
-        });
+    const reloadUseState = async () => {
+        await new Promise(f => setTimeout(f, 500));
+        setReload(!reload);
     }
 
     useEffect(() => {
-        fetchNewRooms().then((allRooms) => setRooms(allRooms));
+        fetchNewRooms().then((allRooms) => {
+            setRooms(allRooms);
+        });
+
+        reloadUseState(); // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
-        <Box sx={{ marginX: 2, p: 2, alignItems: 'center' }} textAlign='center' >
+        <Box sx={{ marginX: 2, py: 2, alignItems: 'center' }} textAlign='center' >
             <Typography variant="h4">Rooms</Typography>
             {props.isAdmin &&
                 <>
-                    {rooms?.map((currentRoom) =>
+                    {rooms && rooms.map((currentRoom) =>
                         <>
-                            <RoomTile room={currentRoom} windowWidth={props.windowWidth} />
+                            <RoomTile
+                                room={currentRoom}
+                                windowWidth={props.windowWidth}
+                                setAlertOpen={setAlertOpen}
+                                setAlertText={setAlertText}
+                                setIsError={setIsError}
+                            />
                         </>
                     )}
-                    <Divider />
-                    <Box textAlign='left' justifyContent='bottom' sx={{ p: redTheme.spacing(3) }}>
-                        <Grid container spacing={3} alignItems='center' justifyContent='center'>
-                            <Grid item xs={12} sm={12} md={12} xl={12}>
-                                <Typography variant="h5" sx={{ p: redTheme.spacing(2) }}>Add new Room</Typography>
-                            </Grid>
-                            <Grid item xs={12} sm={6} md={3} xl={3}>
-                                <TextField
-                                    type="text"
-                                    id="name"
-                                    placeholder="Roomname"
-                                    label="Roomname"
-                                    value={newRoom?.name}
-                                    fullWidth
-                                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-                                        setNewRoom({
-                                            ...newRoom,
-                                            [e.target.id]: e.target.value,
-                                        });
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={6} sm={3} md={1} xl={1}>
-                                <FormControlLabel
-                                    id="hasThreeD"
-                                    control={<Checkbox />}
-                                    label="3D"
-                                    value={newRoom?.hasThreeD}
-                                    onChange={() => {
-                                        setNewRoom({
-                                            ...newRoom,
-                                            hasThreeD: !newRoom.hasThreeD,
-                                        });
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={6} sm={3} md={2} xl={2}>
-                                <FormControlLabel
-                                    id="hasDolbyAtmos"
-                                    control={<Checkbox />}
-                                    label="DolbyAtmos"
-                                    value={newRoom?.hasThreeD}
-                                    onChange={() => {
-                                        setNewRoom({
-                                            ...newRoom,
-                                            hasDolbyAtmos: !newRoom.hasDolbyAtmos,
-                                        });
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={6} sm={6} md={1.5} xl={2}>
-                                <FormControl fullWidth>
-                                    <InputLabel>Rows</InputLabel>
-                                    <Select
-                                        name="numberOfRows"
-                                        value={newRoom.numberOfRows.toString()}
-                                        label="Colums"
-                                        onChange={(e: SelectChangeEvent) => changeNewRoomSelectsValues(e)}
-                                    >
-                                        {colums.map((item) => (
-                                            <MenuItem value={item}>{item}</MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={6} sm={6} md={1.5} xl={2}>
-                                <FormControl fullWidth>
-                                    <InputLabel>Colums</InputLabel>
-                                    <Select
-                                        name="numberOfColumns"
-                                        value={newRoom?.numberOfColumns.toString()}
-                                        label="Colums"
-                                        onChange={(e: SelectChangeEvent) => changeNewRoomSelectsValues(e)}
-                                    >
-                                        {colums.map((item) => (
-                                            <MenuItem value={item}>{item}</MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={12} sm={12} md={3} xl={2}>
-                                <Button
-                                    variant='contained'
-                                    startIcon={<SaveIcon />}
-                                    fullWidth
-                                    onClick={() => saveRoom()}
-                                >
-                                    Save
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </Box>
+                    <NewRoomAdd newRoom={newRoom} saveRoom={saveRoom} setNewRoom={setNewRoom} />
                 </>
             }
+            {!props.isAdmin &&
+                <Alert
+                    sx={{ marginTop: "1rem" }}
+                    severity="error"
+                >
+                    You are not allowed to change the rooms
+                </Alert>
+            }
+            <Alerts alertOpen={alertOpen} alertText={alertText} isError={isError} setAlertOpen={setAlertOpen} />
         </Box>
     );
 }

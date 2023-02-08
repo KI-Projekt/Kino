@@ -99,7 +99,7 @@ function AddNewMoviesView(props: AddNewMoviesViewProps) {
             }
             {!props.isAdmin &&
                 <Alert
-                    sx={{ marginTop: "1rem", width: "90rem", marginLeft: "2rem" }}
+                    sx={{ marginTop: "1rem" }}
                     severity="error"
                 >
                     You are not allowed to add new movies

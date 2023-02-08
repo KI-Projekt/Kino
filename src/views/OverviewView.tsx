@@ -40,6 +40,7 @@ function OverviewView(props: OverviewViewProps) {
                 </Box>
             }
             <TileBar title='All Movies in this Cinema' isAdmin={props.isAdmin} isNew={props.isNew} />
+            {props.isAdmin &&<TileBar title='Archived Movies' status="ARCHIVED" isAdmin={props.isAdmin} isNew={props.isNew} />}
         </div>
     );
 }

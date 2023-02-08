@@ -10,6 +10,8 @@ interface ProfileMenuButtonProps {
     user: User;
     setUser: Function;
     setPersonalDataFilled: Function;
+    isAdmin: boolean;
+    setIsAdmin: Function;
 }
 
 
@@ -31,14 +33,15 @@ function ProfileMenuButton(props: ProfileMenuButtonProps) {
     function createUserMenuData(
         label: string,
         link: string,
+        onlyUser: boolean,
     ) {
-        return { label, link }
+        return { label, link, onlyUser }
     }
 
     const userMenuData = [
-        createUserMenuData('My Profile', `profile/${props.user.userID}`),
-        createUserMenuData('My Order', ''),
-        createUserMenuData("Logout", ''),
+        createUserMenuData('My Profile', `profile/${props.user.userID}`, false),
+        createUserMenuData('My Order', '', true),
+        createUserMenuData("Logout", '', false),
     ];
 
     const navigate = useNavigate();
@@ -68,6 +71,7 @@ function ProfileMenuButton(props: ProfileMenuButtonProps) {
             await new Promise(f => setTimeout(f, 1000));
             props.setUser(initialUser);
             props.setPersonalDataFilled(false);
+            props.setIsAdmin({isAdmin: false});
         } else {
             navigate(`/${link}`);
         }
@@ -102,9 +106,13 @@ function ProfileMenuButton(props: ProfileMenuButtonProps) {
             {props.user.firstName &&
                 <Box sx={{ backgroundColor: 'white', }}>
                     {userMenuData.map((setting) => (
-                        <MenuItem key={setting.label} onClick={() => handleListItemClick(setting.label, setting.link)}>
-                            <Typography textAlign="center">{setting.label}</Typography>
-                        </MenuItem>
+                        <>
+                            {(!props.isAdmin === setting.onlyUser || !props.isAdmin )&&
+                                <MenuItem key={setting.label} onClick={() => handleListItemClick(setting.label, setting.link)}>
+                                    <Typography textAlign="center">{setting.label}</Typography>
+                                </MenuItem>
+                            }
+                        </>
                     ))}
                 </Box>
             }

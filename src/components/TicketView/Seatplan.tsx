@@ -1,7 +1,7 @@
-import { Box, Divider, IconButton } from "@mui/material";
-import EventSeatIcon from "@mui/icons-material/EventSeat";
-import StairsOutlinedIcon from "@mui/icons-material/StairsOutlined";
+import { Box, Divider } from "@mui/material";
 import { ShowRow } from "../../interfaces/Interfaces";
+import ShowSeatIcon from "./ShowSeatIcon";
+import LegendSeatplanUser from "./LegendSeatplanUser";
 
 interface SeatPlanprops {
   data: Array<ShowRow>;
@@ -15,7 +15,7 @@ function Seatplan(props: SeatPlanprops) {
     <Box
       sx={{
         border: "0.1rem dashed grey",
-        marginX: "1rem",
+        marginX: 1,
         marginTop: "1rem",
       }}
       alignItems="center"
@@ -26,43 +26,14 @@ function Seatplan(props: SeatPlanprops) {
           <div style={{ width: "fit-content", margin: "auto", alignItems: "center", justifyContent: "center" }}>
             {row.seats.map((seat) => (
               <>
-                {seat.seat.id && seat.reserved !== null && (
-                  <IconButton
-                    sx={{
-                      width: {
-                        xs: `${(props.windowWidth / 280)}rem`,
-                        sm: `${(props.windowWidth / 280)}rem`,
-                        md: `${(props.windowWidth / 540)}rem`,
-                        xl: `${(props.windowWidth / 540)}rem`
-                      }
-                    }}
-                    id={seat.seat.id.toString()} onClick={(e) => props.onSeatClick(e)} color={seat.selected ? "primary" : "secondary"}
-                    disabled={seat.reserved}
-                  >
-                    <EventSeatIcon id={seat.seat.id.toString()} />
-                  </IconButton>
-                )}
-                {seat.seat.id === null && (
-                  <IconButton
-                    disabled
-                    sx={{
-                      width: {
-                        xs: `${(props.windowWidth / 260)}rem`,
-                        sm: `${(props.windowWidth / 260)}rem`,
-                        md: `${(props.windowWidth / 520)}rem`,
-                        xl: `${(props.windowWidth / 520)}rem`
-                      }
-                    }}
-                  >
-                    <StairsOutlinedIcon />
-                  </IconButton>
-                )}
+                <ShowSeatIcon onSeatClick={props.onSeatClick} seat={seat} windowWidth={props.windowWidth} />
               </>
             ))}
             <Divider />
           </div>
         ))}
         <Divider sx={{ marginBottom: "2rem", marginTop: "1rem" }}>Screen</Divider>
+        <LegendSeatplanUser />
       </>
     </Box >
   );

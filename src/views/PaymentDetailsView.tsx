@@ -17,7 +17,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { getMovieAfterReload, getShowAfterReload } from "./TicketView";
 import { useNavigate } from "react-router-dom";
 import { payOrder } from "../queries/changeOrders";
-import { Movie, Order, Row, Show, Ticket, User } from "../interfaces/Interfaces";
+import { Movie, Order, Row, Show, SimpleFare, Ticket, User } from "../interfaces/Interfaces";
 import { fetchOrderByID } from "../queries/fetchOrder";
 
 interface PaymentDetailsViewProps {
@@ -48,23 +48,31 @@ export const getOrderAfterReload = async () => {
     order.tickets && order.tickets.forEach((ticket: Ticket) => {
       let rowExists = false;
       let newRow: Row = { rowDescription: `${ticket.seat.row}`, seats: [ticket.seat] };
-      if (selectedSeats.length > 0){
-      selectedSeats.forEach(row => {
-        if (`${ticket.seat.row}` === row.rowDescription) {
-          rowExists = true;
-          row.seats.push(ticket.seat);
-        }
-      })
-      if(!rowExists)
-        selectedSeats.push(newRow);
-    } else {
-      selectedSeats.push(newRow)
-    }
+      if (selectedSeats.length > 0) {
+        selectedSeats.forEach(row => {
+          if (`${ticket.seat.row}` === row.rowDescription) {
+            rowExists = true;
+            row.seats.push(ticket.seat);
+          }
+        })
+        if (!rowExists)
+          selectedSeats.push(newRow);
+      } else {
+        selectedSeats.push(newRow)
+      }
     })
     order.seats = selectedSeats;
-
-    /* let fares: fareSelection = [{}]
-    order.fares =  */
+    if (order.faresSelected) {
+      let fares: Array<SimpleFare> = [];
+      let keys = Object.keys(order.faresSelected);
+      keys.forEach(key => {
+        fares.push({
+          name:key, 
+          ammount: order.faresSelected[key]});
+      });
+      order.fares = fares;
+    }
+    
     return order;
   });
   return response;
