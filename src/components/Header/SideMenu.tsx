@@ -13,123 +13,132 @@ import { AppBarProps, drawerWidth } from "./Header";
 import SearchBar from "./SearchBar";
 import SearchIcon from '@mui/icons-material/Search';
 import AssistantDirectionIcon from '@mui/icons-material/AssistantDirection';
+import AddHomeIcon from '@mui/icons-material/AddHome';
 
 const openedMixin = (theme: Theme): CSSObject => ({
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-    }),
-    overflowX: 'hidden',
-    backgroundColor: theme.palette.primary.main,
-    [theme.breakpoints.down('sm')]: {
-        width: '100%',
-    },
+  width: drawerWidth,
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: 'hidden',
+  backgroundColor: theme.palette.primary.main,
+  [theme.breakpoints.down('sm')]: {
+    width: '100%',
+  },
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
-    transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: 'hidden',
-    width: `calc(${theme.spacing(7)} + 1px)`,
-    [theme.breakpoints.down('sm')]: {
-        width: 0,
-    },
-    backgroundColor: theme.palette.primary.main,
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowX: 'hidden',
+  width: `calc(${theme.spacing(7)} + 1px)`,
+  [theme.breakpoints.down('sm')]: {
+    width: 0,
+  },
+  backgroundColor: theme.palette.primary.main,
 });
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-    ({ theme, open }) => ({
-        width: drawerWidth,
-        flexShrink: 0,
-        whiteSpace: 'nowrap',
-        boxSizing: 'border-box',
-        ...(open && {
-            ...openedMixin(theme),
-            '& .MuiDrawer-paper': openedMixin(theme),
-        }),
-        ...(!open && {
-            ...closedMixin(theme),
-            '& .MuiDrawer-paper': closedMixin(theme),
-        }),
+  ({ theme, open }) => ({
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+    boxSizing: 'border-box',
+    ...(open && {
+      ...openedMixin(theme),
+      '& .MuiDrawer-paper': openedMixin(theme),
     }),
+    ...(!open && {
+      ...closedMixin(theme),
+      '& .MuiDrawer-paper': closedMixin(theme),
+    }),
+  }),
 );
 
 const DrawerHeader = styled('div')(({ theme }) => ({
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
+  display: 'flex',
+  alignItems: 'center',
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+  justifyContent: 'flex-end',
 }));
 
-function SideMenu(props: AppBarProps) {
-    const [selectedIndex, setSelectedIndex] = React.useState(1);
-    const theme = useTheme();
+interface SideMenuProps {
+  isAdmin: boolean;
+  appBarProps: AppBarProps;
+}
 
-    function createMenuData(
-        index: number,
-        label: String,
-        link: String,
-        icon: JSX.Element,
-    ) {
-        return { index, label, link, icon }
-    }
+function SideMenu(props: SideMenuProps) {
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const theme = useTheme();
 
-    const menuData = [
-        createMenuData(1, 'Movies', '', <MovieIcon />),
-        createMenuData(2, 'Shows', 'shows', <SlideshowIcon />),
-        createMenuData(3, 'Opening hours', 'openingHours', <AccessTimeIcon />),
-        createMenuData(4, 'Price Categories', 'ticketPrices', <PaidIcon />),
-        createMenuData(5, 'Getting here', 'gettingHere', <AssistantDirectionIcon />),
-    ];
+  function createMenuData(
+    index: number,
+    label: String,
+    link: String,
+    icon: JSX.Element,
+    onlyAdmin: boolean,
+  ) {
+    return { index, label, link, icon, onlyAdmin }
+  }
 
-    const navigate = useNavigate();
+  const menuData = [
+    createMenuData(1, 'Movies', '', <MovieIcon />, false),
+    createMenuData(2, 'Shows', 'shows', <SlideshowIcon />, false),
+    createMenuData(3, 'Opening hours', 'openingHours', <AccessTimeIcon />, false),
+    createMenuData(4, 'Price Categories', 'ticketPrices', <PaidIcon />, false),
+    createMenuData(5, 'Getting here', 'gettingHere', <AssistantDirectionIcon />, false),
+    createMenuData(6, 'Rooms', 'rooms', <AddHomeIcon />, true),
+  ];
 
-    const handleListItemClick = (
-        link: String,
-        index: number,
-    ) => {
-        setSelectedIndex(index);
-        navigate(`/${link}`);
-        props.handleMenuClose();
-    };
+  const navigate = useNavigate();
 
-    const [searchOpen, setSearchOpen] = React.useState<boolean>(false);
+  const handleListItemClick = (
+    link: String,
+    index: number,
+  ) => {
+    setSelectedIndex(index);
+    navigate(`/${link}`);
+    props.appBarProps.handleMenuClose();
+  };
 
-    return (
-      <Drawer
-        variant="permanent"
-        anchor="left"
-        open={props.open}
-        ModalProps={{
-          keepMounted: true, // Better open performance on mobile.
-        }}
-      >
-        <DrawerHeader>
-          <Typography
-            variant="h5"
-            align="left"
-            sx={{ color: theme.palette.primary.contrastText }}
-          >
-            Navigation
-          </Typography>
-          <IconButton
-            onClick={() => props.handleMenuClose()}
-            sx={{ color: theme.palette.primary.contrastText }}
-          >
-            {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        {!props.open && (
+  const [searchOpen, setSearchOpen] = React.useState<boolean>(false);
+
+  return (
+    <Drawer
+      variant="permanent"
+      anchor="left"
+      open={props.appBarProps.open}
+      ModalProps={{
+        keepMounted: true, // Better open performance on mobile.
+      }}
+    >
+      <DrawerHeader>
+        <Typography
+          variant="h5"
+          align="left"
+          sx={{ color: theme.palette.primary.contrastText }}
+        >
+          Navigation
+        </Typography>
+        <IconButton
+          onClick={() => props.appBarProps.handleMenuClose()}
+          sx={{ color: theme.palette.primary.contrastText }}
+        >
+          {theme.direction === "ltr" ? (
+            <ChevronLeftIcon />
+          ) : (
+            <ChevronRightIcon />
+          )}
+        </IconButton>
+      </DrawerHeader>
+      <Divider />
+      <List>
+        {!props.appBarProps.open && (
           <ListItem disablePadding>
             <ListItemButton
               sx={{
@@ -137,9 +146,9 @@ function SideMenu(props: AppBarProps) {
                   backgroundColor: "#871313",
                 },
                 py: 0,
-                my:0
+                my: 0
               }}
-              onClick={() => props.handleMenuOpen()}
+              onClick={() => props.appBarProps.handleMenuOpen()}
             >
               <ListItemIcon sx={{ color: theme.palette.primary.contrastText }}>
                 <SearchIcon />
@@ -156,7 +165,7 @@ function SideMenu(props: AppBarProps) {
             </ListItemButton>
           </ListItem>
         )}
-        {props.open && (
+        {props.appBarProps.open && (
           <ListItem
             disablePadding
             sx={{
@@ -165,7 +174,7 @@ function SideMenu(props: AppBarProps) {
                 backgroundColor: "#871313",
               },
             }}
-          > 
+          >
             <ListItemIcon sx={{ color: theme.palette.primary.contrastText }}>
               <SearchIcon />
             </ListItemIcon>
@@ -180,33 +189,38 @@ function SideMenu(props: AppBarProps) {
             />
           </ListItem>
         )}
-        <List>
-          {menuData.map((item) => (
-            <ListItem key={item.index} disablePadding>
-              <ListItemButton
-                sx={{
-                  "&.Mui-selected": {
-                    backgroundColor: "#871313",
-                  },
-                }}
-                selected={selectedIndex === item.index}
-                onClick={() => handleListItemClick(item.link, item.index)}
-              >
-                <ListItemIcon
-                  sx={{ color: theme.palette.primary.contrastText }}
+
+        {menuData.map((item) => (
+          <>
+            {
+              ((props.isAdmin && item.onlyAdmin) ||  !item.onlyAdmin) &&
+              < ListItem key={item.index} disablePadding>
+                <ListItemButton
+                  sx={{
+                    "&.Mui-selected": {
+                      backgroundColor: "#871313",
+                    },
+                  }}
+                  selected={selectedIndex === item.index}
+                  onClick={() => handleListItemClick(item.link, item.index)}
                 >
-                  {item.icon}
-                </ListItemIcon>
-                <ListItemText
-                  sx={{ color: theme.palette.primary.contrastText }}
-                  primary={item.label}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
-    );
+                  <ListItemIcon
+                    sx={{ color: theme.palette.primary.contrastText }}
+                  >
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText
+                    sx={{ color: theme.palette.primary.contrastText }}
+                    primary={item.label}
+                  />
+                </ListItemButton>
+              </ListItem>
+            }
+          </>
+        ))}
+      </List>
+    </Drawer >
+  );
 }
 
 export default SideMenu;

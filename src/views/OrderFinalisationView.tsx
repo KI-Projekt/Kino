@@ -80,7 +80,7 @@ function OrderFinalisationView(props: OrderFinalisationViewProps) {
                                     <Box sx={{ flexGrow: 1 }} />
                                     <Box sx={{ py: theme.spacing(3), textAlign: "center", textJustify: "center", }}>
                                         <Typography variant="body1" sx={{ pb: theme.spacing(2) }}>
-                                            Below you can find the QR-Code with your order.
+                                            Below you can find the QR-Code for your order.
                                         </Typography>
                                         {props.order.id && <QRCode value={props.order?.id.toString()} size={150} />}
                                         <Typography sx={{ pt: theme.spacing(2) }}>Order-ID: {props.order?.id}</Typography>
