@@ -22,7 +22,6 @@ function RoomMetadata(props: RoomMetadataProps) {
     const saveRoom = () => {
         props.setEditMode(false);
         props.setRoomChanged(false);
-        console.log("###", props.seats);
 
         let updatedRoom: RoomUpdate = {
             id: props.room.id,

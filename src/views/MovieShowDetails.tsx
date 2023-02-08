@@ -66,7 +66,7 @@ function UserMovieDetailsView(props: MovieDetailsViewUserProp) {
                                         {props.selectedShow.dateTime?.getHours()} : {props.selectedShow.dateTime?.getMinutes() === 0 ? "00" : props.selectedShow.dateTime?.getMinutes()}h
                                     </Typography>
                                     <Typography variant="body2" color="text.secondary" align="center" sx={{ p: theme.spacing(1) }}>
-                                        {props.selectedShow.room}
+                                        {props.selectedShow.room?.name}
                                     </Typography>
                                 </CardContent>
                             </Card>

@@ -14,7 +14,7 @@ import { redTheme } from "../interfaces/Theme";
 interface OrderFinalisationViewProps {
     order: Order | undefined;
     setOrder: React.Dispatch<React.SetStateAction<Order | undefined>>;
-    user: User;
+    user?: User;
     setSelectedMovie: React.Dispatch<React.SetStateAction<Movie | undefined>>;
     selectedMovie: Movie | undefined;
     setSelectedShow: React.Dispatch<React.SetStateAction<Show | undefined>>;
@@ -117,7 +117,7 @@ function OrderFinalisationView(props: OrderFinalisationViewProps) {
                                             movie={props.selectedMovie.title}
                                             picture={props.selectedMovie.posterImage}
                                             showDate={props.selectedShow.dateTime}
-                                            room={props.selectedShow.room}
+                                            room={props.selectedShow.room?.name}
                                             seats={props.order.seats}
                                             fares={props.order.fares}
                                             price={props.order.total}

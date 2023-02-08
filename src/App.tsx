@@ -26,6 +26,7 @@ import RoomOverviewView from "./views/Admin/RoomOverviewView";
 import { AdminProps, Movie, Order, Show, User } from "./interfaces/Interfaces";
 import { redTheme } from "./interfaces/Theme";
 import backgroundImage from './img/background.jpg';
+import MyOrdersView from "./views/MyOrdersView";
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
   open?: boolean;
@@ -81,40 +82,8 @@ function App() {
 
   const [personalDataFilled, setPersonalDataFilled] = React.useState(false);
 
-  function createUserData(
-    userID: number | undefined,
-    firstName: string | undefined,
-    surname: string | undefined,
-    street: string | undefined,
-    houseNumber: string | undefined,
-    postcode: string | undefined,
-    city: string | undefined,
-    emailAdress: string | undefined
-  ) {
-    return {
-      userID,
-      firstName,
-      surname,
-      street,
-      houseNumber,
-      postcode,
-      city,
-      emailAdress,
-    };
-  }
 
-  const [user, setUser] = React.useState<User>(
-    createUserData(
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined
-    )
-  );
+const [user, setUser] = React.useState<User | undefined>()
 
   const handleChangeAdminMode = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -321,6 +290,10 @@ function App() {
                           saveUserProfile={saveUserProfile}
                         />
                       }
+                    />
+                    <Route
+                      path="/profile/:userID/myOrders"
+                      element={<MyOrdersView user={user} />}
                     />
                     <Route
                       path="/shows"

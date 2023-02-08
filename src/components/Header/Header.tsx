@@ -16,7 +16,7 @@ export interface AppBarProps extends MuiAppBarProps {
 }
 
 interface HeaderProps {
-  user: User;
+  user?: User;
   setUser: Function;
   setPersonalDataFilled: Function;
   isAdmin: boolean;

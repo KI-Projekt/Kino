@@ -23,14 +23,14 @@ function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {
 
   const setAllRequiredDataFilled = (newUser: User) => {
     if (
-      newUser.userID &&
+      newUser.id &&
       newUser.city &&
-      newUser.emailAdress &&
+      newUser.email &&
       newUser.firstName &&
       newUser.houseNumber &&
-      newUser.postcode &&
+      newUser.zip &&
       newUser.street &&
-      newUser.surname
+      newUser.lastName
     ) {
       props.setPersonalDataFilled(true);
     } else {
@@ -80,8 +80,8 @@ function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {
           type="text"
           placeholder="Doe"
           label="Surname"
-          id="surname"
-          value={props.user.surname}
+          id="lastName"
+          value={props.user.lastName}
           onChange={(
             e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
           ) => handleOnChange(e)}
@@ -122,8 +122,8 @@ function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {
           className="Form-Login-Input"
           placeholder="68165"
           label="Postcode"
-          id="postcode"
-          value={props.user.postcode}
+          id="zip"
+          value={props.user.zip}
           onChange={(
             e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
           ) => handleOnChange(e)}
@@ -148,8 +148,8 @@ function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {
           type="email"
           placeholder="Jane.doe@example.com"
           label="Email Address"
-          id="emailAdress"
-          value={props.user.emailAdress}
+          id="email"
+          value={props.user.email}
           onChange={(
             e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
           ) => handleOnChange(e)}

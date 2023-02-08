@@ -110,7 +110,7 @@ function MovieShowTiles(props: MovieShowTilesProps) {
                                                     {currentShow.dateTime.getHours()} : {currentShow.dateTime.getMinutes() === 0 ? "00" : currentShow.dateTime.getMinutes()} h <br />
                                                 </Typography>
                                                 <Typography variant='body1'>
-                                                    {currentShow.room}
+                                                    {currentShow.room?.name}
                                                 </Typography>
                                                 <ImageMarked className="MuiImageMarked-root" />
                                             </Typography>
