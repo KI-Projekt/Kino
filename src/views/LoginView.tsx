@@ -58,7 +58,7 @@ function LoginView(props: LoginViewProps) {
     const navigate = useNavigate();
 
     function navigateToProfileMenu() {
-        navigate(`/profile/${props.user.userID}`);
+        navigate(`/profile/${props.user.id}`);
     }
 
     return (
@@ -88,7 +88,7 @@ function LoginView(props: LoginViewProps) {
                             </Tabs>
 
                             <TabPanel value={value} index={0} dir={theme.direction}>
-                                <SignUpForm />
+                                <SignUpForm user={props.user} setUser={props.setUser}/>
                             </TabPanel>
                             <TabPanel value={value} index={1} dir={theme.direction}>
                                 <Login setUser={props.setUser} />

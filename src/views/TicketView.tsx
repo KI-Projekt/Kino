@@ -180,8 +180,8 @@ function TicketView(props: TicketViewProps) {
                 screeningId: props.selectedShow?.showID,
                 seatId: seat.seat.id
               }
-              if (props.user?.userID) {
-                reservation.userId = props.user?.userID;
+              if (props.user?.id) {
+                reservation.userId = props.user?.id;
               } 
               postNewReservation(reservation).then((result) => {
                 fetchOrderByID(result.data.id).then((order) => {

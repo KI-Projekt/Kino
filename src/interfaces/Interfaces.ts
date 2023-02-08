@@ -160,14 +160,16 @@ export interface ShowRoom {
 }
 
 export interface User {
-  userID: number | undefined,
+  id: number | undefined,
   firstName: string | undefined,
-  surname: string | undefined,
+  lastName: string | undefined,
   street: string | undefined,
   houseNumber: string | undefined,
-  postcode: string | undefined,
+  zip: string | undefined,
   city: string | undefined,
-  emailAdress: string | undefined,
+  email: string | undefined,
+  password: string | undefined,
+  matchingPassword: string | undefined,
 }
 
 export interface Order {

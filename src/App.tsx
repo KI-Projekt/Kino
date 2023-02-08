@@ -82,39 +82,22 @@ function App() {
   const [personalDataFilled, setPersonalDataFilled] = React.useState(false);
 
   function createUserData(
-    userID: number | undefined,
+    id: number | undefined,
     firstName: string | undefined,
-    surname: string | undefined,
+    lastName: string | undefined,
     street: string | undefined,
     houseNumber: string | undefined,
-    postcode: string | undefined,
+    zip: string | undefined,
     city: string | undefined,
-    emailAdress: string | undefined
-  ) {
-    return {
-      userID,
-      firstName,
-      surname,
-      street,
-      houseNumber,
-      postcode,
-      city,
-      emailAdress,
-    };
-  }
-
-  const [user, setUser] = React.useState<User>(
-    createUserData(
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined
-    )
-  );
+    email: string | undefined,
+    password: string | undefined,
+    matchingPassword: string | undefined,
+) {
+    return { id, firstName, lastName, street, houseNumber, zip, city, email, password, matchingPassword };
+}
+const [user, setUser] = React.useState<User>(
+    createUserData(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)
+  )
 
   const handleChangeAdminMode = (
     event: React.ChangeEvent<HTMLInputElement>

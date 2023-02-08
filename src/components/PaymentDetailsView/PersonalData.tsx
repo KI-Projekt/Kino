@@ -95,14 +95,14 @@ function PersonalData(props: PersonalDataProps) {
             <Login setUser={props.setUser} />
           </TabPanel>
           <TabPanel value={value} index={2} dir={theme.direction}>
-            <SignUpForm />
+            <SignUpForm user={props.user} setUser={props.setUser}/>
           </TabPanel>
         </>
       )}
       {props.user.firstName && (
         <Box sx={{ p: 3 }}>
           <Typography sx={{ pb: 2 }}>
-            You are loggin in as {props.user.firstName} {props.user.surname}.
+            You are loggin in as {props.user.firstName} {props.user.lastName}.
           </Typography>
           <PersonalDataUserLoggedIn
             personalDataFilled={props.personalDataFilled}

@@ -60,7 +60,7 @@ export default function Footer(props: FooterProps) {
                   </IconButton>
                 </Tooltip>
                 <Tooltip title="Account Information">
-                  <IconButton onClick={() => handleClick(props.user.firstName ? `profile/${props.user.userID}` : "login")}>
+                  <IconButton onClick={() => handleClick(props.user.firstName ? `profile/${props.user.id}` : "login")}>
                     <AccountCircleIcon
                       sx={{ color: theme.palette.common.white }}
                       className="Footer-Icons"

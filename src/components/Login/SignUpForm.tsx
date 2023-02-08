@@ -2,44 +2,56 @@ import React from "react"
 import '../../styles/Login.css';
 import { Button, Box, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField, useTheme } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { registerUser, UserInput } from "../../queries/authentication";
 import { User } from "../../interfaces/Interfaces";
+import Alerts from "../Alerts";
 
 interface State {
   password: string;
-  repeatedPassword: string;
+  matchingPassword: string;
   showPassword: boolean;
   showRepeatedPassword: boolean;
 }
 
-function SignUpForm() {
+interface SignUpProps {
+  user: User;
+  setUser: Function;
+}
+function SignUpForm(props: SignUpProps) {
 
   function createUserData(
-    userID: number | undefined,
+    id: number | undefined,
     firstName: string | undefined,
-    surname: string | undefined,
+    lastName: string | undefined,
     street: string | undefined,
     houseNumber: string | undefined,
-    postcode: string | undefined,
+    zip: string | undefined,
     city: string | undefined,
-    emailAdress: string | undefined,) {
-    return { userID, firstName, surname, street, houseNumber, postcode, city, emailAdress };
-  }
+    email: string | undefined,
+    password: string | undefined,
+    matchingPassword: string | undefined,
+) {
+    return { id, firstName, lastName, street, houseNumber, zip, city, email, password, matchingPassword };
+}
 
   const initialUser = (
-    createUserData(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)
+    createUserData(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)
   )
 
-  const [guestUser, setGuestUser] = React.useState<User>(initialUser);
-
+  const [guestUser, setGuestUser] = React.useState<UserInput>(initialUser);
+  const [alertOpen, setAlertOpen] = React.useState(false);
+  const [isError, setIsError] = React.useState(false);
+  const [alertText, setAlertText] = React.useState("Successfully registered");
   const [values, setValues] = React.useState<State>({
     password: '',
-    repeatedPassword: '',
+    matchingPassword: '',
     showPassword: false,
     showRepeatedPassword: false
   });
 
   const handleChangePassword =
     (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      setGuestUser({...guestUser, [prop]: event.target.value})
       setValues({ ...values, [prop]: event.target.value });
     };
 
@@ -69,6 +81,23 @@ function SignUpForm() {
     setGuestUser(newUser);
   }
 
+  const handleSignupClick = () => {
+    registerUser(guestUser).then(result => {
+      if (result.error) {
+        setAlertText(result.error);
+        setIsError(true);
+        setAlertOpen(true)
+      } else if (result.errorMessage) {
+        setAlertText(result.errorMessage);
+        setIsError(true);
+        setAlertOpen(true)
+      } else {
+        setIsError(false);
+        setAlertOpen(true);
+      }
+
+    })
+  }
   return (
     <>
       <Box
@@ -97,8 +126,8 @@ function SignUpForm() {
           className="Form-Login-Input"
           placeholder="Doe"
           label="Surname"
-          id="surname"
-          value={guestUser.surname}
+          id="lastName"
+          value={guestUser.lastName}
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleOnChange(e)}
         />
 
@@ -131,8 +160,8 @@ function SignUpForm() {
             className="Form-Login-Input"
             placeholder="68165"
             label="Postcode"
-            id="postcode"
-            value={guestUser.postcode}
+            id="zip"
+            value={guestUser.zip}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleOnChange(e)}
           />
           <TextField
@@ -153,8 +182,8 @@ function SignUpForm() {
           className="Form-Login-Input"
           placeholder="Jane.doe@example.com"
           label="Email Address"
-          id="emailAdress"
-          value={guestUser.emailAdress}
+          id="email"
+          value={guestUser.email}
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleOnChange(e)}
         />
 
@@ -185,8 +214,8 @@ function SignUpForm() {
           <OutlinedInput
             id="outlined-adornment-password-signUp-repeated"
             type={values.showRepeatedPassword ? 'text' : 'password'}
-            value={values.repeatedPassword}
-            onChange={handleChangePassword('repeatedPassword')}
+            value={values.matchingPassword}
+            onChange={handleChangePassword('matchingPassword')}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
@@ -204,8 +233,9 @@ function SignUpForm() {
         </FormControl>
       </Box>
       <div className="d-grid gap-2 mt-3">
-        <Button sx={{ m: 0.5, width: '100%' }} variant="contained">Sign Up</Button>
+        <Button sx={{ m: 0.5, width: '100%' }} variant="contained" onClick={handleSignupClick}>Sign Up</Button>
       </div>
+      <Alerts alertOpen={alertOpen} alertText={alertText} isError={isError} setAlertOpen={setAlertOpen} />
     </>
   )
 }
