@@ -79,10 +79,10 @@ function OrderFinalisationView(props: OrderFinalisationViewProps) {
                                         <Typography variant="body1">
                                             We will send you an email with the tickets and the invoice soon.
                                         </Typography>
-                                        {props.user.firstName &&
+                                        {props.user?.id &&
                                             <Typography variant="body1">
                                                 You can also find this order {" "}
-                                                <Link href={`/order/${props.user.userID}`} target="_blank">
+                                                <Link href={`/order/${props.user.id}`} target="_blank">
                                                     here
                                                 </Link>
                                                 .
