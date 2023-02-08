@@ -61,16 +61,16 @@ function TicketPricesView(adminProp: AdminProps) {
             if (result.error) {
                 setAlertText(result.error);
                 setIsError(true);
-                setAlertOpen(true)
+                setAlertOpen(true);
             } else if (result.errorMessage) {
                 setAlertText(result.errorMessage);
                 setIsError(true);
-                setAlertOpen(true)
+                setAlertOpen(true);
             } else {
                 setIsError(false);
                 fetchAllFares().then(fares => setAllFares(fares));
                 setAlertText("Fare added successfully");
-                setAlertOpen(true)
+                setAlertOpen(true);
             }
         });
         setNewFare({ name: "", fareCondition: "", price: 0 });
@@ -195,13 +195,11 @@ function TicketPricesView(adminProp: AdminProps) {
                                 </StyledTableCell>
                                 <StyledTableCell align="right">
                                     <TextField variant='outlined' label="Insert Price" id='price' defaultValue={newFare.price} type="number" onChange={changeNewFare} />
-
                                 </StyledTableCell>
                                 <StyledTableCell align="right">
                                     <TextField variant='outlined' label="Insert Condition" id='fareCondition' defaultValue={newFare.fareCondition} onChange={changeNewFare} />
                                 </StyledTableCell>
                                 <StyledTableCell align="right">
-
                                     <Button startIcon={<SaveIcon />} onClick={saveNewFare}>Save</Button>
                                 </StyledTableCell>
                             </StyledTableRow>
