@@ -131,6 +131,7 @@ function TicketView(props: TicketViewProps) {
       seats.forEach((row) => {
         row.seats.forEach((seat) => {
           if (seat.seat.id === parseInt(e.currentTarget.id)) {
+            console.log("###", props.user)
             if (seat.selected === false) {
               let reservation: any = {
                 screeningId: props.selectedShow?.showID,
@@ -142,6 +143,20 @@ function TicketView(props: TicketViewProps) {
               postNewReservation(reservation).then((result) => {
                 fetchOrderByID(result.data.id).then((order) => {
                   props.setOrder(order);
+                  const newSeats = seats.map(row => {
+                    row.seats.map(seat => {
+                      order.tickets.forEach((ticket: any)  => {
+                        if (ticket.seat.id === seat.seat.id) {
+                          seat.selected = true;
+                          seat.reserved = false;
+                        }
+                      });
+                      return seat;
+                    });
+                    return row;
+                  });
+                  setSeats(newSeats);
+                  console.log("###", newSeats)
                 })
               })
               setCurrentTicketAmount(currentTicketAmmount + 1);
@@ -192,7 +207,7 @@ function TicketView(props: TicketViewProps) {
               }}
             >
               Show on {props.selectedShow?.dateTime.toDateString()} <br />
-              {props.selectedShow?.dateTime.getHours()}:{props.selectedShow?.dateTime.getMinutes() === 0 ? "00" : props.selectedShow?.dateTime.getMinutes()}h in {props.selectedShow?.room}
+              {props.selectedShow?.dateTime.getHours()}:{props.selectedShow?.dateTime.getMinutes() === 0 ? "00" : props.selectedShow?.dateTime.getMinutes()}h in {props.selectedShow?.room?.name}
             </Typography>
           }
         </Box>

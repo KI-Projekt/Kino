@@ -23,7 +23,7 @@ import { fetchOrderByID } from "../queries/fetchOrder";
 interface PaymentDetailsViewProps {
   order: Order | undefined;
   setOrder: React.Dispatch<React.SetStateAction<Order | undefined>>;
-  user: User;
+  user?: User;
   setUser: Function;
   personalDataFilled: boolean;
   setPersonalDataFilled: Function;
@@ -106,9 +106,7 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
 
   function handleOnClick() {
     if (props.order?.id)
-      payOrder(props.order?.id).then((result) => {
-        console.log(result);
-      });
+      payOrder(props.order?.id);
     navigate(
       `/order/${props.selectedMovie?.id}/${props.selectedShow?.showID}/${props.order?.id}`
     );
@@ -126,7 +124,7 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
               movie={props.selectedMovie?.title}
               picture={props.selectedMovie?.posterImage}
               showDate={props.selectedShow?.dateTime}
-              room={props.selectedShow?.room}
+              room={props.selectedShow?.room?.name}
               seats={props.order.seats}
               fares={props.order.fares}
               price={props.order.total}

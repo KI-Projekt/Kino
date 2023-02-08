@@ -36,7 +36,6 @@ export const sortShowsToShowDate = (input: Array<ShowWithMovieObject>) => {
             movieName: show.movie.title,
             moviePoster: show.movie.posterImage,
             dateTime: new Date(show.startDateTime),
-            room: show.room.name,
             roomID: show.room.id.toString(),
             showID: show.id,
             additionalInfo: {

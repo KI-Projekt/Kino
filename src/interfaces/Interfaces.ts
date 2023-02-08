@@ -4,13 +4,16 @@ export interface Show {
   movieName: String | undefined;
   showID: number | undefined;
   roomID: string | undefined;
-  room: string | undefined;
+  room?: Room | undefined;
   dateTime: Date | null;
+  startDateTime?: Date | undefined;
+  endDateTime?: Date | undefined;
   additionalInfo: {
     isThreeD: boolean;
     hasDolbyAtmos: boolean;
   }
   seatingPlan?: any;
+  movie?: Movie
 }
 
 export interface ShowWithMovieObject {
@@ -194,6 +197,7 @@ export interface Order {
   seats: Array<Row> | undefined;
   fares: Array<SimpleFare> | undefined;
   price?: number | undefined;
+  paymentMethod: string | undefined;
   faresSelected?: any | undefined;
 }
 

@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { User } from "../interfaces/Interfaces";
 
 interface FooterProps {
-  user: User;
+  user?: User;
 }
 
 export default function Footer(props: FooterProps) {
@@ -60,7 +60,7 @@ export default function Footer(props: FooterProps) {
                   </IconButton>
                 </Tooltip>
                 <Tooltip title="Account Information">
-                  <IconButton onClick={() => handleClick(props.user.firstName ? `profile/${props.user.id}` : "login")}>
+                  <IconButton onClick={() => handleClick(props.user?.firstName ? `profile/${props.user?.id}` : "login")}>
                     <AccountCircleIcon
                       sx={{ color: theme.palette.common.white }}
                       className="Footer-Icons"

@@ -3,7 +3,6 @@ import '../../styles/Login.css';
 import { Button, Box, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField, useTheme } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { registerUser, UserInput } from "../../queries/authentication";
-import { User } from "../../interfaces/Interfaces";
 import Alerts from "../Alerts";
 
 interface State {
@@ -13,11 +12,7 @@ interface State {
   showRepeatedPassword: boolean;
 }
 
-interface SignUpProps {
-  user: User;
-  setUser: Function;
-}
-function SignUpForm(props: SignUpProps) {
+function SignUpForm() {
 
   function createUserData(
     id: number | undefined,

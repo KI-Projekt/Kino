@@ -18,7 +18,7 @@ function SignUp(props: SignUpProps) {
           <div className="Text-Center">
             Already registered? <Link href={`/signIn`}>Sign In</Link>
           </div>
-          <SignUpForm user={props.user} setUser={props.setUser} />
+          <SignUpForm />
         </div>
       </div>
     </div>

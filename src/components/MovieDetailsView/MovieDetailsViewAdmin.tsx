@@ -405,7 +405,8 @@ function AdminMovieDetailsView(props: MovieDetailsViewAdminProp) {
                       </Typography>
                     </Grid>
                   </Grid>
-                  {props.selectedMovie.movieStatus === "IN_CATALOG" && <ShowDetails
+                  {props.selectedMovie.movieStatus === "IN_CATALOG" && 
+                  <ShowDetails
                     showData={props.showData}
                     setShowData={props.setShowData}
                     selectedMovie={props.selectedMovie}
