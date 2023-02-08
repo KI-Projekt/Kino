@@ -47,6 +47,7 @@ function RoomOverviewView(props: RoomOverviewViewProps) {
                 setAlertOpen(true);
                 setIsError(false);
                 fetchNewRooms().then((allRooms) => setRooms(allRooms));
+                setNewRoom({ name: "", hasDolbyAtmos: false, hasThreeD: false, numberOfColumns: 1, numberOfRows: 1 });
             }
         });
         reloadUseState();
