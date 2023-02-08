@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import MovieTile from '../../components/OverviewView/MovieTile';
 import '../../styles/OverviewView.css'
 import { Typography, useTheme } from '@mui/material';
-import { fetchAllMovies, fetchMoviesByAgeRating } from '../../queries/fetchMovieAPI';
+import { fetchAllArchivedMovies, fetchAllMovies, fetchMoviesByAgeRating } from '../../queries/fetchMovieAPI';
 import Alerts from '../Alerts';
 
 export interface MovieProps {
@@ -14,6 +14,7 @@ export interface MovieProps {
 interface TilebarProps {
     title: string,
     query?: string,
+    status?: string,
     isAdmin: boolean,
     isNew: boolean,
 }
@@ -25,15 +26,18 @@ function TileBar(props: TilebarProps) {
     const [alertText, setAlertText] = useState("");
 
     useEffect(() => {
-        props.query ?
+        if (props.status === "ARCHIVED") {
+            fetchAllArchivedMovies().then(result => setMovies(result))
+        } else if (props.query) {
             fetchMoviesByAgeRating(props.query).then((result) => { setMovies(result) })
-            :
+        } else {
+
             fetchAllMovies().then((result) => {
                 if (result.error) {
                     setAlertText(result.error);
                     setIsError(true);
                     setAlertOpen(true)
-                  } else if (result.errorMessage) {
+                } else if (result.errorMessage) {
                     setAlertText(result.errorMessage);
                     setIsError(true);
                     setAlertOpen(true)
@@ -42,7 +46,8 @@ function TileBar(props: TilebarProps) {
                     setMovies(result)
                 }
             })
-    }, [props.query]);
+        }
+    }, [props.query, props.status]);
 
     const theme = useTheme();
 

@@ -56,8 +56,6 @@ function RoomOverviewView(props: RoomOverviewViewProps) {
     }
 
     useEffect(() => {
-
-
         fetchNewRooms().then((allRooms) => {
             setRooms(allRooms);
         });
