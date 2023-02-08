@@ -5,6 +5,8 @@ import ButtonBase from '@mui/material/ButtonBase';
 import Typography from '@mui/material/Typography';
 import { Divider, Grid } from '@mui/material';
 import { Show, ShowDate } from '../../interfaces/Interfaces';
+import ThreeDRotationIcon from '@mui/icons-material/ThreeDRotation';
+import SpeakerGroupIcon from '@mui/icons-material/SpeakerGroup';
 
 const ImageSrc = styled('span')({
     position: 'absolute',
@@ -113,6 +115,13 @@ function MovieShowTiles(props: MovieShowTilesProps) {
                                                     {currentShow.room?.name}
                                                 </Typography>
                                                 <ImageMarked className="MuiImageMarked-root" />
+                                                <br />
+                                                {currentShow.additionalInfo.isThreeD &&
+                                                    <ThreeDRotationIcon color='inherit' />
+                                                }
+                                                {currentShow.additionalInfo.hasDolbyAtmos &&
+                                                    <SpeakerGroupIcon color='inherit' />
+                                                }
                                             </Typography>
                                         </Image>
                                     </ImageButton>

@@ -82,7 +82,7 @@ function OrderFinalisationView(props: OrderFinalisationViewProps) {
                                         {props.user?.id &&
                                             <Typography variant="body1">
                                                 You can also find this order {" "}
-                                                <Link href={`/profile/${props.user.id}/myorders`} target="_blank" >
+                                                <Link href={`/profile/${props.user.id}/myOrders`} target="_blank" >
                                                     here
                                                 </Link>
                                                 .

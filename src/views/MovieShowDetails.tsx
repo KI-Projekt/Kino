@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, CardHeader, Grid, Typography, useTheme } from "@mui/material";
+import { Button, Card, CardContent, CardHeader, Grid, Tooltip, Typography, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect } from "react";
 import MovieFacts from "../components/MovieDetailsView/MovieFacts";
@@ -8,6 +8,8 @@ import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import { useNavigate } from "react-router-dom";
 import { fetchTrailerFromTMDb } from "../queries/fetchOMDbAPI";
 import { Movie, Show, TrailerType } from "../interfaces/Interfaces";
+import ThreeDRotationIcon from '@mui/icons-material/ThreeDRotation';
+import SpeakerGroupIcon from '@mui/icons-material/SpeakerGroup';
 
 interface MovieDetailsViewUserProp {
     selectedMovie: Movie | undefined,
@@ -64,6 +66,17 @@ function UserMovieDetailsView(props: MovieDetailsViewUserProp) {
                                 <CardContent>
                                     <Typography variant="h4" align="center" >
                                         {props.selectedShow.dateTime?.getHours()} : {props.selectedShow.dateTime?.getMinutes() === 0 ? "00" : props.selectedShow.dateTime?.getMinutes()}h
+                                        <br />
+                                        {props.selectedShow.additionalInfo.isThreeD &&
+                                            <Tooltip title='3D'>
+                                                <ThreeDRotationIcon color='inherit' />
+                                            </Tooltip>
+                                        }
+                                        {props.selectedShow.additionalInfo.hasDolbyAtmos &&
+                                            <Tooltip title='Dolby Atmos'>
+                                                <SpeakerGroupIcon color='inherit' />
+                                            </Tooltip>
+                                        }
                                     </Typography>
                                     <Typography variant="body2" color="text.secondary" align="center" sx={{ p: theme.spacing(1) }}>
                                         {props.selectedShow.room?.name}

@@ -56,6 +56,15 @@ function OrderOverview(prop: OrderOverviewProps) {
               </Box>
               <Divider />
               <Box sx={{ paddingBottom: "1rem" }}>
+                <Typography variant="h6">Room:</Typography>
+                {prop.room && (
+                  <Typography variant="body1" color="text.secondary">
+                    {prop.room}
+                  </Typography>
+                )}
+              </Box>
+              <Divider />
+              <Box sx={{ paddingBottom: "1rem" }}>
                 <>
                   <Typography variant="h6">Seats:</Typography>
                   <Typography variant="body1" color="text.secondary">
