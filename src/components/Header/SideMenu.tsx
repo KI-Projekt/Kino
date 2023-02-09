@@ -138,58 +138,6 @@ function SideMenu(props: SideMenuProps) {
       </DrawerHeader>
       <Divider />
       <List>
-        {!props.appBarProps.open && (
-          <ListItem disablePadding>
-            <ListItemButton
-              sx={{
-                "&.Mui-selected": {
-                  backgroundColor: "#871313",
-                },
-                py: 0,
-                my: 0
-              }}
-              onClick={() => props.appBarProps.handleMenuOpen()}
-            >
-              <ListItemIcon sx={{ color: theme.palette.primary.contrastText }}>
-                <SearchIcon />
-              </ListItemIcon>
-              <ListItemText
-                sx={{ color: theme.palette.primary.contrastText }}
-                primary={
-                  <SearchBar
-                    searchOpen={searchOpen}
-                    setSearchOpen={setSearchOpen}
-                  />
-                }
-              />
-            </ListItemButton>
-          </ListItem>
-        )}
-        {props.appBarProps.open && (
-          <ListItem
-            disablePadding
-            sx={{
-              ml: "1rem",
-              "&.Mui-selected": {
-                backgroundColor: "#871313",
-              },
-            }}
-          >
-            <ListItemIcon sx={{ color: theme.palette.primary.contrastText }}>
-              <SearchIcon />
-            </ListItemIcon>
-            <ListItemText
-              sx={{ color: theme.palette.primary.contrastText }}
-              primary={
-                <SearchBar
-                  searchOpen={searchOpen}
-                  setSearchOpen={setSearchOpen}
-                />
-              }
-            />
-          </ListItem>
-        )}
-
         {menuData.map((item) => (
           <>
             {

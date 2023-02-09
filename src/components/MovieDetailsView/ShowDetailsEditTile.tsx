@@ -72,6 +72,7 @@ function ShowDetailsEditTiles(props: ShowDetailsEditTileProps) {
                             setIsError(true);
                             setAlertOpen(true)
                           } else {
+                            setAlertOpen(true);
                             setIsError(false);
                             setAlertText("Show was updated");
                             props.getShowsByMovie();
