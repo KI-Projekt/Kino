@@ -87,20 +87,13 @@ function PersonalData(props: PersonalDataProps) {
             aria-label="full width tabs example"
             centered
           >
-            <Tab label="Without Account" {...a11yProps(0)} />
             <Tab label="Sign In" {...a11yProps(1)} />
             <Tab label="Sign Up" {...a11yProps(2)} />
           </Tabs>
           <TabPanel value={value} index={0} dir={theme.direction}>
-            <PersonalDataGuestUser
-              personalDataFilled={props.personalDataFilled}
-              setPersonalDataFilled={props.setPersonalDataFilled}
-            />
-          </TabPanel>
-          <TabPanel value={value} index={1} dir={theme.direction}>
             <Login setIsAdmin={props.setIsAdmin} setUser={props.setUser} />
           </TabPanel>
-          <TabPanel value={value} index={2} dir={theme.direction}>
+          <TabPanel value={value} index={1} dir={theme.direction}>
             <SignUpForm setValue={setValue} />
           </TabPanel>
         </>
