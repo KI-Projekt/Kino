@@ -149,7 +149,6 @@ export interface fareInput {
   fareCondition: string;
 }
 
-
 export interface Room {
   id: number;
   name: string;

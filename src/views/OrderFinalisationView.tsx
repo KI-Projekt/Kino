@@ -1,4 +1,4 @@
-import { Box, Button, Card, Grid, Typography, useTheme } from "@mui/material";
+import { Box, Button, Card, Grid, Link, Typography, useTheme } from "@mui/material";
 import { useEffect } from "react";
 import React from "react";
 import html2canvas from "html2canvas";
@@ -10,6 +10,7 @@ import { getMovieAfterReload, getShowAfterReload } from "./TicketView";
 import { Movie, Order, Show, User } from "../interfaces/Interfaces";
 import { getOrderAfterReload } from "./PaymentDetailsView";
 import { redTheme } from "../interfaces/Theme";
+import { useNavigate } from "react-router-dom";
 
 interface OrderFinalisationViewProps {
     order: Order | undefined;
@@ -55,6 +56,8 @@ function OrderFinalisationView(props: OrderFinalisationViewProps) {
         pdf.save(`Cinetastisch_Order_${props.order?.id}.pdf`);
     }
 
+    const navigate = useNavigate();
+
     return (
         <>
             {props.order && props.selectedMovie && props.selectedShow && (
@@ -74,8 +77,20 @@ function OrderFinalisationView(props: OrderFinalisationViewProps) {
                                             Thank you for your Order!
                                         </Typography>
                                         <Typography variant="body1">
+                                            Please make a screenshot or print this page.
+                                        </Typography>
+                                        <Typography variant="body1">
                                             We will send you an email with the tickets and the invoice soon.
                                         </Typography>
+                                        {props.user?.id &&
+                                            <Typography variant="body1">
+                                                You can also find this order {" "}
+                                                <Link onClick={() => navigate(`/profile/${props.user?.id}/myOrders`)}>
+                                                    here
+                                                </Link>
+                                                .
+                                            </Typography>
+                                        }
                                     </Box>
                                     <Box sx={{ flexGrow: 1 }} />
                                     <Box sx={{ py: theme.spacing(3), textAlign: "center", textJustify: "center", }}>
@@ -97,7 +112,7 @@ function OrderFinalisationView(props: OrderFinalisationViewProps) {
                             </Grid>
                             <Grid item xs={12} sm={12} md={6} xl={6}>
                                 <>
-                                    <Card sx={{backgroundColor: redTheme.palette.common.white}}>
+                                    <Card sx={{ backgroundColor: redTheme.palette.common.white }}>
                                         <OrderOverview
                                             orderID={props.order.id}
                                             movieID={props.selectedMovie.id}
@@ -112,7 +127,6 @@ function OrderFinalisationView(props: OrderFinalisationViewProps) {
                                         />
                                     </Card>
                                 </>
-
                             </Grid>
                         </Grid>
                     </Box>

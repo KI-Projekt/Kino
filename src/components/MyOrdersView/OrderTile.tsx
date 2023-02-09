@@ -69,10 +69,9 @@ function OrderTile(props: OrderTileProps) {
 
     const theme = useTheme();
 
-
     React.useEffect(() => {
         console.log(props.order)
-    },[])
+    },[props.order])
     return (
         <>
             <ImageButton
