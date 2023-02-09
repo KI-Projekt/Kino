@@ -33,7 +33,6 @@ interface PaymentDetailsViewProps {
   selectedShow: Show | undefined;
   setPersonalDataChanged: Function;
   personalDataChanged: boolean;
-  saveUserProfile: Function;
 }
 
 export const getOrderAfterReload = async () => {
@@ -139,7 +138,6 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
             setUser={props.setUser}
             personalDataChanged={props.personalDataChanged}
             setPersonalDataChanged={props.setPersonalDataChanged}
-            saveUserProfile={props.saveUserProfile}
           />
           <PaymentOptions
             paymentMethod={paymentMethod}

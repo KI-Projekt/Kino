@@ -13,7 +13,6 @@ export interface PersonalDataProps {
   setUser: Function;
   setPersonalDataChanged: Function;
   personalDataChanged: boolean;
-  saveUserProfile: Function;
 }
 
 interface TabPanelProps {
@@ -54,6 +53,12 @@ function PersonalData(props: PersonalDataProps) {
   const theme = useTheme();
 
   const [value, setValue] = React.useState(0);
+
+  const setPersonalDataChanged = props.setPersonalDataChanged;
+
+  React.useEffect(() => {
+    setPersonalDataChanged(false);
+  },[setPersonalDataChanged])
 
   const handleChangeTabs = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -111,7 +116,6 @@ function PersonalData(props: PersonalDataProps) {
             setUser={props.setUser}
             personalDataChanged={props.personalDataChanged}
             setPersonalDataChanged={props.setPersonalDataChanged}
-            saveUserProfile={props.saveUserProfile}
           />
         </Box>
       )}

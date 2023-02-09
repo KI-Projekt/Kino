@@ -3,6 +3,8 @@ import React from "react"
 import '../../styles/Login.css';
 import SaveIcon from '@mui/icons-material/Save';
 import { User } from "../../interfaces/Interfaces";
+import { changeUser } from "../../queries/changeUser";
+import Alerts from "../Alerts";
 
 interface PersonalDataUserLoggedInProps {
   personalDataFilled: boolean;
@@ -11,13 +13,34 @@ interface PersonalDataUserLoggedInProps {
   setUser: Function;
   personalDataChanged: boolean;
   setPersonalDataChanged: Function;
-  saveUserProfile: Function
 }
 
 function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {
+  const [alertOpen, setAlertOpen] = React.useState(false);
+  const [isError, setIsError] = React.useState(false);
+  const [alertText, setAlertText] = React.useState("User Data was updated successfully!");
+
   React.useEffect(() => {
     setAllRequiredDataFilled(props.user);
   });
+
+  const saveUserProfile = () => {
+    changeUser(props.user).then(result => {
+      if (result.error) {
+        setAlertText(result.error);
+        setIsError(true);
+        setAlertOpen(true)
+      } else if (result.errorMessage) {
+        setAlertText(result.errorMessage);
+        setIsError(true);
+        setAlertOpen(true)
+      } else {
+        setIsError(false);
+        setAlertOpen(true);
+        props.setPersonalDataChanged(false);
+      }
+    });
+  }
 
   const theme = useTheme();
 
@@ -162,10 +185,11 @@ function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {
         variant="contained"
         fullWidth
         disabled={!props.personalDataChanged}
-        onClick={() => props.saveUserProfile()}
+        onClick={saveUserProfile}
       >
         Save
       </Button>
+      <Alerts alertOpen={alertOpen} alertText={alertText} isError={isError} setAlertOpen={setAlertOpen} />
     </Box>
   );
 }

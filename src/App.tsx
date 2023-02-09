@@ -102,10 +102,6 @@ const [user, setUser] = React.useState<User | undefined>()
     setWindowWidth(windowWidth)
   }
 
-  function saveUserProfile() {
-    setPersonalDataChanged(false);
-  };
-
   React.useEffect(() => {
     let url = window.location.href;
 
@@ -193,7 +189,6 @@ const [user, setUser] = React.useState<User | undefined>()
                           setOrder={setOrder}
                           setPersonalDataChanged={setPersonalDataChanged}
                           personalDataChanged={personalDataChanged}
-                          saveUserProfile={saveUserProfile}
                         />
                       }
                     />
@@ -287,7 +282,6 @@ const [user, setUser] = React.useState<User | undefined>()
                           setUser={setUser}
                           personalUserDataChanged={personalDataChanged}
                           setPersonalUserDataChanged={setPersonalDataChanged}
-                          saveUserProfile={saveUserProfile}
                         />
                       }
                     />

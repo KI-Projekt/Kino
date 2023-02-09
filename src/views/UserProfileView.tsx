@@ -14,11 +14,16 @@ interface UserProfileProps {
   setUser: Function;
   personalUserDataChanged: boolean;
   setPersonalUserDataChanged: Function;
-  saveUserProfile: Function;
 }
 
 function UserProfileView(props: UserProfileProps) {
   const navigate = useNavigate();
+
+  const setPersonalUserDataChanged = props.setPersonalUserDataChanged;
+
+  React.useEffect(() => {
+    setPersonalUserDataChanged(false);
+  }, [setPersonalUserDataChanged]);
 
   function navigateToLogin() {
     navigate("/login");
@@ -84,7 +89,6 @@ function UserProfileView(props: UserProfileProps) {
                     setUser={props.setUser}
                     setPersonalDataChanged={props.setPersonalUserDataChanged}
                     personalDataChanged={props.personalUserDataChanged}
-                    saveUserProfile={props.saveUserProfile}
                   />
                 )}{" "}
                 {!isEdited && (

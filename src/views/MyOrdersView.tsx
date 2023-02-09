@@ -60,7 +60,13 @@ function MyOrdersView(props: MyOrdersProps) {
     React.useEffect(() => {
         if (props.user?.id) {
             fetchOrderByUserID(props.user?.id).then(result => {
-                setOrders(result);
+                let sortedOrders: any = []
+                result.forEach((order: any) => {
+                    if(order.orderStatus === "PAID"){
+                        sortedOrders.push(order)
+                    }
+                })
+                setOrders(sortedOrders);
             })
         } else {
             navigate("/");
@@ -115,7 +121,7 @@ function MyOrdersView(props: MyOrdersProps) {
                     </Grid>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => setDialogOpen(false)} autoFocus>
+                    <Button onClick={() => setDialogOpen(false)} autoFocus variant='contained'>
                         Okay
                     </Button>
 
