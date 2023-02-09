@@ -128,6 +128,7 @@ function TicketView(props: TicketViewProps) {
   };
 
   function onSeatClick(e: React.ChangeEvent<HTMLButtonElement>) {
+    let ticketAmmount = 0;
     seats &&
       seats.forEach((row) => {
         row.seats.forEach((seat) => {
@@ -149,6 +150,8 @@ function TicketView(props: TicketViewProps) {
                         if (ticket.seat.id === seat.seat.id) {
                           seat.selected = true;
                           seat.reserved = false;
+                          ticketAmmount++;
+                          setCurrentTicketAmount(ticketAmmount);
                         }
                       });
                       return seat;
