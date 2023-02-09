@@ -3,7 +3,6 @@ import React from "react"
 import { User } from "../../interfaces/Interfaces";
 import Login from '../Login/LoginForm'
 import SignUpForm from "../Login/SignUpForm";
-import PersonalDataGuestUser from "./PersonalDataGuestUser";
 import PersonalDataUserLoggedIn from "./PersonalDataUserLoggedIn";
 
 export interface PersonalDataProps {
