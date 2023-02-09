@@ -5,7 +5,6 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { isMobile } from 'react-device-detect';
 import { fareSelection } from "../../interfaces/Interfaces";
-import { redTheme } from "../../interfaces/Theme";
 
 interface fareSelectionProps {
     totalAmountOfTickets: number;

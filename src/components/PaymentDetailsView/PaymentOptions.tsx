@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import StoreIcon from '@mui/icons-material/Store';
+import CreditCardIcon from '@mui/icons-material/CreditCard';
 import { Box, Divider, Grid, ToggleButton, ToggleButtonGroup, Typography, useTheme } from '@mui/material';
 import React from 'react';
 
@@ -9,14 +10,13 @@ interface PaymentOptionsProps {
 }
 
 function PaymentOptions(props: PaymentOptionsProps) {
-    
+
     const theme = useTheme();
 
     const handlePaymentMethod = (
         event: React.MouseEvent<HTMLElement>,
-        newPaymentMethod: string | null,
     ) => {
-        props.setPaymentMethod(newPaymentMethod);
+        props.setPaymentMethod(event.currentTarget.id);
     };
 
     return (
@@ -37,13 +37,17 @@ function PaymentOptions(props: PaymentOptionsProps) {
                     <ToggleButtonGroup
                         value={props.paymentMethod}
                         exclusive
-                        onChange={handlePaymentMethod}
+                        onChange={(e) => handlePaymentMethod(e)}
                         aria-label="payment method"
                         sx={{ p: 3, paddingLeft: theme.spacing, }}
                     >
-                        <ToggleButton value="cash" aria-label='pay with cash'>
+                        <ToggleButton id="cash" value="cash" aria-label='pay with cash'>
                             <StoreIcon />
                             <Typography>Pay local</Typography>
+                        </ToggleButton>
+                        <ToggleButton id="creditCard" value="creditCard" aria-label='pay with credit card'>
+                            <CreditCardIcon />
+                            <Typography>Pay with CreditCard</Typography>
                         </ToggleButton>
                     </ToggleButtonGroup>
                 </Grid>

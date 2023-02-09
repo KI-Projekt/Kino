@@ -19,6 +19,8 @@ import { useNavigate } from "react-router-dom";
 import { payOrder } from "../queries/changeOrders";
 import { Movie, Order, Row, Show, SimpleFare, Ticket, User } from "../interfaces/Interfaces";
 import { fetchOrderByID } from "../queries/fetchOrder";
+import StripeCheckout, { Token } from 'react-stripe-checkout';
+import Alerts from "../components/Alerts";
 
 interface PaymentDetailsViewProps {
   order: Order | undefined;
@@ -67,12 +69,13 @@ export const getOrderAfterReload = async () => {
       let keys = Object.keys(order.faresSelected);
       keys.forEach(key => {
         fares.push({
-          name:key, 
-          ammount: order.faresSelected[key]});
+          name: key,
+          ammount: order.faresSelected[key]
+        });
       });
       order.fares = fares;
     }
-    
+
     return order;
   });
   return response;
@@ -86,6 +89,10 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
   );
 
   const [privacyPolicyChecked, setPrivacyPolicyChecked] = React.useState(false);
+
+  const [alertOpen, setAlertOpen] = React.useState(false);
+  const [isError, setIsError] = React.useState(false);
+  const [alertText, setAlertText] = React.useState("");
 
   const handleChangePrivacyPolicyCheck = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -106,11 +113,30 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
 
   function handleOnClick() {
     if (props.order?.id)
-      payOrder(props.order?.id);
-    navigate(
-      `/order/${props.selectedMovie?.id}/${props.selectedShow?.showID}/${props.order?.id}`
-    );
+      payOrder(props.order?.id).then((result) => {
+        if (result.error) {
+          setAlertText(result.error);
+          setIsError(true);
+          setAlertOpen(true);
+        } else if (result.errorMessage) {
+          setAlertText(result.errorMessage);
+          setIsError(true);
+          setAlertOpen(true);
+        } else {
+          setAlertText("Payment was successful!");
+          setAlertOpen(true);
+          setIsError(false);
+          navigate(
+            `/order/${props.selectedMovie?.id}/${props.selectedShow?.showID}/${props.order?.id}`
+          );
+        }
+      });
   }
+
+  function onToken(token: Token): void {
+    console.log("###", token)
+    handleOnClick();
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -170,23 +196,39 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
               paddingRight: theme.spacing,
             }}
           >
-            <Button
-              variant="contained"
-              sx={{ paddingX: theme.spacing, width: "100%" }}
-              disabled={
-                paymentMethod &&
-                  privacyPolicyChecked &&
-                  props.personalDataFilled
-                  ? false
-                  : true
-              }
-              onClick={handleOnClick}
-            >
-              Buy with payment
-            </Button>
+            {props.order?.total &&
+              <>
+                {
+                  paymentMethod === "cash" ?
+                    <Button
+                      variant="contained"
+                      sx={{ paddingX: theme.spacing, width: "100%" }}
+                      disabled={
+                        paymentMethod &&
+                          privacyPolicyChecked &&
+                          props.personalDataFilled
+                          ? false
+                          : true
+                      }
+                      onClick={handleOnClick}
+                    >
+                      Buy with payment
+                    </Button>
+                    :
+                    <StripeCheckout
+                      currency="EUR"
+                      amount={props.order?.total * 100}
+                      token={onToken}
+                      stripeKey="pk_test_51MZU2cCLKooS5fK6QVnai87tgzJOCBbqKwZ6bx62vU3BpcATUFgNYEX1uf3vq5eqZfypwF9cQMJOo8YwRdH2iUpo00ueVRg7hj"
+                    />
+
+                }
+              </>
+            }
           </Box>
         </Grid>
       </Grid>
+      <Alerts alertOpen={alertOpen} alertText={alertText} isError={isError} setAlertOpen={setAlertOpen} />
     </Box>
   );
 }
