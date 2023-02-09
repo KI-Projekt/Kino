@@ -6,6 +6,7 @@ import Login from "./LoginForm";
 interface LoginPopUpProps {
   setUser: Function;
   handleProfileMenuClose?: Function;
+  setIsAdmin: Function;
 }
 
 function LoginPopUp(props: LoginPopUpProps) {
@@ -20,7 +21,7 @@ function LoginPopUp(props: LoginPopUpProps) {
           Not registered yet? <Link href={`/login`}>Sign Up</Link>
         </Typography>
       </div>
-      <Login setUser={props.setUser} handleProfileMenuClose={props.handleProfileMenuClose} />
+      <Login setIsAdmin={props.setIsAdmin} setUser={props.setUser} handleProfileMenuClose={props.handleProfileMenuClose} />
     </Box >
   )
 }

@@ -13,6 +13,7 @@ export interface PersonalDataProps {
   setUser: Function;
   setPersonalDataChanged: Function;
   personalDataChanged: boolean;
+  setIsAdmin: Function;
 }
 
 interface TabPanelProps {
@@ -97,7 +98,7 @@ function PersonalData(props: PersonalDataProps) {
             />
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
-            <Login setUser={props.setUser} />
+            <Login setIsAdmin={props.setIsAdmin} setUser={props.setUser} />
           </TabPanel>
           <TabPanel value={value} index={2} dir={theme.direction}>
             <SignUpForm setValue={setValue} />

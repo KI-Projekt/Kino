@@ -8,7 +8,7 @@ import GettingHereView from "./views/GettingHereView";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header, { drawerWidth } from "./components/Header/Header";
 import OverviewView from "./views/OverviewView";
-import { Box, Container, FormControlLabel, styled, Switch, ThemeProvider, Toolbar, } from "@mui/material";
+import { Box, Container, styled, ThemeProvider, Toolbar, } from "@mui/material";
 import type { } from '@mui/x-date-pickers/themeAugmentation';
 import OpeningHoursView from "./views/OpeningHoursView";
 import TicketPricesView from "./views/TicketPricesView";
@@ -83,15 +83,7 @@ function App() {
   const [personalDataFilled, setPersonalDataFilled] = React.useState(false);
 
 
-const [user, setUser] = React.useState<User | undefined>()
-
-  const handleChangeAdminMode = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setAdminProps({
-      isAdmin: event.target.checked,
-    });
-  };
+  const [user, setUser] = React.useState<User | undefined>()
 
   const [isNew, setIsNew] = React.useState<boolean>(false);
 
@@ -177,6 +169,7 @@ const [user, setUser] = React.useState<User | undefined>()
                       path="/orderDetails/:imdbID/:showID/:orderID"
                       element={
                         <PaymentDetailsView
+                          setIsAdmin={setAdminProps}
                           order={order}
                           user={user}
                           setUser={setUser}
@@ -208,7 +201,7 @@ const [user, setUser] = React.useState<User | undefined>()
                     <Route path="/gettingHere" element={<GettingHereView />} />
                     <Route
                       path="/login"
-                      element={<LoginView setUser={setUser} user={user} />}
+                      element={<LoginView setIsAdmin={setAdminProps} setUser={setUser} user={user} />}
                     />
                     <Route
                       path="/privacyPolicy"
@@ -301,10 +294,6 @@ const [user, setUser] = React.useState<User | undefined>()
                 </Box>
               </Container>
               <Footer user={user} />
-              <FormControlLabel
-                control={<Switch onChange={handleChangeAdminMode} />}
-                label="Admin"
-              />
             </Main>
           </Box>
         </BrowserRouter>

@@ -84,7 +84,7 @@ function ProfileMenuButton(props: ProfileMenuButtonProps) {
                         width: '20rem',
                         height: '20rem',
                     }}>
-                    <Login setUser={props.setUser} handleProfileMenuClose={handleProfileMenuClose} />
+                    <Login setIsAdmin={props.setIsAdmin} setUser={props.setUser} handleProfileMenuClose={handleProfileMenuClose} />
                 </Box>
             }
             {props.user && 

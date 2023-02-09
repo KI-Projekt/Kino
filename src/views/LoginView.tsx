@@ -16,6 +16,7 @@ interface TabPanelProps {
 interface LoginViewProps {
     user?: User;
     setUser: Function;
+    setIsAdmin: Function;
 }
 
 function TabPanel(props: TabPanelProps) {
@@ -91,7 +92,7 @@ function LoginView(props: LoginViewProps) {
                                 <SignUpForm />
                             </TabPanel>
                             <TabPanel value={value} index={1} dir={theme.direction}>
-                                <Login setUser={props.setUser} />
+                                <Login setIsAdmin={props.setIsAdmin} setUser={props.setUser} />
                             </TabPanel>
                         </Box>
                     </div>
