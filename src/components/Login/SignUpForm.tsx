@@ -38,9 +38,11 @@ function SignUpForm(props: SignUpFormProps) {
   )
 
   const [guestUser, setGuestUser] = React.useState<UserInput>(initialUser);
+  
   const [alertOpen, setAlertOpen] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
   const [alertText, setAlertText] = React.useState("Successfully registered");
+
   const [values, setValues] = React.useState<State>({
     password: '',
     matchingPassword: '',

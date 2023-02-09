@@ -208,3 +208,44 @@ export interface AdminPropsChange {
   isAdmin: boolean;
   handleChangeAdminMode: Function;
 }
+
+export interface OpeningHourDay {
+  id: number,
+  weekday: string,
+  openingtime: string,
+  closingtime: string
+}
+
+export interface OpeningHourDayPut {
+  id: number,
+  weekday: string,
+  openingtime: {
+    hour: number,
+    minute: number,
+    second: number,
+    nano: number,
+  },
+  closingtime: {
+    hour: number,
+    minute: number,
+    second: number,
+    nano: number
+  }
+}
+
+export interface OpeningHourDayBetter {
+  id: number,
+  weekday: string,
+  openingtime: {
+    hour: number,
+    minute: number,
+    second: number,
+    nano: number,
+  },
+  closingtime: {
+    hour: number,
+    minute: number,
+    second: number,
+    nano: number
+  }
+}
