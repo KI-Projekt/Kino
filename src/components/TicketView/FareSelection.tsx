@@ -5,6 +5,7 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { isMobile } from 'react-device-detect';
 import { fareSelection } from "../../interfaces/Interfaces";
+import { redTheme } from "../../interfaces/Theme";
 
 interface fareSelectionProps {
     totalAmountOfTickets: number;
@@ -45,7 +46,7 @@ function FareSelection(props: fareSelectionProps) {
                 horizontal: 'left',
             }}
         >
-            <Typography sx={{ p: 2 }}>{currentFareCondition}</Typography>
+            <Typography sx={{ p: 2 , backgroundColor:'#ffffff'}}>{currentFareCondition}</Typography>
         </Popover>
     )
 
