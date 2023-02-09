@@ -13,6 +13,7 @@ interface State {
 interface LoginProps {
   setUser: Function;
   handleProfileMenuClose?: Function;
+  setIsAdmin: Function
 }
 
 function Login(props: LoginProps) {
@@ -46,7 +47,11 @@ function Login(props: LoginProps) {
        await new Promise((f) => setTimeout(f, 1000));
      }
      loginUser({email: values.email, password: values.password}).then((result) => {
-        props.setUser(result.data)
+        props.setUser(result.data);
+        let roles = result.data.role.split(",");
+        if(roles[1] && roles[1] === "ROLE_ADMIN"){
+          props.setIsAdmin({isAdmin: true});
+        }
      });
    }
 

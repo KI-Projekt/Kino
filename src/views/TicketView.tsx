@@ -132,7 +132,6 @@ function TicketView(props: TicketViewProps) {
       seats.forEach((row) => {
         row.seats.forEach((seat) => {
           if (seat.seat.id === parseInt(e.currentTarget.id)) {
-            console.log("###", props.user)
             if (seat.selected === false) {
               let reservation: any = {
                 screeningId: props.selectedShow?.showID,
@@ -157,7 +156,6 @@ function TicketView(props: TicketViewProps) {
                     return row;
                   });
                   setSeats(newSeats);
-                  console.log("###", newSeats)
                 })
               })
               setCurrentTicketAmount(currentTicketAmmount + 1);

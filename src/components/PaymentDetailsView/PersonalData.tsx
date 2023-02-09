@@ -13,7 +13,7 @@ export interface PersonalDataProps {
   setUser: Function;
   setPersonalDataChanged: Function;
   personalDataChanged: boolean;
-  saveUserProfile: Function;
+  setIsAdmin: Function;
 }
 
 interface TabPanelProps {
@@ -55,6 +55,12 @@ function PersonalData(props: PersonalDataProps) {
 
   const [value, setValue] = React.useState(0);
 
+  const setPersonalDataChanged = props.setPersonalDataChanged;
+
+  React.useEffect(() => {
+    setPersonalDataChanged(false);
+  },[setPersonalDataChanged])
+
   const handleChangeTabs = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
     props.setPersonalDataFilled(false);
@@ -92,7 +98,7 @@ function PersonalData(props: PersonalDataProps) {
             />
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
-            <Login setUser={props.setUser} />
+            <Login setIsAdmin={props.setIsAdmin} setUser={props.setUser} />
           </TabPanel>
           <TabPanel value={value} index={2} dir={theme.direction}>
             <SignUpForm setValue={setValue} />
@@ -111,7 +117,6 @@ function PersonalData(props: PersonalDataProps) {
             setUser={props.setUser}
             personalDataChanged={props.personalDataChanged}
             setPersonalDataChanged={props.setPersonalDataChanged}
-            saveUserProfile={props.saveUserProfile}
           />
         </Box>
       )}

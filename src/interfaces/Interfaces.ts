@@ -198,6 +198,7 @@ export interface Order {
   price?: number | undefined;
   paymentMethod: string | undefined;
   faresSelected?: any | undefined;
+  expiresAt?: string | undefined;
 }
 
 export interface AdminProps {
