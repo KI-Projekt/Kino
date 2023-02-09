@@ -157,7 +157,7 @@ function TicketPricesView(adminProp: AdminProps) {
                                         <Typography>{row.name}</Typography>
                                     )}
                                     {adminProp.isAdmin && (
-                                        <TextField variant='outlined' id='name' defaultValue={row.name} label={`Category`} onChange={(e) => changeExistingFare(e, row)} />
+                                        <TextField variant='outlined' id='name' value={row.name} label={`Category`} onChange={(e) => changeExistingFare(e, row)} />
                                     )}
                                 </StyledTableCell>
                                 <StyledTableCell align="right">
@@ -165,7 +165,7 @@ function TicketPricesView(adminProp: AdminProps) {
                                         <Typography>{row.price} €</Typography>
                                     )}
                                     {adminProp.isAdmin && (
-                                        <TextField variant='outlined' id='price' defaultValue={row.price} label={`Price for ${row.name}`} onChange={(e) => changeExistingFare(e, row)} />
+                                        <TextField variant='outlined' id='price' type="number" value={row.price} label={`Price for ${row.name}`} onChange={(e) => changeExistingFare(e, row)} />
                                     )}
                                 </StyledTableCell>
                                 <StyledTableCell align="right">
@@ -173,7 +173,7 @@ function TicketPricesView(adminProp: AdminProps) {
                                         <Typography>{row.fareCondition}</Typography>
                                     )}
                                     {adminProp.isAdmin && (
-                                        <TextField variant='outlined' id='fareCondition' defaultValue={row.fareCondition} label={`Condition for ${row.name}`} onChange={(e) => changeExistingFare(e, row)} />
+                                        <TextField variant='outlined' id='fareCondition' value={row.fareCondition} label={`Condition for ${row.name}`} onChange={(e) => changeExistingFare(e, row)} />
                                     )}
 
                                 </StyledTableCell>
@@ -191,14 +191,14 @@ function TicketPricesView(adminProp: AdminProps) {
                         {adminProp.isAdmin && (
                             <StyledTableRow>
                                 <StyledTableCell component="th" scope="row">
-                                    <TextField variant='outlined' label="Insert Category" id='name' defaultValue={newFare.name} onChange={changeNewFare} />
+                                    <TextField variant='outlined' label="Insert Category" id='name' value={newFare.name} onChange={changeNewFare} />
                                 </StyledTableCell>
                                 <StyledTableCell align="right">
-                                    <TextField variant='outlined' label="Insert Price" id='price' defaultValue={newFare.price} type="number" onChange={changeNewFare} />
+                                    <TextField variant='outlined' label="Insert Price" id='price' value={newFare.price} type="number" onChange={changeNewFare} />
 
                                 </StyledTableCell>
                                 <StyledTableCell align="right">
-                                    <TextField variant='outlined' label="Insert Condition" id='fareCondition' defaultValue={newFare.fareCondition} onChange={changeNewFare} />
+                                    <TextField variant='outlined' label="Insert Condition" id='fareCondition' value={newFare.fareCondition} onChange={changeNewFare} />
                                 </StyledTableCell>
                                 <StyledTableCell align="right">
 
