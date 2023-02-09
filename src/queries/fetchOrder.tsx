@@ -8,3 +8,12 @@ export const fetchOrderByID = async (orderId: number) => {
 
     return responseJson;
 };
+
+export const fetchOrderByUserID = async (userId: number | undefined) => {
+    const url = PATH + `api/orders?userId=${userId}`;
+
+    const response = await fetch(url);
+    const responseJson = await response.json();
+
+    return responseJson;
+};

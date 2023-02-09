@@ -8,7 +8,7 @@ import { ArrowBack, Edit } from "@mui/icons-material";
 import { redTheme } from "../interfaces/Theme";
 
 interface UserProfileProps {
-  user: User;
+  user?: User;
   personalDataFilled: boolean;
   setPersonalDataFilled: Function;
   setUser: Function;
@@ -34,7 +34,7 @@ function UserProfileView(props: UserProfileProps) {
       <Card sx={{ backgroundColor: redTheme.palette.common.white }}>
         <Box sx={{ p: 3 }}>
           <>
-            {props.user.firstName && (
+            {props.user?.firstName && (
               <>
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={8} md={8} xl={8}>
@@ -98,7 +98,7 @@ function UserProfileView(props: UserProfileProps) {
                 )}
               </>
             )}
-            {!props.user.firstName && navigateToLogin()}
+            {!props.user?.firstName && navigateToLogin()}
           </>
         </Box>
       </Card >

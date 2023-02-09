@@ -9,7 +9,7 @@ import PersonalDataUserLoggedIn from "./PersonalDataUserLoggedIn";
 export interface PersonalDataProps {
   personalDataFilled: boolean;
   setPersonalDataFilled: Function;
-  user: User;
+  user?: User;
   setUser: Function;
   setPersonalDataChanged: Function;
   personalDataChanged: boolean;
@@ -70,7 +70,7 @@ function PersonalData(props: PersonalDataProps) {
       <Typography variant="h4" sx={{ p: 3, paddingLeft: theme.spacing }}>
         Personal Data
       </Typography>
-      {!props.user.firstName && (
+      {!props.user?.firstName && (
         <>
           <Tabs
             value={value}
@@ -95,14 +95,14 @@ function PersonalData(props: PersonalDataProps) {
             <Login setUser={props.setUser} />
           </TabPanel>
           <TabPanel value={value} index={2} dir={theme.direction}>
-            <SignUpForm />
+            <SignUpForm setValue={setValue} />
           </TabPanel>
         </>
       )}
-      {props.user.firstName && (
+      {props.user?.firstName && (
         <Box sx={{ p: 3 }}>
           <Typography sx={{ pb: 2 }}>
-            You are loggin in as {props.user.firstName} {props.user.surname}.
+            You are loggin in as {props.user?.firstName} {props.user?.lastName}.
           </Typography>
           <PersonalDataUserLoggedIn
             personalDataFilled={props.personalDataFilled}

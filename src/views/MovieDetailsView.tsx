@@ -36,13 +36,12 @@ export const sortShowsToShowDate = (input: Array<ShowWithMovieObject>) => {
             movieName: show.movie.title,
             moviePoster: show.movie.posterImage,
             dateTime: new Date(show.startDateTime),
-            room: show.room.name,
             roomID: show.room.id.toString(),
             showID: show.id,
             additionalInfo: {
                 hasDolbyAtmos: show.room.hasDolbyAtmos,
                 isThreeD: show.room.hasThreeD
-            }
+            },
         }
         showDate.forEach(showDate => {
             if (show.startDateTime && showDate.date.toDateString() === new Date(show.startDateTime).toDateString()) {

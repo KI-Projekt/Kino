@@ -4,13 +4,16 @@ export interface Show {
   movieName: String | undefined;
   showID: number | undefined;
   roomID: string | undefined;
-  room: string | undefined;
+  room?: Room | undefined;
   dateTime: Date | null;
+  startDateTime?: Date | undefined;
+  endDateTime?: Date | undefined;
   additionalInfo: {
     isThreeD: boolean;
     hasDolbyAtmos: boolean;
   }
   seatingPlan?: any;
+  movie?: Movie
 }
 
 export interface ShowWithMovieObject {
@@ -146,7 +149,6 @@ export interface fareInput {
   fareCondition: string;
 }
 
-
 export interface Room {
   id: number;
   name: string;
@@ -172,14 +174,16 @@ export interface ShowRoom {
 }
 
 export interface User {
-  userID: number | undefined,
+  id: number | undefined,
   firstName: string | undefined,
-  surname: string | undefined,
+  lastName: string | undefined,
   street: string | undefined,
   houseNumber: string | undefined,
-  postcode: string | undefined,
+  zip: string | undefined,
   city: string | undefined,
-  emailAdress: string | undefined,
+  email: string | undefined,
+  password: string | undefined,
+  matchingPassword: string | undefined,
 }
 
 export interface Order {
@@ -192,6 +196,7 @@ export interface Order {
   seats: Array<Row> | undefined;
   fares: Array<SimpleFare> | undefined;
   price?: number | undefined;
+  paymentMethod: string | undefined;
   faresSelected?: any | undefined;
 }
 
@@ -202,4 +207,45 @@ export interface AdminProps {
 export interface AdminPropsChange {
   isAdmin: boolean;
   handleChangeAdminMode: Function;
+}
+
+export interface OpeningHourDay {
+  id: number,
+  weekday: string,
+  openingtime: string,
+  closingtime: string
+}
+
+export interface OpeningHourDayPut {
+  id: number,
+  weekday: string,
+  openingtime: {
+    hour: number,
+    minute: number,
+    second: number,
+    nano: number,
+  },
+  closingtime: {
+    hour: number,
+    minute: number,
+    second: number,
+    nano: number
+  }
+}
+
+export interface OpeningHourDayBetter {
+  id: number,
+  weekday: string,
+  openingtime: {
+    hour: number,
+    minute: number,
+    second: number,
+    nano: number,
+  },
+  closingtime: {
+    hour: number,
+    minute: number,
+    second: number,
+    nano: number
+  }
 }
