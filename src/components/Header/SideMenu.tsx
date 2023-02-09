@@ -10,8 +10,6 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { AppBarProps, drawerWidth } from "./Header";
-import SearchBar from "./SearchBar";
-import SearchIcon from '@mui/icons-material/Search';
 import AssistantDirectionIcon from '@mui/icons-material/AssistantDirection';
 import AddHomeIcon from '@mui/icons-material/AddHome';
 
@@ -105,8 +103,6 @@ function SideMenu(props: SideMenuProps) {
     navigate(`/${link}`);
     props.appBarProps.handleMenuClose();
   };
-
-  const [searchOpen, setSearchOpen] = React.useState<boolean>(false);
 
   return (
     <Drawer
