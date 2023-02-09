@@ -3,6 +3,8 @@ import React from "react"
 import '../../styles/Login.css';
 import SaveIcon from '@mui/icons-material/Save';
 import { User } from "../../interfaces/Interfaces";
+import { changeUser } from "../../queries/changeUser";
+import Alerts from "../Alerts";
 
 interface PersonalDataUserLoggedInProps {
   personalDataFilled: boolean;
@@ -11,26 +13,47 @@ interface PersonalDataUserLoggedInProps {
   setUser: Function;
   personalDataChanged: boolean;
   setPersonalDataChanged: Function;
-  saveUserProfile: Function
 }
 
 function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {
+  const [alertOpen, setAlertOpen] = React.useState(false);
+  const [isError, setIsError] = React.useState(false);
+  const [alertText, setAlertText] = React.useState("User Data was updated successfully!");
+
   React.useEffect(() => {
     setAllRequiredDataFilled(props.user);
   });
+
+  const saveUserProfile = () => {
+    changeUser(props.user).then(result => {
+      if (result.error) {
+        setAlertText(result.error);
+        setIsError(true);
+        setAlertOpen(true)
+      } else if (result.errorMessage) {
+        setAlertText(result.errorMessage);
+        setIsError(true);
+        setAlertOpen(true)
+      } else {
+        setIsError(false);
+        setAlertOpen(true);
+        props.setPersonalDataChanged(false);
+      }
+    });
+  }
 
   const theme = useTheme();
 
   const setAllRequiredDataFilled = (newUser: User) => {
     if (
-      newUser.userID &&
+      newUser.id &&
       newUser.city &&
-      newUser.emailAdress &&
+      newUser.email &&
       newUser.firstName &&
       newUser.houseNumber &&
-      newUser.postcode &&
+      newUser.zip &&
       newUser.street &&
-      newUser.surname
+      newUser.lastName
     ) {
       props.setPersonalDataFilled(true);
     } else {
@@ -80,8 +103,8 @@ function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {
           type="text"
           placeholder="Doe"
           label="Surname"
-          id="surname"
-          value={props.user.surname}
+          id="lastName"
+          value={props.user.lastName}
           onChange={(
             e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
           ) => handleOnChange(e)}
@@ -122,8 +145,8 @@ function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {
           className="Form-Login-Input"
           placeholder="68165"
           label="Postcode"
-          id="postcode"
-          value={props.user.postcode}
+          id="zip"
+          value={props.user.zip}
           onChange={(
             e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
           ) => handleOnChange(e)}
@@ -148,8 +171,8 @@ function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {
           type="email"
           placeholder="Jane.doe@example.com"
           label="Email Address"
-          id="emailAdress"
-          value={props.user.emailAdress}
+          id="email"
+          value={props.user.email}
           onChange={(
             e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
           ) => handleOnChange(e)}
@@ -162,10 +185,11 @@ function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {
         variant="contained"
         fullWidth
         disabled={!props.personalDataChanged}
-        onClick={() => props.saveUserProfile()}
+        onClick={saveUserProfile}
       >
         Save
       </Button>
+      <Alerts alertOpen={alertOpen} alertText={alertText} isError={isError} setAlertOpen={setAlertOpen} />
     </Box>
   );
 }

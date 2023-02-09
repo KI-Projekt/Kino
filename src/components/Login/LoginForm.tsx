@@ -2,8 +2,10 @@ import { Box, Button, FormControl, IconButton, InputAdornment, InputLabel, Outli
 import React from "react"
 import '../../styles/Login.css';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { loginUser } from "../../queries/authentication";
 
 interface State {
+  email: string,
   password: string;
   showPassword: boolean;
 }
@@ -11,10 +13,12 @@ interface State {
 interface LoginProps {
   setUser: Function;
   handleProfileMenuClose?: Function;
+  setIsAdmin: Function
 }
 
 function Login(props: LoginProps) {
   const [values, setValues] = React.useState<State>({
+    email: '',
     password: '',
     showPassword: false,
   });
@@ -37,45 +41,18 @@ function Login(props: LoginProps) {
 
   const theme = useTheme();
 
-   function createUserData(
-     userID: number | undefined,
-     firstName: string | undefined,
-     surname: string | undefined,
-     street: string | undefined,
-     houseNumber: string | undefined,
-     postcode: string | undefined,
-     city: string | undefined,
-     emailAdress: string | undefined
-   ) {
-     return {
-       userID,
-       firstName,
-       surname,
-       street,
-       houseNumber,
-       postcode,
-       city,
-       emailAdress,
-     };
-   }
-
-   const testUser = createUserData(
-     156548,
-     "Jojo",
-     "Siwaaaa",
-     "Fifth Avenue",
-     "87",
-     "64729",
-     "New York",
-     "jojo.siwaaa@gmail.com"
-   );
-
    async function handleSignIn() {
      if (props.handleProfileMenuClose) {
        props.handleProfileMenuClose();
        await new Promise((f) => setTimeout(f, 1000));
      }
-     props.setUser(testUser);
+     loginUser({email: values.email, password: values.password}).then((result) => {
+        props.setUser(result.data);
+        let roles = result.data.role.split(",");
+        if(roles[1] && roles[1] === "ROLE_ADMIN"){
+          props.setIsAdmin({isAdmin: true});
+        }
+     });
    }
 
   return (
@@ -93,6 +70,7 @@ function Login(props: LoginProps) {
         className="Form-Login-Input"
         placeholder="Jane.doe@example.com"
         label="Email Address"
+        onChange={handleChange('email')}
       />
       <FormControl sx={{ m: 0.5, width: '100%' }} variant="outlined">
         <InputLabel htmlFor="outlined-adornment-password-signIn">Password</InputLabel>

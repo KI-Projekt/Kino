@@ -7,7 +7,7 @@ import { User } from "../../interfaces/Interfaces";
 import '../../App.css'
 
 interface ProfileMenuButtonProps {
-    user: User;
+    user?: User;
     setUser: Function;
     setPersonalDataFilled: Function;
     isAdmin: boolean;
@@ -39,28 +39,12 @@ function ProfileMenuButton(props: ProfileMenuButtonProps) {
     }
 
     const userMenuData = [
-        createUserMenuData('My Profile', `profile/${props.user.userID}`, false),
-        createUserMenuData('My Order', '', true),
+        createUserMenuData('My Profile', `profile/${props.user?.id}`, false),
+        createUserMenuData('My Orders', `profile/${props.user?.id}/myOrders`, true),
         createUserMenuData("Logout", '', false),
     ];
 
     const navigate = useNavigate();
-
-    function createUserData(
-        userID: number | undefined,
-        firstName: string | undefined,
-        surname: string | undefined,
-        street: string | undefined,
-        houseNumber: string | undefined,
-        postcode: string | undefined,
-        city: string | undefined,
-        emailAdress: string | undefined,) {
-        return { userID, firstName, surname, street, houseNumber, postcode, city, emailAdress };
-    }
-
-    const initialUser = (
-        createUserData(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)
-    )
 
     const handleListItemClick = async (
         label: string,
@@ -69,7 +53,7 @@ function ProfileMenuButton(props: ProfileMenuButtonProps) {
         handleProfileMenuClose();
         if (label === "Logout") {
             await new Promise(f => setTimeout(f, 1000));
-            props.setUser(initialUser);
+            props.setUser(undefined);
             props.setPersonalDataFilled(false);
             props.setIsAdmin({isAdmin: false});
         } else {
@@ -94,16 +78,16 @@ function ProfileMenuButton(props: ProfileMenuButtonProps) {
             open={isProfileMenuOpen}
             onClose={handleProfileMenuClose}
         >
-            {!props.user.firstName &&
+            {!props.user &&
                 <Box
                     sx={{
                         width: '20rem',
                         height: '20rem',
                     }}>
-                    <Login setUser={props.setUser} handleProfileMenuClose={handleProfileMenuClose} />
+                    <Login setIsAdmin={props.setIsAdmin} setUser={props.setUser} handleProfileMenuClose={handleProfileMenuClose} />
                 </Box>
             }
-            {props.user.firstName &&
+            {props.user && 
                 <Box sx={{ backgroundColor: 'white', }}>
                     {userMenuData.map((setting) => (
                         <>

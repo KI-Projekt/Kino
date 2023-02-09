@@ -14,25 +14,28 @@ function PersonalDataGuestUser(props: PersonalDataGuestUserProps) {
     const theme = useTheme();
 
     function createUserData(
-        userID: number | undefined,
+        id: number | undefined,
         firstName: string | undefined,
-        surname: string | undefined,
+        lastName: string | undefined,
         street: string | undefined,
         houseNumber: string | undefined,
-        postcode: string | undefined,
+        zip: string | undefined,
         city: string | undefined,
-        emailAdress: string | undefined,) {
-        return { userID, firstName, surname, street, houseNumber, postcode, city, emailAdress };
+        email: string | undefined,
+        password: string | undefined,
+        matchingPassword: string | undefined,
+    ) {
+        return { id, firstName, lastName, street, houseNumber, zip, city, email, password, matchingPassword };
     }
 
     const initialUser = (
-        createUserData(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)
+        createUserData(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)
     )
 
     const [guestUser, setGuestUser] = React.useState<User>(initialUser);
 
     const setAllRequiredDataFilled = (newUser: User) => {
-        if (newUser.city && newUser.emailAdress && newUser.firstName && newUser.houseNumber && newUser.postcode && newUser.street && newUser.surname) {
+        if (newUser.city && newUser.email && newUser.firstName && newUser.houseNumber && newUser.zip && newUser.street && newUser.lastName) {
             props.setPersonalDataFilled(true);
         } else {
             props.setPersonalDataFilled(false);
@@ -73,8 +76,8 @@ function PersonalDataGuestUser(props: PersonalDataGuestUserProps) {
                 type="text"
                 placeholder="Doe"
                 label="Surname"
-                id="surname"
-                value={guestUser.surname}
+                id="lastName"
+                value={guestUser.lastName}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleOnChange(e)}
             />
 
@@ -108,8 +111,8 @@ function PersonalDataGuestUser(props: PersonalDataGuestUserProps) {
                     className="Form-Login-Input"
                     placeholder="68165"
                     label="Postcode"
-                    id="postcode"
-                    value={guestUser.postcode}
+                    id="zip"
+                    value={guestUser.zip}
                     onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleOnChange(e)}
                 />
                 <TextField
@@ -129,8 +132,8 @@ function PersonalDataGuestUser(props: PersonalDataGuestUserProps) {
                 type="email"
                 placeholder="Jane.doe@example.com"
                 label="Email Address"
-                id="emailAdress"
-                value={guestUser.emailAdress}
+                id="email"
+                value={guestUser.email}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleOnChange(e)}
             />
         </Box>

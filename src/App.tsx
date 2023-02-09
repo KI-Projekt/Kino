@@ -8,7 +8,7 @@ import GettingHereView from "./views/GettingHereView";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header, { drawerWidth } from "./components/Header/Header";
 import OverviewView from "./views/OverviewView";
-import { Box, Container, FormControlLabel, styled, Switch, ThemeProvider, Toolbar, } from "@mui/material";
+import { Box, Container, styled, ThemeProvider, Toolbar, } from "@mui/material";
 import type { } from '@mui/x-date-pickers/themeAugmentation';
 import OpeningHoursView from "./views/OpeningHoursView";
 import TicketPricesView from "./views/TicketPricesView";
@@ -26,6 +26,7 @@ import RoomOverviewView from "./views/Admin/RoomOverviewView";
 import { AdminProps, Movie, Order, Show, User } from "./interfaces/Interfaces";
 import { redTheme } from "./interfaces/Theme";
 import backgroundImage from './img/background.jpg';
+import MyOrdersView from "./views/MyOrdersView";
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
   open?: boolean;
@@ -81,48 +82,8 @@ function App() {
 
   const [personalDataFilled, setPersonalDataFilled] = React.useState(false);
 
-  function createUserData(
-    userID: number | undefined,
-    firstName: string | undefined,
-    surname: string | undefined,
-    street: string | undefined,
-    houseNumber: string | undefined,
-    postcode: string | undefined,
-    city: string | undefined,
-    emailAdress: string | undefined
-  ) {
-    return {
-      userID,
-      firstName,
-      surname,
-      street,
-      houseNumber,
-      postcode,
-      city,
-      emailAdress,
-    };
-  }
 
-  const [user, setUser] = React.useState<User>(
-    createUserData(
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined
-    )
-  );
-
-  const handleChangeAdminMode = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setAdminProps({
-      isAdmin: event.target.checked,
-    });
-  };
+  const [user, setUser] = React.useState<User | undefined>()
 
   const [isNew, setIsNew] = React.useState<boolean>(false);
 
@@ -132,10 +93,6 @@ function App() {
     const windowWidth = window.innerWidth
     setWindowWidth(windowWidth)
   }
-
-  function saveUserProfile() {
-    setPersonalDataChanged(false);
-  };
 
   React.useEffect(() => {
     let url = window.location.href;
@@ -212,6 +169,7 @@ function App() {
                       path="/orderDetails/:imdbID/:showID/:orderID"
                       element={
                         <PaymentDetailsView
+                          setIsAdmin={setAdminProps}
                           order={order}
                           user={user}
                           setUser={setUser}
@@ -224,7 +182,6 @@ function App() {
                           setOrder={setOrder}
                           setPersonalDataChanged={setPersonalDataChanged}
                           personalDataChanged={personalDataChanged}
-                          saveUserProfile={saveUserProfile}
                         />
                       }
                     />
@@ -244,7 +201,7 @@ function App() {
                     <Route path="/gettingHere" element={<GettingHereView />} />
                     <Route
                       path="/login"
-                      element={<LoginView setUser={setUser} user={user} />}
+                      element={<LoginView setIsAdmin={setAdminProps} setUser={setUser} user={user} />}
                     />
                     <Route
                       path="/privacyPolicy"
@@ -318,9 +275,12 @@ function App() {
                           setUser={setUser}
                           personalUserDataChanged={personalDataChanged}
                           setPersonalUserDataChanged={setPersonalDataChanged}
-                          saveUserProfile={saveUserProfile}
                         />
                       }
+                    />
+                    <Route
+                      path="/profile/:userID/myOrders"
+                      element={<MyOrdersView user={user} />}
                     />
                     <Route
                       path="/shows"
@@ -334,10 +294,6 @@ function App() {
                 </Box>
               </Container>
               <Footer user={user} />
-              <FormControlLabel
-                control={<Switch onChange={handleChangeAdminMode} />}
-                label="Admin"
-              />
             </Main>
           </Box>
         </BrowserRouter>

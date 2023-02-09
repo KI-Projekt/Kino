@@ -45,7 +45,7 @@ function FareSelection(props: fareSelectionProps) {
                 horizontal: 'left',
             }}
         >
-            <Typography sx={{ p: 2 }}>{currentFareCondition}</Typography>
+            <Typography sx={{ p: 2 , backgroundColor:'#ffffff'}}>{currentFareCondition}</Typography>
         </Popover>
     )
 

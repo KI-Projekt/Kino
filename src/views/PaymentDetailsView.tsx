@@ -16,14 +16,17 @@ import PaymentOptions from "../components/PaymentDetailsView/PaymentOptions";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { getMovieAfterReload, getShowAfterReload } from "./TicketView";
 import { useNavigate } from "react-router-dom";
-import { payOrder } from "../queries/changeOrders";
+import { changePaymentmethod, payOrder, setUserOnOrder } from "../queries/changeOrders";
 import { Movie, Order, Row, Show, SimpleFare, Ticket, User } from "../interfaces/Interfaces";
 import { fetchOrderByID } from "../queries/fetchOrder";
+import StripeCheckout, { Token } from 'react-stripe-checkout';
+import Alerts from "../components/Alerts";
+import '../App.css'
 
 interface PaymentDetailsViewProps {
   order: Order | undefined;
   setOrder: React.Dispatch<React.SetStateAction<Order | undefined>>;
-  user: User;
+  user?: User;
   setUser: Function;
   personalDataFilled: boolean;
   setPersonalDataFilled: Function;
@@ -33,7 +36,7 @@ interface PaymentDetailsViewProps {
   selectedShow: Show | undefined;
   setPersonalDataChanged: Function;
   personalDataChanged: boolean;
-  saveUserProfile: Function;
+  setIsAdmin: Function;
 }
 
 export const getOrderAfterReload = async () => {
@@ -67,12 +70,13 @@ export const getOrderAfterReload = async () => {
       let keys = Object.keys(order.faresSelected);
       keys.forEach(key => {
         fares.push({
-          name:key, 
-          ammount: order.faresSelected[key]});
+          name: key,
+          ammount: order.faresSelected[key]
+        });
       });
       order.fares = fares;
     }
-    
+
     return order;
   });
   return response;
@@ -87,10 +91,15 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
 
   const [privacyPolicyChecked, setPrivacyPolicyChecked] = React.useState(false);
 
+  const [alertOpen, setAlertOpen] = React.useState(false);
+  const [isError, setIsError] = React.useState(false);
+  const [alertText, setAlertText] = React.useState("");
+
   const handleChangePrivacyPolicyCheck = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setPrivacyPolicyChecked(event.target.checked);
+    setPaymentMethod("cash");
   };
 
   const setSelectedShow = props.setSelectedShow;
@@ -104,15 +113,51 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
   }, [setSelectedShow, setSelectedMovie, setOrder]);
   const navigate = useNavigate();
 
-  function handleOnClick() {
-    if (props.order?.id)
-      payOrder(props.order?.id).then((result) => {
-        console.log(result);
-      });
-    navigate(
-      `/order/${props.selectedMovie?.id}/${props.selectedShow?.showID}/${props.order?.id}`
-    );
+  function pay(){
+    if (props.order?.id) {
+    payOrder(props.order?.id).then((result) => {
+      if (result.error) {
+        setAlertText(result.error);
+        setIsError(true);
+        setAlertOpen(true);
+      } else if (result.errorMessage) {
+        setAlertText(result.errorMessage);
+        setIsError(true);
+        setAlertOpen(true);
+      } else {
+        setAlertText("Payment was successful!");
+        setAlertOpen(true);
+        setIsError(false);
+      
+        navigate(
+          `/order/${props.selectedMovie?.id}/${props.selectedShow?.showID}/${props.order?.id}`
+        );
+      }
+    });
   }
+  }
+
+  function handleOnClick() {
+    if(props.order?.user === null && props.user) {
+      setUserOnOrder(props.order?.id, props.user.id).then(() => {
+        if (paymentMethod === "cash") {
+          changePaymentmethod(props.order?.id, "CASH").then(() => pay());
+        } else {
+          changePaymentmethod(props.order?.id, "CREDIT_CARD").then(() => pay());
+        }
+      })
+  } else {
+    if (paymentMethod === "cash") {
+      changePaymentmethod(props.order?.id, "CASH").then(() => pay());
+    } else {
+      changePaymentmethod(props.order?.id, "CREDIT_CARD").then(() => pay());
+    }
+  }
+}
+
+  function onToken(token: Token): void {
+    handleOnClick();
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -126,7 +171,7 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
               movie={props.selectedMovie?.title}
               picture={props.selectedMovie?.posterImage}
               showDate={props.selectedShow?.dateTime}
-              room={props.selectedShow?.room}
+              room={props.selectedShow?.room?.name}
               seats={props.order.seats}
               fares={props.order.fares}
               price={props.order.total}
@@ -135,17 +180,13 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
         </Grid>
         <Grid item xs={12} sm={12} md={6} xl={6}>
           <PersonalData
+            setIsAdmin={props.setIsAdmin}
             personalDataFilled={props.personalDataFilled}
             setPersonalDataFilled={props.setPersonalDataFilled}
             user={props.user}
             setUser={props.setUser}
             personalDataChanged={props.personalDataChanged}
             setPersonalDataChanged={props.setPersonalDataChanged}
-            saveUserProfile={props.saveUserProfile}
-          />
-          <PaymentOptions
-            paymentMethod={paymentMethod}
-            setPaymentMethod={setPaymentMethod}
           />
           <FormControlLabel
             control={
@@ -172,23 +213,45 @@ function PaymentDetailsView(props: PaymentDetailsViewProps) {
               paddingRight: theme.spacing,
             }}
           >
-            <Button
-              variant="contained"
-              sx={{ paddingX: theme.spacing, width: "100%" }}
-              disabled={
-                paymentMethod &&
+            {props.order?.total &&
+              <>
+                {paymentMethod &&
                   privacyPolicyChecked &&
-                  props.personalDataFilled
-                  ? false
-                  : true
-              }
-              onClick={handleOnClick}
-            >
-              Buy with payment
-            </Button>
+                  props.personalDataFilled &&
+                  <PaymentOptions
+                    paymentMethod={paymentMethod}
+                    setPaymentMethod={setPaymentMethod}
+                  />}
+                {
+                  paymentMethod === "cash" ?
+                    <Button
+                      variant="contained"
+                      sx={{ paddingX: theme.spacing, width: "100%" }}
+                      disabled={
+                        paymentMethod &&
+                          privacyPolicyChecked &&
+                          props.personalDataFilled
+                          ? false
+                          : true
+                      }
+                      onClick={handleOnClick}
+                    >
+                      Buy with payment
+                    </Button>
+                    :
+                      <StripeCheckout
+                        currency="EUR"
+                        amount={props.order?.total * 100}
+                        token={onToken}
+                        stripeKey="pk_test_51MZU2cCLKooS5fK6QVnai87tgzJOCBbqKwZ6bx62vU3BpcATUFgNYEX1uf3vq5eqZfypwF9cQMJOo8YwRdH2iUpo00ueVRg7hj"
+                      />
+                }
+              </>
+            }
           </Box>
         </Grid>
       </Grid>
+      <Alerts alertOpen={alertOpen} alertText={alertText} isError={isError} setAlertOpen={setAlertOpen} />
     </Box>
   );
 }

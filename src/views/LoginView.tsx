@@ -14,8 +14,9 @@ interface TabPanelProps {
 }
 
 interface LoginViewProps {
-    user: User;
+    user?: User;
     setUser: Function;
+    setIsAdmin: Function;
 }
 
 function TabPanel(props: TabPanelProps) {
@@ -58,12 +59,12 @@ function LoginView(props: LoginViewProps) {
     const navigate = useNavigate();
 
     function navigateToProfileMenu() {
-        navigate(`/profile/${props.user.userID}`);
+        navigate(`/profile/${props.user?.id}`);
     }
 
     return (
         <>
-            {!props.user.firstName &&
+            {!props.user?.firstName &&
                 <div className="Login-Form-Container">
                     <div className="Login-Form">
                         <Box sx={{ bgcolor: 'background.paper' }}>
@@ -91,13 +92,13 @@ function LoginView(props: LoginViewProps) {
                                 <SignUpForm />
                             </TabPanel>
                             <TabPanel value={value} index={1} dir={theme.direction}>
-                                <Login setUser={props.setUser} />
+                                <Login setIsAdmin={props.setIsAdmin} setUser={props.setUser} />
                             </TabPanel>
                         </Box>
                     </div>
                 </div>
             }
-            {props.user.firstName &&
+            {props.user?.firstName &&
                 navigateToProfileMenu()
             }
         </>

@@ -1,8 +1,9 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import { Dayjs } from "dayjs";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { cancelShow } from "../../queries/changeScreenings";
+import UpdateIcon from '@mui/icons-material/Update';
+import { cancelShow, updateShow } from "../../queries/changeScreenings";
 import React from "react";
 import Alerts from "../Alerts";
 import { Movie, Room, Show, ShowDate } from "../../interfaces/Interfaces";
@@ -47,6 +48,40 @@ function ShowDetailsEditTiles(props: ShowDetailsEditTileProps) {
         });
         props.setShowData(newShowData);
     };
+
+    const onUpdateClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        const TRAILER_ADD = 15;
+
+        props.showData.forEach((currentShowDate) => {
+            currentShowDate.shows.forEach((currentShow) => {
+                if (currentShow.showID?.toString() === e.currentTarget.id && props.selectedMovie?.runtime && currentShow.dateTime) {
+                    let newShow = {
+                        movieId: currentShow.movieID,
+                        roomId: currentShow.roomID,
+                        startDateTime: new Date(currentShow.dateTime?.setHours(currentShow.dateTime?.getHours() + 1)),
+                        endDateTime: new Date(currentShow.dateTime?.setMinutes(currentShow.dateTime?.getMinutes() + parseInt(props.selectedMovie.runtime) + TRAILER_ADD)),
+                        status: "TICKET_SALE_OPEN"
+                    }
+                    updateShow(newShow, currentShow.showID).then(result => {
+                        if (result.error) {
+                            setAlertText(result.error);
+                            setIsError(true);
+                            setAlertOpen(true)
+                          } else if (result.errorMessage) {
+                            setAlertText(result.errorMessage);
+                            setIsError(true);
+                            setAlertOpen(true)
+                          } else {
+                            setAlertOpen(true);
+                            setIsError(false);
+                            setAlertText("Show was updated");
+                            props.getShowsByMovie();
+                          }
+                    });
+                }
+            })
+        })
+    }
 
     const handleChangeRoom = (e: SelectChangeEvent, changedShow: Show) => {
         const newShowData = props.showData.map((currentShowDate) => {
@@ -148,7 +183,12 @@ function ShowDetailsEditTiles(props: ShowDetailsEditTileProps) {
                                 </FormControl>
                             </Grid>
                             <Grid item xs={2} sm={2} md={2} xl={2}>
-                                <Button startIcon={<DeleteForeverIcon />} id={currentShow.showID?.toString()} onClick={() => { setDialogOpen(true); setShowID(currentShow.showID) }} />
+                                <Box
+                                    sx={{ flexDirection: "row", flexGrow: 1 }}
+                                >
+                                    <Button startIcon={<DeleteForeverIcon />} id={currentShow.showID?.toString()} onClick={() => { setDialogOpen(true); setShowID(currentShow.showID) }} />
+                                    <Button startIcon={<UpdateIcon />} id={currentShow.showID?.toString()} onClick={onUpdateClick} />
+                                </Box>
                             </Grid>
                         </Grid>
                         <Dialog

@@ -9,11 +9,11 @@ import PersonalDataUserLoggedIn from "./PersonalDataUserLoggedIn";
 export interface PersonalDataProps {
   personalDataFilled: boolean;
   setPersonalDataFilled: Function;
-  user: User;
+  user?: User;
   setUser: Function;
   setPersonalDataChanged: Function;
   personalDataChanged: boolean;
-  saveUserProfile: Function;
+  setIsAdmin: Function;
 }
 
 interface TabPanelProps {
@@ -55,6 +55,12 @@ function PersonalData(props: PersonalDataProps) {
 
   const [value, setValue] = React.useState(0);
 
+  const setPersonalDataChanged = props.setPersonalDataChanged;
+
+  React.useEffect(() => {
+    setPersonalDataChanged(false);
+  },[setPersonalDataChanged])
+
   const handleChangeTabs = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
     props.setPersonalDataFilled(false);
@@ -70,7 +76,7 @@ function PersonalData(props: PersonalDataProps) {
       <Typography variant="h4" sx={{ p: 3, paddingLeft: theme.spacing }}>
         Personal Data
       </Typography>
-      {!props.user.firstName && (
+      {!props.user?.firstName && (
         <>
           <Tabs
             value={value}
@@ -81,28 +87,21 @@ function PersonalData(props: PersonalDataProps) {
             aria-label="full width tabs example"
             centered
           >
-            <Tab label="Without Account" {...a11yProps(0)} />
             <Tab label="Sign In" {...a11yProps(1)} />
             <Tab label="Sign Up" {...a11yProps(2)} />
           </Tabs>
           <TabPanel value={value} index={0} dir={theme.direction}>
-            <PersonalDataGuestUser
-              personalDataFilled={props.personalDataFilled}
-              setPersonalDataFilled={props.setPersonalDataFilled}
-            />
+            <Login setIsAdmin={props.setIsAdmin} setUser={props.setUser} />
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
-            <Login setUser={props.setUser} />
-          </TabPanel>
-          <TabPanel value={value} index={2} dir={theme.direction}>
-            <SignUpForm />
+            <SignUpForm setValue={setValue} />
           </TabPanel>
         </>
       )}
-      {props.user.firstName && (
+      {props.user?.firstName && (
         <Box sx={{ p: 3 }}>
           <Typography sx={{ pb: 2 }}>
-            You are loggin in as {props.user.firstName} {props.user.surname}.
+            You are loggin in as {props.user?.firstName} {props.user?.lastName}.
           </Typography>
           <PersonalDataUserLoggedIn
             personalDataFilled={props.personalDataFilled}
@@ -111,7 +110,6 @@ function PersonalData(props: PersonalDataProps) {
             setUser={props.setUser}
             personalDataChanged={props.personalDataChanged}
             setPersonalDataChanged={props.setPersonalDataChanged}
-            saveUserProfile={props.saveUserProfile}
           />
         </Box>
       )}

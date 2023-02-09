@@ -3,7 +3,7 @@ import { useState } from "react";
 import FareSelection from "../components/TicketView/FareSelection";
 import Seatplan from "../components/TicketView/Seatplan";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Button, Grid, Typography, useTheme } from "@mui/material";
+import { Button, Grid, Tooltip, Typography, useTheme } from "@mui/material";
 import { getIMDbIDFromURL } from "./MovieDetailsView";
 import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/system";
@@ -14,7 +14,8 @@ import { fetchOrderByID } from "../queries/fetchOrder";
 import { updateOrderFares } from "../queries/changeOrders";
 import { fareSelection, Movie, Order, Show, ShowRow, User } from "../interfaces/Interfaces";
 import { fetchAllFares } from "../queries/fetchFares";
-
+import ThreeDRotationIcon from '@mui/icons-material/ThreeDRotation';
+import SpeakerGroupIcon from '@mui/icons-material/SpeakerGroup';
 
 export const getShowAfterReload = async () => {
   let url = window.location.href;
@@ -28,7 +29,7 @@ export const getShowAfterReload = async () => {
       movieName: show.movie.posterImage,
       moviePoster: show.movie.title,
       dateTime: new Date(show.startDateTime),
-      room: show.room.name,
+      room: show.room,
       roomID: show.room.id,
       showID: show.id,
       additionalInfo: {
@@ -77,10 +78,10 @@ function TicketView(props: TicketViewProps) {
 
   React.useEffect(() => {
     getShowAfterReload().then(result => {
-      setSelectedShow(result)
+      setSelectedShow(result);
       initializeSeatingPlan(result.seatingPlan);
     });
-    getMovieAfterReload().then(result =>  setSelectedMovie(result));
+    getMovieAfterReload().then(result => setSelectedMovie(result));
     fetchAllFares().then(fares => setFares(fares));
   }, [setSelectedShow, setSelectedMovie]);
 
@@ -112,13 +113,13 @@ function TicketView(props: TicketViewProps) {
 
   const onButtonClick = () => {
     if (props.selectedShow && props.order?.id && fares) {
-    let fareQuery = {}
-    fares.forEach(fare=> {
-      fareQuery = {
-        ...fareQuery,
-        [fare.name]: fare.amountOfTickets
-      }
-    });
+      let fareQuery = {}
+      fares.forEach(fare => {
+        fareQuery = {
+          ...fareQuery,
+          [fare.name]: fare.amountOfTickets
+        }
+      });
       updateOrderFares(fareQuery, props.order.id);
       navigate(
         `/orderDetails/${getIMDbIDFromURL()}/${props.selectedShow.showID}/${props.order.id}`
@@ -136,12 +137,25 @@ function TicketView(props: TicketViewProps) {
                 screeningId: props.selectedShow?.showID,
                 seatId: seat.seat.id
               }
-              if (props.user?.userID) {
-                reservation.userId = props.user?.userID;
-              } 
+              if (props.user?.id) {
+                reservation.userId = props.user?.id;
+              }
               postNewReservation(reservation).then((result) => {
                 fetchOrderByID(result.data.id).then((order) => {
                   props.setOrder(order);
+                  const newSeats = seats.map(row => {
+                    row.seats.map(seat => {
+                      order.tickets.forEach((ticket: any) => {
+                        if (ticket.seat.id === seat.seat.id) {
+                          seat.selected = true;
+                          seat.reserved = false;
+                        }
+                      });
+                      return seat;
+                    });
+                    return row;
+                  });
+                  setSeats(newSeats);
                 })
               })
               setCurrentTicketAmount(currentTicketAmmount + 1);
@@ -192,7 +206,18 @@ function TicketView(props: TicketViewProps) {
               }}
             >
               Show on {props.selectedShow?.dateTime.toDateString()} <br />
-              {props.selectedShow?.dateTime.getHours()}:{props.selectedShow?.dateTime.getMinutes() === 0 ? "00" : props.selectedShow?.dateTime.getMinutes()}h in {props.selectedShow?.room}
+              {props.selectedShow?.dateTime.getHours()}:{props.selectedShow?.dateTime.getMinutes() === 0 ? "00" : props.selectedShow?.dateTime.getMinutes()}h in {props.selectedShow?.room?.name}
+              <br />
+              {props.selectedShow.additionalInfo.isThreeD &&
+                <Tooltip title='3D'>
+                  <ThreeDRotationIcon color='disabled' />
+                </Tooltip>
+              }
+              {props.selectedShow.additionalInfo.hasDolbyAtmos &&
+                <Tooltip title='Dolby Atmos'>
+                  <SpeakerGroupIcon color='disabled' />
+                </Tooltip>
+              }
             </Typography>
           }
         </Box>
@@ -208,7 +233,7 @@ function TicketView(props: TicketViewProps) {
           fares={fares}
           setFares={setFares}
           windowWidth={props.windowWidth}
-        /> }
+        />}
         <Box>
           <Typography
             align="center"

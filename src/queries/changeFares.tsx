@@ -27,7 +27,7 @@ export const changeFare = async (newFare: fareSelection) => {
 };
 
 export const deleteFare = async (id: number) => {
-    const data = await axios.delete(`${PATH}api/fareSelecion/${id}`)
+    const data = await axios.delete(`${PATH}api/fareSelection/${id}`)
         .then(response => {
             return response
         })
