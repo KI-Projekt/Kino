@@ -16,6 +16,7 @@ import { fareSelection, Movie, Order, Show, ShowRow, User } from "../interfaces/
 import { fetchAllFares } from "../queries/fetchFares";
 import ThreeDRotationIcon from '@mui/icons-material/ThreeDRotation';
 import SpeakerGroupIcon from '@mui/icons-material/SpeakerGroup';
+import Alerts from "../components/Alerts";
 
 export const getShowAfterReload = async () => {
   let url = window.location.href;
@@ -72,6 +73,9 @@ function TicketView(props: TicketViewProps) {
   const [currentTicketAmmount, setCurrentTicketAmount] = useState(0);
   const [fares, setFares] = useState<Array<fareSelection> | undefined>(undefined);
   const [seats, setSeats] = useState<Array<ShowRow> | undefined>(undefined);
+  const [alertOpen, setAlertOpen] = React.useState(false);
+  const [isError, setIsError] = React.useState(false);
+  const [alertText, setAlertText] = React.useState("The Movie was added successfully!");
 
   const setSelectedShow = props.setSelectedShow
   const setSelectedMovie = props.setSelectedMovie
@@ -142,26 +146,44 @@ function TicketView(props: TicketViewProps) {
                 reservation.userId = props.user?.id;
               }
               postNewReservation(reservation).then((result) => {
-                fetchOrderByID(result.data.id).then((order) => {
-                  props.setOrder(order);
-                  const newSeats = seats.map(row => {
-                    row.seats.map(seat => {
-                      order.tickets.forEach((ticket: any) => {
-                        if (ticket.seat.id === seat.seat.id) {
-                          seat.selected = true;
-                          seat.reserved = false;
-                          ticketAmmount++;
-                          setCurrentTicketAmount(ticketAmmount);
-                        }
-                      });
-                      return seat;
-                    });
-                    return row;
+                if (result.error) {
+                  getShowAfterReload().then(result => {
+                    setSelectedShow(result);
+                    initializeSeatingPlan(result.seatingPlan);
                   });
-                  setSeats(newSeats);
-                })
+                  setAlertText(result.error);
+                  setIsError(true);
+                  setAlertOpen(true)
+                } else if (result.errorMessage) {
+                  getShowAfterReload().then(result => {
+                    setSelectedShow(result);
+                    initializeSeatingPlan(result.seatingPlan);
+                  });
+                  setAlertText(result.errorMessage);
+                  setIsError(true);
+                  setAlertOpen(true)
+                } else {
+                  fetchOrderByID(result.data.id).then((order) => {
+                    props.setOrder(order);
+                    const newSeats = seats.map(row => {
+                      row.seats.map(seat => {
+                        order.tickets.forEach((ticket: any) => {
+                          if (ticket.seat.id === seat.seat.id) {
+                            seat.selected = true;
+                            seat.reserved = false;
+                            ticketAmmount++;
+                            setCurrentTicketAmount(ticketAmmount);
+                          }
+                        });
+                        return seat;
+                      });
+                      return row;
+                    });
+                    setSeats(newSeats);
+                  })
+                  setCurrentTicketAmount(currentTicketAmmount + 1);
+                }
               })
-              setCurrentTicketAmount(currentTicketAmmount + 1);
             } else {
               props.order?.tickets?.forEach(ticket => {
                 if (ticket.seat.id === parseInt(e.currentTarget.id)) {
@@ -261,6 +283,7 @@ function TicketView(props: TicketViewProps) {
         >
           Continue
         </Button>
+        <Alerts alertOpen={alertOpen} alertText={alertText} isError={isError} setAlertOpen={setAlertOpen} />
       </Grid>
     </Grid>
   );
