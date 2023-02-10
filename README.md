@@ -6,6 +6,8 @@
 - Aidan Zimmer: 4803747
 - Marcel Bulling: 2953627
 - Johanna Deike: 4940972
+
+Die Dokumentation ist im Backend-Repository unter Dokumentation_Projekt.pdf zu finden.
  
  ## Branch Rules:
  The main development will be done on the dev branch. Version Releases will be merged on `main` after approval with all team members.
