@@ -1,4 +1,4 @@
-export const PATH = "https://api.c930.net/";
+export const PATH = "http://192.168.178.125/";
 
 export const fetchAllMovies = async () => {
     const url = PATH + "api/movies";
