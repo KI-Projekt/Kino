@@ -1,4 +1,4 @@
-export const PATH = "http://192.168.178.125/";
+export const PATH = "localhost:8080";
 
 export const fetchAllMovies = async () => {
     const url = PATH + "api/movies";
