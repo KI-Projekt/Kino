@@ -1,5 +1,4 @@
 import * as React from "react";
-import "../styles/Footer.css";
 import {
   Container,
   Grid,
@@ -30,8 +29,8 @@ export default function Footer(props: FooterProps) {
   const theme = useTheme();
 
   return (
-    <Box className="Footer-Box">
-      <Container className="footerContainer" sx={{ width: "100%" }}>
+    <Box className="text-white bg-slate-800 py-2 static bottom-0 w-full mb-0">
+      <Container  sx={{ width: "100%" }}>
         <Grid
           container
           spacing={0}
@@ -47,7 +46,6 @@ export default function Footer(props: FooterProps) {
                   <IconButton onClick={() => handleClick("about")}>
                     <InfoIcon
                       sx={{ color: theme.palette.common.white }}
-                      className="Footer-Icons"
                     />
                   </IconButton>
                 </Tooltip>
@@ -55,7 +53,7 @@ export default function Footer(props: FooterProps) {
                   <IconButton onClick={() => handleClick("gettingHere")}>
                     <AssistantDirectionIcon
                       sx={{ color: theme.palette.common.white }}
-                      className="Footer-Icons"
+                      
                     />
                   </IconButton>
                 </Tooltip>
@@ -63,14 +61,14 @@ export default function Footer(props: FooterProps) {
                   <IconButton onClick={() => handleClick(props.user?.firstName ? `profile/${props.user?.id}` : "login")}>
                     <AccountCircleIcon
                       sx={{ color: theme.palette.common.white }}
-                      className="Footer-Icons"
+                      
                     />
                   </IconButton>
                 </Tooltip>
               </Typography>
               <Typography align="center">
                 <Link
-                  className="Footer-Link"
+                  className="p-1"
                   href="/openingHours"
                   color="inherit"
                   underline="none"
@@ -79,7 +77,7 @@ export default function Footer(props: FooterProps) {
                   Opening Hours ᛫
                 </Link>
                 <Link
-                  className="Footer-Link"
+                  className="p-1"
                   href="/ticketPrices"
                   color="inherit"
                   underline="none"
@@ -88,7 +86,7 @@ export default function Footer(props: FooterProps) {
                   Price Categories ᛫
                 </Link>
                 <Link
-                  className="Footer-Link"
+                  className="p-1"
                   href="/contact"
                   color="inherit"
                   underline="none"
@@ -102,7 +100,7 @@ export default function Footer(props: FooterProps) {
             <Box>
               <Typography align="center">
                 <Link
-                  className="Footer-Link"
+                  className="p-1"
                   href="/impressum"
                   color="inherit"
                   underline="none"
@@ -111,7 +109,7 @@ export default function Footer(props: FooterProps) {
                   Impressum ᛫
                 </Link>
                 <Link
-                  className="Footer-Link"
+                  className="p-1"
                   href="/privacyPolicy"
                   color="inherit"
                   underline="none"
@@ -123,7 +121,7 @@ export default function Footer(props: FooterProps) {
             </Box>
             <Box>
               <Typography
-                className="Lowest-Footer-Box"
+                className="pt-1 text-gray-400"
                 variant="subtitle2"
                 align="center"
               >

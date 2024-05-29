@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MovieTile from '../../components/OverviewView/MovieTile';
-import '../../styles/OverviewView.css'
 import { Typography, useTheme } from '@mui/material';
 import { fetchAllArchivedMovies, fetchAllMovies, fetchMoviesByAgeRating } from '../../queries/fetchMovieAPI';
 import Alerts from '../Alerts';
@@ -56,7 +55,7 @@ function TileBar(props: TilebarProps) {
             {movies &&
                 <>
                     <Typography variant="h4" sx={{ padding: theme.spacing(1), paddingLeft: theme.spacing(3), paddingTop: theme.spacing(2) }}>{props.title}</Typography>
-                    <div className='Tile-Bar'>
+                    <div className='overflow-x-auto flex-nowrap flex flex-row mb-4'>
                         {movies.map((item: MovieProps) => (
                             <MovieTile picture={item.posterImage} id={item.id} isAdmin={props.isAdmin} isNew={props.isNew} />
                         ))}

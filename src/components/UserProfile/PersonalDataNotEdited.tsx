@@ -1,6 +1,5 @@
 import { Box, Button, TextField, useTheme } from "@mui/material";
 import React from "react";
-import "../../styles/Login.css";
 import { User } from "../../interfaces/Interfaces";
 import SaveIcon from "@mui/icons-material/Save";
 
@@ -92,7 +91,7 @@ function UserProfileView(props: UserProfileViewProps) {
           disabled
           variant="outlined"
           type="text"
-          className="Form-Login-Input"
+          className="w-full mb-4"
           placeholder="Fifth Avenue"
           label="Street"
           id="street"
@@ -105,7 +104,7 @@ function UserProfileView(props: UserProfileViewProps) {
           disabled
           variant="outlined"
           type="text"
-          className="Form-Login-Input"
+          className="w-full mb-4"
           placeholder="69"
           label="House number"
           id="houseNumber"
@@ -121,7 +120,7 @@ function UserProfileView(props: UserProfileViewProps) {
           disabled
           variant="outlined"
           type="text"
-          className="Form-Login-Input"
+          className="w-full mb-4"
           placeholder="68165"
           label="Postcode"
           id="zip"
@@ -134,7 +133,7 @@ function UserProfileView(props: UserProfileViewProps) {
           disabled
           variant="outlined"
           type="text"
-          className="Form-Login-Input"
+          className="w-full mb-4"
           placeholder="Mannheim"
           label="City"
           id="city"

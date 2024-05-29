@@ -1,6 +1,5 @@
 import { Box, Button, TextField, useTheme } from "@mui/material";
 import React from "react"
-import '../../styles/Login.css';
 import SaveIcon from '@mui/icons-material/Save';
 import { User } from "../../interfaces/Interfaces";
 import { changeUser } from "../../queries/changeUser";
@@ -115,7 +114,7 @@ function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {
         <TextField
           required
           type="text"
-          className="Form-Login-Input"
+          className="w-full mb-4"
           placeholder="Fifth Avenue"
           label="Street"
           id="street"
@@ -127,7 +126,7 @@ function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {
         <TextField
           required
           type="text"
-          className="Form-Login-Input"
+          className="w-full mb-4"
           placeholder="69"
           label="House number"
           id="houseNumber"
@@ -142,7 +141,7 @@ function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {
         <TextField
           required
           type="text"
-          className="Form-Login-Input"
+          className="w-full mb-4"
           placeholder="68165"
           label="Postcode"
           id="zip"
@@ -154,7 +153,7 @@ function PersonalDataUserLoggedIn(props: PersonalDataUserLoggedInProps) {
         <TextField
           required
           type="text"
-          className="Form-Login-Input"
+          className="w-full mb-4"
           placeholder="Mannheim"
           label="City"
           id="city"

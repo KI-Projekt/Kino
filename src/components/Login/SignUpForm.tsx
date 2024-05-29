@@ -1,5 +1,4 @@
 import React from "react"
-import '../../styles/Login.css';
 import { Button, Box, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField, useTheme } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { registerUser, UserInput } from "../../queries/authentication";
@@ -116,7 +115,7 @@ function SignUpForm(props: SignUpFormProps) {
         <TextField
           required
           type="text"
-          className="Form-Login-Input"
+          className="w-full mb-4"
           placeholder="Jane"
           label="First Name"
           id="firstName"
@@ -127,7 +126,7 @@ function SignUpForm(props: SignUpFormProps) {
         <TextField
           required
           type="text"
-          className="Form-Login-Input"
+          className="w-full mb-4"
           placeholder="Doe"
           label="Surname"
           id="lastName"
@@ -139,7 +138,7 @@ function SignUpForm(props: SignUpFormProps) {
           <TextField
             required
             type="text"
-            className="Form-Login-Input"
+            className="w-full mb-4" 
             placeholder="Fifth Avenue"
             label="Street" id="street"
             value={guestUser.street}
@@ -148,7 +147,7 @@ function SignUpForm(props: SignUpFormProps) {
           <TextField
             required
             type="text"
-            className="Form-Login-Input"
+            className="w-full mb-4"
             placeholder="69"
             label="House number"
             id="houseNumber"
@@ -161,7 +160,7 @@ function SignUpForm(props: SignUpFormProps) {
           <TextField
             required
             type="text"
-            className="Form-Login-Input"
+            className="w-full mb-4"
             placeholder="68165"
             label="Postcode"
             id="zip"
@@ -171,7 +170,7 @@ function SignUpForm(props: SignUpFormProps) {
           <TextField
             required
             type="text"
-            className="Form-Login-Input"
+            className="w-full mb-4"
             placeholder="Mannheim"
             label="City"
             id="city"
@@ -183,7 +182,7 @@ function SignUpForm(props: SignUpFormProps) {
         <TextField
           required
           type="email"
-          className="Form-Login-Input"
+          className="w-full mb-4"
           placeholder="Jane.doe@example.com"
           label="Email Address"
           id="email"
@@ -236,7 +235,7 @@ function SignUpForm(props: SignUpFormProps) {
           />
         </FormControl>
       </Box>
-      <div className="d-grid gap-2 mt-3">
+      <div className="grid gap-2 mt-3">
         <Button sx={{ m: 0.5, width: '100%' }} variant="contained" onClick={handleSignupClick}>Sign Up</Button>
       </div>
       <Alerts alertOpen={alertOpen} alertText={alertText} isError={isError} setAlertOpen={setAlertOpen} />

@@ -1,5 +1,4 @@
 import React from "react"
-import '../styles/Login.css';
 import Login from "../components/Login/LoginForm";
 import { Box, Tab, Tabs, Typography, useTheme } from "@mui/material";
 import SignUpForm from "../components/Login/SignUpForm";
@@ -65,8 +64,8 @@ function LoginView(props: LoginViewProps) {
     return (
         <>
             {!props.user?.firstName &&
-                <div className="Login-Form-Container">
-                    <div className="Login-Form">
+                <div className="flex justify-center items-center h-180">
+                    <div className="flex bg-white rounded-lg pb-5 pt-7 shadow-sm shadow-black w-96">
                         <Box sx={{ bgcolor: 'background.paper' }}>
                             <Typography
                                 variant="h4"

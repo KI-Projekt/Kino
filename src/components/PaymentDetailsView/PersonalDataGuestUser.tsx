@@ -1,8 +1,6 @@
 import { Box, TextField, useTheme } from "@mui/material";
 import React from "react"
 import { User } from "../../interfaces/Interfaces";
-import '../../styles/Login.css';
-
 
 interface PersonalDataGuestUserProps {
     personalDataFilled: boolean;
@@ -85,7 +83,7 @@ function PersonalDataGuestUser(props: PersonalDataGuestUserProps) {
                 <TextField
                     required
                     type="text"
-                    className="Form-Login-Input"
+                    className="w-full mb-4"
                     placeholder="Fifth Avenue"
                     label="Street"
                     id="street"
@@ -95,7 +93,7 @@ function PersonalDataGuestUser(props: PersonalDataGuestUserProps) {
                 <TextField
                     required
                     type="text"
-                    className="Form-Login-Input"
+                    className="w-full mb-4"
                     placeholder="69"
                     label="House number"
                     id="houseNumber"
@@ -108,7 +106,7 @@ function PersonalDataGuestUser(props: PersonalDataGuestUserProps) {
                 <TextField
                     required
                     type="text"
-                    className="Form-Login-Input"
+                    className="w-full mb-4"
                     placeholder="68165"
                     label="Postcode"
                     id="zip"
@@ -118,7 +116,7 @@ function PersonalDataGuestUser(props: PersonalDataGuestUserProps) {
                 <TextField
                     required
                     type="text"
-                    className="Form-Login-Input"
+                    className="w-full mb-4"
                     placeholder="Mannheim"
                     label="City"
                     id="city"

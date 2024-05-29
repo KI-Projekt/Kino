@@ -1,6 +1,5 @@
 import { Box, Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField, useTheme } from "@mui/material";
 import React from "react"
-import '../../styles/Login.css';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { loginUser } from "../../queries/authentication";
 
@@ -67,7 +66,7 @@ function Login(props: LoginProps) {
     >
       <TextField
         type="email"
-        className="Form-Login-Input"
+        className="w-full mb-4"
         placeholder="Jane.doe@example.com"
         label="Email Address"
         onChange={handleChange('email')}

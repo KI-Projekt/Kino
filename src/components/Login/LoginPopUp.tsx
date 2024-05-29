@@ -1,6 +1,5 @@
 import { Link, Typography, Box, useTheme } from "@mui/material";
 import React from "react"
-import '../../styles/Login.css';
 import Login from "./LoginForm";
 
 interface LoginPopUpProps {
@@ -15,7 +14,7 @@ function LoginPopUp(props: LoginPopUpProps) {
 
   return (
     <Box sx={{ m: 2, padding: theme.spacing }}>
-      <div className="Login-Form-Content">
+      <div className="px-4">
         <Typography variant="h4" align="center" padding='1rem' >Sign In</Typography>
         <Typography sx={{ mb: '0.5rem' }}>
           Not registered yet? <Link href={`/login`}>Sign Up</Link>

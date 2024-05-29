@@ -6,7 +6,6 @@ import {
   Container,
 } from "@mui/material";
 import * as React from "react";
-import "../styles/Impressum.css";
 import CinetastischHorizontal from "../img/Cinetastisch_horizontal.png";
 import { redTheme } from "../interfaces/Theme";
 
@@ -18,7 +17,7 @@ class ImpressumView extends React.Component<Props, State> {
   render() {
     return (
       <Container sx={{ py: redTheme.spacing(3) }}>
-        <Card className="Impressum-Card" sx={{ maxWidth: 500, backgroundColor: redTheme.palette.common.white }}>
+        <Card className="m-auto py-4" sx={{ maxWidth: 500, backgroundColor: redTheme.palette.common.white }}>
           <CardMedia
             component="img"
             height=""

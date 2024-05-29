@@ -6,7 +6,6 @@ import {
   Container,
 } from "@mui/material";
 import * as React from "react";
-import "../styles/PrivacyPolicyView.css";
 import CinetastischHorizontal from "../img/Cinetastisch_horizontal.png";
 import { redTheme } from "../interfaces/Theme";
 
@@ -18,7 +17,7 @@ class PrivacyPolicyView extends React.Component<Props, State> {
   render() {
     return (
       <Container sx={{ py: redTheme.spacing(3) }}>
-        <Card className="PrivacyPolicy-Card" sx={{ maxWidth: 1000, backgroundColor: redTheme.palette.common.white }}>
+        <Card className="m-auto pb-20 pt-12" sx={{ maxWidth: 1000, backgroundColor: redTheme.palette.common.white }}>
           <CardMedia
             component="img"
             height=""

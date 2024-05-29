@@ -8,7 +8,6 @@ import {
 import * as React from "react";
 import Map from "../components/MapView/MapComponent";
 import { redTheme } from "../interfaces/Theme";
-import "../styles/GettingHereView.css";
 
 
 
@@ -16,7 +15,7 @@ class GettingHereView extends React.Component {
   render() {
     return (
       <Container sx={{ p: redTheme.spacing(3) }}>
-        <Card className="GettingHere-Card" sx={{ maxWidth: 700, backgroundColor: redTheme.palette.common.white }}>
+        <Card className="m-auto py-4" sx={{ maxWidth: 700, backgroundColor: redTheme.palette.common.white }}>
           <CardActionArea>
             <CardContent>
               <Map />

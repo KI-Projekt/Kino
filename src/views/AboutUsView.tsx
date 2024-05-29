@@ -4,7 +4,6 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import "../styles/AboutUsView.css";
 import * as React from "react";
 import SeatNr12 from "../img/oneSeat.jpg";
 
@@ -17,11 +16,11 @@ class AboutUsView extends React.Component<Props, State> {
     return (
       <Grid container spacing={2} columns={20}>
         <Grid item xs={20} sm={20} md={7} lg={10} xl={10}>
-          <Container className="Container-Left">
-            <Typography className="Headline" variant="h4">
+          <Container className="pt-24 px-8 text-center flex">
+            <Typography className="pt-[5%] left-1/2 justify-center items-center relative" variant="h4">
               About Us
             </Typography>
-            <Typography className="Text-Left">
+            <Typography className="pt-6">
               The Cinetastic Cinema can now look back on almost two semesters of
               history. The first performances took place at the DHBW Mannheim.
               The seats were ordinary but much too hard wooden chairs. A lecture
@@ -43,7 +42,7 @@ class AboutUsView extends React.Component<Props, State> {
         </Grid>
         <Grid item xs={20} sm={20} md={13} lg={10} xl={10}>
           <Box>
-            <img className="Image-Right" src={SeatNr12} alt="seat" />
+            <img className="w-full" src={SeatNr12} alt="seat" />
           </Box>
         </Grid>
       </Grid>
