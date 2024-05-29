@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import TileBar from '../components/OverviewView/Tilebar';
 import AddIcon from '@mui/icons-material/Add';
 import { useEffect } from 'react';
+import AIComingSOON from '../img/AIComingSoon.png'
 
 interface OverviewViewProps {
     isAdmin: boolean,
@@ -28,6 +29,7 @@ function OverviewView(props: OverviewViewProps) {
 
     return (
         <div>
+            <img src={AIComingSOON} alt="" />
             {props.isAdmin &&
                 <Box textAlign='center' sx={{ pt: theme.spacing(3) }}>
                     <Button
