@@ -9,6 +9,7 @@ import { Order, Row, SimpleFare, Ticket, User } from '../interfaces/Interfaces';
 import { redTheme } from '../interfaces/Theme';
 import { refundOrder } from '../queries/changeOrders';
 import { fetchOrderByUserID } from '../queries/fetchOrder';
+import AddReview from '../components/MyOrdersView/addReviewDialog';
 
 interface MyOrdersProps {
     user?: User;
@@ -19,6 +20,7 @@ function MyOrdersView(props: MyOrdersProps) {
     const [orders, setOrders] = React.useState<Array<Order> | undefined>(undefined)
     const [dialogOpen, setDialogOpen] = React.useState(false);
     const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
+    const [reviewDialogOpen, setReviewDialogOpen] = React.useState(false);
     const [order, setOrder] = React.useState<Order | undefined>(undefined)
 
     const navigate = useNavigate();
@@ -70,6 +72,9 @@ function MyOrdersView(props: MyOrdersProps) {
             });
         });
     }
+    const onSaveReviewClick = ()=>{
+        //hier speichern bei review
+    }
 
     React.useEffect(() => {
         if (props.user?.id) {
@@ -114,6 +119,7 @@ function MyOrdersView(props: MyOrdersProps) {
                                 <Typography sx={{ pt: theme.spacing(2) }}>Order-ID: {order?.id}</Typography>
                                 <Typography sx={{ pt: theme.spacing(2) }}>Payment Method: {order?.paymentMethod}</Typography>
                                 <Button sx={{p:5}} onClick={() => setDeleteDialogOpen(true)}>Refund</Button>
+                                <Button sx={{p:5}} onClick={()=> setReviewDialogOpen(true)}>Add Review</Button>
                             </Box>
                         </Grid>
                         <Grid item xs={12} sm={12} md={6} xl={6}>
@@ -145,6 +151,7 @@ function MyOrdersView(props: MyOrdersProps) {
                 </DialogActions>
             </Dialog>
             <DeleteDialog onRefundClick={onRefundClick} dialogOpen={deleteDialogOpen} setDialogOpen={setDeleteDialogOpen} />
+            <AddReview onSaveReviewClick={onSaveReviewClick} dialogOpen={reviewDialogOpen} setDialogOpen={setReviewDialogOpen}></AddReview>
         </>
     );
 }

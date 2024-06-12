@@ -1,4 +1,5 @@
 export const PATH = "https://cinema-api.mabu2807.de/";
+//export const PATH = "http://localhost:8080/";
 
 export const fetchAllMovies = async () => {
     const url = PATH + "api/movies";

@@ -2,6 +2,8 @@ import { Box, Button, FormControl, IconButton, InputAdornment, InputLabel, Outli
 import React from "react"
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { loginUser } from "../../queries/authentication";
+import { Navigate, useNavigate } from "react-router-dom";
+
 
 interface State {
   email: string,
@@ -15,12 +17,14 @@ interface LoginProps {
   setIsAdmin: Function
 }
 
+
 function Login(props: LoginProps) {
   const [values, setValues] = React.useState<State>({
     email: '',
     password: '',
     showPassword: false,
   });
+  const navigate = useNavigate();
 
   const handleChange =
     (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,6 +54,11 @@ function Login(props: LoginProps) {
         let roles = result.data.role.split(",");
         if(roles[1] && roles[1] === "ROLE_ADMIN"){
           props.setIsAdmin({isAdmin: true});
+        }
+        if(result.data.firstLogin){
+          
+          //navigate to change password
+          navigate('/reviews');
         }
      });
    }
