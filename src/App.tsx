@@ -167,8 +167,8 @@ function App() {
                       }
                     />
                     <Route
-                    path="/review"
-                    element={<Review />}
+                    path="/reviews"
+                    element={<Review  user={user}/>}
                     />
                     <Route
                       path="/orderDetails/:imdbID/:showID/:orderID"

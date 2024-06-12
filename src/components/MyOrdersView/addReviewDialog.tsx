@@ -38,11 +38,11 @@ function AddReview(props: AddReviewProps) {
         <TextField id="textfield-tags" label="Tags" variant="outlined" />
       </DialogContent>
       <DialogActions>
-        <Button onClick={()=> props.onSaveReviewClick()} variant="contained">
-          Save rating
-        </Button>
         <Button onClick={()=> props.setDialogOpen(false)} variant="outlined">
           Cancel
+        </Button>
+        <Button onClick={()=> props.onSaveReviewClick()} variant="contained">
+          Save rating
         </Button>
       </DialogActions>
     </Dialog>

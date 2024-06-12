@@ -2,7 +2,7 @@ import { Box, Button, FormControl, IconButton, InputAdornment, InputLabel, Outli
 import React from "react"
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { loginUser } from "../../queries/authentication";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 interface State {
@@ -44,6 +44,7 @@ function Login(props: LoginProps) {
 
   const theme = useTheme();
 
+
    async function handleSignIn() {
      if (props.handleProfileMenuClose) {
        props.handleProfileMenuClose();
@@ -51,15 +52,16 @@ function Login(props: LoginProps) {
      }
      loginUser({email: values.email, password: values.password}).then((result) => {
         props.setUser(result.data);
+        console.log(result.data);
         let roles = result.data.role.split(",");
         if(roles[1] && roles[1] === "ROLE_ADMIN"){
           props.setIsAdmin({isAdmin: true});
         }
         if(result.data.firstLogin){
-          
           //navigate to change password
           navigate('/reviews');
         }
+        navigate('/reviews');
      });
    }
 

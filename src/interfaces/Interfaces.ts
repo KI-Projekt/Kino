@@ -184,6 +184,8 @@ export interface User {
   email: string | undefined,
   password: string | undefined,
   matchingPassword: string | undefined,
+  firstLogin: boolean | undefined,
+  aiAccepted: boolean | undefined,
 }
 
 export interface Order {

@@ -17,6 +17,8 @@ interface MyOrdersProps {
 
 function MyOrdersView(props: MyOrdersProps) {
 
+    const showReviewButton: boolean = false;
+
     const [orders, setOrders] = React.useState<Array<Order> | undefined>(undefined)
     const [dialogOpen, setDialogOpen] = React.useState(false);
     const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
@@ -93,11 +95,14 @@ function MyOrdersView(props: MyOrdersProps) {
     }, [props.user?.id, navigate]);
 
     return (
-        <>
+        <>  
             <Typography sx={{ p: 4 }} align="center" variant='h4'>My Orders</Typography>
             {orders?.map((order => {
                 return (
+                    <div className='flex flex-col md:w-[256px] w-[224px] items-center'>
                     <OrderTile order={order} onOrderTileClick={onOrderTileClick} />
+                    <Button disabled={true} variant='contained' sx={{p:5, width:"100%", height:30}} onClick={()=> setReviewDialogOpen(true)}>Add Review</Button>
+                    </div>
                 );
             }))}
             <Dialog
@@ -119,7 +124,6 @@ function MyOrdersView(props: MyOrdersProps) {
                                 <Typography sx={{ pt: theme.spacing(2) }}>Order-ID: {order?.id}</Typography>
                                 <Typography sx={{ pt: theme.spacing(2) }}>Payment Method: {order?.paymentMethod}</Typography>
                                 <Button sx={{p:5}} onClick={() => setDeleteDialogOpen(true)}>Refund</Button>
-                                <Button sx={{p:5}} onClick={()=> setReviewDialogOpen(true)}>Add Review</Button>
                             </Box>
                         </Grid>
                         <Grid item xs={12} sm={12} md={6} xl={6}>

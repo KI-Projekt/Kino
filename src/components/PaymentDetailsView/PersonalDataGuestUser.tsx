@@ -22,12 +22,14 @@ function PersonalDataGuestUser(props: PersonalDataGuestUserProps) {
         email: string | undefined,
         password: string | undefined,
         matchingPassword: string | undefined,
+        firstLogin: boolean | undefined,
+        aiAccepted: boolean | undefined
     ) {
-        return { id, firstName, lastName, street, houseNumber, zip, city, email, password, matchingPassword };
+        return { id, firstName, lastName, street, houseNumber, zip, city, email, password, matchingPassword, firstLogin, aiAccepted };
     }
 
     const initialUser = (
-        createUserData(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)
+        createUserData(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)
     )
 
     const [guestUser, setGuestUser] = React.useState<User>(initialUser);

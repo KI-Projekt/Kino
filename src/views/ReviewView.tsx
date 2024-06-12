@@ -2,6 +2,14 @@ import * as React from "react";
 import MovieReview from "../components/ReviewView/MovieReview";
 import { Button, Divider } from "@mui/material";
 import GenreSelect from "../components/ReviewView/GenreSelect";
+import { User } from "../interfaces/Interfaces";
+import { useNavigate } from "react-router-dom";
+import DsgvoDialog from "../components/Ai/DsgvoDialog";
+
+interface ReviewProps {
+  user?: User;
+}
+
 
 const movies = [
   {
@@ -26,7 +34,27 @@ const movies = [
   },
 ];
 
-function Review() {
+function Review(props:ReviewProps) {
+  const [open, setOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    if (!props.user?.aiAccepted) {
+      setOpen(true);
+    }
+  }
+  ,[]);
+
+  const navigate = useNavigate();	
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  React.useEffect(() => {
+    if (!props.user?.id) {
+      navigate("/");
+    }
+}, [props.user?.id, navigate]);
   return (
     <div>
         <div className="h-2"></div>
@@ -50,6 +78,7 @@ function Review() {
       <div className="h-1">
 
       </div>
+      <DsgvoDialog open={open} onClose={handleClose}/>
     </div>
   );
 }
