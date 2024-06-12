@@ -27,6 +27,7 @@ import { AdminProps, Movie, Order, Show, User } from "./interfaces/Interfaces";
 import { redTheme } from "./interfaces/Theme";
 import backgroundImage from './img/background.jpg';
 import MyOrdersView from "./views/MyOrdersView";
+import Review from "./views/ReviewView";
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
   open?: boolean;
@@ -164,6 +165,10 @@ function App() {
                           selectedShow={selectedShow}
                         />
                       }
+                    />
+                    <Route
+                    path="/review"
+                    element={<Review />}
                     />
                     <Route
                       path="/orderDetails/:imdbID/:showID/:orderID"
