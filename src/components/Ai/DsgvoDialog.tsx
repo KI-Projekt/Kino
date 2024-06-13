@@ -1,8 +1,8 @@
 import * as React from 'react';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
-import { Checkbox, DialogContent, DialogContentText, FormControlLabel } from '@mui/material';
-import { CheckBox, Label } from '@mui/icons-material';
+import { Button, Checkbox, DialogActions, DialogContent, DialogContentText, FormControlLabel } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 export interface SimpleDialogProps {
   open: boolean;
@@ -10,7 +10,19 @@ export interface SimpleDialogProps {
 }
 
 export default function DsgvoDialog(props: SimpleDialogProps) {
+  const [checked, setChecked] = React.useState(false);
+  const navigate = useNavigate();
   const { onClose, open } = props;
+  const handleClose = () => {
+    onClose('cancel');
+    navigate('/');
+  };
+
+  const handleSubmit = () => {
+    //request for accept dsgvo
+
+    onClose('accept');
+  };
 
 
   return (
@@ -37,10 +49,14 @@ export default function DsgvoDialog(props: SimpleDialogProps) {
             <p>For questions and concerns regarding data protection, please contact our data protection officer:<br/>Marcel Bulling<br/>s212532@student.dhbw-mannheim.de</p>
             
         </DialogContentText>
-        <FormControlLabel control={<Checkbox  required/>} label="*I have taken note of the above information and consent to the processing of my personal data for the purposes stated."  />
+        <FormControlLabel control={<Checkbox  required onChange={()=>setChecked(!checked)}/>} label="*I have taken note of the above information and consent to the processing of my personal data for the purposes stated."  />
         
         
       </DialogContent>
+      <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button disabled={!checked} type="submit" onClick={handleSubmit}>Accept</Button>
+        </DialogActions>
       
     </Dialog>
   );

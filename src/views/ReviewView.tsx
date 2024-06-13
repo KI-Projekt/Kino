@@ -42,7 +42,7 @@ function Review(props:ReviewProps) {
       setOpen(true);
     }
   }
-  ,[]);
+  ,[props.user?.aiAccepted]);
 
   const navigate = useNavigate();	
 

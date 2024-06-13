@@ -2,7 +2,7 @@ import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import * as React from "react";
 
 function GenreSelect() {
-  const [formats, setFormats] = React.useState(() => ["bold", 'primary']);
+  const [formats, setFormats] = React.useState<Array<String>>(() => []);
   const genreTop = ["animation", "documentary", "fantasy", "mystery", "war", "crime", "adventure","sport"];
   const genreBottm = ["action", "comedy", "drama", "horror", "romance", "sci-fi", "thriller", "western"]
   const handleFormat = (
@@ -10,6 +10,7 @@ function GenreSelect() {
     newFormats: string[]
   ) => {
     setFormats(newFormats);
+    console.log(newFormats);
   };
   return (
     <div className="flex flex-col justify-start items-start ">
