@@ -10,6 +10,15 @@ export const fetchAllMovies = async () => {
     return responseJson;
 };
 
+export const fetchAiMovies = async () => {
+    const url = PATH + "api/movies/ai";
+
+    const response = await fetch(url);
+    const responseJson = await response.json();
+
+    return responseJson;
+};
+
 export const fetchMoviesByAgeRating = async (rated: string) => {
     const url = PATH + `api/movies?rated=${rated}`;
 

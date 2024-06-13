@@ -17,8 +17,6 @@ interface MyOrdersProps {
 
 function MyOrdersView(props: MyOrdersProps) {
 
-    const showReviewButton: boolean = false;
-
     const [orders, setOrders] = React.useState<Array<Order> | undefined>(undefined)
     const [dialogOpen, setDialogOpen] = React.useState(false);
     const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);

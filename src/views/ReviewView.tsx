@@ -78,7 +78,7 @@ function Review(props:ReviewProps) {
       <div className="h-1">
 
       </div>
-      <DsgvoDialog open={open} onClose={handleClose}/>
+      <DsgvoDialog userId={props.user?.id} open={open} onClose={handleClose}/>
     </div>
   );
 }
