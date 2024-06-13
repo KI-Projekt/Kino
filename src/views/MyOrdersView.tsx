@@ -74,7 +74,7 @@ function MyOrdersView(props: MyOrdersProps) {
             });
         });
     }
-    const onSaveReviewClick = ()=>{
+    const onSaveReviewClick = () => {
         //hier speichern bei review
     }
 
@@ -95,13 +95,15 @@ function MyOrdersView(props: MyOrdersProps) {
     }, [props.user?.id, navigate]);
 
     return (
-        <>  
+        <>
             <Typography sx={{ p: 4 }} align="center" variant='h4'>My Orders</Typography>
-            {orders?.map((order => {
+            {orders?.map((order => { 
                 return (
                     <div className='flex flex-col md:w-[256px] w-[224px] items-center'>
-                    <OrderTile order={order} onOrderTileClick={onOrderTileClick} />
-                    <Button disabled={true} variant='contained' sx={{p:5, width:"100%", height:30}} onClick={()=> setReviewDialogOpen(true)}>Add Review</Button>
+                        <OrderTile order={order} onOrderTileClick={onOrderTileClick} />
+                        {order.tickets && order.tickets[0].screening.startDateTime && new Date(order.tickets[0].screening.startDateTime) < new Date() && 
+                            <Button variant='contained' sx={{ p: 5, width: "100%", height: 30 }} onClick={() => setReviewDialogOpen(true)}>Add Review</Button>
+                        }
                     </div>
                 );
             }))}
@@ -118,12 +120,12 @@ function MyOrdersView(props: MyOrdersProps) {
                 <DialogContent >
                     <Grid container spacing={3} justifyContent="center" alignItems="center" sx={{ width: { xl: "50rem" } }}>
                         <Grid item xs={12} sm={12} md={6} xl={6}>
-                        {order?.paymentMethod=== "CASH" &&<Alert severity='warning'>Please note: You still need to pay this Reservation at the counter</Alert>}
+                            {order?.paymentMethod === "CASH" && <Alert severity='warning'>Please note: You still need to pay this Reservation at the counter</Alert>}
                             <Box sx={{ py: theme.spacing(3), textAlign: "center", textJustify: "center", }}>
                                 {order?.id && <QRCode value={order?.id.toString()} size={150} />}
                                 <Typography sx={{ pt: theme.spacing(2) }}>Order-ID: {order?.id}</Typography>
                                 <Typography sx={{ pt: theme.spacing(2) }}>Payment Method: {order?.paymentMethod}</Typography>
-                                <Button sx={{p:5}} onClick={() => setDeleteDialogOpen(true)}>Refund</Button>
+                                <Button sx={{ p: 5 }} onClick={() => setDeleteDialogOpen(true)}>Refund</Button>
                             </Box>
                         </Grid>
                         <Grid item xs={12} sm={12} md={6} xl={6}>
