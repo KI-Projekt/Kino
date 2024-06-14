@@ -10,6 +10,8 @@ import { redTheme } from '../interfaces/Theme';
 import { refundOrder } from '../queries/changeOrders';
 import { fetchOrderByUserID } from '../queries/fetchOrder';
 import AddReview from '../components/MyOrdersView/addReviewDialog';
+import { addReview } from '../queries/fetchReview';
+import { Review } from '../interfaces/InterfacesReview';
 
 interface MyOrdersProps {
     user?: User;
@@ -73,7 +75,10 @@ function MyOrdersView(props: MyOrdersProps) {
         });
     }
     const onSaveReviewClick = () => {
-        //hier speichern bei review
+        // let reviewData: Review ={
+        //     rating: 
+        // }
+        // addReview(reviewData);
     }
 
     React.useEffect(() => {
