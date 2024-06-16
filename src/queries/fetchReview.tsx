@@ -4,6 +4,7 @@ import { PATH } from "./fetchMovieAPI";
 export async function getMoviesForReview(userId: number) {
     const response = await fetch(`${PATH}api/movies/${userId}/review`);
     const data = await response.json();
+    console.log(data);
     return data;
     }
 

@@ -61,7 +61,6 @@ function Login(props: LoginProps) {
           //navigate to change password
           navigate('/reviews');
         }
-        navigate('/reviews');
      });
    }
 

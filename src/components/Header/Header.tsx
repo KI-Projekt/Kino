@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
-import { Link, Box, Toolbar } from '@mui/material';
+import { Link, Box, Toolbar, Button } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import CinetastischHorizontal from '../../img/Cinetastisch_horizontal.png';
 import CinetastischIcon from '../../img/Cinetastisch_icon.png';
@@ -8,6 +8,7 @@ import SideMenu from './SideMenu';
 import SideMenuButton from './SideMenuButton';
 import ProfileMenuButton from './ProfileMenuButton';
 import { User } from '../../interfaces/Interfaces';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 export interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -53,6 +54,7 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 function Header(props: HeaderProps) {
+  const navigate = useNavigate();
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -87,6 +89,8 @@ function Header(props: HeaderProps) {
             />
           </Link>
           <Box sx={{ flexGrow: 1 }} />
+          {props.user?.aiAccepted === false && <Button variant='contained' onClick={()=>navigate("/reviews")}>Start with AI</Button>}
+          
           <ProfileMenuButton
             user={props.user}
             setUser={props.setUser}
@@ -94,6 +98,7 @@ function Header(props: HeaderProps) {
             isAdmin={props.isAdmin}
             setIsAdmin={props.setIsAdmin}
           />
+          
         </Toolbar>
       </AppBar>
       <SideMenu appBarProps={props.appBarProps} isAdmin={props.isAdmin} />
