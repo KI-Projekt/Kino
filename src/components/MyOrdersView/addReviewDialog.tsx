@@ -13,19 +13,19 @@ import {
   Typography,
 } from "@mui/material";
 import * as React from "react";
+import { addReview } from "../../queries/fetchReview";
 
 interface AddReviewProps {
-  dialogOpen: boolean;
-  setDialogOpen: Function;
-  onSaveReviewClick: Function;
+  userId: number | undefined;
+  order: any;
 }
 
 function AddReview(props: AddReviewProps) {
   const [value, setValue] = React.useState<number | null>(0);
   const [tags, setTags] = React.useState<Array<String>>([]);
   const [inputValue, setInputValue] = React.useState("");
-  const [counterTags, setCounterTags] = React.useState(1);
   const [writeTags, setWriteTags] = React.useState(false);
+  const [reviewDialogOpen, setReviewDialogOpen] = React.useState(false);
 
   const handleKeyDownEnter = (event: any) => {
     if (event.key === "Enter") {
@@ -34,8 +34,7 @@ function AddReview(props: AddReviewProps) {
       }
       setTags([...tags, inputValue]);
       setInputValue("");
-      setCounterTags(counterTags+1);
-      if (counterTags === 2) {
+      if (tags.length >= 1) {
         setWriteTags(true);
       }
     }
@@ -44,54 +43,86 @@ function AddReview(props: AddReviewProps) {
     setInputValue(event.target.value);
   };
 
+  const onSaveReviewClick = async () => {
+    console.log(props.order)
+    const body = {
+      rating: value,
+      tags: tags,
+      userId: props.userId,
+      movieId: props.order?.tickets[0].screening.movie?.id ?? 0
+    }
+    if (body.userId === undefined) {
+      return;
+    }
+    const response = await addReview(body);
+    if (response.status === 201) {
+      setReviewDialogOpen(false);
+      setTags([]);
+      setValue(0);
+      setWriteTags(false);
+    } else {
+      console.log("Review not added");
+    }
+
+  }
+  const handleClose = () => {
+    setReviewDialogOpen(false);
+    setTags([]);
+    setValue(0);
+    setWriteTags(false);
+  }
+
   return (
-    <Dialog open={props.dialogOpen} onClose={() => props.setDialogOpen(false)}>
-      <DialogTitle id="titleMovieRating">
-        Rate the movies you've seen so we can get to know your preferences
-        better.
-      </DialogTitle>
-      <DialogContent>
-        <Typography component="legend" fontWeight={"medium"}>
-          Star Rating
-        </Typography>
-        <Rating
-          name="simple-rating"
-          value={value}
-          onChange={(event, newValue) => {
-            setValue(newValue);
-          }}
-        />
-        <DialogContentText fontWeight={"bold"} paddingTop={5}>
-          Note keywords about the movie, maximum 2 possible
-        </DialogContentText>
-        <div className="flex flex-col w-[10vw]">
-          <Stack direction="row" spacing={2}>
-          {tags.map((tag) => {
-            return <Chip label={tag} variant="outlined"/>
-          })}
-          </Stack>
-          <FormControl defaultValue="">
-            <TextField
-              id="textfield-tags"
-              label="Tags"
-              variant="standard"
-              disabled={writeTags}
-              value={inputValue}
-              onChange={handleInputChange}
-              onKeyDown={handleKeyDownEnter}
-            />
-          </FormControl>
-        </div>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={() => props.setDialogOpen(false)} variant="outlined">
-          Cancel
-        </Button>
-        <Button onClick={() => props.onSaveReviewClick()} variant="contained">
-          Save rating
-        </Button>
-      </DialogActions>
-    </Dialog>
+    <React.Fragment>
+      <Button variant='contained' sx={{ p: 5, width: "100%", height: 30 }} onClick={() => setReviewDialogOpen(true)}>Add Review</Button>
+      <Dialog open={reviewDialogOpen} onClose={() => setReviewDialogOpen(false)}>
+        <DialogTitle id="titleMovieRating">
+          Rate the movies you've seen so we can get to know your preferences
+          better.
+        </DialogTitle>
+        <DialogContent>
+          <Typography component="legend" fontWeight={"medium"}>
+            Star Rating
+          </Typography>
+          <Rating
+            name="simple-rating"
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+          />
+          <DialogContentText fontWeight={"bold"} paddingTop={5}>
+            Note keywords about the movie, maximum 2 possible
+          </DialogContentText>
+          <div className="flex flex-col w-[10vw]">
+            <Stack direction="row" spacing={2}>
+              {tags.map((tag) => {
+                return <Chip label={tag} variant="outlined" />
+              })}
+            </Stack>
+            <FormControl defaultValue="">
+              <TextField
+                id="textfield-tags"
+                label="Tags"
+                variant="standard"
+                disabled={writeTags}
+                value={inputValue}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDownEnter}
+              />
+            </FormControl>
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} variant="outlined">
+            Cancel
+          </Button>
+          <Button onClick={onSaveReviewClick} variant="contained">
+            Save rating
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
   );
 }
 export default AddReview;

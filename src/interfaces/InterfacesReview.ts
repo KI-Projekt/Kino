@@ -1,12 +1,14 @@
-export interface Review{
+export interface ReviewArrayTags{
     rating: number | null;
-    genre: Array<String>;
-    tag: Array<String>;
+    tags: Array<String>;
     movieId: number;
-    userId: number;
+    userId: number | undefined;
 }
 
-export interface UserGerne{
-    genre: Array<String>;
-    userId: number;
+export interface ReviewStringTags{
+    rating: number | null;
+    tags:  string;
+    movieId: number;
+    userId: number | undefined;
 }
+

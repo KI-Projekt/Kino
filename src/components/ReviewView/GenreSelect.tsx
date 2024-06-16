@@ -1,17 +1,25 @@
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import * as React from "react";
+import { findDifference } from "./HelperFunctions";
+import { addFavoriteGerne } from "../../queries/fetchReview";
 
-function GenreSelect() {
-  const [formats, setFormats] = React.useState<Array<String>>(() => []);
+function GenreSelect(props: {userId: number}) {
+  const [formats, setFormats] = React.useState<Array<string>>(() => []);
   const genreTop = ["animation", "documentary", "fantasy", "mystery", "war", "crime", "adventure","sport"];
-  const genreBottm = ["action", "comedy", "drama", "horror", "romance", "sci-fi", "thriller", "western"]
+  const genreBottm = ["action", "comedy", "drama", "horror", "romance", "sci_fi", "thriller", "western"]
   const handleFormat = (
     event: React.MouseEvent<HTMLElement>,
     newFormats: string[]
   ) => {
+
+    const difference = findDifference(formats, newFormats);
+    addFavoriteGenre(difference ?? "")
     setFormats(newFormats);
-    console.log(newFormats);
   };
+
+  const addFavoriteGenre = async (genre: string) => {
+    await addFavoriteGerne(props.userId, genre);
+  }
   return (
     <div className="flex flex-col justify-start items-start ">
       <ToggleButtonGroup

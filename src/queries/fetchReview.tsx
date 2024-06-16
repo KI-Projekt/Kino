@@ -1,4 +1,4 @@
-import { Review, UserGerne } from "../interfaces/InterfacesReview";
+import { ReviewArrayTags, ReviewStringTags } from "../interfaces/InterfacesReview";
 import { PATH } from "./fetchMovieAPI";
 
 export async function getMoviesForReview(userId: number) {
@@ -7,19 +7,20 @@ export async function getMoviesForReview(userId: number) {
     return data;
     }
 
-export async function addReview(review:Review) {
+export async function addReview(review:ReviewArrayTags) {
+    const reviewStringTags:ReviewStringTags = tagArrytoString(review);
     const response = await fetch(`${PATH}api/reviews`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(review),
+        body: JSON.stringify(reviewStringTags),
     });
     return response;
 }
 
-export async function addFavoriteGernes(userGerne:UserGerne) {
-    const response = await fetch(`${PATH}api/favorite-genres/${userGerne.userId}/${userGerne.genre}`, {
+export async function addFavoriteGerne(userId: number, genre: string) {
+    const response = await fetch(`${PATH}api/favorite-genres/${userId}/${genre}`, {
         method: "PUT"
     });
     return response;
@@ -32,3 +33,18 @@ export async function activateAI(userId: number) {
     return  response.status;
 }
 
+
+
+function tagArrytoString(review: ReviewArrayTags): ReviewStringTags {
+    let tagString = "";
+    review.tags.forEach(tag => {
+        tagString += tag + ";";
+    });
+
+    return {
+        rating: review.rating,
+        tags: tagString,
+        movieId: review.movieId,
+        userId: review.userId
+    }
+}

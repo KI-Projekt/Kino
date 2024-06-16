@@ -10,6 +10,7 @@ import { redTheme } from '../interfaces/Theme';
 import { refundOrder } from '../queries/changeOrders';
 import { fetchOrderByUserID } from '../queries/fetchOrder';
 import AddReview from '../components/MyOrdersView/addReviewDialog';
+import UserMovieDetailsView from './MovieShowDetails';
 
 interface MyOrdersProps {
     user?: User;
@@ -20,7 +21,7 @@ function MyOrdersView(props: MyOrdersProps) {
     const [orders, setOrders] = React.useState<Array<Order> | undefined>(undefined)
     const [dialogOpen, setDialogOpen] = React.useState(false);
     const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
-    const [reviewDialogOpen, setReviewDialogOpen] = React.useState(false);
+    
     const [order, setOrder] = React.useState<Order | undefined>(undefined)
 
     const navigate = useNavigate();
@@ -72,9 +73,19 @@ function MyOrdersView(props: MyOrdersProps) {
             });
         });
     }
-    const onSaveReviewClick = () => {
-        //hier speichern bei review
+    const onSaveReviewClick = (rating:number, tags:String[], orders:any) => {
+        console.log(orders)
+        const body ={
+            rating: rating,
+            tags: tags,
+            userId: props.user?.id,
+            //@ts-ignore
+            movieId: order?.tickets[0].screening.movie?.id ?? 0,
+
+        }
+        console.log(body)
     }
+
 
     React.useEffect(() => {
         if (props.user?.id) {
@@ -100,7 +111,7 @@ function MyOrdersView(props: MyOrdersProps) {
                     <div className='flex flex-col md:w-[256px] w-[224px] items-center'>
                         <OrderTile order={order} onOrderTileClick={onOrderTileClick} />
                         {order.tickets && order.tickets[0].screening.startDateTime && new Date(order.tickets[0].screening.startDateTime) < new Date() && 
-                            <Button variant='contained' sx={{ p: 5, width: "100%", height: 30 }} onClick={() => setReviewDialogOpen(true)}>Add Review</Button>
+                            <AddReview order={order} userId={props.user?.id}></AddReview>
                         }
                     </div>
                 );
@@ -155,7 +166,7 @@ function MyOrdersView(props: MyOrdersProps) {
                 </DialogActions>
             </Dialog>
             <DeleteDialog onRefundClick={onRefundClick} dialogOpen={deleteDialogOpen} setDialogOpen={setDeleteDialogOpen} />
-            <AddReview onSaveReviewClick={onSaveReviewClick} dialogOpen={reviewDialogOpen} setDialogOpen={setReviewDialogOpen}></AddReview>
+            
         </>
     );
 }

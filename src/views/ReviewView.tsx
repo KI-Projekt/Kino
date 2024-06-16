@@ -62,7 +62,7 @@ function Review(props:ReviewProps) {
          <p>So that we can offer you a unique movie experience and our AI only suggests movies that you really want to see, we ask for your help. Tell us your favorites and rate a few old films in advance.</p>
        
         <h1 className="text-xl font-bold">Slecet your favorite Genres:</h1>
-      <GenreSelect />
+      <GenreSelect userId={props.user?.id ?? 0}/>
       <h1 className="text-xl font-bold">Please review these movies so we can get to know you better:</h1>
       {movies.map((movie) => {
         return (
