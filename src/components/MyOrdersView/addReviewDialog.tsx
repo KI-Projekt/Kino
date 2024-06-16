@@ -44,7 +44,6 @@ function AddReview(props: AddReviewProps) {
   };
 
   const onSaveReviewClick = async () => {
-    console.log(props.order)
     const body = {
       rating: value,
       tags: tags,

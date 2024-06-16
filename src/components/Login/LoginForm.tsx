@@ -52,7 +52,6 @@ function Login(props: LoginProps) {
      }
      loginUser({email: values.email, password: values.password}).then((result) => {
         props.setUser(result.data);
-        console.log(result.data);
         let roles = result.data.role.split(",");
         if(roles[1] && roles[1] === "ROLE_ADMIN"){
           props.setIsAdmin({isAdmin: true});

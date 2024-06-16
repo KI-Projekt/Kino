@@ -40,11 +40,9 @@ function OpeningHoursView(prop: AdminProps) {
             ...openingHourDay,
             [e.target.id]: e.target.value
         };
-        console.log("###", newDay);
 
         let newOpeningHours = [...openingHoursFetch];
         newOpeningHours[openingHourDay.id - 1] = newDay;
-        console.log("###", newOpeningHours);
 
         setOpeningHoursFetch(newOpeningHours);
     }

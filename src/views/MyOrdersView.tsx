@@ -11,6 +11,7 @@ import { refundOrder } from '../queries/changeOrders';
 import { fetchOrderByUserID } from '../queries/fetchOrder';
 import AddReview from '../components/MyOrdersView/addReviewDialog';
 import UserMovieDetailsView from './MovieShowDetails';
+import { addReview } from '../queries/fetchReview';
 
 interface MyOrdersProps {
     user?: User;
@@ -73,20 +74,6 @@ function MyOrdersView(props: MyOrdersProps) {
             });
         });
     }
-    const onSaveReviewClick = (rating:number, tags:String[], orders:any) => {
-        console.log(orders)
-        const body ={
-            rating: rating,
-            tags: tags,
-            userId: props.user?.id,
-            //@ts-ignore
-            movieId: order?.tickets[0].screening.movie?.id ?? 0,
-
-        }
-        console.log(body)
-    }
-
-
     React.useEffect(() => {
         if (props.user?.id) {
             fetchOrderByUserID(props.user?.id).then(result => {
