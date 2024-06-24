@@ -23,7 +23,7 @@ function MovieTile(props: MovieProps) {
 
   return (
     <div
-      className="relative transition duration-100 hover:scale-110 hover:opacity-100 hover:cursor-pointer flex justify-start m-3 min-w-[162px]"
+      className="relative transition duration-100 hover:scale-110 hover:opacity-100 hover:cursor-pointer flex justify-start m-3 min-w-[162px] max-h-[241px] max-w-[168px]"
       onClick={() => handleOnClick()}
     >
       <img src={props.picture} alt="movie" className="Movie-Tile" />

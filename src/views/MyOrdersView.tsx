@@ -10,9 +10,6 @@ import { redTheme } from '../interfaces/Theme';
 import { refundOrder } from '../queries/changeOrders';
 import { fetchOrderByUserID } from '../queries/fetchOrder';
 import AddReview from '../components/MyOrdersView/addReviewDialog';
-import UserMovieDetailsView from './MovieShowDetails';
-import { addReview } from '../queries/fetchReview';
-
 interface MyOrdersProps {
     user?: User;
 }

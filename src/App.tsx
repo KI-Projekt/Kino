@@ -197,6 +197,7 @@ function App() {
                           isAdmin={adminProps.isAdmin}
                           isNew={isNew}
                           setIsNew={setIsNew}
+                          user={user}
                         />
                       }
                     />

@@ -1,5 +1,7 @@
-export const PATH = "https://cinema-api.mabu2807.de/";
-//export const PATH = "http://localhost:8080/";
+import { AiScore } from "../interfaces/InterfacesReview";
+
+//export const PATH = "https://cinema-api.mabu2807.de/";
+export const PATH = "http://localhost:8080/";
 
 export const fetchAllMovies = async () => {
     const url = PATH + "api/movies";
@@ -10,13 +12,13 @@ export const fetchAllMovies = async () => {
     return responseJson;
 };
 
-export const fetchAiMovies = async () => {
-    const url = PATH + "api/movies/ai";
+export const fetchAiMovies = async (userId:number) => {
+    const url = PATH + `api/ai-scores/${userId}`;
 
     const response = await fetch(url);
     const responseJson = await response.json();
 
-    return responseJson;
+    return responseJson as AiScore;
 };
 
 export const fetchMoviesByAgeRating = async (rated: string) => {

@@ -70,7 +70,7 @@ export interface OMDbMovie {
 }
 
 export interface Movie {
-  id?: number | string | undefined,
+  id?: number| undefined,
   imdbId?: String | undefined
   title?: String | undefined,
   posterImage?: string | undefined,
@@ -87,6 +87,7 @@ export interface Movie {
   movieStatus?: String | undefined,
   imdbVotes?: String | undefined,
   trailer: TrailerType | undefined,
+  score?: number | undefined,
 }
 
 
