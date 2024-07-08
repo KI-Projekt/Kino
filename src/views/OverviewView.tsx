@@ -24,7 +24,7 @@ function OverviewView(props: OverviewViewProps) {
     const [alertOpen, setAlertOpen] = useState(false);
     const [isError, setIsError] = useState(false);
     const [alertText, setAlertText] = useState("");
-    const [aiScores, setAiScores] = useState<AiScore>({ body: [], statusCode: "", statusCodeValue: 0 });
+    const [aiScores, setAiScores] = useState<AiScore>();
 
     const navigate = useNavigate();
 
@@ -54,24 +54,24 @@ function OverviewView(props: OverviewViewProps) {
             }
         })
         if (props.user && props.user.aiAccepted) {
-            fetchAiMovies(props.user?.id ?? 0).then((result) => setAiScores(result))
+            fetchAiMovies(props.user?.id ?? 0).then((result) => {if (result) { setAiScores(result) }})
 
         }
     }, [props.isAdmin, props.user]);
 
     useEffect(() => {
-        if (aiScores.body.length > 0) {
-            
+        if (aiScores?.body && aiScores.body.length > 0) {
+
             const sortedScores = aiScores.body.sort((a, b) => b.score - a.score)
             console.log(sortedScores)
             const topScores = sortedScores.slice(0, 4)
 
             // Erstelle eine Map von MovieId zu Score
-            const scoreMap = new Map<number, number>(topScores.map(score => [score.movieId, score.score]));
+            const scoreMap = new Map<number, number>(topScores.map(score => [score.externalId, score.score]));
 
             // Filtern Sie die Filme nach den IDs in topScores und fügen Sie den Score hinzu
             const topMovies = movies
-                .filter(movie => scoreMap.has( movie.id ?? 0))
+                .filter(movie => scoreMap.has(movie.id ?? 0))
                 .map(movie => ({
                     ...movie,
                     score: scoreMap.get(movie.id ?? 0) as number // Typ-Assertion, dass score immer einen Wert hat
@@ -79,7 +79,7 @@ function OverviewView(props: OverviewViewProps) {
 
             setTopMovies(topMovies);
 
-           
+
         }
     }, [aiScores, movies])
 
@@ -104,7 +104,7 @@ function OverviewView(props: OverviewViewProps) {
                         </Button>
                     </Box>
                 }
-                {topMovies.length > 0 && props.user && props.user.aiAccepted && <SwipeableTextMobileStepper movies={topMovies}/>}
+                {aiScores && topMovies.length > 0 && props.user && props.user.aiAccepted && <SwipeableTextMobileStepper movies={topMovies} />}
                 <TileBar title='All Movies in this Cinema' isAdmin={props.isAdmin} isNew={props.isNew} movies={movies} />
                 {props.isAdmin && <TileBar title='Archived Movies' isAdmin={props.isAdmin} isNew={props.isNew} movies={ArchivedMovies} />}
             </div>

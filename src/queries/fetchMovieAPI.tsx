@@ -16,9 +16,12 @@ export const fetchAiMovies = async (userId:number) => {
     const url = PATH + `api/ai-scores/${userId}`;
 
     const response = await fetch(url);
+    if (response.status === 200) {
     const responseJson = await response.json();
-
     return responseJson as AiScore;
+    } else {
+
+    }
 };
 
 export const fetchMoviesByAgeRating = async (rated: string) => {

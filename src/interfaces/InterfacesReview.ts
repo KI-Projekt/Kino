@@ -1,3 +1,5 @@
+import { UUID } from "crypto";
+
 export interface ReviewArrayTags{
     rating: number | null;
     tags: Array<String>;
@@ -20,6 +22,6 @@ export interface AiScore {
 }
 
 export interface AiScoreBody {
-    movieId: number;
+    externalId: number;
     score: number;
 }
