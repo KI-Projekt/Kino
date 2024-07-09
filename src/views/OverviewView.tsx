@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import TileBar from '../components/OverviewView/Tilebar';
 import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from 'react';
-import AIComingSOON from '../img/AIComingSoon.png'
 import { Movie, User } from '../interfaces/Interfaces';
 import { fetchAiMovies, fetchAllArchivedMovies, fetchAllMovies } from '../queries/fetchMovieAPI';
 import Alerts from '../components/Alerts';
 import { AiScore } from '../interfaces/InterfacesReview';
 import SwipeableTextMobileStepper from '../components/OverviewView/carusel';
+import AiStartNow from '../img/AiStartNow.png';
 
 interface OverviewViewProps {
     isAdmin: boolean,
@@ -92,7 +92,7 @@ function OverviewView(props: OverviewViewProps) {
     return (
         <>
             <div>
-                {(!props.user || !props.user?.aiAccepted) && <img src={AIComingSOON} alt="" />}
+                {(!props.user || !props.user?.aiAccepted) && <img src={AiStartNow} alt="" />}
                 {props.isAdmin &&
                     <Box textAlign='center' sx={{ pt: theme.spacing(3) }}>
                         <Button
